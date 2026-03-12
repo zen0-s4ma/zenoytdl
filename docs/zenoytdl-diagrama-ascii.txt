@@ -1,0 +1,764 @@
+┌──────────────────────────────────────────────────────────────────────────────────────────────┐
+│                                      ZENOYTDL                                               │
+│        Capa superior funcional, técnica y arquitectónica construida sobre ytdl-sub         │
+└──────────────────────────────────────────────────────────────────────────────────────────────┘
+
+                                         OBJETIVO
+                                             
+    ┌──────────────────────────────────────────────────────────────────────────────────────┐
+    │ Convertir una base potente pero compleja (ytdl-sub) en un sistema:                 │
+    │                                                                                    │
+    │  - más predecible                                                                   │
+    │  - más mantenible                                                                   │
+    │  - más reutilizable                                                                 │
+    │  - más extensible                                                                   │
+    │  - más amigable de operar                                                           │
+    └──────────────────────────────────────────────────────────────────────────────────────┘
+
+
+════════════════════════════════════════════════════════════════════════════════════════════════
+1) NATURALEZA DEL SISTEMA
+════════════════════════════════════════════════════════════════════════════════════════════════
+
+                   ┌───────────────────────────────────────────────┐
+                   │               Zenoytdl                        │
+                   │-----------------------------------------------│
+                   │ NO reemplaza ytdl-sub                         │
+                   │ SÍ lo encapsula                               │
+                   │ SÍ añade semántica propia                     │
+                   │ SÍ añade validación, estado y control         │
+                   │ SÍ prepara API y futuras interfaces           │
+                   └───────────────────────────────────────────────┘
+                                      │
+                                      ▼
+                   ┌───────────────────────────────────────────────┐
+                   │                 ytdl-sub                      │
+                   │-----------------------------------------------│
+                   │ Motor subyacente de:                          │
+                   │ - resolución                                  │
+                   │ - descarga                                    │
+                   │ - parte del procesamiento                     │
+                   └───────────────────────────────────────────────┘
+
+
+════════════════════════════════════════════════════════════════════════════════════════════════
+2) PRINCIPIOS RECTORES
+════════════════════════════════════════════════════════════════════════════════════════════════
+
+    ┌──────────────────────────────────────────────────────────────────────────────────────┐
+    │ 1. ytdl-sub como motor, no como interfaz de usuario                                 │
+    │ 2. Zenoytdl como capa de alto nivel real                                            │
+    │ 3. Configuración declarativa, clara y legible                                       │
+    │ 4. Separación estricta de responsabilidades                                         │
+    │ 5. Validación fuerte antes de ejecutar                                              │
+    │ 6. Overrides con control explícito                                                  │
+    │ 7. Persistencia como fuente de verdad operativa                                     │
+    │ 8. Rendimiento y fluidez como propiedad de diseño                                   │
+    │ 9. UX tardía, pero luego prioritaria                                                │
+    └──────────────────────────────────────────────────────────────────────────────────────┘
+
+
+════════════════════════════════════════════════════════════════════════════════════════════════
+3) BLOQUES PRINCIPALES DEL SISTEMA
+════════════════════════════════════════════════════════════════════════════════════════════════
+
+┌────────────────────┐
+│  general.yaml      │
+│ Config. global     │
+└─────────┬──────────┘
+          │
+          ▼
+┌────────────────────┐        ┌────────────────────┐        ┌────────────────────────────┐
+│  profiles.yaml     │        │ subscriptions.yaml │        │ ytdl-sub-conf.yaml         │
+│ Perfiles           │        │ Suscripciones      │        │ Contrato de integración    │
+└─────────┬──────────┘        └─────────┬──────────┘        └──────────────┬─────────────┘
+          │                             │                                   │
+          └──────────────┬──────────────┴───────────────────────┬───────────┘
+                         │                                      │
+                         ▼                                      ▼
+              ┌──────────────────────┐              ┌──────────────────────────┐
+              │   Modelo interno     │              │  Validación / Compilación│
+              │   de Zenoytdl        │              │  Traducción a ytdl-sub   │
+              └──────────┬───────────┘              └─────────────┬────────────┘
+                         │                                        │
+                         ├──────────────────────┐                 │
+                         │                      │                 ▼
+                         ▼                      ▼      ┌──────────────────────────┐
+              ┌──────────────────────┐  ┌──────────────────────┐ │   Artefactos      │
+              │ Caché                │  │ Gestor de colas      │ │ compilados para   │
+              │                      │  │                      │ │ ytdl-sub          │
+              └──────────┬───────────┘  └──────────┬───────────┘ └──────────┬───────┘
+                         │                         │                         │
+                         └──────────────┬──────────┴───────────────┬─────────┘
+                                        │                          │
+                                        ▼                          ▼
+                             ┌──────────────────────┐   ┌──────────────────────┐
+                             │ Estado / SQLite      │   │ Módulo de ejecución   │
+                             │ fuente de verdad     │   │ invocación controlada │
+                             └──────────┬───────────┘   └──────────┬───────────┘
+                                        │                          │
+                                        └─────────────┬────────────┘
+                                                      ▼
+                                           ┌──────────────────────┐
+                                           │ API propia Zenoytdl  │
+                                           └──────────┬───────────┘
+                                                      │
+                                 ┌────────────────────┴────────────────────┐
+                                 ▼                                         ▼
+                      ┌──────────────────────┐                 ┌──────────────────────┐
+                      │ TUI futura           │                 │ GUI web futura       │
+                      │ proyecto separado    │                 │ proyecto separado    │
+                      └──────────────────────┘                 └──────────────────────┘
+
+
+════════════════════════════════════════════════════════════════════════════════════════════════
+4) MODELO FUNCIONAL DE ALTO NIVEL
+════════════════════════════════════════════════════════════════════════════════════════════════
+
+    ┌──────────────────────────────────────────────────────────────────────────────────────┐
+    │ CONFIGURACIÓN GENERAL                                                               │
+    │ - rutas de binarios                                                                 │
+    │ - directorios globales                                                              │
+    │ - base de datos de estado                                                           │
+    │ - flags globales                                                                    │
+    │ - logging                                                                           │
+    │ - red                                                                               │
+    └──────────────────────────────────────────────────────────────────────────────────────┘
+
+    ┌──────────────────────────────────────────────────────────────────────────────────────┐
+    │ PERFILES                                                                            │
+    │ Plantillas reutilizables de comportamiento base                                     │
+    │ Responden a: "¿Cómo debe comportarse este tipo de contenido por defecto?"           │
+    └──────────────────────────────────────────────────────────────────────────────────────┘
+
+    ┌──────────────────────────────────────────────────────────────────────────────────────┐
+    │ SUSCRIPCIONES                                                                       │
+    │ Fuentes concretas de contenido                                                      │
+    │ Responden a: "¿Qué fuente concreta se sigue / inspecciona / sincroniza?"            │
+    └──────────────────────────────────────────────────────────────────────────────────────┘
+
+    ┌──────────────────────────────────────────────────────────────────────────────────────┐
+    │ POSTPROCESADOS                                                                      │
+    │ Transformaciones o enriquecimientos aplicables al contenido                         │
+    └──────────────────────────────────────────────────────────────────────────────────────┘
+
+    ┌──────────────────────────────────────────────────────────────────────────────────────┐
+    │ OVERRIDES                                                                           │
+    │ Alteran parcialmente la herencia del perfil bajo reglas explícitas                  │
+    └──────────────────────────────────────────────────────────────────────────────────────┘
+
+    ┌──────────────────────────────────────────────────────────────────────────────────────┐
+    │ INTEGRACIÓN + COMPILACIÓN HACIA ytdl-sub                                            │
+    │ Traducción del modelo Zenoytdl al modelo ejecutable por la capa inferior            │
+    └──────────────────────────────────────────────────────────────────────────────────────┘
+
+    ┌──────────────────────────────────────────────────────────────────────────────────────┐
+    │ ESTADO                                                                              │
+    │ Persistencia, trazabilidad, anti-redescarga, historial, purgas, descartes           │
+    └──────────────────────────────────────────────────────────────────────────────────────┘
+
+    ┌──────────────────────────────────────────────────────────────────────────────────────┐
+    │ CACHÉ                                                                               │
+    │ Reutilización de resultados y reducción de recomputaciones                          │
+    └──────────────────────────────────────────────────────────────────────────────────────┘
+
+    ┌──────────────────────────────────────────────────────────────────────────────────────┐
+    │ COLAS                                                                               │
+    │ Organización, priorización y control de ejecución                                   │
+    └──────────────────────────────────────────────────────────────────────────────────────┘
+
+    ┌──────────────────────────────────────────────────────────────────────────────────────┐
+    │ API                                                                                 │
+    │ Frontera estable para automatización e interfaces futuras                           │
+    └──────────────────────────────────────────────────────────────────────────────────────┘
+
+
+════════════════════════════════════════════════════════════════════════════════════════════════
+5) FICHEROS MÍNIMOS OBLIGATORIOS
+════════════════════════════════════════════════════════════════════════════════════════════════
+
+    ┌─────────────────────────────┐
+    │ general.yaml                │
+    │-----------------------------│
+    │ Configuración técnica global│
+    └─────────────────────────────┘
+
+    ┌─────────────────────────────┐
+    │ profiles.yaml               │
+    │-----------------------------│
+    │ Perfiles reutilizables      │
+    └─────────────────────────────┘
+
+    ┌─────────────────────────────┐
+    │ subscriptions.yaml          │
+    │-----------------------------│
+    │ Fuentes concretas           │
+    └─────────────────────────────┘
+
+    ┌─────────────────────────────┐
+    │ ytdl-sub-conf.yaml          │
+    │-----------------------------│
+    │ Contrato técnico de         │
+    │ acoplamiento con ytdl-sub   │
+    └─────────────────────────────┘
+
+
+════════════════════════════════════════════════════════════════════════════════════════════════
+6) FICHEROS OPCIONALES POSIBLES
+════════════════════════════════════════════════════════════════════════════════════════════════
+
+    ┌───────────────┬───────────────┬───────────────┬───────────────┬───────────────┐
+    │postprocessing │plugins.yaml   │defaults.yaml  │locks.yaml     │queue.yaml     │
+    └───────────────┴───────────────┴───────────────┴───────────────┴───────────────┘
+    ┌───────────────┬───────────────┐
+    │cache.yaml     │api.yaml       │
+    └───────────────┴───────────────┘
+
+
+════════════════════════════════════════════════════════════════════════════════════════════════
+7) RELACIÓN ENTRE FICHEROS Y RESPONSABILIDADES
+════════════════════════════════════════════════════════════════════════════════════════════════
+
+    general.yaml
+        │
+        ├── entorno técnico común
+        ├── binarios
+        ├── paths
+        ├── logging
+        ├── red
+        └── estado global
+
+    profiles.yaml
+        │
+        ├── profile_type
+        ├── output_directory
+        ├── format
+        ├── quality
+        ├── max_items
+        ├── preset_base
+        ├── override_policy
+        └── postprocessing
+
+    subscriptions.yaml
+        │
+        ├── subscription_name
+        ├── element_type
+        ├── source_url / source_id
+        ├── assigned_profile
+        ├── enabled
+        ├── priority
+        ├── queue_class
+        └── overrides
+
+    ytdl-sub-conf.yaml
+        │
+        ├── versionado de integración
+        ├── compatibilidad
+        ├── preset_mapping
+        ├── field_mapping
+        ├── translation_rules
+        ├── invocation
+        ├── fallback_policy
+        └── validation
+
+
+════════════════════════════════════════════════════════════════════════════════════════════════
+8) FLUJO LÓGICO PRINCIPAL
+════════════════════════════════════════════════════════════════════════════════════════════════
+
+    ┌──────────────┐
+    │ YAMLs input  │
+    └──────┬───────┘
+           ▼
+    ┌──────────────┐
+    │ Parseo       │
+    └──────┬───────┘
+           ▼
+    ┌──────────────┐
+    │ Validación   │◄───────────────┐
+    │ fuerte       │                │
+    └──────┬───────┘                │
+           ▼                        │
+    ┌──────────────┐                │
+    │ Resolución   │                │
+    │ perfil+subs  │                │
+    └──────┬───────┘                │
+           ▼                        │
+    ┌──────────────┐                │
+    │ Aplicación   │                │
+    │ overrides    │                │
+    └──────┬───────┘                │
+           ▼                        │
+    ┌──────────────┐                │
+    │ Config.      │                │
+    │ efectiva     │                │
+    └──────┬───────┘                │
+           ▼                        │
+    ┌──────────────┐                │
+    │ Traducción   │───────────────►│ reglas de ytdl-sub-conf
+    │ a ytdl-sub   │                │
+    └──────┬───────┘                │
+           ▼                        │
+    ┌──────────────┐                │
+    │ Compilación  │                │
+    │ de artefactos│                │
+    └──────┬───────┘                │
+           ▼                        │
+    ┌──────────────┐
+    │ Cola         │
+    │ de ejecución │
+    └──────┬───────┘
+           ▼
+    ┌──────────────┐
+    │ Invocación   │
+    │ de ytdl-sub  │
+    └──────┬───────┘
+           ▼
+    ┌──────────────┐
+    │ Descarga /   │
+    │ sincroniza   │
+    └──────┬───────┘
+           ▼
+    ┌──────────────┐
+    │ Postprocesa  │
+    └──────┬───────┘
+           ▼
+    ┌──────────────┐
+    │ Retención /  │
+    │ purga        │
+    └──────┬───────┘
+           ▼
+    ┌──────────────┐
+    │ Persistencia │
+    │ + trazabilidad
+    └──────────────┘
+
+
+════════════════════════════════════════════════════════════════════════════════════════════════
+9) MODELO PERFIL → SUSCRIPCIÓN → CONFIGURACIÓN EFECTIVA
+════════════════════════════════════════════════════════════════════════════════════════════════
+
+    ┌──────────────────────┐
+    │ PERFIL               │
+    │----------------------│
+    │ define:              │
+    │ - comportamiento     │
+    │ - formato            │
+    │ - calidad            │
+    │ - retención          │
+    │ - postprocesados     │
+    │ - política override  │
+    └──────────┬───────────┘
+               │ herencia
+               ▼
+    ┌──────────────────────┐
+    │ SUSCRIPCIÓN          │
+    │----------------------│
+    │ define:              │
+    │ - fuente concreta    │
+    │ - identidad          │
+    │ - perfil asignado    │
+    │ - enabled            │
+    │ - prioridad          │
+    │ - queue_class        │
+    │ - overrides          │
+    └──────────┬───────────┘
+               │ resolución
+               ▼
+    ┌──────────────────────┐
+    │ CONFIGURACIÓN        │
+    │ EFECTIVA             │
+    │----------------------│
+    │ perfil base          │
+    │ + overrides válidos  │
+    │ + normalización      │
+    │ + validación         │
+    └──────────┬───────────┘
+               │ traducción
+               ▼
+    ┌──────────────────────┐
+    │ CONFIGURACIÓN        │
+    │ COMPILADA ytdl-sub   │
+    └──────────────────────┘
+
+
+════════════════════════════════════════════════════════════════════════════════════════════════
+10) SISTEMA DE OVERRIDES
+════════════════════════════════════════════════════════════════════════════════════════════════
+
+    ┌──────────────────────────────────────────────────────────────────────────────────────┐
+    │ Objetivo: permitir flexibilidad sin romper la semántica del perfil                  │
+    └──────────────────────────────────────────────────────────────────────────────────────┘
+
+                     ┌──────────────────────────────────────────────┐
+                     │ Estado por campo                            │
+                     ├──────────────────────────────────────────────┤
+                     │ allowed    -> se puede sobrescribir         │
+                     │ restricted -> con limitaciones / validación │
+                     │ forbidden  -> no se puede sobrescribir      │
+                     └──────────────────────────────────────────────┘
+
+    Ejemplo:
+    ┌──────────────────────────────────────────────────────────────────────────────────────┐
+    │ Perfil podcast                                                                      │
+    │ - format.type      = audio      -> forbidden                                        │
+    │ - format.extension = mp3        -> forbidden                                        │
+    │ - preset_base      = base audio -> forbidden                                        │
+    │ - quality          -> allowed                                                       │
+    │ - max_items        -> allowed                                                       │
+    └──────────────────────────────────────────────────────────────────────────────────────┘
+
+
+════════════════════════════════════════════════════════════════════════════════════════════════
+11) PERFILES PREVISTOS
+════════════════════════════════════════════════════════════════════════════════════════════════
+
+    ┌───────────────────────┬─────────────────────────────────────────────────────────────┐
+    │ podcast               │ audio largo: episodios, tertulias, entrevistas, programas  │
+    │ tv                    │ vídeo largo/continuo                                         │
+    │ videos_sueltos        │ vídeos independientes                                        │
+    │ ambience_video        │ vídeo de ambientación                                        │
+    │ ambience_audio        │ audio de ambientación                                        │
+    │ music_playlist        │ playlists musicales                                          │
+    │ shorts                │ contenido corto                                              │
+    └───────────────────────┴─────────────────────────────────────────────────────────────┘
+
+
+════════════════════════════════════════════════════════════════════════════════════════════════
+12) TIPOS DE ELEMENTO PREVISTOS
+════════════════════════════════════════════════════════════════════════════════════════════════
+
+    element_type enum:
+    ┌───────────────────────────────┐
+    │ youtube_channel_videos        │
+    │ youtube_channel_shorts        │
+    │ youtube_playlist              │
+    │ youtube_single_video          │
+    │ external_single_media         │
+    │ external_single_short         │
+    └───────────────────────────────┘
+
+
+════════════════════════════════════════════════════════════════════════════════════════════════
+13) POSTPROCESADOS PREVISTOS
+════════════════════════════════════════════════════════════════════════════════════════════════
+
+    ┌───────────────────────────────┬──────────────────────────────────────────────────────┐
+    │ metadata_text                 │ enriquecimiento textual                              │
+    │ metadata_images               │ imágenes / carátulas                                │
+    │ embed_metadata                │ incrustado de metadatos                             │
+    │ export_info_json              │ exportación de info estructurada                    │
+    │ max_duration                  │ recorte / límite técnico                            │
+    └───────────────────────────────┴──────────────────────────────────────────────────────┘
+
+    Futuro posible:
+    - renombrado avanzado
+    - normalización de nombres
+    - enriquecimiento por plugins
+    - conversión forzada
+    - organización posterior
+
+
+════════════════════════════════════════════════════════════════════════════════════════════════
+14) RETENCIÓN, PURGA Y LIMPIEZA
+════════════════════════════════════════════════════════════════════════════════════════════════
+
+    max_items = X
+          │
+          ▼
+    ┌──────────────────────────────────────────────────────────────────────────────────────┐
+    │ Regla funcional                                                                     │
+    │ - si hay menos de X -> se puede seguir descargando                                  │
+    │ - si ya hay X y entra nuevo contenido -> purgar los más antiguos                    │
+    │ - objetivo -> mantener ventana reciente                                             │
+    └──────────────────────────────────────────────────────────────────────────────────────┘
+
+    criterio prioritario de antigüedad:
+    ┌───────────────────────────────┐
+    │ fecha de publicación          │
+    │ > fecha de descarga           │
+    └───────────────────────────────┘
+
+    además:
+    ┌───────────────────────────────┐
+    │ registrar qué se purgó        │
+    │ registrar por qué             │
+    └───────────────────────────────┘
+
+
+════════════════════════════════════════════════════════════════════════════════════════════════
+15) ESTADO / SQLITE / TRAZABILIDAD
+════════════════════════════════════════════════════════════════════════════════════════════════
+
+                              ┌─────────────────────────────┐
+                              │      SQLite / Estado        │
+                              └──────────────┬──────────────┘
+                                             │
+         ┌───────────────────────────────────┼────────────────────────────────────┐
+         ▼                                   ▼                                    ▼
+┌──────────────────────┐           ┌──────────────────────┐            ┌──────────────────────┐
+│ anti-redescarga      │           │ trazabilidad         │            │ historial operativo  │
+└──────────────────────┘           └──────────────────────┘            └──────────────────────┘
+
+         ┌───────────────────────────────────┼────────────────────────────────────┐
+         ▼                                   ▼                                    ▼
+┌──────────────────────┐           ┌──────────────────────┐            ┌──────────────────────┐
+│ purgas               │           │ descartes            │            │ sincronizaciones     │
+└──────────────────────┘           └──────────────────────┘            └──────────────────────┘
+
+         ┌───────────────────────────────────┼────────────────────────────────────┐
+         ▼                                   ▼                                    ▼
+┌──────────────────────┐           ┌──────────────────────┐            ┌──────────────────────┐
+│ colas                │           │ caché                │            │ métricas ejecución   │
+└──────────────────────┘           └──────────────────────┘            └──────────────────────┘
+
+
+════════════════════════════════════════════════════════════════════════════════════════════════
+16) CACHÉ
+════════════════════════════════════════════════════════════════════════════════════════════════
+
+    ┌──────────────────────────────────────────────────────────────────────────────────────┐
+    │ Objetivo: reducir recomputaciones y mejorar fluidez                                 │
+    └──────────────────────────────────────────────────────────────────────────────────────┘
+
+    Tipos recomendados:
+    ┌────────────────────────────────────────────┐
+    │ 1. caché de configuración compilada        │
+    │ 2. caché de resolución de metadatos        │
+    │ 3. caché de validación                     │
+    │ 4. caché de mapeo / traducción             │
+    │ 5. caché operativa de estado reciente      │
+    └────────────────────────────────────────────┘
+
+    Invalidación:
+    ┌────────────────────────────────────────────┐
+    │ - cambio de fichero                        │
+    │ - cambio de hash de configuración          │
+    │ - cambio de ytdl-sub-conf                  │
+    │ - TTL                                      │
+    │ - invalidación manual                      │
+    │ - error o inconsistencia                   │
+    └────────────────────────────────────────────┘
+
+    Requisitos:
+    ┌────────────────────────────────────────────┐
+    │ - transparente cuando sea posible          │
+    │ - inspeccionable por API                   │
+    │ - limpieza parcial o total                 │
+    │ - estadísticas hit/miss                    │
+    │ - corrección por encima de velocidad       │
+    └────────────────────────────────────────────┘
+
+
+════════════════════════════════════════════════════════════════════════════════════════════════
+17) GESTOR DE COLAS
+════════════════════════════════════════════════════════════════════════════════════════════════
+
+    ┌──────────────────────────────────────────────────────────────────────────────────────┐
+    │ Objetivo: organizar, priorizar, distribuir y controlar el trabajo                   │
+    └──────────────────────────────────────────────────────────────────────────────────────┘
+
+    Tipos de trabajo:
+    ┌────────────────────┬────────────────────┬────────────────────┬──────────────────────┐
+    │ validación         │ compilación        │ inspección         │ sincronización       │
+    ├────────────────────┼────────────────────┼────────────────────┼──────────────────────┤
+    │ descarga           │ postprocesado      │ purga              │ actualización estado │
+    ├────────────────────┼────────────────────┼────────────────────┼──────────────────────┤
+    │ limpieza caché     │ reintentos         │ mantenimiento      │                      │
+    └────────────────────┴────────────────────┴────────────────────┴──────────────────────┘
+
+    Clases lógicas de cola:
+    ┌────────────────────┐
+    │ cola validación    │
+    │ cola compilación   │
+    │ cola sincronización│
+    │ cola descarga      │
+    │ cola postprocesado │
+    │ cola mantenimiento │
+    └────────────────────┘
+
+    Prioridades:
+    ┌────────────────────┐
+    │ alta               │
+    │ normal             │
+    │ baja               │
+    │ mantenimiento      │
+    └────────────────────┘
+
+    Estados del trabajo:
+    ┌────────────────────┐
+    │ queued             │
+    │ scheduled          │
+    │ running            │
+    │ waiting            │
+    │ completed          │
+    │ failed             │
+    │ retry_pending      │
+    │ cancelled          │
+    │ dead_letter        │
+    └────────────────────┘
+
+    Reintentos:
+    ┌──────────────────────────────────────────────────────────────────────────────────────┐
+    │ - max_retries                                                                       │
+    │ - backoff progresivo                                                                │
+    │ - errores recuperables / no recuperables                                            │
+    │ - paso a dead-letter cuando no puede completarse                                    │
+    └──────────────────────────────────────────────────────────────────────────────────────┘
+
+    Capacidades clave:
+    ┌──────────────────────────────────────────────────────────────────────────────────────┐
+    │ - deduplicación                                                                     │
+    │ - concurrencia controlada                                                           │
+    │ - integración con caché                                                             │
+    │ - integración con estado                                                            │
+    │ - integración con API                                                               │
+    └──────────────────────────────────────────────────────────────────────────────────────┘
+
+
+════════════════════════════════════════════════════════════════════════════════════════════════
+18) RELACIÓN CACHÉ + COLAS + FLUIDEZ
+════════════════════════════════════════════════════════════════════════════════════════════════
+
+                ┌──────────────────────┐
+                │ Caché                │
+                │----------------------│
+                │ - menos recomputación│
+                │ - menor latencia     │
+                │ - respuestas rápidas │
+                └──────────┬───────────┘
+                           │
+                           ├──────────────┐
+                           │              │
+                           ▼              ▼
+                ┌──────────────────────┐  ┌──────────────────────┐
+                │ Fluidez operativa    │  │ Mejor UX futura      │
+                └──────────┬───────────┘  └──────────────────────┘
+                           │
+                           ├──────────────┐
+                           │              │
+                           ▼              ▼
+                ┌──────────────────────┐  ┌──────────────────────┐
+                │ Cola                 │  │ Estado persistente   │
+                │----------------------│  │----------------------│
+                │ - orden              │  │ - memoria operativa  │
+                │ - control            │  │ - trazabilidad       │
+                │ - prioridad          │  │ - consulta por API   │
+                │ - aislamiento        │  └──────────────────────┘
+                └──────────────────────┘
+
+
+════════════════════════════════════════════════════════════════════════════════════════════════
+19) API PROPIA
+════════════════════════════════════════════════════════════════════════════════════════════════
+
+    ┌──────────────────────────────────────────────────────────────────────────────────────┐
+    │ API = frontera estable entre el core y las interfaces / automatizaciones            │
+    └──────────────────────────────────────────────────────────────────────────────────────┘
+
+    Capacidades esperables:
+    ┌──────────────────────────────────────────────────────────────────────────────────────┐
+    │ - listar perfiles                                                                   │
+    │ - obtener perfil                                                                    │
+    │ - validar configuración                                                             │
+    │ - listar suscripciones                                                              │
+    │ - crear / actualizar suscripción                                                    │
+    │ - resolver configuración efectiva                                                   │
+    │ - consultar cola                                                                    │
+    │ - ejecutar sincronización                                                           │
+    │ - consultar historial                                                               │
+    │ - consultar caché                                                                   │
+    │ - reintentar trabajos fallidos                                                      │
+    │ - inspeccionar descargados / purgados                                               │
+    └──────────────────────────────────────────────────────────────────────────────────────┘
+
+
+════════════════════════════════════════════════════════════════════════════════════════════════
+20) ORDEN RECOMENDADO DE IMPLEMENTACIÓN
+════════════════════════════════════════════════════════════════════════════════════════════════
+
+    1.  modelado de dominio
+            │
+            ▼
+    2.  diseño de configuración
+            │
+            ▼
+    3.  validación
+            │
+            ▼
+    4.  compilación + integración con ytdl-sub
+            │
+            ▼
+    5.  persistencia
+            │
+            ▼
+    6.  control de retención y purga
+            │
+            ▼
+    7.  sistema de caché
+            │
+            ▼
+    8.  gestor de colas
+            │
+            ▼
+    9.  API
+            │
+            ▼
+    10. test suite completa
+            │
+            ▼
+    11. estabilización final
+            │
+            ▼
+    12. UX avanzada en proyecto aparte
+
+
+════════════════════════════════════════════════════════════════════════════════════════════════
+21) UX: CUÁNDO ENTRA Y CÓMO
+════════════════════════════════════════════════════════════════════════════════════════════════
+
+    ┌──────────────────────────────────────────────────────────────────────────────────────┐
+    │ La UX será CRÍTICA                                                                  │
+    │ pero NO debe adelantarse al core.                                                   │
+    └──────────────────────────────────────────────────────────────────────────────────────┘
+
+    Condición previa obligatoria:
+    ┌──────────────────────────────────────────────────────────────────────────────────────┐
+    │ - core completo                                                                     │
+    │ - integración consolidada con ytdl-sub                                              │
+    │ - validación robusta                                                                │
+    │ - colas funcionando                                                                 │
+    │ - caché integrada                                                                   │
+    │ - persistencia estable                                                              │
+    │ - API fiable                                                                        │
+    │ - todos los tests pasando                                                           │
+    └──────────────────────────────────────────────────────────────────────────────────────┘
+
+    Entonces:
+    ┌──────────────────────┐       ┌──────────────────────┐
+    │ TUI                  │       │ GUI web              │
+    │ proyecto separado    │       │ proyecto separado    │
+    └──────────────────────┘       └──────────────────────┘
+
+
+════════════════════════════════════════════════════════════════════════════════════════════════
+22) RESUMEN CONSOLIDADO FINAL
+════════════════════════════════════════════════════════════════════════════════════════════════
+
+    ┌──────────────────────────────────────────────────────────────────────────────────────┐
+    │ Zenoytdl = capa superior robusta sobre ytdl-sub                                    │
+    │                                                                                    │
+    │ Su valor no está solo en descargar, sino en:                                       │
+    │                                                                                    │
+    │ - semántica clara                                                                   │
+    │ - configuración reutilizable                                                        │
+    │ - integración fiable                                                                │
+    │ - persistencia coherente                                                            │
+    │ - automatización por API                                                            │
+    │ - caché potente                                                                     │
+    │ - colas robustas                                                                    │
+    │ - futura TUI/GUI desacoplada                                                        │
+    │                                                                                    │
+    │ Regla central:                                                                      │
+    │ primero núcleo sólido, después UX refinada.                                         │
+    └──────────────────────────────────────────────────────────────────────────────────────┘

@@ -1,0 +1,1281 @@
+---
+
+# Hito 0 — Preparación de base para arrancar
+
+**Objetivo:** dejar listo todo lo necesario para empezar desde cero sin deuda inicial.
+
+**Contexto ampliado para agentes IA**
+Este hito no construye todavía funcionalidad de negocio, pero es crítico porque fija el terreno donde se apoyará todo lo demás. El documento deja claro que Zenoytdl no es un script puntual, sino una herramienta con arquitectura propia, capas bien separadas y proyección a futuro. Eso significa que empezar “rápido” pero sin estructura sería contraproducente: rompería la coherencia del modelo, haría más difícil la validación y comprometería la estabilidad del core. Aquí se prepara el repo, las convenciones, el entorno y la base mínima para que los siguientes hitos se implementen sin improvisación.
+
+**Prerrequisitos:** ninguno.
+
+**Checklist:**
+
+* Definir stack técnico inicial del core.
+* Crear estructura de repo y módulos base.
+* Establecer convención de nombres, layout y separación por capas.
+* Preparar entorno de desarrollo, linting, testing y empaquetado.
+* Definir estrategia de configuración por YAML.
+* Fijar política de logs, errores y trazabilidad mínima.
+* Preparar entorno local con ytdl-sub, ffmpeg y SQLite disponibles.
+* Documentar supuestos iniciales y límites del alcance.
+* Dejar claro que TUI y GUI web quedan fuera del proyecto actual.
+* Crear fixtures y ejemplos mínimos de configuración para desarrollo.
+
+**Plan de pruebas:**
+
+**Pruebas de sistema**
+
+* Verificar que el proyecto arranca en entorno limpio.
+* Verificar que dependencias críticas están accesibles.
+* Verificar que la estructura base del repo coincide con la arquitectura prevista.
+
+**Unitarias**
+
+* Tests de utilidades base de paths, logging y carga de entorno.
+* Tests de helpers de configuración global mínima.
+
+**Integración**
+
+* Verificar integración básica con SQLite.
+* Verificar detección de ytdl-sub y ffmpeg desde el runtime.
+
+**Funcionales**
+
+* Confirmar que el comando o entrypoint principal responde.
+* Confirmar que se puede cargar configuración mínima sin ejecutar lógica real.
+
+**E2E**
+
+* Flujo mínimo: arrancar proyecto, cargar config dummy, salir sin error.
+
+**Prueba de regresión**
+
+* Ejecutar bootstrap completo en entorno limpio y confirmar:
+
+  * estructura correcta,
+  * dependencias disponibles,
+  * test runner operativo,
+  * entrypoint ejecutable.
+
+---
+
+# Hito 1 — Preparación de contenedorización y runtime objetivo
+
+**Objetivo:** dejar decididos desde el principio los condicionantes técnicos necesarios para que el core pueda terminar como herramienta desplegable en contenedor Docker, sin contaminar todavía la implementación del núcleo.
+
+**Contexto ampliado para agentes IA**
+Este hito existe para evitar un error clásico: desarrollar todo el core pensando implícitamente en un entorno local arbitrario y solo al final intentar “meterlo en Docker”. En este proyecto eso sería especialmente mala idea porque el documento ya presupone rutas persistentes, SQLite, caché, artefactos compilados y ejecución por subprocess sobre ytdl-sub. Por tanto, aquí no se dockeriza todavía, pero sí se fijan las reglas del juego del runtime objetivo: filesystem esperado, resolución de binarios, política de volúmenes, logs y persistencia. Eso permite que todos los hitos posteriores nazcan con compatibilidad container-first, aunque el empaquetado real llegue al final.
+
+**Prerrequisitos:** hito 0.
+
+**Checklist:**
+
+* Definir oficialmente que el runtime objetivo soportado será Linux containerizado.
+* Fijar la estrategia de imagen base.
+* Fijar cómo se resolverán dentro del contenedor `ffmpeg`, `ffprobe` y `ytdl-sub`.
+* Definir layout de directorios persistentes dentro del contenedor:
+
+  * `/data/library`
+  * `/data/tmp`
+  * `/data/logs`
+  * `/data/state.sqlite`
+  * `/data/cache.sqlite`
+  * `/data/compiled-ytdl-sub`
+* Definir política de volúmenes y qué datos deben sobrevivir al reinicio del contenedor.
+* Definir estrategia de configuración:
+
+  * bind mount de YAMLs
+  * variables de entorno
+  * combinación de ambas
+* Definir usuario/grupo de ejecución dentro del contenedor.
+* Definir política de logs para contenedor:
+
+  * stdout/stderr
+  * logs JSON opcionales en volumen
+* Definir si habrá un solo proceso principal o supervisor mínimo.
+* Definir criterio de healthcheck de contenedor.
+* Definir cómo se validará el contenedor en CI/CD o en pipeline local.
+
+**Plan de pruebas:**
+
+**Pruebas de sistema**
+
+* Verificar que todas las decisiones de runtime containerizado son coherentes con el diseño del core.
+
+**Unitarias**
+
+* Tests de helpers de resolución de rutas Linux/container.
+* Tests de generación o resolución de paths persistentes.
+
+**Integración**
+
+* Validar que la estrategia de volúmenes encaja con SQLite, caché, compilados y logs.
+
+**Funcionales**
+
+* Comprobar que la configuración puede expresarse sin ambigüedades para entorno local y entorno container.
+
+**E2E**
+
+* Simulación de arranque en entorno pseudo-container con layout `/data/...` y resolución de binarios prevista.
+
+**Prueba de regresión**
+
+* Ejecutar una batería de verificación de runtime objetivo y asegurar que no se rompen:
+
+  * rutas base,
+  * resolución de binarios,
+  * política de persistencia,
+  * contrato de logs para contenedor.
+
+---
+
+# Hito 2 — Modelado del dominio interno
+
+**Objetivo:** definir el lenguaje interno real de Zenoytdl.
+
+**Contexto ampliado para agentes IA**
+Este es el primer hito verdaderamente “de producto”. Aquí se decide cómo piensa Zenoytdl el problema. El documento insiste en que el valor principal de la herramienta está en ofrecer una semántica más clara que ytdl-sub: perfiles, suscripciones, postprocesados, overrides, estado, caché, colas y control de ejecución. Por eso el dominio no puede ser una traducción pobre de ytdl-sub, sino un modelo propio, estable y expresivo. Si este hito queda bien hecho, los siguientes módulos se apoyarán sobre conceptos nítidos; si queda mal hecho, toda la herramienta se volverá ambigua.
+
+**Prerrequisitos:** hito 1.
+
+**Checklist:**
+
+* Definir entidades principales: general config, perfil, suscripción, postprocesado, override, configuración efectiva, artefacto compilado, trabajo, estado.
+* Definir enums y tipos base.
+* Modelar relaciones perfil → suscripción → configuración efectiva.
+* Fijar invariantes del dominio.
+* Diferenciar modelo Zenoytdl y modelo ytdl-sub.
+* Dejar el dominio desacoplado de API, cola y persistencia concreta.
+
+**Plan de pruebas:**
+
+**Pruebas de sistema**
+
+* Verificar que el dominio puede inicializarse completo sin infraestructura adicional.
+
+**Unitarias**
+
+* Construcción válida de cada entidad.
+* Validación de invariantes del dominio.
+* Igualdad, serialización interna y normalización de tipos.
+
+**Integración**
+
+* Verificar que distintos objetos del dominio se relacionan correctamente.
+* Verificar que el dominio no depende de infraestructura concreta.
+
+**Funcionales**
+
+* Crear perfiles, suscripciones y postprocesados en memoria.
+* Resolver asociaciones básicas entre entidades.
+
+**E2E**
+
+* Flujo corto: crear perfil + suscripción + override y obtener estructura interna coherente.
+
+**Prueba de regresión**
+
+* Cargar un conjunto canónico de objetos de dominio y comprobar que:
+
+  * las entidades existen,
+  * las relaciones son válidas,
+  * no hay acoplamiento accidental con ytdl-sub, DB o API.
+
+---
+
+# Hito 3 — Diseño del contrato de configuración YAML
+
+**Objetivo:** convertir el dominio en un contrato declarativo claro y mantenible.
+
+**Contexto ampliado para agentes IA**
+Aquí el dominio deja de ser algo solo interno y se convierte en contrato externo. El esquema y el documento son muy claros: la herramienta debe estructurarse en torno a `general.yaml`, `profiles.yaml`, `subscriptions.yaml` y `ytdl-sub-conf.yaml`. Estos ficheros no son meros detalles técnicos; son la forma en que el usuario y, en el futuro, otras capas del sistema, expresarán la intención funcional. Por eso este hito no consiste solo en “aceptar YAML”, sino en diseñar una configuración de alto nivel, estable, legible y con semántica propia.
+
+**Prerrequisitos:** hito 2.
+
+**Checklist:**
+
+* Diseñar formalmente `general.yaml`.
+* Diseñar formalmente `profiles.yaml`.
+* Diseñar formalmente `subscriptions.yaml`.
+* Diseñar formalmente `ytdl-sub-conf.yaml`.
+* Decidir bloques opcionales dentro o fuera de `general.yaml`.
+* Definir claves obligatorias, opcionales y condicionales.
+* Redactar ejemplos de referencia válidos.
+* Garantizar semántica de alto nivel y no detalle crudo de ytdl-sub.
+
+**Plan de pruebas:**
+
+**Pruebas de sistema**
+
+* Verificar que el conjunto de YAMLs obligatorios cubre la estructura mínima prevista por el documento. 
+
+**Unitarias**
+
+* Tests de schemas o contratos por fichero.
+* Tests de defaults declarativos.
+* Tests de campos obligatorios/condicionales.
+
+**Integración**
+
+* Verificar consistencia entre `general.yaml`, `profiles.yaml`, `subscriptions.yaml` y `ytdl-sub-conf.yaml`.
+
+**Funcionales**
+
+* Cargar configuraciones de ejemplo válidas.
+* Detectar ejemplos inválidos con errores entendibles.
+
+**E2E**
+
+* Flujo: preparar carpeta de config completa, leer los 4 ficheros obligatorios y aceptar solo el conjunto correcto.
+
+**Prueba de regresión**
+
+* Pasar una colección fija de YAMLs válidos e inválidos y comprobar que el contrato no cambia accidentalmente.
+
+---
+
+# Hito 4 — Parseo y carga de configuración
+
+**Objetivo:** cargar todos los YAML obligatorios en memoria y convertirlos a modelo interno.
+
+**Contexto ampliado para agentes IA**
+Una vez diseñado el contrato, este hito construye la frontera de entrada real del sistema. No basta con parsear YAML sintácticamente: hay que convertirlo en objetos internos correctos, tipados y aptos para validación posterior. Este paso es especialmente importante porque define el primer punto donde la herramienta transforma input externo en estructura semántica. También prepara la base para firmas, hashes, caché y trazabilidad de configuración.
+
+**Prerrequisitos:** hito 3.
+
+**Checklist:**
+
+* Implementar lector de YAMLs obligatorios.
+* Resolver rutas, referencias y carga compuesta.
+* Parsear a estructuras internas tipadas.
+* Gestionar errores de sintaxis y estructura.
+* Soportar defaults razonables donde proceda.
+* Preparar base para firma/hash de configuración.
+
+**Plan de pruebas:**
+
+**Pruebas de sistema**
+
+* Verificar carga desde árbol real de ficheros.
+* Verificar comportamiento con rutas relativas y absolutas.
+
+**Unitarias**
+
+* Tests de parser por fichero.
+* Tests de coerción de tipos.
+* Tests de manejo de valores por defecto.
+
+**Integración**
+
+* Verificar que el parser construye correctamente objetos del dominio definidos en el hito 2.
+
+**Funcionales**
+
+* Cargar config mínima, media y compleja.
+* Fallar con mensajes claros en YAML roto o incompleto.
+
+**E2E**
+
+* Flujo: carpeta de config → parser → modelo interno listo para validación.
+
+**Prueba de regresión**
+
+* Ejecutar parsing sobre un set estable de fixtures y verificar salida estructural idéntica.
+
+---
+
+# Hito 5 — Validación estructural y semántica
+
+**Objetivo:** detectar cuanto antes configuraciones inválidas.
+
+**Contexto ampliado para agentes IA**
+Este hito materializa uno de los principios rectores del esquema: **validación fuerte antes de ejecutar**. La herramienta no debe descubrir errores tarde, cuando ya haya compilado o invocado ytdl-sub, sino lo antes posible y con mensajes claros. Aquí se fijan reglas estructurales, relaciones cruzadas y restricciones semánticas. Este bloque es uno de los más sensibles, porque de su robustez depende la confianza del sistema y la calidad de la UX futura, aunque la UX visual todavía no exista.
+
+**Prerrequisitos:** hito 4.
+
+**Checklist:**
+
+* Validar presencia de ficheros obligatorios.
+* Validar claves obligatorias y formatos.
+* Validar perfiles y extensibilidad.
+* Validar `element_type`.
+* Validar relación suscripción ↔ perfil.
+* Validar tipos de medio y campos dependientes.
+* Validar referencias cruzadas.
+* Emitir errores accionables.
+* Preparar resultados reutilizables por caché posterior.
+
+**Plan de pruebas:**
+
+**Pruebas de sistema**
+
+* Verificar que una configuración inválida nunca pasa a ejecución. 
+
+**Unitarias**
+
+* Tests por regla de validación.
+* Tests de mensajes de error específicos.
+* Tests de campos incompatibles.
+
+**Integración**
+
+* Verificar validación cruzada entre múltiples ficheros y entidades.
+
+**Funcionales**
+
+* Aceptar combinaciones válidas.
+* Rechazar combinaciones ilegales o incompletas.
+
+**E2E**
+
+* Flujo: cargar configuración inválida y confirmar corte antes de compilación o ejecución.
+
+**Prueba de regresión**
+
+* Ejecutar el corpus de configuraciones problemáticas históricas y comprobar que todas siguen fallando donde deben.
+
+---
+
+# Hito 6 — Sistema de herencia y resolución perfil → suscripción
+
+**Objetivo:** obtener configuración efectiva real antes de traducir nada.
+
+**Contexto ampliado para agentes IA**
+El documento separa claramente niveles: perfil, suscripción, postprocesado, configuración general y conectividad con ytdl-sub. En la práctica eso exige un resolvedor que combine capas y produzca una configuración efectiva determinista. Este hito es el puente entre el mundo declarativo y el mundo operativo: aquí se decide qué valores quedan finalmente activos, de dónde vienen y con qué precedencia. También se prepara la base para caché y deduplicación, porque sin una firma estable de la configuración efectiva no puede haber reutilización fiable.
+
+**Prerrequisitos:** hito 5.
+
+**Checklist:**
+
+* Implementar herencia desde perfil a suscripción.
+* Resolver valores por defecto.
+* Aplicar normalización interna.
+* Generar configuración efectiva determinista.
+* Mantener trazabilidad del origen de cada valor.
+* Preparar firma estable de configuración efectiva.
+
+**Plan de pruebas:**
+
+**Pruebas de sistema**
+
+* Verificar que el sistema puede resolver configuraciones efectivas reproducibles desde múltiples fuentes.
+
+**Unitarias**
+
+* Tests de merge.
+* Tests de precedencia.
+* Tests de normalización.
+* Tests de firma/hash de configuración efectiva.
+
+**Integración**
+
+* Verificar la interacción parser + validador + resolvedor.
+
+**Funcionales**
+
+* Perfil base + suscripción simple.
+* Perfil base + suscripción con cambios locales.
+* Configuraciones equivalentes que deben producir el mismo resultado efectivo.
+
+**E2E**
+
+* Flujo: YAMLs → parseo → validación → configuración efectiva final.
+
+**Prueba de regresión**
+
+* Recalcular configuraciones efectivas de fixtures canónicos y comparar snapshot estable de salida.
+
+---
+
+# Hito 7 — Sistema de overrides controlados
+
+**Objetivo:** permitir flexibilidad sin romper la semántica del perfil.
+
+**Contexto ampliado para agentes IA**
+Los overrides son un punto delicado: añaden potencia, pero también pueden destruir la coherencia del modelo si se dejan libres. El documento propone control explícito con políticas como `allowed`, `restricted` y `forbidden`, y da ejemplos concretos. Por tanto, este hito debe blindar el sistema para que las suscripciones puedan personalizarse sin desnaturalizar el perfil asignado. Conceptualmente, aquí se protege la semántica de negocio frente a configuraciones oportunistas o erróneas.
+
+**Prerrequisitos:** hito 6.
+
+**Checklist:**
+
+* Implementar políticas `allowed`, `restricted`, `forbidden`.
+* Validar overrides ilegales.
+* Soportar restricciones por tipo de campo.
+* Registrar motivo de rechazo.
+* Garantizar bloqueos explícitos donde el perfil lo requiera.
+* Integrar overrides en la configuración efectiva.
+
+**Plan de pruebas:**
+
+**Pruebas de sistema**
+
+* Verificar que los overrides nunca rompen la coherencia global del perfil. 
+
+**Unitarias**
+
+* Tests de política permitida.
+* Tests de política restringida.
+* Tests de política prohibida.
+* Tests de mensajes de rechazo.
+
+**Integración**
+
+* Resolver herencia + override + validación final.
+* Verificar trazabilidad del valor final y del motivo de rechazo si aplica.
+
+**Funcionales**
+
+* Override permitido exitoso.
+* Override restringido aceptado solo bajo condición.
+* Override prohibido rechazado.
+
+**E2E**
+
+* Flujo: YAML con override → parseo → validación → resolución efectiva → aceptación o rechazo correcto.
+
+**Prueba de regresión**
+
+* Ejecutar la matriz canónica de overrides válidos e inválidos y verificar mismo comportamiento en cada release interna.
+
+---
+
+# Hito 8 — Modelado de postprocesados
+
+**Objetivo:** tratar los postprocesados como parte formal del core.
+
+**Contexto ampliado para agentes IA**
+El documento no trata el postprocesado como un extra, sino como parte del comportamiento estructural del sistema. Eso obliga a modelarlo formalmente: herencia, activación, compatibilidad, parámetros y relación con perfiles y suscripciones. Aquí el objetivo no es ejecutar todavía todos los efectos finales, sino garantizar que el sistema sabe describirlos y resolverlos como parte de su configuración efectiva. Esto prepara la compilación e integración posterior.
+
+**Prerrequisitos:** hito 7.
+
+**Checklist:**
+
+* Definir estructura interna de postprocesados.
+* Implementar soporte para `metadata_text`, `metadata_images`, `embed_metadata`, `export_info_json`, `max_duration`.
+* Permitir herencia desde perfil y ajuste por suscripción.
+* Validar incompatibilidades y requisitos previos.
+* Dejar preparado el sistema para ampliaciones.
+
+**Plan de pruebas:**
+
+**Pruebas de sistema**
+
+* Verificar que los postprocesados forman parte del flujo funcional y no quedan como lógica ad hoc.
+
+**Unitarias**
+
+* Tests por tipo de postprocesado.
+* Tests de compatibilidad entre postprocesados.
+* Tests de parámetros obligatorios y opcionales.
+
+**Integración**
+
+* Verificar interacción entre perfil, suscripción, override y postprocesados.
+
+**Funcionales**
+
+* Resolver postprocesados heredados.
+* Resolver postprocesados específicos de suscripción.
+* Detectar combinaciones incompatibles.
+
+**E2E**
+
+* Flujo: definición en YAML → resolución interna → artefacto listo para compilación con postprocesado incluido.
+
+**Prueba de regresión**
+
+* Ejecutar configuraciones patrón con cada postprocesado soportado y comparar estructura efectiva resultante.
+
+---
+
+# Hito 9 — Contrato de integración con ytdl-sub
+
+**Objetivo:** convertir `ytdl-sub-conf.yaml` en la fuente de verdad del acoplamiento.
+
+**Contexto ampliado para agentes IA**
+Este hito es la formalización del acoplamiento con la capa inferior. El documento insiste en que Zenoytdl **no reemplaza** ytdl-sub: lo encapsula y lo usa como motor. Eso significa que la traducción no puede quedar dispersa en código arbitrario, sino centralizada en un contrato explícito. `ytdl-sub-conf.yaml` debe gobernar mappings, compatibilidad, reglas de traducción, validación y modo de invocación. Si este contrato queda bien resuelto, el sistema será adaptable y mantenible; si queda mal resuelto, la integración se volverá frágil y opaca.
+
+**Prerrequisitos:** hito 8.
+
+**Checklist:**
+
+* Implementar lectura y validación específica de `ytdl-sub-conf.yaml`.
+* Soportar `preset_mapping`.
+* Soportar `field_mapping`.
+* Soportar `translation_rules`.
+* Soportar `compatibility`, `fallback_policy`, `validation`, `invocation`.
+* Incorporar versionado de integración.
+* Detectar configuraciones Zenoytdl sin traducción válida.
+* Mantener este contrato desacoplado del motor de ejecución.
+
+**Plan de pruebas:**
+
+**Pruebas de sistema**
+
+* Verificar que toda integración con la capa inferior pasa por el contrato específico. 
+
+**Unitarias**
+
+* Tests por bloque del fichero de conectividad.
+* Tests de mappings y reglas de traducción.
+* Tests de fallback y compatibilidad.
+
+**Integración**
+
+* Verificar relación entre configuración efectiva Zenoytdl y mapeo declarativo hacia ytdl-sub.
+
+**Funcionales**
+
+* Perfil con mapeo completo.
+* Perfil sin mapeo obligatorio.
+* Campo soportado y no soportado.
+* Traducción parcial con abort esperado.
+
+**E2E**
+
+* Flujo: configuración efectiva + `ytdl-sub-conf.yaml` → traducción preparada y validada.
+
+**Prueba de regresión**
+
+* Ejecutar una batería fija de perfiles y campos contra el contrato y comprobar que los mappings esperados no se alteran.
+
+---
+
+# Hito 10 — Traducción a modelo ytdl-sub
+
+**Objetivo:** transformar la configuración efectiva Zenoytdl en configuración ejecutable por la capa inferior.
+
+**Contexto ampliado para agentes IA**
+Una cosa es tener un contrato de integración; otra es aplicar ese contrato para traducir configuraciones reales. Este hito implementa el traductor propiamente dicho. Debe transformar una semántica de alto nivel, más rica y abstracta, en una estructura compatible con ytdl-sub, sin perder coherencia ni dejar estados ambiguos. El esquema ASCII separa claramente el modelo interno de la validación/compilación/traducción a ytdl-sub, y este hito materializa esa frontera.
+
+**Prerrequisitos:** hito 9.
+
+**Checklist:**
+
+* Traducir perfiles y suscripciones a estructuras ytdl-sub.
+* Aplicar normalizaciones y reglas declaradas.
+* Resolver preset base y preset puente.
+* Gestionar campos `internal_only`.
+* Tratar fallbacks.
+* Generar representación compilable y reproducible.
+* Detectar traducciones ambiguas o parciales.
+
+**Plan de pruebas:**
+
+**Pruebas de sistema**
+
+* Verificar que toda configuración efectiva Zenoytdl se traduce o se rechaza explícitamente, nunca queda en estado gris.
+
+**Unitarias**
+
+* Tests de traductor por campo.
+* Tests de preset mapping.
+* Tests de exclusión de campos internos.
+
+**Integración**
+
+* Resolver configuración efectiva y pasarla al traductor usando el contrato del hito 9.
+
+**Funcionales**
+
+* Traducción correcta de varios perfiles tipo.
+* Rechazo controlado de campos imposibles de traducir.
+
+**E2E**
+
+* Flujo: YAMLs → modelo interno → configuración efectiva → traducción a ytdl-sub.
+
+**Prueba de regresión**
+
+* Comparar salida traducida de fixtures canónicos con snapshots aprobados.
+
+---
+
+# Hito 11 — Compilación de artefactos ejecutables
+
+**Objetivo:** producir artefactos finales consumibles por ytdl-sub.
+
+**Contexto ampliado para agentes IA**
+Tras traducir, hace falta una fase estable y reproducible de compilación. El documento habla de artefactos compilados para ytdl-sub y de un directorio específico para ellos. Eso significa que Zenoytdl no debe ejecutar “sobre la marcha” sin rastro, sino producir una salida materializable, inspeccionable y trazable. Este hito fija el contrato entre la capa de traducción y la de ejecución.
+
+**Prerrequisitos:** hito 10.
+
+**Checklist:**
+
+* Generar YAML o artefactos compilados finales.
+* Definir layout de salida de compilación.
+* Gestionar limpieza o reutilización de compilados anteriores.
+* Asociar artefactos a firma/configuración efectiva.
+* Validar que el compilado es invocable.
+* Preparar artefactos por suscripción o unidad lógica.
+
+**Plan de pruebas:**
+
+**Pruebas de sistema**
+
+* Verificar generación consistente de artefactos compilados como etapa separada del modelo interno. 
+
+**Unitarias**
+
+* Tests del compilador de artefactos.
+* Tests de naming y layout.
+* Tests de firma asociada.
+
+**Integración**
+
+* Integrar traductor + compilador.
+* Verificar que el compilado conserva la información necesaria para ejecución.
+
+**Funcionales**
+
+* Compilar una suscripción individual.
+* Compilar múltiples suscripciones.
+* Recompilar sin cambios y obtener resultado estable.
+
+**E2E**
+
+* Flujo: config válida → traducción → compilado en disco listo para ser consumido.
+
+**Prueba de regresión**
+
+* Regenerar artefactos de referencia y comparar estructura, contenido esperado y estabilidad de nombres/firma.
+
+---
+
+# Hito 12 — Módulo de ejecución controlada de ytdl-sub
+
+**Objetivo:** invocar ytdl-sub como motor subyacente de forma controlada y trazable.
+
+**Contexto ampliado para agentes IA**
+Aquí Zenoytdl deja de ser solo “modelado y compilación” y pasa a operar de verdad. El documento especifica invocación por subprocess y deja claro que ytdl-sub es motor subyacente, no interfaz. Este hito implementa una ejecución encapsulada, trazable y gobernada por el core. Debe ser robusta ante errores, tiempos de espera, logs y clasificación de fallos. Además, prepara el terreno para colas, estado y API.
+
+**Prerrequisitos:** hito 11.
+
+**Checklist:**
+
+* Implementar invocación por subprocess.
+* Resolver binarios y parámetros globales.
+* Soportar entorno, flags, timeout y temporales.
+* Capturar stdout/stderr y exit codes.
+* Asociar ejecución a unidad de trabajo.
+* Diferenciar errores recuperables y no recuperables.
+* Encapsular complejidad de ytdl-sub.
+
+**Plan de pruebas:**
+
+**Pruebas de sistema**
+
+* Verificar que Zenoytdl usa ytdl-sub como motor y no como interfaz directa. 
+
+**Unitarias**
+
+* Tests de construcción de comando.
+* Tests de clasificación de errores.
+* Tests de parsing de resultados de ejecución.
+
+**Integración**
+
+* Integrar compilador + ejecutor.
+* Verificar consumo correcto del artefacto compilado.
+
+**Funcionales**
+
+* Ejecutar un caso válido controlado.
+* Ejecutar un caso fallido controlado.
+* Verificar captura de logs y códigos de salida.
+
+**E2E**
+
+* Flujo completo corto: configuración válida → compilación → invocación real o simulada de ytdl-sub → resultado trazado.
+
+**Prueba de regresión**
+
+* Ejecutar un set fijo de jobs de ejemplo y comprobar:
+
+  * invocación correcta,
+  * captura de salida,
+  * clasificación estable de errores.
+
+---
+
+# Hito 13 — Persistencia y estado operativo en SQLite
+
+**Objetivo:** convertir la base de datos en la fuente de verdad operativa.
+
+**Contexto ampliado para agentes IA**
+El esquema lo formula como principio rector: la persistencia debe ser la fuente de verdad operativa. Este hito fija que el sistema ya no dependerá solo del runtime actual o de memoria temporal, sino de un estado consolidado. Aquí se modelan ejecuciones, elementos conocidos, resultados, purgas, descargas, timestamps y firmas de configuración. Todo lo que venga después —anti-redescarga, colas, caché, API— necesita este cimiento.
+
+**Prerrequisitos:** hito 12.
+
+**Checklist:**
+
+* Diseñar esquema SQLite inicial.
+* Persistir suscripciones, elementos conocidos y resultados de ejecución.
+* Registrar descargas, sincronizaciones, descartes y purgas.
+* Registrar firma de configuración aplicada.
+* Registrar estado de postprocesado.
+* Registrar métricas y timestamps.
+* Dejar soporte base para colas y caché.
+
+**Plan de pruebas:**
+
+**Pruebas de sistema**
+
+* Verificar que el estado persistido pasa a ser la fuente de verdad operativa. 
+
+**Unitarias**
+
+* Tests de repositorios y queries.
+* Tests de schema y migraciones iniciales.
+* Tests de serialización de estado.
+
+**Integración**
+
+* Integrar ejecutor + persistencia.
+* Verificar escritura y lectura consistente del estado resultante.
+
+**Funcionales**
+
+* Registrar ejecución exitosa.
+* Registrar fallo.
+* Consultar estado de suscripción y elementos.
+
+**E2E**
+
+* Flujo: ejecutar una suscripción y confirmar huella persistida completa en SQLite.
+
+**Prueba de regresión**
+
+* Repetir ejecuciones de referencia y comprobar que la base queda en el estado esperado exacto.
+
+---
+
+# Hito 14 — Anti-redescarga, historial y trazabilidad
+
+**Objetivo:** usar el estado para evitar repeticiones indebidas y poder explicar qué pasó.
+
+**Contexto ampliado para agentes IA**
+Una vez existe estado persistente, ya es posible tomar decisiones operativas inteligentes. Este hito aprovecha esa base para que el sistema no reprocesse indefinidamente el mismo contenido y para que todas las decisiones relevantes queden trazadas. Este bloque es muy importante para que Zenoytdl se perciba como sistema maduro: no solo hace cosas, sino que sabe qué hizo, por qué y qué debe evitar repetir.
+
+**Prerrequisitos:** hito 13.
+
+**Checklist:**
+
+* Implementar detección de elementos ya procesados.
+* Evitar redescargas infinitas.
+* Mantener historial operativo consultable.
+* Registrar causas de descarte.
+* Registrar causas de fallo.
+* Garantizar trazabilidad en cada acción importante.
+* Preparar base para inspección por API.
+
+**Plan de pruebas:**
+
+**Pruebas de sistema**
+
+* Verificar prevención real de redescargas indebidas. 
+
+**Unitarias**
+
+* Tests de detección de duplicados.
+* Tests de reglas de historial.
+* Tests de causa de descarte y fallo.
+
+**Integración**
+
+* Integrar persistencia + lógica anti-redescarga + ejecución.
+
+**Funcionales**
+
+* Ejecutar por primera vez un elemento.
+* Reintentar el mismo elemento y comprobar descarte correcto.
+* Consultar historial y motivos.
+
+**E2E**
+
+* Flujo: primera ejecución exitosa + segunda ejecución del mismo input → no redescarga y queda trazado.
+
+**Prueba de regresión**
+
+* Ejecutar el escenario de duplicado canónico y verificar que nunca vuelve a procesarse como nuevo.
+
+---
+
+# Hito 15 — Retención, purga y limpieza
+
+**Objetivo:** aplicar políticas de conservación reales sobre artefactos y estado.
+
+**Contexto ampliado para agentes IA**
+Este bloque materializa la parte de “políticas de retención” que el documento considera parte central de la semántica del sistema. No se trata solo de borrar archivos antiguos, sino de aplicar reglas coherentes según publicación, límites de `max_items`, consistencia entre disco y base de datos, y trazabilidad de purgas. Este hito aporta sostenibilidad operativa y prepara el terreno para escenarios de larga duración.
+
+**Prerrequisitos:** hito 14.
+
+**Checklist:**
+
+* Implementar `max_items`.
+* Aplicar criterio prioritario por fecha de publicación.
+* Gestionar fallback si no hay fecha de publicación.
+* Purgar elementos más antiguos cuando entra contenido nuevo.
+* Registrar qué se purga y por qué.
+* Mantener coherencia entre filesystem y estado persistido.
+* Asegurar funcionamiento por perfil y suscripción.
+
+**Plan de pruebas:**
+
+**Pruebas de sistema**
+
+* Verificar que la política de retención y purga se aplica como parte del comportamiento central del sistema.
+
+**Unitarias**
+
+* Tests de selección de candidatos a purga.
+* Tests de orden por fecha.
+* Tests de fallback por ausencia de fecha.
+
+**Integración**
+
+* Integrar persistencia + filesystem + política de purga.
+
+**Funcionales**
+
+* Insertar más de `max_items`.
+* Verificar que se eliminan los más antiguos.
+* Verificar consistencia DB/disco tras purga.
+
+**E2E**
+
+* Flujo: múltiples elementos procesados + entrada de nuevo contenido → purga automática correcta y trazada.
+
+**Prueba de regresión**
+
+* Reproducir dataset fijo con sobrecapacidad y verificar exactamente qué elementos sobreviven y cuáles se purgan.
+
+---
+
+# Hito 16 — Sistema de caché
+
+**Objetivo:** reducir recomputaciones y mejorar fluidez operativa desde el core.
+
+**Contexto ampliado para agentes IA**
+El documento es muy explícito: la caché no es un accesorio, sino parte central de la fluidez percibida. Aquí se introducen caches de validación, traducción, compilación y metadatos, con invalidación coherente. Este hito existe para que la herramienta responda de forma ágil sin sacrificar corrección. Para agentes IA, la regla clave es esta: la caché acelera, pero nunca puede convertirse en fuente de verdad por encima del estado o la configuración efectiva.
+
+**Prerrequisitos:** hito 15.
+
+**Checklist:**
+
+* Implementar caché de configuración compilada.
+* Implementar caché de validación.
+* Implementar caché de traducción/mapeo.
+* Implementar caché de metadatos o resolución.
+* Implementar caché operativa de estado reciente.
+* Soportar invalidación por cambio de fichero, hash, `ytdl-sub-conf`, TTL, limpieza manual y error.
+* Registrar métricas hit/miss.
+* Garantizar que la corrección prevalece sobre la velocidad.
+
+**Plan de pruebas:**
+
+**Pruebas de sistema**
+
+* Verificar que la caché mejora fluidez sin sacrificar corrección.
+
+**Unitarias**
+
+* Tests de hit/miss.
+* Tests de TTL.
+* Tests de invalidación por hash, config, error y purge manual.
+
+**Integración**
+
+* Integrar caché con validación, traducción y compilación.
+
+**Funcionales**
+
+* Repetir operación idéntica y verificar reutilización.
+* Cambiar config y verificar invalidación.
+* Forzar error y verificar invalidación si procede.
+
+**E2E**
+
+* Flujo: ejecutar dos veces mismo caso y comprobar menor recomputación con mismo resultado final.
+
+**Prueba de regresión**
+
+* Ejecutar la batería de escenarios de caché y confirmar estabilidad de:
+
+  * hits esperados,
+  * invalidaciones esperadas,
+  * igualdad funcional del resultado.
+
+---
+
+# Hito 17 — Gestor de colas: modelo y persistencia
+
+**Objetivo:** introducir un modelo explícito de trabajo.
+
+**Contexto ampliado para agentes IA**
+Al igual que la caché, el documento considera la cola parte esencial del comportamiento operativo. Este primer hito de colas define qué es un job, qué tipos existen, cómo se priorizan y cómo se persisten. No es todavía el momento de los workers completos, pero sí de dejar modelado el universo de trabajo. Esto ordena el sistema y evita que ejecución, validación y mantenimiento queden mezclados en llamadas ad hoc.
+
+**Prerrequisitos:** hito 16.
+
+**Checklist:**
+
+* Definir entidad `job`.
+* Soportar clases de cola: validación, compilación, sync, descarga, postprocesado, mantenimiento.
+* Soportar prioridades.
+* Soportar estados: queued, scheduled, running, waiting, completed, failed, retry_pending, cancelled, dead_letter.
+* Persistir trabajos en SQLite.
+* Firmar trabajos para deduplicación.
+* Asociar trabajos a suscripción, perfil o recurso.
+
+**Plan de pruebas:**
+
+**Pruebas de sistema**
+
+* Verificar que la cola existe como subsistema central y persistido, no como cola efímera en memoria.
+
+**Unitarias**
+
+* Tests de entidad job.
+* Tests de transición de estados.
+* Tests de prioridad y firma de deduplicación.
+
+**Integración**
+
+* Integrar cola con SQLite y con el modelo de suscripción/trabajo.
+
+**Funcionales**
+
+* Crear trabajos de varios tipos.
+* Persistirlos y recuperarlos.
+* Ordenarlos por prioridad.
+
+**E2E**
+
+* Flujo: alta de varios trabajos y consulta del estado de la cola completa.
+
+**Prueba de regresión**
+
+* Crear una cola canónica con múltiples jobs y verificar orden, estado inicial, persistencia y firma esperada.
+
+---
+
+# Hito 18 — Gestor de colas: ejecución, reintentos y concurrencia
+
+**Objetivo:** hacer que la cola no sea solo una tabla, sino un sistema operativo real del core.
+
+**Contexto ampliado para agentes IA**
+Este hito convierte el modelo de trabajos en una maquinaria operativa. Aquí aparecen workers, deduplicación efectiva, backoff, dead-letter y reglas de concurrencia. El documento subraya que la cola aporta orden, control y priorización, y que junto con la caché mejora la percepción de rapidez y robustez. Por tanto, este bloque es esencial para que Zenoytdl funcione bien bajo carga, no solo en demos simples.
+
+**Prerrequisitos:** hito 17.
+
+**Checklist:**
+
+* Implementar workers por clase lógica.
+* Soportar concurrencia controlada.
+* Implementar deduplicación de trabajos equivalentes.
+* Implementar reintentos con backoff.
+* Implementar clasificación de errores recuperables/no recuperables.
+* Implementar dead-letter.
+* Integrar cola con ejecución, persistencia y caché.
+* Garantizar no correr sincronizaciones incompatibles en paralelo.
+
+**Plan de pruebas:**
+
+**Pruebas de sistema**
+
+* Verificar que la cola aporta orden, priorización, aislamiento y robustez operativa. 
+
+**Unitarias**
+
+* Tests de scheduler.
+* Tests de backoff.
+* Tests de deduplicación.
+* Tests de dead-letter.
+* Tests de reglas de concurrencia.
+
+**Integración**
+
+* Integrar workers con ejecutor, caché y persistencia.
+* Verificar transición correcta de estado bajo éxito y fallo.
+
+**Funcionales**
+
+* Ejecutar varios jobs con distintas prioridades.
+* Forzar fallos recuperables y no recuperables.
+* Verificar reintentos y dead-letter.
+
+**E2E**
+
+* Flujo: cola poblada → workers → ejecuciones reales/controladas → estados finales correctos.
+
+**Prueba de regresión**
+
+* Ejecutar un escenario mixto de éxito, retry, deduplicación y dead-letter, y verificar resultado final exacto.
+
+---
+
+# Hito 19 — API propia del core
+
+**Objetivo:** exponer una frontera estable y programable para operar Zenoytdl.
+
+**Contexto ampliado para agentes IA**
+La API es una consecuencia natural del enfoque del documento: Zenoytdl debe ofrecer una interfaz programática consistente y servir de base a futuras interfaces desacopladas. Por eso la API no es un añadido ornamental, sino la frontera formal del núcleo. Aquí se exponen operaciones de consulta, validación, resolución, control de cola, sincronización e historial. Todo lo visual queda fuera; lo que se construye aquí es una interfaz estable y automatizable.
+
+**Prerrequisitos:** hito 18.
+
+**Checklist:**
+
+* Diseñar contrato inicial de API.
+* Exponer listado y consulta de perfiles.
+* Exponer listado y consulta de suscripciones.
+* Exponer validación de configuración.
+* Exponer resolución de configuración efectiva.
+* Exponer consulta de cola.
+* Exponer disparo de sincronización.
+* Exponer historial, purgas y caché.
+* Exponer reintento de trabajos fallidos.
+* Mantener desacoplamiento respecto a TUI y GUI futura.
+
+**Plan de pruebas:**
+
+**Pruebas de sistema**
+
+* Verificar que existe una interfaz programática consistente como parte central del sistema. 
+
+**Unitarias**
+
+* Tests de handlers/controladores.
+* Tests de serialización de respuesta.
+* Tests de validación de payloads.
+
+**Integración**
+
+* Integrar API con dominio, persistencia, cola y caché.
+
+**Funcionales**
+
+* Consultar perfiles.
+* Consultar suscripciones.
+* Lanzar sincronización.
+* Consultar historial y cola.
+* Reintentar trabajos fallidos.
+
+**E2E**
+
+* Flujo: cliente API → validación/cola/ejecución/estado → respuesta correcta.
+
+**Prueba de regresión**
+
+* Ejecutar una colección fija de llamadas API y verificar contrato, códigos, payloads y efectos laterales esperados.
+
+---
+
+# Hito 20 — Suite de pruebas integral
+
+**Objetivo:** demostrar que el sistema no solo existe, sino que funciona con garantías.
+
+**Contexto ampliado para agentes IA**
+Este hito consolida todo el esfuerzo anterior en una red de seguridad técnica. El documento pide explícitamente una test suite completa antes de dar prioridad práctica a la UX. Aquí se integran todas las baterías: dominio, parseo, validación, traducción, compilación, persistencia, anti-redescarga, retención, caché, colas y API. Este hito no introduce nueva semántica, pero sí convierte el proyecto en una base confiable para evolución posterior.
+
+**Prerrequisitos:** hito 19.
+
+**Checklist:**
+
+* Tests unitarios de dominio.
+* Tests de parseo y validación.
+* Tests de herencia y overrides.
+* Tests de traducción y compilación.
+* Tests de persistencia y estado.
+* Tests de anti-redescarga.
+* Tests de retención y purga.
+* Tests de caché e invalidación.
+* Tests de colas, reintentos y deduplicación.
+* Tests de API.
+* Tests end-to-end con ytdl-sub real o entorno controlado.
+
+**Plan de pruebas:**
+
+**Pruebas de sistema**
+
+* Verificar cobertura transversal del core completo.
+* Verificar estabilidad del sistema base antes de considerar UX avanzada.
+
+**Unitarias**
+
+* Consolidar toda la batería unitaria por módulo.
+* Medir cobertura de ramas críticas.
+
+**Integración**
+
+* Consolidar batería de integración entre módulos mayores.
+
+**Funcionales**
+
+* Validar todos los casos de uso principales del núcleo.
+
+**E2E**
+
+* Ejecutar varios recorridos completos reales o semirrealistas de principio a fin.
+
+**Prueba de regresión**
+
+* Ejecutar la suite de regresión acumulada completa de hitos 0–20 y exigir resultado verde.
+
+---
+
+# Hito 21 — Aplicación completa, endurecida y probada
+
+**Objetivo:** cierre del proyecto core con el sistema completo y listo para servir de base a UX futura.
+
+**Contexto ampliado para agentes IA**
+Este hito es el cierre funcional del núcleo antes del empaquetado final. Aquí ya no se trata de abrir nuevos bloques, sino de endurecer el conjunto: revisar arquitectura, afinar rendimiento, asegurar compatibilidad con ytdl-sub, pulir errores y dejar documentación técnica suficiente. Es el momento de convertir un conjunto de módulos correctos en un core realmente maduro. La UX sigue fuera, pero este hito prepara precisamente el terreno para que esa UX futura pueda construirse sobre una base estable.
+
+**Prerrequisitos:** hito 20.
+
+**Checklist:**
+
+* Revisar coherencia global de arquitectura.
+* Eliminar deuda técnica crítica.
+* Afinar rendimiento base y estabilidad.
+* Revisar mensajes de error y ergonomía operativa.
+* Verificar compatibilidad consolidada con ytdl-sub.
+* Verificar persistencia, caché, colas y API funcionando conjuntamente.
+* Completar documentación técnica y operativa.
+* Preparar ejemplos finales de configuración.
+* Cerrar criterios de “core completo”.
+* Dejar explícito que a partir de aquí puede comenzar el proyecto separado de TUI/GUI web.
+
+**Plan de pruebas:**
+
+**Pruebas de sistema**
+
+* Verificar el sistema completo como core desacoplado, robusto y listo para servir de base a interfaces futuras.
+
+**Unitarias**
+
+* Reejecución total de unitarias críticas.
+* Refuerzo sobre módulos con mayor complejidad o mayor historial de fallos.
+
+**Integración**
+
+* Verificar todos los acoplamientos mayores: config → validación → traducción → compilación → ejecución → persistencia → caché → colas → API.
+
+**Funcionales**
+
+* Validar el catálogo completo de operaciones del core.
+* Validar recuperación ante errores.
+* Validar estabilidad operativa con datasets medianos.
+
+**E2E**
+
+* Ejecutar recorridos completos representativos:
+
+  * configuración nueva,
+  * sincronización,
+  * descarga/procesado,
+  * no redescarga,
+  * purga,
+  * reintento de fallo,
+  * consulta por API.
+
+**Prueba de regresión**
+
+* Ejecutar la regresión acumulada completa de hitos 0–21.
+* El criterio de cierre del proyecto es:
+
+  * todas las regresiones históricas en verde,
+  * todos los tests previstos en verde,
+  * ningún fallo crítico abierto en core.
+
+---
+
+# Hito 22 — Dockerización del core
+
+**Objetivo:** empaquetar el core ya estabilizado como imagen Docker operable, sin alterar su contrato funcional ni su arquitectura principal.
+
+**Contexto ampliado para agentes IA**
+Este hito transforma el core estable en un artefacto desplegable real. No debe rediseñar el sistema, sino empaquetarlo respetando su arquitectura: configuración externa, volúmenes persistentes, binarios de sistema, ytdl-sub, SQLite, caché, artefactos compilados y logs. El objetivo es que el contenedor sea una forma oficial de ejecutar Zenoytdl, no un experimento paralelo. Este hito conecta directamente con las decisiones tomadas al principio en el runtime objetivo.
+
+**Prerrequisitos:** hito 21.
+
+**Checklist:**
+
+* Crear `Dockerfile` oficial del proyecto.
+* Elegir estrategia de build:
+
+  * imagen simple
+  * multi-stage si aporta valor
+* Instalar dentro de la imagen:
+
+  * runtime de la app
+  * `ffmpeg`
+  * `ffprobe`
+  * `ytdl-sub`
+  * dependencias del sistema necesarias
+* Configurar entrypoint o command principal.
+* Hacer compatible el contenedor con el modelo de paths del documento (`/data/...`).
+* Garantizar que SQLite, caché y compilados viven en volumen persistente.
+* Definir variables de entorno soportadas.
+* Preparar `docker-compose.yml` o ejemplo equivalente de ejecución local.
+* Definir healthcheck del contenedor.
+* Garantizar parada limpia del proceso principal.
+* Garantizar que logs útiles salen por stdout/stderr.
+* Documentar bind mounts y volúmenes necesarios.
+* Documentar límites conocidos del contenedor.
+
+**Plan de pruebas:**
+
+**Pruebas de sistema**
+
+* Verificar que el mismo core funcional sigue comportándose igual dentro y fuera del contenedor.
+
+**Unitarias**
+
+* Tests de helpers de configuración específica de entorno container.
+* Tests de resolución de env vars y paths montados.
+
+**Integración**
+
+* Integrar imagen + volúmenes + entrypoint + runtime del core.
+* Verificar integración real con binarios incluidos en la imagen.
+
+**Funcionales**
+
+* Arrancar el contenedor.
+* Cargar configuración montada.
+* Ejecutar validación.
+* Ejecutar compilación.
+* Ejecutar operación simple del core desde dentro del contenedor.
+
+**E2E**
+
+* Flujo: `docker build` → `docker run`/compose → carga config → ejecución real/controlada → persistencia en volumen → logs visibles.
+
+**Prueba de regresión**
+
+* Ejecutar una batería fija dentro del contenedor y comprobar que:
+
+  * el core responde,
+  * los binarios se resuelven,
+  * los datos persisten,
+  * el comportamiento funcional coincide con el de la versión no containerizada.
+
+---
+
+## Regla operativa de regresión acumulativa
+
+Se mantiene exactamente la misma idea que ya habías aceptado, ahora con numeración secuencial completa:
+
+* al terminar el **Hito 0**, se ejecuta regresión del **Hito 0**
+* al terminar el **Hito 1**, se ejecutan regresiones de **Hito 0 + Hito 1**
+* al terminar el **Hito 2**, se ejecutan regresiones de **Hito 0 + Hito 1 + Hito 2**
+* …
+* al terminar el **Hito 22**, se ejecutan regresiones acumuladas de **Hito 0 a Hito 22**
+
+La idea es que **ningún hito nuevo da por buena su implementación sin volver a demostrar que no ha roto nada ya consolidado**, lo cual es totalmente coherente con la prioridad que el documento da a la robustez de validación, la trazabilidad, la fluidez y la estabilidad del core.
+
+## Observación importante para agentes IA
+
+Aunque el roadmap está muy detallado, el propio documento insiste en que **no es un corsé absoluto**, sino una guía muy aproximada pero seria. Eso significa que un agente IA que implemente estos hitos debe respetar la dirección arquitectónica y los principios rectores, pero puede ajustar detalles concretos si la implementación real, la validación o las pruebas lo aconsejan. Lo importante no es clavar al milímetro cada nombre interno, sino preservar estas propiedades: separación de responsabilidades, validación fuerte, persistencia como fuente de verdad, integración formal con ytdl-sub, caché y cola como partes centrales del comportamiento operativo, API propia y UX aplazada hasta que el núcleo esté terminado y probado.
