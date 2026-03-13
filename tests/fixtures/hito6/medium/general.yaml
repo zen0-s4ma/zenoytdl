@@ -1,0 +1,7 @@
+workspace: /srv/zeno
+library_dir: /srv/zeno/library
+environment: staging
+default_profile: audio-base
+log_level: warning
+execution:
+  dry_run: true

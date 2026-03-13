@@ -1,0 +1,9 @@
+profiles:
+  - name: video-main
+    element_type: profile
+    media_type: video
+    quality_profile: hq
+  - name: shorts-main
+    element_type: profile
+    media_type: shorts
+    quality_profile: compact

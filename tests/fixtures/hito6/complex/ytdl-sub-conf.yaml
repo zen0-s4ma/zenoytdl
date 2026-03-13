@@ -1,0 +1,5 @@
+integration:
+  min_version: "2024.01"
+profile_preset_map:
+  hq: preset-hq
+  compact: preset-compact

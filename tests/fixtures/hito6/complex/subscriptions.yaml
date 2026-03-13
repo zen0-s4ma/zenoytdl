@@ -1,0 +1,17 @@
+subscriptions:
+  - name: docs-main
+    element_type: subscription
+    profile: video-main
+    media_type: video
+    video_container: mkv
+    sources:
+      - playlist_docs
+  - name: shorts-fast
+    element_type: subscription
+    profile: shorts-main
+    media_type: shorts
+    max_duration_seconds: 120
+    schedule:
+      mode: manual
+    sources:
+      - playlist_shorts

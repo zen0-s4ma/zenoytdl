@@ -1,0 +1,6 @@
+subscriptions:
+  - name: alpha
+    element_type: subscription
+    profile: base
+    sources:
+      - channel_alpha
