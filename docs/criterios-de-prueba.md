@@ -95,3 +95,9 @@ Criterios de aceptación de estas pruebas:
 - Integración: `tests/integration/test_postprocessing_integration.py`.
 - E2E: `tests/e2e/test_postprocessing_flow.py`.
 - Regresión: `tests/regression/test_hito8_postprocessing_regression.py`.
+
+## Cobertura mínima específica del contrato de integración con ytdl-sub (Hito 9)
+- Unitarias: `tests/unit/test_ytdl_sub_contract.py`.
+- Integración: `tests/integration/test_ytdl_sub_contract_integration.py`.
+- E2E: `tests/e2e/test_ytdl_sub_contract_flow.py`.
+- Regresión: `tests/regression/test_hito9_ytdl_sub_contract_regression.py`.
