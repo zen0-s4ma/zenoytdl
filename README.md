@@ -4,6 +4,13 @@
 
 ---
 
+## Estado verificado actual del roadmap
+
+- **Hito 0**: base de arranque y validación mínima del core.
+- **Hitos 1+**: en roadmap, no deben interpretarse como capacidades cerradas hasta su validación formal.
+
+> Regla de gobierno: este README no sustituye a `hitos-and-test.md`; ante conflicto, manda `hitos-and-test.md`.
+
 # Introducción
 
 Zenoytdl es una herramienta de alto nivel concebida como una capa de orquestación, validación, modelado y control situada por encima de `ytdl-sub`, con el objetivo de simplificar su uso, centralizar la configuración, imponer contratos claros y proporcionar una base sólida para automatización, ejecución controlada, observabilidad, persistencia y futura evolución de interfaces.
@@ -1322,7 +1329,7 @@ No. Debe reflejar sólo estado realmente verificado y cerrado por hito.
 ## Preguntas frecuentes de despliegue
 
 **¿Se puede ejecutar en Docker?**  
-Sí, el proyecto está concebido para soportar una estrategia de despliegue containerizada.
+Está planificado en el roadmap; su cierre formal corresponde a hitos posteriores.
 
 **¿La persistencia sobrevive a recreaciones?**  
 Debe hacerlo mediante volúmenes y una estrategia correcta de datos persistentes.

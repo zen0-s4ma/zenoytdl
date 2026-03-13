@@ -25,3 +25,6 @@ def test_hito0_regression_bootstrap_in_clean_flow(tmp_path) -> None:
     assert result.returncode == 0
     payload = json.loads(result.stdout)
     assert payload["ok"] is True
+    assert payload["runtime"]["workspace"]
+    assert payload["runtime"]["log_level"] in {"DEBUG", "INFO", "WARNING", "ERROR"}
+    assert payload["dependencies"]["ffprobe"]["available"] is True

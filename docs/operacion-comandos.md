@@ -3,7 +3,7 @@
 Estado: **en ejecución**. Esta guía define comandos mínimos operativos sin declarar cierre de hito.
 
 ## Entrypoint/arranque
-- `python -m src.api.cli --config tests/fixtures/clean/minimal.yaml`
+- `PATH="tests/fixtures/bin:$PATH" python -m src.api.cli --config tests/fixtures/clean/minimal.yaml`
 
 ## Lint
 - `python -m ruff check src tests`
@@ -20,3 +20,12 @@ Estado: **en ejecución**. Esta guía define comandos mínimos operativos sin de
 ## Regresión acumulada (Hito 0)
 - `python -m pytest tests/regression -m regression`
 - (opcional consolidado) `python -m pytest -m "unit or integration or e2e or regression"`
+
+
+## Verificación de dependencias runtime (real)
+- `ytdl-sub --version`
+- `ffmpeg -version`
+- `ffprobe -version`
+
+## Smoke bootstrap con dependencias reales
+- `make bootstrap` (incluye `tests/fixtures/bin` en `PATH` para smoke reproducible)

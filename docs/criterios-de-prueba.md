@@ -31,6 +31,13 @@ Solo después del cierre real del hito se actualiza el `README.md`. No antes.
 ## Datos de prueba
 Usar `tests/fixtures/valid`, `tests/fixtures/invalid` y snapshots controlados.
 
+## Dependencias runtime críticas (Hito 0)
+La verificación mínima de Hito 0 debe incluir evidencia real de:
+- `ytdl-sub`
+- `ffmpeg`
+- `ffprobe`
+- SQLite
+
 
 ## Criterios específicos para colas y caché (Hitos 17-18)
 Estados oficiales a validar en pruebas: `pending`, `running`, `success`, `retry`, `dead_letter`, `cancelled`.
