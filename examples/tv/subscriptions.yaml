@@ -1,6 +1,5 @@
 subscriptions:
-  - name: demo_subscription
-    profile: default
-    enabled: true
-    items:
-      - https://example.com/resource/1
+  - name: tv-subscription
+    profile: tv-main
+    sources:
+      - https://example.com/channel/tv

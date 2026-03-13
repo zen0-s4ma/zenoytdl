@@ -1,6 +1,4 @@
 profiles:
-  - name: default
-    platform: generic
-    preset: base_video
-    ytdl_options:
-      quality: best
+  - name: shorts-fast
+    media_type: shorts
+    quality_profile: compact

@@ -1,0 +1,3 @@
+workspace: /data/x
+environment: development
+default_profile: a

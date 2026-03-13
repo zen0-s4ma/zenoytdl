@@ -1,17 +1,4 @@
-integration_version: 1
-preset_mapping:
-  base_video: tv_show
-field_mapping:
-  quality: format
-  output_template: output
-translation_rules:
-  quality:
-    best: "bv*+ba/b"
-compatibility:
-  min_ytdl_sub_version: "2024.01"
-fallback_policy:
-  on_missing_field: reject
-validation:
-  strict_unknown_fields: true
-invocation:
-  binary: ytdl-sub
+integration:
+  min_version: "2024.10"
+profile_preset_map:
+  balanced: tv_show

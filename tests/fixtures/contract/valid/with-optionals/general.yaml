@@ -1,0 +1,6 @@
+workspace: /srv/zenoytdl
+environment: production
+default_profile: audio-archive
+log_level: WARNING
+execution:
+  dry_run: true

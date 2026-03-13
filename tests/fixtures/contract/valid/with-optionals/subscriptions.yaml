@@ -1,0 +1,9 @@
+subscriptions:
+  - name: podcasts
+    profile: audio-archive
+    enabled: false
+    sources:
+      - https://example.com/podcast/main
+    schedule:
+      mode: interval
+      every_hours: 12

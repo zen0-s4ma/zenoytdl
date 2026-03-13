@@ -58,3 +58,9 @@ Criterios de aceptación de estas pruebas:
 - no hay transiciones inválidas ni reapertura de estados terminales;
 - `attempts` incrementa de forma consistente por ejecución real;
 - los casos de deduplicación no crean jobs duplicados en `pending|running|retry`.
+
+## Cobertura mínima específica del contrato YAML (Hito 3)
+- Unitarias: `tests/unit/test_yaml_contract.py`.
+- Integración: `tests/integration/test_yaml_contract_consistency.py`.
+- E2E: `tests/e2e/test_yaml_contract_flow.py`.
+- Regresión: `tests/regression/test_hito3_yaml_contract_regression.py`.
