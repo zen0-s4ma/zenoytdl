@@ -76,3 +76,9 @@ Criterios de aceptación de estas pruebas:
 - Integración: `tests/integration/test_config_validation_integration.py`.
 - E2E: `tests/e2e/test_config_validation_flow.py`.
 - Regresión: `tests/regression/test_hito5_validation_regression.py`.
+
+## Cobertura mínima específica de resolución efectiva (Hito 6)
+- Unitarias: `tests/unit/test_effective_resolution.py`.
+- Integración: `tests/integration/test_effective_resolution_integration.py`.
+- E2E: `tests/e2e/test_effective_resolution_flow.py`.
+- Regresión: `tests/regression/test_hito6_effective_resolution_regression.py`.

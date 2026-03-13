@@ -1,0 +1,12 @@
+subscriptions:
+  - name: podcast-es
+    element_type: subscription
+    profile: audio-base
+    media_type: audio
+    audio_language: es
+    schedule:
+      mode: interval
+      every_hours: 8
+    sources:
+      - channel_podcast_a
+      - channel_podcast_b

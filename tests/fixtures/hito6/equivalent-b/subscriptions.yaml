@@ -1,0 +1,10 @@
+subscriptions:
+  - name: eq-sub
+    element_type: subscription
+    profile: same
+    schedule:
+      mode: interval
+      every_hours: 4
+    sources:
+      - channel_a
+      - channel_b

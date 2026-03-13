@@ -1,0 +1,6 @@
+workspace: /srv/zeno
+environment: stage
+default_profile: same
+log_level: INFO
+execution:
+  dry_run: false

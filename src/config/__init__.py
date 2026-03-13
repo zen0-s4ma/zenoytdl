@@ -10,6 +10,13 @@ from src.config.config_loader import (
     build_config_signature,
     load_parsed_config_bundle,
 )
+from src.config.effective_resolution import (
+    EffectiveResolutionError,
+    EffectiveSubscriptionConfig,
+    resolve_effective_config_for_subscription,
+    resolve_effective_configs,
+    serialize_effective_configs,
+)
 from src.config.validation import (
     SemanticValidationError,
     ValidationIssue,
@@ -39,6 +46,11 @@ __all__ = [
     "ContractValidationError",
     "ensure_minimal_config",
     "load_contract_bundle",
+    "EffectiveResolutionError",
+    "EffectiveSubscriptionConfig",
+    "resolve_effective_config_for_subscription",
+    "resolve_effective_configs",
+    "serialize_effective_configs",
     "SemanticValidationError",
     "ValidationIssue",
     "ValidationReport",

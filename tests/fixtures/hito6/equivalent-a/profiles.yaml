@@ -1,0 +1,5 @@
+profiles:
+  - name: same
+    element_type: profile
+    media_type: video
+    quality_profile: balanced

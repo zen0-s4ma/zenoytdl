@@ -1,0 +1,8 @@
+integration:
+  provider: ytdl-sub
+  binary: ytdl-sub
+  min_version: "2024.01"
+invocation:
+  extra_args: []
+profile_preset_map:
+  balanced: preset-balanced
