@@ -1,4 +1,6 @@
 profiles:
-  - name: podcast-archive
+  - name: audio-archive
     media_type: audio
     quality_profile: archive
+    retention:
+      keep_days: 90

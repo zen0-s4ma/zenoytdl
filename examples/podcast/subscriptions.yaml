@@ -1,6 +1,8 @@
 subscriptions:
-  - name: demo_subscription
-    profile: default
-    enabled: true
-    items:
-      - https://example.com/resource/1
+  - name: podcast-subscription
+    profile: podcast-archive
+    sources:
+      - https://example.com/podcast/feed
+    schedule:
+      mode: interval
+      every_hours: 24

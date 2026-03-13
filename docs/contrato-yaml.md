@@ -1,95 +1,130 @@
-# Contrato de archivos de configuración YAML
+# Contrato YAML de configuración (Hito 3)
 
-## Alcance normativo (Hito 3 + Hito 9)
+## Alcance normativo
 
-Este contrato consolida dos decisiones:
+Este documento define **exclusivamente** el contrato declarativo del Hito 3.
+No incluye:
+- parseo completo a dominio (Hito 4),
+- validación semántica fuerte avanzada (Hito 5),
+- resolución de herencia efectiva (Hito 6),
+- traducción completa a `ytdl-sub` (Hitos 9–10).
 
-1. **Hito 3**: el sistema se define con **4 YAML obligatorios**:
-   - `general.yaml`
-   - `profiles.yaml`
-   - `subscriptions.yaml`
-   - `ytdl-sub-conf.yaml`
-2. **Hito 3 (decisión formal de bloques opcionales)**: los bloques operativos opcionales **van fuera de `general.yaml`** en archivos dedicados.
-3. **Hito 9**: `ytdl-sub-conf.yaml` es la fuente de verdad del acoplamiento con `ytdl-sub`.
+## Set obligatorio de archivos
 
-## Archivos obligatorios
+Una carpeta de configuración solo es candidata válida si contiene:
+- `general.yaml`
+- `profiles.yaml`
+- `subscriptions.yaml`
+- `ytdl-sub-conf.yaml`
+
+## Decisión de bloques opcionales
+
+Los bloques operativos opcionales se mantienen **fuera** de `general.yaml`:
+- `cache.yaml`
+- `queues.yaml`
+- `logging.yaml`
+
+Esta separación evita mezclar contrato funcional con ajustes operativos de runtime.
+
+## Estructura formal por archivo
 
 ### `general.yaml`
-Propósito: parámetros globales y contexto de ejecución.
+Propósito: contexto global de ejecución de Zenoytdl.
 
-Campos mínimos:
-- `workspace` (string, ruta base)
-- `default_profile` (string)
-- `environment` (`development|staging|production`)
+Obligatorias:
+- `workspace`: `string` no vacía.
+- `environment`: `development|staging|production`.
+- `default_profile`: `string` que referencia un perfil definido en `profiles.yaml`.
 
-Campos opcionales:
-- `log_level` (`DEBUG|INFO|WARNING|ERROR`)
+Opcionales:
+- `log_level`: `DEBUG|INFO|WARNING|ERROR`.
+- `execution` (objeto):
+  - `dry_run`: `boolean`.
+
+Defaults declarativos:
+- `log_level: INFO`
+- `execution.dry_run: false`
+
+---
 
 ### `profiles.yaml`
-Propósito: catálogo de perfiles reutilizables.
+Propósito: catálogo semántico de perfiles reutilizables.
 
 Estructura:
-- lista `profiles` con elementos:
-  - `name` (único)
-  - `platform`
-  - `preset` (clave lógica de traducción)
-  - `ytdl_options` (objeto libre)
-  - `postprocess` (objeto opcional)
+- `profiles`: lista no vacía de objetos.
+
+Obligatorias por perfil:
+- `name`: identificador único.
+- `media_type`: `video|audio|shorts`.
+- `quality_profile`: clave semántica de calidad (ej. `balanced`, `archive`, `compact`).
+
+Opcionales por perfil:
+- cualquier bloque semántico adicional de alto nivel (ej. `retention`).
 
 Reglas:
-- `name` único.
-- `preset` debe estar cubierto por `ytdl-sub-conf.yaml.preset_mapping`.
+- no se permiten nombres de perfil duplicados.
+
+---
 
 ### `subscriptions.yaml`
-Propósito: suscripciones concretas.
+Propósito: declarar suscripciones de usuario y su vínculo con perfiles.
 
 Estructura:
-- lista `subscriptions` con elementos:
-  - `name` (único)
-  - `profile` (referencia a `profiles[].name`)
-  - `enabled` (bool)
-  - `items` (lista no vacía de URL o ids de entrada)
-  - `overrides` (objeto opcional)
+- `subscriptions`: lista no vacía de objetos.
 
-Reglas:
-- toda referencia `profile` debe existir.
-- `items` no puede estar vacío.
+Obligatorias por suscripción:
+- `name`: identificador único.
+- `profile`: referencia a `profiles[].name`.
+- `sources`: lista no vacía de fuentes declaradas por el usuario.
+
+Opcionales:
+- `enabled`: `boolean`.
+- `schedule` (objeto):
+  - `mode`: `manual|interval`.
+  - `every_hours`: entero (condicional).
+
+Condicionales:
+- `schedule.every_hours` es obligatorio cuando `schedule.mode = interval`.
+
+Defaults declarativos:
+- `enabled: true`
+
+---
 
 ### `ytdl-sub-conf.yaml`
-Propósito: contrato de integración y traducción hacia `ytdl-sub`.
+Propósito: puente de conectividad de alto nivel con la capa inferior.
 
-Bloques soportados (Hito 9):
-- `integration_version`
-- `preset_mapping`
-- `field_mapping`
-- `translation_rules`
-- `compatibility`
-- `fallback_policy`
-- `validation`
-- `invocation`
+Obligatorias:
+- `integration` (objeto):
+  - `provider`: `ytdl-sub`
+  - `min_version`: versión mínima esperada
+  - `binary`: ruta o nombre de binario
+- `profile_preset_map`: objeto no vacío que mapea `quality_profile` semántico hacia presets de la capa inferior.
 
-Reglas:
-- `integration_version` obligatoria.
-- `preset_mapping` y `field_mapping` obligatorios.
-- la validación cruzada debe rechazar perfiles sin preset traducible.
+Opcionales:
+- `invocation` (objeto):
+  - `extra_args`: lista de argumentos adicionales.
 
-## Archivos opcionales (fuera de `general.yaml`)
+Defaults declarativos:
+- `integration.provider: ytdl-sub`
+- `integration.binary: ytdl-sub`
+- `invocation.extra_args: []`
 
-Estos ficheros amplían operación, pero no sustituyen el set obligatorio:
+## Reglas de consistencia inter-fichero en Hito 3
 
-- `cache.yaml`: políticas de firma, persistencia e invalidación.
-- `queues.yaml`: concurrencia, reintentos y estrategia de scheduling.
-- `logging.yaml`: formato y destinos de logs.
+1. `general.default_profile` debe existir en `profiles[].name`.
+2. `subscriptions[].profile` debe existir en `profiles[].name`.
+3. Cada `profiles[].quality_profile` debe existir en `ytdl-sub-conf.profile_preset_map`.
 
-## Regla de consistencia inter-ficheros
+## Ejemplos de referencia
 
-Una carpeta de configuración solo es válida si:
-
-1. existen los 4 YAML obligatorios,
-2. `subscriptions.profile` referencia perfiles existentes,
-3. `profiles.preset` tiene mapping en `ytdl-sub-conf.yaml.preset_mapping`,
-4. la traducción de campos respeta `field_mapping`/`translation_rules`.
-
-## Regla sobre evolución del README
-
-Si el contrato cambia durante un hito, la documentación de contrato sí debe actualizarse inmediatamente; sin embargo, el `README.md` sólo podrá reflejar ese cambio como capacidad del proyecto cuando el hito correspondiente quede cerrado con regresión acumulada en verde.
+- Válidos:
+  - `tests/fixtures/contract/valid/minimal/`
+  - `tests/fixtures/contract/valid/with-optionals/`
+  - `examples/config-minima/`
+- Inválidos:
+  - `tests/fixtures/contract/invalid/missing-required-file/`
+  - `tests/fixtures/contract/invalid/missing-default-profile/`
+  - `tests/fixtures/contract/invalid/missing-conditional-every-hours/`
+  - `tests/fixtures/contract/invalid/missing-profile-mapping/`
+  - `tests/fixtures/contract/invalid/unknown-profile-reference/`

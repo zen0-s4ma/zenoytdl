@@ -1,4 +1,4 @@
-workspace: /data/library
-default_profile: default
-environment: development
+workspace: /data/zenoytdl
+environment: production
+default_profile: tv-main
 log_level: INFO

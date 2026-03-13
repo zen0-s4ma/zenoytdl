@@ -1,0 +1,4 @@
+subscriptions:
+  - name: x
+    profile: a
+    sources: [https://example.com/x]

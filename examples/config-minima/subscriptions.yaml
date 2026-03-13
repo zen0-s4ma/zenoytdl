@@ -1,6 +1,5 @@
 subscriptions:
-  - name: demo_subscription
-    profile: default
-    enabled: true
-    items:
-      - https://example.com/resource/1
+  - name: sample-channel
+    profile: base-video
+    sources:
+      - https://example.com/channel/sample

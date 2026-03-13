@@ -1,6 +1,5 @@
 subscriptions:
-  - name: demo_subscription
-    profile: default
-    enabled: true
-    items:
-      - https://example.com/resource/1
+  - name: shorts-subscription
+    profile: shorts-fast
+    sources:
+      - https://example.com/channel/shorts

@@ -1,4 +1,3 @@
-workspace: /data/library
-default_profile: default
+workspace: /data/zenoytdl
 environment: development
-log_level: INFO
+default_profile: base-video

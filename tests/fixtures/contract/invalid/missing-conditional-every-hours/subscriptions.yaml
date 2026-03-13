@@ -1,0 +1,7 @@
+subscriptions:
+  - name: docs-channel
+    profile: tv-balanced
+    sources:
+      - https://example.com/channel/docs
+    schedule:
+      mode: interval

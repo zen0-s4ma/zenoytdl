@@ -1,6 +1,4 @@
 profiles:
-  - name: default
-    platform: generic
-    preset: base_video
-    ytdl_options:
-      quality: best
+  - name: base-video
+    media_type: video
+    quality_profile: balanced

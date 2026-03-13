@@ -1,4 +1,4 @@
 profiles:
-  - name: tv-main
+  - name: a
     media_type: video
     quality_profile: balanced

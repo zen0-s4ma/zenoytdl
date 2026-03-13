@@ -1,0 +1,9 @@
+integration:
+  provider: ytdl-sub
+  min_version: "2024.10"
+  binary: /usr/local/bin/ytdl-sub
+profile_preset_map:
+  archive: music_archive
+invocation:
+  extra_args:
+    - --verbose

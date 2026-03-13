@@ -1,4 +1,4 @@
 integration:
   min_version: "2024.10"
 profile_preset_map:
-  archive: music_archive
+  compact: tv_show
