@@ -1,0 +1,7 @@
+profiles:
+  - name: strict-video
+    element_type: profile
+    media_type: video
+    quality_profile: hq
+    override_policies:
+      media_type: forbidden

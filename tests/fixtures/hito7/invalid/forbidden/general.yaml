@@ -1,0 +1,3 @@
+workspace: /srv/zeno
+environment: prod
+default_profile: strict-video

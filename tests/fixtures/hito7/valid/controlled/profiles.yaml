@@ -1,0 +1,17 @@
+profiles:
+  - name: strict-video
+    element_type: profile
+    media_type: video
+    quality_profile: hq
+    override_policies:
+      quality_profile:
+        policy: restricted
+        allowed_values:
+          - hq
+          - balanced
+      media_type: forbidden
+      video_container: allowed
+      max_duration_seconds:
+        policy: restricted
+        min_value: 60
+        max_value: 600

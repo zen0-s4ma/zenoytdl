@@ -1,0 +1,13 @@
+subscriptions:
+  - name: strict-ok
+    element_type: subscription
+    profile: strict-video
+    video_container: mkv
+    max_duration_seconds: 300
+    overrides:
+      quality_profile: balanced
+      media_type: audio
+      unknown_toggle: true
+      max_duration_seconds: 45
+    sources:
+      - playlist_docs

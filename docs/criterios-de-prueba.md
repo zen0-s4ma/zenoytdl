@@ -82,3 +82,9 @@ Criterios de aceptación de estas pruebas:
 - Integración: `tests/integration/test_effective_resolution_integration.py`.
 - E2E: `tests/e2e/test_effective_resolution_flow.py`.
 - Regresión: `tests/regression/test_hito6_effective_resolution_regression.py`.
+
+## Cobertura mínima específica de overrides controlados (Hito 7)
+- Unitarias: `tests/unit/test_override_policies.py`.
+- Integración: `tests/integration/test_override_policies_integration.py`.
+- E2E: `tests/e2e/test_override_policies_flow.py`.
+- Regresión: `tests/regression/test_hito7_override_policies_regression.py`.

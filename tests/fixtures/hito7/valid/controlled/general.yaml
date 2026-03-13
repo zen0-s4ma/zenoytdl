@@ -1,0 +1,6 @@
+workspace: /srv/zeno
+environment: prod
+default_profile: strict-video
+log_level: info
+execution:
+  dry_run: false

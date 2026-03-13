@@ -1,0 +1,97 @@
+{
+  "batch_signature": "d60472c2262a3f0695910f7e0fd92c0e99ad3839b54772bdc904c306d2d8e7d1",
+  "effective_configs": [
+    {
+      "effective_signature": "9ea50b20149c6b062b5ef834ef72b2de103a8c1405815a585efa20d068f02e97",
+      "override_decisions": [
+        {
+          "accepted": false,
+          "field": "max_duration_seconds",
+          "policy": "restricted",
+          "reason_code": "OVERRIDE_RESTRICTED_MIN_VALUE",
+          "reason_message": "El valor es menor que min_value=60.",
+          "requested_origin": "subscriptions.yaml:strict-ok:overrides",
+          "value": 45
+        },
+        {
+          "accepted": false,
+          "field": "media_type",
+          "policy": "forbidden",
+          "reason_code": "OVERRIDE_POLICY_FORBIDDEN",
+          "reason_message": "El perfil bloquea override para este campo.",
+          "requested_origin": "subscriptions.yaml:strict-ok:overrides",
+          "value": "audio"
+        },
+        {
+          "accepted": true,
+          "field": "quality_profile",
+          "policy": "restricted",
+          "reason_code": "OVERRIDE_ACCEPTED",
+          "reason_message": "Override permitido por política restricted.",
+          "requested_origin": "subscriptions.yaml:strict-ok:overrides",
+          "value": "balanced"
+        },
+        {
+          "accepted": false,
+          "field": "unknown_toggle",
+          "policy": "forbidden",
+          "reason_code": "OVERRIDE_FIELD_NOT_SUPPORTED",
+          "reason_message": "El campo no soporta overrides en Hito 7.",
+          "requested_origin": "subscriptions.yaml:strict-ok:overrides",
+          "value": true
+        },
+        {
+          "accepted": true,
+          "field": "video_container",
+          "policy": "allowed",
+          "reason_code": "OVERRIDE_ACCEPTED",
+          "reason_message": "Override permitido por política allowed.",
+          "requested_origin": "subscriptions.yaml:strict-ok:local",
+          "value": "mkv"
+        }
+      ],
+      "profile_id": "strict-video",
+      "resolved_options": {
+        "default_profile": "strict-video",
+        "dry_run": false,
+        "enabled": true,
+        "environment": "prod",
+        "library_dir": "/srv/zeno/library",
+        "log_level": "INFO",
+        "media_type": "video",
+        "primary_source": "playlist_docs",
+        "profile_name": "strict-video",
+        "quality_profile": "balanced",
+        "schedule_every_hours": 0,
+        "schedule_mode": "manual",
+        "source_count": 1,
+        "source_kind": "playlist",
+        "sources_signature": "9f90b804ed3cc96f8cf9ea5cd7bdd1814f38f1067c3d04399fcdfb94c00fa30a",
+        "timezone": "UTC",
+        "video_container": "mkv",
+        "workspace": "/srv/zeno"
+      },
+      "subscription_id": "strict-ok",
+      "value_origins": {
+        "default_profile": "general.yaml",
+        "dry_run": "general.yaml",
+        "enabled": "subscriptions.yaml:strict-ok",
+        "environment": "general.yaml",
+        "library_dir": "general.yaml",
+        "log_level": "general.yaml",
+        "media_type": "profiles.yaml:strict-video",
+        "primary_source": "subscriptions.yaml:strict-ok",
+        "profile_name": "profiles.yaml:strict-video",
+        "quality_profile": "subscriptions.yaml:strict-ok:overrides",
+        "schedule_every_hours": "subscriptions.yaml:strict-ok",
+        "schedule_mode": "subscriptions.yaml:strict-ok",
+        "source_count": "subscriptions.yaml:strict-ok",
+        "source_kind": "subscriptions.yaml:strict-ok",
+        "sources_signature": "subscriptions.yaml:strict-ok",
+        "timezone": "defaults.general",
+        "video_container": "subscriptions.yaml:strict-ok:local",
+        "workspace": "general.yaml"
+      }
+    }
+  ]
+}
