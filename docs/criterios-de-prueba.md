@@ -12,6 +12,7 @@
 ## Preparación reproducible de entorno dev (incluye Windows)
 - Instalar dependencias dev del proyecto: `python -m pip install -e ".[dev]"`.
 - En Windows PowerShell, usar los mismos comandos de lint/tests vía `python -m ...` (sin depender de `make`).
+- Bootstrap oficial en Windows PowerShell (sin `make`): `./scripts/bootstrap-dev.ps1`.
 
 ## Comandos mínimos operativos (Hito 0 en curso)
 - Lint: `python -m ruff check src tests`

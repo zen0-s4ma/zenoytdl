@@ -6,6 +6,10 @@ Estado: **en ejecución**. Esta guía define comandos mínimos operativos sin de
 - Linux/macOS: `python -m pip install -e ".[dev]"`
 - Windows PowerShell: `python -m pip install -e ".[dev]"`
 
+## Bootstrap oficial (Hito 0 en curso)
+- Linux/macOS (make): `make bootstrap`
+- Windows PowerShell (oficial, sin `make`): `./scripts/bootstrap-dev.ps1`
+
 ## Entrypoint/arranque
 - Linux/macOS: `PATH="tests/fixtures/bin:$PATH" python -m src.api.cli --config tests/fixtures/clean/minimal.yaml`
 - Windows PowerShell (sin `make`): `./scripts/bootstrap-dev.ps1`
