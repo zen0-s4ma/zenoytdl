@@ -3,7 +3,7 @@ from __future__ import annotations
 import hashlib
 import json
 from dataclasses import dataclass
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 from typing import Any
 
 from src.config.yaml_contract import REQUIRED_YAML_FILES, _parse_simple_yaml
@@ -36,12 +36,12 @@ class PathResolutionError(ConfigLoadError):
 
 @dataclass(frozen=True)
 class ParsedGeneral:
-    workspace: Path
+    workspace: Path | PurePosixPath
     default_profile: str
     environment: str
     log_level: str
     dry_run: bool
-    library_dir: Path
+    library_dir: Path | PurePosixPath
 
 
 @dataclass(frozen=True)
@@ -329,18 +329,24 @@ def _coerce_int(value: Any, scope: str) -> int:
     return value
 
 
-def _resolve_path(base: Path, candidate: str) -> Path:
+def _resolve_path(base: Path, candidate: str) -> Path | PurePosixPath:
     try:
+        if _is_posix_absolute_path(candidate):
+            return PurePosixPath(candidate)
         path = Path(candidate)
     except Exception as exc:  # pragma: no cover - protección defensiva
         raise PathResolutionError(f"Ruta inválida: {candidate}") from exc
     return path if path.is_absolute() else (base / path).resolve()
 
 
-def _resolve_optional_path_like(base: Path, candidate: str) -> Path:
+def _resolve_optional_path_like(base: Path, candidate: str) -> Path | PurePosixPath:
     if "/" in candidate or "\\" in candidate or candidate.startswith("."):
         return _resolve_path(base, candidate)
     return Path(candidate)
+
+
+def _is_posix_absolute_path(candidate: str) -> bool:
+    return candidate.startswith("/") and not candidate.startswith("//")
 
 
 def _coerce_source_kind(source: str) -> SubscriptionSourceKind:

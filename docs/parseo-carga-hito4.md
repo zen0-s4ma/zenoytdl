@@ -19,7 +19,9 @@ Módulo: `src/config/config_loader.py`.
 ### Entrada y resolución de rutas
 - `load_parsed_config_bundle(config_dir)` acepta ruta relativa o absoluta.
 - La ruta relativa se resuelve contra `Path.cwd()`.
-- `general.workspace` y `general.library_dir` se normalizan a `Path` absoluto.
+- `general.workspace` y `general.library_dir` se normalizan a ruta absoluta:
+  - si el valor es absoluto POSIX (ej. `/srv/zeno`), se preserva semántica POSIX del contrato/runtime Linux,
+  - si el valor es relativo o absoluto del host, se resuelve como ruta absoluta del host.
 - `integration.binary` se resuelve a ruta absoluta solo cuando viene con formato path (`./`, `/`, `\\`).
 
 ### Salida tipada

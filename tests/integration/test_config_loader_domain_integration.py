@@ -24,4 +24,4 @@ def test_loader_resolves_relative_and_absolute_paths() -> None:
     absolute_bundle = load_parsed_config_bundle(Path("tests/fixtures/hito4/valid/medium").resolve())
 
     assert relative_bundle.general.library_dir == absolute_bundle.general.library_dir
-    assert relative_bundle.ytdl_sub_conf.integration_binary.endswith("bin/ytdl-sub")
+    assert Path(relative_bundle.ytdl_sub_conf.integration_binary).parts[-2:] == ("bin", "ytdl-sub")
