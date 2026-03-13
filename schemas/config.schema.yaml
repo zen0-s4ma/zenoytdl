@@ -1,0 +1,4 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$title: ZenoytdlConfigPlaceholder
+$type: object
+$comment: Esquema placeholder inicial a desarrollar en Hito 3.

@@ -1,0 +1,5 @@
+- name: demo_subscription
+  profile: default
+  enabled: true
+  items:
+    - https://example.com/resource/1

@@ -1,0 +1,10 @@
+services:
+  zenoytdl:
+    image: zenoytdl:dev
+    volumes:
+      - ./examples/config-minima:/data/config
+      - ./data/cache:/data/cache
+      - ./data/output:/data/output
+      - ./data/logs:/data/logs
+    environment:
+      - ZENOYTDL_LOG_LEVEL=INFO

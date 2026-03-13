@@ -1,0 +1,4 @@
+- name: default
+  platform: generic
+  ytdl_options:
+    quality: best

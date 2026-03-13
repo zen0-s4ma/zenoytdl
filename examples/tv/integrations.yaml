@@ -1,0 +1,6 @@
+ytdl_sub:
+  mappings:
+    quality: format
+  fallbacks:
+    - best
+    - bestvideo+bestaudio

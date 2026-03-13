@@ -1,0 +1,4 @@
+concurrency: 1
+retries: 2
+priority_strategy: fifo
+shutdown_policy: graceful

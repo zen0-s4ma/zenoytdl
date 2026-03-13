@@ -1,0 +1,4 @@
+persist_enabled: true
+hashing: sha256
+invalidation_rules:
+  - profile_change
