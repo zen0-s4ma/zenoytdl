@@ -603,7 +603,7 @@ La contenerización persigue lograr despliegue reproducible, aislamiento del run
 
 ## Estrategia general de Dockerización
 
-La estrategia general consiste en encapsular Zenoytdl y sus dependencias necesarias dentro de uno o varios contenedores, con volúmenes persistentes para configuración, datos, caché, base de datos y resultados.
+La estrategia general consiste en encapsular Zenoytdl y sus dependencias necesarias dentro de uno o varios contenedores, usando bind mount de configuración en `/config` y persistencia en rutas `/data/...` definidas por contrato de runtime.
 
 ## Estructura de contenedores
 
@@ -741,9 +741,9 @@ Define conjuntos reutilizables de parámetros de comportamiento para categorías
 
 Contiene las suscripciones concretas, fuentes, elementos, activación, overrides y datos específicos de cada flujo real.
 
-### Configuración de integraciones externas
+### Configuración de integración con ytdl-sub
 
-Define cómo se mapea el modelo interno a herramientas externas, qué parámetros se traducen, qué límites existen y qué fallbacks deben aplicarse.
+Se define en `ytdl-sub-conf.yaml` y concentra mappings, reglas de traducción, compatibilidad, fallback e invocación hacia `ytdl-sub`.
 
 ### Configuración de cache
 
@@ -771,7 +771,7 @@ Describe variables, montajes, servicios, healthchecks, límites y parámetros ne
 
 ## Ficheros de configuración
 
-### configuracion-general.yaml
+### general.yaml
 
 #### Propósito
 
@@ -796,11 +796,13 @@ Ejemplos de campos esperables:
 #### Ejemplo esperado
 
 ```yaml
-workspace: /data/zenoytdl
+workspace: /data/library
 environment: production
 default_profile: default
 log_level: INFO
 database_path: /data/state.sqlite
+cache_path: /data/cache.sqlite
+compiled_config_dir: /data/compiled-ytdl-sub
 max_parallelism: 2
 ```
 
@@ -875,39 +877,47 @@ subscriptions:
       - https://example.com/feed.xml
 ```
 
-### integrations.yaml
+### ytdl-sub-conf.yaml
 
 #### Propósito
 
-Define el contrato de integración con dependencias externas, especialmente la traducción hacia `ytdl-sub`.
+Define el contrato de integración con `ytdl-sub` y es la fuente de verdad del acoplamiento.
 
 #### Cuándo se usa
 
-Se usa cuando el sistema compila una configuración efectiva y la transforma en ejecución real.
+Se usa al validar la traducibilidad de perfiles/suscripciones y al preparar la traducción final al formato ejecutable por `ytdl-sub`.
 
 #### Campos principales
 
-- `provider`
-- `mappings`
-- `fallbacks`
-- `limits`
+- `integration_version`
+- `preset_mapping`
+- `field_mapping`
+- `translation_rules`
 - `compatibility`
+- `fallback_policy`
+- `validation`
+- `invocation`
 
 #### Ejemplo esperado
 
 ```yaml
-integrations:
-  ytdl_sub:
-    provider: ytdl-sub
-    mappings:
-      quality: format
-      extract_audio: audio_only
-    fallbacks:
-      format:
-        - best
-        - bv*+ba/b
-    limits:
-      max_retries: 3
+integration_version: 1
+preset_mapping:
+  default: base_video
+field_mapping:
+  quality: format
+  output_template: output
+translation_rules:
+  quality:
+    best: "bv*+ba/b"
+compatibility:
+  min_ytdl_sub_version: "2024.01"
+fallback_policy:
+  on_missing_field: reject
+validation:
+  strict_unknown_fields: true
+invocation:
+  binary: ytdl-sub
 ```
 
 ### cache.yaml
@@ -1018,7 +1028,7 @@ Y en el futuro puede ampliarse con servicios auxiliares.
 
 #### Observaciones importantes
 
-- debe reflejar correctamente volúmenes persistentes;
+- debe reflejar rutas persistentes del contrato (`/data/library`, `/data/tmp`, `/data/logs`, `/data/state.sqlite`, `/data/cache.sqlite`, `/data/compiled-ytdl-sub`);
 - debe exponer sólo lo necesario;
 - debe definir variables de entorno relevantes;
 - debe incluir healthchecks cuando proceda;

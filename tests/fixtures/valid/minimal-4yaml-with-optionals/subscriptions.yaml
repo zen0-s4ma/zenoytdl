@@ -1,0 +1,6 @@
+subscriptions:
+  - name: ok-sub
+    profile: default
+    enabled: true
+    items:
+      - https://example.com/a

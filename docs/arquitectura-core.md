@@ -14,13 +14,19 @@ Zenoytdl es una capa de alto nivel sobre `ytdl-sub`. No pretende reemplazar el m
 
 ## Capas del sistema
 ### 1. Configuración
+
+**Núcleo obligatorio (Hito 3):**
 - `general.yaml`
 - `profiles.yaml`
 - `subscriptions.yaml`
-- `integrations.yaml`
+- `ytdl-sub-conf.yaml`
+
+**Bloques opcionales en archivos separados (decisión formal Hito 3):**
 - `cache.yaml`
 - `queues.yaml`
 - `logging.yaml`
+
+`general.yaml` queda reservado para contexto global. La integración con la capa inferior se centraliza en `ytdl-sub-conf.yaml` (Hito 9) para evitar acoplamientos dispersos.
 
 ### 2. Modelo interno
 Representación normalizada del dominio y la configuración efectiva.
