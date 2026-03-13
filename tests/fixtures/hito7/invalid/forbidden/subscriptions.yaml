@@ -1,0 +1,8 @@
+subscriptions:
+  - name: denied-forbidden
+    element_type: subscription
+    profile: strict-video
+    overrides:
+      media_type: audio
+    sources:
+      - channel_news

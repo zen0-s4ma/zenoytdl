@@ -1,0 +1,8 @@
+subscriptions:
+  - name: denied
+    element_type: subscription
+    profile: strict-video
+    overrides:
+      quality_profile: ultra
+    sources:
+      - channel_news
