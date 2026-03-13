@@ -1,0 +1,3 @@
+workspace: /tmp/zeno
+environment: development
+default_profile: missing-profile

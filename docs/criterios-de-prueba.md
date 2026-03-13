@@ -64,3 +64,9 @@ Criterios de aceptación de estas pruebas:
 - Integración: `tests/integration/test_yaml_contract_consistency.py`.
 - E2E: `tests/e2e/test_yaml_contract_flow.py`.
 - Regresión: `tests/regression/test_hito3_yaml_contract_regression.py`.
+
+## Cobertura mínima específica de parseo/carga (Hito 4)
+- Unitarias: `tests/unit/test_config_loader.py`.
+- Integración: `tests/integration/test_config_loader_domain_integration.py`.
+- E2E: `tests/e2e/test_config_loader_flow.py`.
+- Regresión: `tests/regression/test_hito4_config_loader_regression.py`.

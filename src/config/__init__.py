@@ -1,4 +1,15 @@
 from src.config.bootstrap import ConfigBootstrapError, ensure_minimal_config
+from src.config.config_loader import (
+    CoercionError,
+    ConfigLoadError,
+    MissingDataError,
+    ParsedConfigBundle,
+    PathResolutionError,
+    YAMLStructureError,
+    YAMLSyntaxError,
+    build_config_signature,
+    load_parsed_config_bundle,
+)
 from src.config.yaml_contract import (
     ContractBundle,
     ContractValidationError,
@@ -6,6 +17,15 @@ from src.config.yaml_contract import (
 )
 
 __all__ = [
+    "CoercionError",
+    "ConfigLoadError",
+    "MissingDataError",
+    "ParsedConfigBundle",
+    "PathResolutionError",
+    "YAMLStructureError",
+    "YAMLSyntaxError",
+    "build_config_signature",
+    "load_parsed_config_bundle",
     "ConfigBootstrapError",
     "ContractBundle",
     "ContractValidationError",

@@ -1,0 +1,4 @@
+profiles:
+  - name: x
+    media_type: audio
+    quality_profile: archive

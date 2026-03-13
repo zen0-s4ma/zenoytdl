@@ -1,0 +1,3 @@
+workspace /bad/syntax
+environment: development
+default_profile: x

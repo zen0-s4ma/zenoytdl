@@ -1,0 +1,10 @@
+profiles:
+  - name: archive-video
+    media_type: video
+    quality_profile: archive
+  - name: audio-daily
+    media_type: audio
+    quality_profile: balanced
+  - name: shorts-fast
+    media_type: shorts
+    quality_profile: compact

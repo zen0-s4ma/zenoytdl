@@ -1,0 +1,19 @@
+subscriptions:
+  - name: documentaries
+    profile: archive-video
+    schedule:
+      mode: interval
+      every_hours: 12
+    sources:
+      - channel_docs
+  - name: tech-audio
+    profile: audio-daily
+    schedule:
+      mode: manual
+    sources:
+      - channel_tech_audio
+      - channel_tech_alt
+  - name: quick-shorts
+    profile: shorts-fast
+    sources:
+      - playlist_shorts

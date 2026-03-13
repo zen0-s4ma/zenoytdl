@@ -1,0 +1,7 @@
+workspace: /srv/zeno
+library_dir: ./library
+environment: production
+default_profile: news
+log_level: DEBUG
+execution:
+  dry_run: true

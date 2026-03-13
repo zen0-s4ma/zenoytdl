@@ -1,0 +1,3 @@
+workspace: ./not/real
+environment: development
+default_profile: audio

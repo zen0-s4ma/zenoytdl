@@ -1,0 +1,5 @@
+workspace: /tmp/zeno
+environment: development
+default_profile: audio
+execution:
+  dry_run: "false"

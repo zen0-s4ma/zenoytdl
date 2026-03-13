@@ -1,0 +1,12 @@
+integration:
+  provider: ytdl-sub
+  min_version: "2024.05"
+  binary: ytdl-sub
+profile_preset_map:
+  archive: tv_archive
+  balanced: podcast
+  compact: shorts
+invocation:
+  extra_args:
+    - --write-thumbnail
+    - --write-info-json

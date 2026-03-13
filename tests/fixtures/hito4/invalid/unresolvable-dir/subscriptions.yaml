@@ -1,0 +1,5 @@
+subscriptions:
+  - name: sub
+    profile: audio
+    sources:
+      - channel_root
