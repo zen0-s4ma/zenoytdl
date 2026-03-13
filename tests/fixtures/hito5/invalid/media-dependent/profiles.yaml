@@ -1,0 +1,5 @@
+profiles:
+  - name: shorts-main
+    element_type: profile
+    media_type: shorts
+    quality_profile: shorts-q

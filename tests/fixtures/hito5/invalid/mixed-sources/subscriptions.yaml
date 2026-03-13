@@ -1,0 +1,9 @@
+subscriptions:
+  - name: podcast-main
+    element_type: subscription
+    profile: audio-archive
+    media_type: audio
+    audio_language: es
+    sources:
+      - channel_audio
+      - playlist_audio
