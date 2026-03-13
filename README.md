@@ -7,7 +7,9 @@
 ## Estado verificado actual del roadmap
 
 - **Hito 0**: base de arranque y validación mínima del core.
-- **Hitos 1+**: en roadmap, no deben interpretarse como capacidades cerradas hasta su validación formal.
+- **Hito 1**: preparación de runtime objetivo container-first cerrada.
+- **Hito 2**: modelado del dominio interno cerrado (sin parseo YAML ni infraestructura real).
+- **Hitos 3+**: en roadmap, no deben interpretarse como capacidades cerradas hasta su validación formal.
 
 > Regla de gobierno: este README no sustituye a `hitos-and-test.md`; ante conflicto, manda `hitos-and-test.md`.
 
