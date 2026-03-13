@@ -741,9 +741,9 @@ Define conjuntos reutilizables de parámetros de comportamiento para categorías
 
 Contiene las suscripciones concretas, fuentes, elementos, activación, overrides y datos específicos de cada flujo real.
 
-### Configuración de integraciones externas
+### Configuración de integración con ytdl-sub
 
-Define cómo se mapea el modelo interno a herramientas externas, qué parámetros se traducen, qué límites existen y qué fallbacks deben aplicarse.
+Se define en `ytdl-sub-conf.yaml` y concentra mappings, reglas de traducción, compatibilidad, fallback e invocación hacia `ytdl-sub`.
 
 ### Configuración de cache
 
@@ -877,39 +877,47 @@ subscriptions:
       - https://example.com/feed.xml
 ```
 
-### integrations.yaml
+### ytdl-sub-conf.yaml
 
 #### Propósito
 
-Define el contrato de integración con dependencias externas, especialmente la traducción hacia `ytdl-sub`.
+Define el contrato de integración con `ytdl-sub` y es la fuente de verdad del acoplamiento.
 
 #### Cuándo se usa
 
-Se usa cuando el sistema compila una configuración efectiva y la transforma en ejecución real.
+Se usa al validar la traducibilidad de perfiles/suscripciones y al preparar la traducción final al formato ejecutable por `ytdl-sub`.
 
 #### Campos principales
 
-- `provider`
-- `mappings`
-- `fallbacks`
-- `limits`
+- `integration_version`
+- `preset_mapping`
+- `field_mapping`
+- `translation_rules`
 - `compatibility`
+- `fallback_policy`
+- `validation`
+- `invocation`
 
 #### Ejemplo esperado
 
 ```yaml
-integrations:
-  ytdl_sub:
-    provider: ytdl-sub
-    mappings:
-      quality: format
-      extract_audio: audio_only
-    fallbacks:
-      format:
-        - best
-        - bv*+ba/b
-    limits:
-      max_retries: 3
+integration_version: 1
+preset_mapping:
+  default: base_video
+field_mapping:
+  quality: format
+  output_template: output
+translation_rules:
+  quality:
+    best: "bv*+ba/b"
+compatibility:
+  min_ytdl_sub_version: "2024.01"
+fallback_policy:
+  on_missing_field: reject
+validation:
+  strict_unknown_fields: true
+invocation:
+  binary: ytdl-sub
 ```
 
 ### cache.yaml

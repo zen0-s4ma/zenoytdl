@@ -1,4 +1,159 @@
 $schema: https://json-schema.org/draft/2020-12/schema
-$title: ZenoytdlConfigPlaceholder
+$title: ZenoytdlConfigBundle
 $type: object
-$comment: Esquema placeholder inicial a desarrollar en Hito 3.
+additionalProperties: false
+required:
+  - general
+  - profiles
+  - subscriptions
+  - ytdl_sub_conf
+properties:
+  general:
+    $ref: '#/$defs/general'
+  profiles:
+    $ref: '#/$defs/profiles'
+  subscriptions:
+    $ref: '#/$defs/subscriptions'
+  ytdl_sub_conf:
+    $ref: '#/$defs/ytdl_sub_conf'
+  cache:
+    $ref: '#/$defs/cache'
+  queues:
+    $ref: '#/$defs/queues'
+  logging:
+    $ref: '#/$defs/logging'
+$defs:
+  general:
+    type: object
+    additionalProperties: false
+    required: [workspace, default_profile, environment]
+    properties:
+      workspace:
+        type: string
+        minLength: 1
+      default_profile:
+        type: string
+        minLength: 1
+      environment:
+        type: string
+        enum: [development, staging, production]
+      log_level:
+        type: string
+        enum: [DEBUG, INFO, WARNING, ERROR]
+  profiles:
+    type: object
+    additionalProperties: false
+    required: [profiles]
+    properties:
+      profiles:
+        type: array
+        minItems: 1
+        items:
+          type: object
+          additionalProperties: false
+          required: [name, platform, preset, ytdl_options]
+          properties:
+            name: {type: string, minLength: 1}
+            platform: {type: string, minLength: 1}
+            preset: {type: string, minLength: 1}
+            ytdl_options: {type: object}
+            postprocess: {type: object}
+  subscriptions:
+    type: object
+    additionalProperties: false
+    required: [subscriptions]
+    properties:
+      subscriptions:
+        type: array
+        minItems: 1
+        items:
+          type: object
+          additionalProperties: false
+          required: [name, profile, enabled, items]
+          properties:
+            name: {type: string, minLength: 1}
+            profile: {type: string, minLength: 1}
+            enabled: {type: boolean}
+            items:
+              type: array
+              minItems: 1
+              items: {type: string, minLength: 1}
+            overrides: {type: object}
+  ytdl_sub_conf:
+    type: object
+    additionalProperties: false
+    required: [integration_version, preset_mapping, field_mapping, translation_rules, compatibility, fallback_policy, validation, invocation]
+    properties:
+      integration_version:
+        type: [string, integer]
+      preset_mapping:
+        type: object
+        minProperties: 1
+        additionalProperties:
+          type: string
+      field_mapping:
+        type: object
+        minProperties: 1
+        additionalProperties:
+          type: string
+      translation_rules:
+        type: object
+        additionalProperties:
+          type: object
+      compatibility:
+        type: object
+        required: [min_ytdl_sub_version]
+        additionalProperties: true
+        properties:
+          min_ytdl_sub_version:
+            type: string
+      fallback_policy:
+        type: object
+        required: [on_missing_field]
+        additionalProperties: true
+        properties:
+          on_missing_field:
+            type: string
+            enum: [reject, ignore, warn]
+      validation:
+        type: object
+        required: [strict_unknown_fields]
+        additionalProperties: true
+        properties:
+          strict_unknown_fields:
+            type: boolean
+      invocation:
+        type: object
+        required: [binary]
+        additionalProperties: true
+        properties:
+          binary:
+            type: string
+  cache:
+    type: object
+    additionalProperties: true
+    properties:
+      persist_enabled: {type: boolean}
+      hashing: {type: string}
+      invalidation_rules:
+        type: array
+        items: {type: string}
+  queues:
+    type: object
+    additionalProperties: true
+    properties:
+      concurrency: {type: integer, minimum: 1}
+      retries: {type: integer, minimum: 0}
+      priority_strategy: {type: string}
+      shutdown_policy: {type: string}
+  logging:
+    type: object
+    additionalProperties: true
+    properties:
+      level: {type: string}
+      format: {type: string}
+      sinks:
+        type: array
+        items: {type: string}
+allOf:
+  - $comment: "Validación cruzada mínima: cada subscription.profile debe existir en profiles."
