@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "zenoytdl"
+version = "0.1.0"
+description = "Core bootstrap and smoke checks for Zenoytdl"
+requires-python = ">=3.10"
+
+[tool.pytest.ini_options]
+addopts = "-ra"
+pythonpath = ["."]
+testpaths = ["tests"]
+markers = [
+  "unit: unit test scope",
+  "integration: integration test scope",
+  "e2e: end-to-end test scope",
+  "regression: cumulative regression scope",
+]
+
+[tool.ruff]
+line-length = 100
+
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B"]
