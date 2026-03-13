@@ -2,8 +2,14 @@
 
 Estado: **en ejecución**. Esta guía define comandos mínimos operativos sin declarar cierre de hito.
 
+## Instalación entorno dev
+- Linux/macOS: `python -m pip install -e ".[dev]"`
+- Windows PowerShell: `python -m pip install -e ".[dev]"`
+
 ## Entrypoint/arranque
-- `PATH="tests/fixtures/bin:$PATH" python -m src.api.cli --config tests/fixtures/clean/minimal.yaml`
+- Linux/macOS: `PATH="tests/fixtures/bin:$PATH" python -m src.api.cli --config tests/fixtures/clean/minimal.yaml`
+- Windows PowerShell (sin `make`): `./scripts/bootstrap-dev.ps1`
+- Windows PowerShell (equivalente inline): `$env:PATH = "tests/fixtures/bin;$env:PATH"; python -m src.api.cli --config tests/fixtures/clean/minimal.yaml`
 
 ## Lint
 - `python -m ruff check src tests`
@@ -28,4 +34,5 @@ Estado: **en ejecución**. Esta guía define comandos mínimos operativos sin de
 - `ffprobe -version`
 
 ## Smoke bootstrap con dependencias reales
-- `make bootstrap` (incluye `tests/fixtures/bin` en `PATH` para smoke reproducible)
+- Linux/macOS: `make bootstrap` (incluye `tests/fixtures/bin` en `PATH` para smoke reproducible)
+- Windows PowerShell: `./scripts/bootstrap-dev.ps1`

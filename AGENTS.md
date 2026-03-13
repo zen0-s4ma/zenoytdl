@@ -26,6 +26,7 @@ Los comandos definitivos se fijarán al cerrar Hito 0. Como mínimo, cualquier a
 - comando de integración
 - comando e2e
 - comando de regresión acumulada
+- alternativa operativa en Windows PowerShell cuando `make` no esté disponible
 
 ## Done means
 Un cambio sólo está terminado cuando:
