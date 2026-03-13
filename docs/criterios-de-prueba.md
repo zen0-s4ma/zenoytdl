@@ -21,3 +21,19 @@ Solo después del cierre real del hito se actualiza el `README.md`. No antes.
 
 ## Datos de prueba
 Usar `tests/fixtures/valid`, `tests/fixtures/invalid` y snapshots controlados.
+
+
+## Criterios específicos para colas y caché (Hitos 17-18)
+Estados oficiales a validar en pruebas: `pending`, `running`, `success`, `retry`, `dead_letter`, `cancelled`.
+
+Cobertura mínima obligatoria de regresión:
+1. flujo de éxito (`pending -> running -> success`),
+2. flujo con reintento (`running -> retry -> pending`),
+3. agotamiento de reintentos y paso a `dead_letter`,
+4. cancelación en `pending` y en `running`,
+5. deduplicación por clave de item/firma y por existencia de job activo.
+
+Criterios de aceptación de estas pruebas:
+- no hay transiciones inválidas ni reapertura de estados terminales;
+- `attempts` incrementa de forma consistente por ejecución real;
+- los casos de deduplicación no crean jobs duplicados en `pending|running|retry`.
