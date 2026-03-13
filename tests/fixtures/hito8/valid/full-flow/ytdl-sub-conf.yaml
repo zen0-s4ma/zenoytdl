@@ -1,0 +1,9 @@
+integration:
+  provider: ytdl-sub
+  binary: ytdl-sub
+  min_version: 2024.01.01
+profile_preset_map:
+  hq: preset_hq
+  archive: preset_archive
+invocation:
+  extra_args: []

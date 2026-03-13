@@ -1,0 +1,9 @@
+profiles:
+  - name: pp-profile
+    media_type: video
+    quality_profile: balanced
+    postprocessings:
+      - type: metadata_images
+        parameters:
+          include_thumbnail: true
+          include_banner: true

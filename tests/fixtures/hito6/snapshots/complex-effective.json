@@ -1,28 +1,7 @@
 {
-  "batch_signature": "a6e32241384e56771667877e16036b96800c78fa515faa74e653adf2e5e49216",
   "effective_configs": [
     {
-      "effective_signature": "0aa8befe9f7937fd7c348a585ffbdbd5cc1ab35f9ab75d447b48960acd64c54a",
-      "override_decisions": [
-        {
-          "accepted": true,
-          "field": "media_type",
-          "policy": "allowed",
-          "reason_code": "OVERRIDE_ACCEPTED",
-          "reason_message": "Override permitido por política allowed.",
-          "requested_origin": "subscriptions.yaml:docs-main:local",
-          "value": "video"
-        },
-        {
-          "accepted": true,
-          "field": "video_container",
-          "policy": "allowed",
-          "reason_code": "OVERRIDE_ACCEPTED",
-          "reason_message": "Override permitido por política allowed.",
-          "requested_origin": "subscriptions.yaml:docs-main:local",
-          "value": "mkv"
-        }
-      ],
+      "subscription_id": "docs-main",
       "profile_id": "video-main",
       "resolved_options": {
         "default_profile": "video-main",
@@ -44,7 +23,6 @@
         "video_container": "mkv",
         "workspace": "/srv/zeno"
       },
-      "subscription_id": "docs-main",
       "value_origins": {
         "default_profile": "general.yaml",
         "dry_run": "general.yaml",
@@ -64,30 +42,32 @@
         "timezone": "defaults.general",
         "video_container": "subscriptions.yaml:docs-main:local",
         "workspace": "general.yaml"
-      }
-    },
-    {
-      "effective_signature": "eb2745672054819768c623543533547d61a051f87f89c062c935c531b93b48c3",
+      },
       "override_decisions": [
         {
-          "accepted": true,
-          "field": "max_duration_seconds",
-          "policy": "allowed",
-          "reason_code": "OVERRIDE_ACCEPTED",
-          "reason_message": "Override permitido por política allowed.",
-          "requested_origin": "subscriptions.yaml:shorts-fast:local",
-          "value": 120
-        },
-        {
-          "accepted": true,
           "field": "media_type",
           "policy": "allowed",
+          "accepted": true,
+          "value": "video",
           "reason_code": "OVERRIDE_ACCEPTED",
           "reason_message": "Override permitido por política allowed.",
-          "requested_origin": "subscriptions.yaml:shorts-fast:local",
-          "value": "shorts"
+          "requested_origin": "subscriptions.yaml:docs-main:local"
+        },
+        {
+          "field": "video_container",
+          "policy": "allowed",
+          "accepted": true,
+          "value": "mkv",
+          "reason_code": "OVERRIDE_ACCEPTED",
+          "reason_message": "Override permitido por política allowed.",
+          "requested_origin": "subscriptions.yaml:docs-main:local"
         }
       ],
+      "postprocessings": [],
+      "effective_signature": "ba367c0b6fd80c21b501724416b5edd0a8b6b2423f82a6a8cf32eee175a6eed0"
+    },
+    {
+      "subscription_id": "shorts-fast",
       "profile_id": "shorts-main",
       "resolved_options": {
         "default_profile": "video-main",
@@ -109,7 +89,6 @@
         "timezone": "UTC",
         "workspace": "/srv/zeno"
       },
-      "subscription_id": "shorts-fast",
       "value_origins": {
         "default_profile": "general.yaml",
         "dry_run": "general.yaml",
@@ -129,7 +108,30 @@
         "sources_signature": "subscriptions.yaml:shorts-fast",
         "timezone": "defaults.general",
         "workspace": "general.yaml"
-      }
+      },
+      "override_decisions": [
+        {
+          "field": "max_duration_seconds",
+          "policy": "allowed",
+          "accepted": true,
+          "value": 120,
+          "reason_code": "OVERRIDE_ACCEPTED",
+          "reason_message": "Override permitido por política allowed.",
+          "requested_origin": "subscriptions.yaml:shorts-fast:local"
+        },
+        {
+          "field": "media_type",
+          "policy": "allowed",
+          "accepted": true,
+          "value": "shorts",
+          "reason_code": "OVERRIDE_ACCEPTED",
+          "reason_message": "Override permitido por política allowed.",
+          "requested_origin": "subscriptions.yaml:shorts-fast:local"
+        }
+      ],
+      "postprocessings": [],
+      "effective_signature": "18c77e5bbfeee9890a173b557bee59bf691796f965e2a650f1f00ae7e66f7faa"
     }
-  ]
+  ],
+  "batch_signature": "1ee051efbaf7c51b2cae1ea9f310e815109ea2c5ade4fcecaf97c6a5daac9934"
 }

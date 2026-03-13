@@ -1,55 +1,7 @@
 {
-  "batch_signature": "d60472c2262a3f0695910f7e0fd92c0e99ad3839b54772bdc904c306d2d8e7d1",
   "effective_configs": [
     {
-      "effective_signature": "9ea50b20149c6b062b5ef834ef72b2de103a8c1405815a585efa20d068f02e97",
-      "override_decisions": [
-        {
-          "accepted": false,
-          "field": "max_duration_seconds",
-          "policy": "restricted",
-          "reason_code": "OVERRIDE_RESTRICTED_MIN_VALUE",
-          "reason_message": "El valor es menor que min_value=60.",
-          "requested_origin": "subscriptions.yaml:strict-ok:overrides",
-          "value": 45
-        },
-        {
-          "accepted": false,
-          "field": "media_type",
-          "policy": "forbidden",
-          "reason_code": "OVERRIDE_POLICY_FORBIDDEN",
-          "reason_message": "El perfil bloquea override para este campo.",
-          "requested_origin": "subscriptions.yaml:strict-ok:overrides",
-          "value": "audio"
-        },
-        {
-          "accepted": true,
-          "field": "quality_profile",
-          "policy": "restricted",
-          "reason_code": "OVERRIDE_ACCEPTED",
-          "reason_message": "Override permitido por política restricted.",
-          "requested_origin": "subscriptions.yaml:strict-ok:overrides",
-          "value": "balanced"
-        },
-        {
-          "accepted": false,
-          "field": "unknown_toggle",
-          "policy": "forbidden",
-          "reason_code": "OVERRIDE_FIELD_NOT_SUPPORTED",
-          "reason_message": "El campo no soporta overrides en Hito 7.",
-          "requested_origin": "subscriptions.yaml:strict-ok:overrides",
-          "value": true
-        },
-        {
-          "accepted": true,
-          "field": "video_container",
-          "policy": "allowed",
-          "reason_code": "OVERRIDE_ACCEPTED",
-          "reason_message": "Override permitido por política allowed.",
-          "requested_origin": "subscriptions.yaml:strict-ok:local",
-          "value": "mkv"
-        }
-      ],
+      "subscription_id": "strict-ok",
       "profile_id": "strict-video",
       "resolved_options": {
         "default_profile": "strict-video",
@@ -71,7 +23,6 @@
         "video_container": "mkv",
         "workspace": "/srv/zeno"
       },
-      "subscription_id": "strict-ok",
       "value_origins": {
         "default_profile": "general.yaml",
         "dry_run": "general.yaml",
@@ -91,7 +42,57 @@
         "timezone": "defaults.general",
         "video_container": "subscriptions.yaml:strict-ok:local",
         "workspace": "general.yaml"
-      }
+      },
+      "override_decisions": [
+        {
+          "field": "max_duration_seconds",
+          "policy": "restricted",
+          "accepted": false,
+          "value": 45,
+          "reason_code": "OVERRIDE_RESTRICTED_MIN_VALUE",
+          "reason_message": "El valor es menor que min_value=60.",
+          "requested_origin": "subscriptions.yaml:strict-ok:overrides"
+        },
+        {
+          "field": "media_type",
+          "policy": "forbidden",
+          "accepted": false,
+          "value": "audio",
+          "reason_code": "OVERRIDE_POLICY_FORBIDDEN",
+          "reason_message": "El perfil bloquea override para este campo.",
+          "requested_origin": "subscriptions.yaml:strict-ok:overrides"
+        },
+        {
+          "field": "quality_profile",
+          "policy": "restricted",
+          "accepted": true,
+          "value": "balanced",
+          "reason_code": "OVERRIDE_ACCEPTED",
+          "reason_message": "Override permitido por política restricted.",
+          "requested_origin": "subscriptions.yaml:strict-ok:overrides"
+        },
+        {
+          "field": "unknown_toggle",
+          "policy": "forbidden",
+          "accepted": false,
+          "value": true,
+          "reason_code": "OVERRIDE_FIELD_NOT_SUPPORTED",
+          "reason_message": "El campo no soporta overrides en Hito 7.",
+          "requested_origin": "subscriptions.yaml:strict-ok:overrides"
+        },
+        {
+          "field": "video_container",
+          "policy": "allowed",
+          "accepted": true,
+          "value": "mkv",
+          "reason_code": "OVERRIDE_ACCEPTED",
+          "reason_message": "Override permitido por política allowed.",
+          "requested_origin": "subscriptions.yaml:strict-ok:local"
+        }
+      ],
+      "postprocessings": [],
+      "effective_signature": "e98480ca5932543c0dc1c750f87109ea00f433bc2afcc63734c59d6d8eb6330e"
     }
-  ]
+  ],
+  "batch_signature": "12652f31d51bed433f0d4479d8088d599ec179549f49fc1e7c3c82715e9159bb"
 }

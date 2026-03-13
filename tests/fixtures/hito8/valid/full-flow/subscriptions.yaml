@@ -1,0 +1,24 @@
+subscriptions:
+  - name: sub-video
+    element_type: subscription
+    profile: profile-video
+    sources:
+      - playlist_docs
+    postprocessings:
+      - type: metadata_text
+        parameters:
+          filename: custom-metadata.txt
+      - type: metadata_images
+        enabled: false
+      - type: export_info_json
+        parameters:
+          pretty: true
+  - name: sub-shorts
+    element_type: subscription
+    profile: profile-shorts
+    sources:
+      - playlist_shorts
+    postprocessings:
+      - type: max_duration
+        parameters:
+          seconds: 90

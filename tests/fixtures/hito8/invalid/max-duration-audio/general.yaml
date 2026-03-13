@@ -1,0 +1,4 @@
+workspace: /srv/zeno
+library_dir: /srv/zeno/library
+environment: prod
+default_profile: bad-profile

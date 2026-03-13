@@ -1,0 +1,7 @@
+workspace: /srv/zeno
+library_dir: /srv/zeno/library
+environment: prod
+default_profile: profile-video
+log_level: INFO
+execution:
+  dry_run: false

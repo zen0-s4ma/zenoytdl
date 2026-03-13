@@ -8,8 +8,14 @@
 
 - **Hito 0**: base de arranque y validación mínima del core.
 - **Hito 1**: preparación de runtime objetivo container-first cerrada.
-- **Hito 2**: modelado del dominio interno cerrado (sin parseo YAML ni infraestructura real).
-- **Hitos 3+**: en roadmap, no deben interpretarse como capacidades cerradas hasta su validación formal.
+- **Hito 2**: modelado del dominio interno cerrado.
+- **Hito 3**: contrato YAML cerrado.
+- **Hito 4**: parseo/carga cerrado.
+- **Hito 5**: validación estructural/semántica cerrada.
+- **Hito 6**: resolución efectiva cerrada.
+- **Hito 7**: overrides controlados cerrados.
+- **Hito 8**: modelado de postprocesados cerrado.
+- **Hitos 9+**: en roadmap, no deben interpretarse como capacidades cerradas hasta su validación formal.
 
 > Regla de gobierno: este README no sustituye a `hitos-and-test.md`; ante conflicto, manda `hitos-and-test.md`.
 

@@ -1,0 +1,8 @@
+profiles:
+  - name: pp-profile
+    media_type: video
+    quality_profile: balanced
+    postprocessings:
+      - type: metadata_text
+        parameters:
+          filename: info.txt
