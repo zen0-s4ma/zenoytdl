@@ -1,0 +1,26 @@
+integration:
+  provider: ytdl-sub
+  min_version: "2024.10"
+profile_preset_map:
+  balanced: tv_show
+integration_version: 1
+preset_mapping:
+  balanced: tv_show
+field_mapping:
+  quality_profile: quality
+translation_rules:
+  quality_profile:
+    map_values:
+      ultra: "bv*+ba/b"
+    required: true
+compatibility:
+  min_ytdl_sub_version: "2024.10"
+  policy: strict
+fallback_policy:
+  on_missing_field: reject
+  on_missing_preset: reject
+validation:
+  strict_unknown_fields: false
+  abort_on_partial_translation: true
+invocation:
+  binary: ytdl-sub

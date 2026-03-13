@@ -1,0 +1,22 @@
+[
+  {
+    "invocation": {
+      "binary": "ytdl-sub",
+      "extra_args": [
+        "--dry-run"
+      ],
+      "mode": "sub"
+    },
+    "is_valid": true,
+    "issues": [],
+    "mapped_fields": {
+      "media_type": "video",
+      "quality": "bv*+ba/b",
+      "url": "techchannel_source"
+    },
+    "preset": "tv_show",
+    "profile_id": "profile_tv",
+    "subscription_id": "tech_channel",
+    "translation_signature": "5cfd2f578b8045688035387c78a00a2094e5f6354d0dcbe6280d7cfeaf7cc01d"
+  }
+]

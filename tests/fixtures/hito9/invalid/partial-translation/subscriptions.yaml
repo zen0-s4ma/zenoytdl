@@ -1,0 +1,6 @@
+subscriptions:
+  - name: tech_channel
+    element_type: subscription
+    profile: profile_tv
+    sources:
+      - techchannel_source
