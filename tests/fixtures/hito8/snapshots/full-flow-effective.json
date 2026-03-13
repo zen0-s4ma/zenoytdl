@@ -1,0 +1,143 @@
+{
+  "effective_configs": [
+    {
+      "subscription_id": "sub-shorts",
+      "profile_id": "profile-shorts",
+      "resolved_options": {
+        "default_profile": "profile-video",
+        "dry_run": false,
+        "enabled": true,
+        "environment": "prod",
+        "library_dir": "/srv/zeno/library",
+        "log_level": "INFO",
+        "media_type": "shorts",
+        "primary_source": "playlist_shorts",
+        "profile_name": "profile-shorts",
+        "quality_profile": "archive",
+        "schedule_every_hours": 0,
+        "schedule_mode": "manual",
+        "source_count": 1,
+        "source_kind": "playlist",
+        "sources_signature": "a87eec374ac0fbc0535a10bc0cb8c7ebf7c6fadde14ac14364f0f3a8ec86ff43",
+        "timezone": "UTC",
+        "workspace": "/srv/zeno"
+      },
+      "value_origins": {
+        "default_profile": "general.yaml",
+        "dry_run": "general.yaml",
+        "enabled": "subscriptions.yaml:sub-shorts",
+        "environment": "general.yaml",
+        "library_dir": "general.yaml",
+        "log_level": "general.yaml",
+        "media_type": "profiles.yaml:profile-shorts",
+        "primary_source": "subscriptions.yaml:sub-shorts",
+        "profile_name": "profiles.yaml:profile-shorts",
+        "quality_profile": "profiles.yaml:profile-shorts",
+        "schedule_every_hours": "subscriptions.yaml:sub-shorts",
+        "schedule_mode": "subscriptions.yaml:sub-shorts",
+        "source_count": "subscriptions.yaml:sub-shorts",
+        "source_kind": "subscriptions.yaml:sub-shorts",
+        "sources_signature": "subscriptions.yaml:sub-shorts",
+        "timezone": "defaults.general",
+        "workspace": "general.yaml"
+      },
+      "override_decisions": [],
+      "postprocessings": [
+        {
+          "kind": "max_duration",
+          "enabled": true,
+          "parameters": {
+            "seconds": 90
+          },
+          "origin": "subscriptions.yaml:sub-shorts.postprocessings[0]",
+          "parameter_origins": {
+            "seconds": "subscriptions.yaml:sub-shorts.postprocessings[0]"
+          }
+        }
+      ],
+      "effective_signature": "2ee14a1f610ebb8b759739ab7196eb52ff8082b235cac33c2aa403b1ec759ced"
+    },
+    {
+      "subscription_id": "sub-video",
+      "profile_id": "profile-video",
+      "resolved_options": {
+        "default_profile": "profile-video",
+        "dry_run": false,
+        "enabled": true,
+        "environment": "prod",
+        "library_dir": "/srv/zeno/library",
+        "log_level": "INFO",
+        "media_type": "video",
+        "primary_source": "playlist_docs",
+        "profile_name": "profile-video",
+        "quality_profile": "hq",
+        "schedule_every_hours": 0,
+        "schedule_mode": "manual",
+        "source_count": 1,
+        "source_kind": "playlist",
+        "sources_signature": "9f90b804ed3cc96f8cf9ea5cd7bdd1814f38f1067c3d04399fcdfb94c00fa30a",
+        "timezone": "UTC",
+        "workspace": "/srv/zeno"
+      },
+      "value_origins": {
+        "default_profile": "general.yaml",
+        "dry_run": "general.yaml",
+        "enabled": "subscriptions.yaml:sub-video",
+        "environment": "general.yaml",
+        "library_dir": "general.yaml",
+        "log_level": "general.yaml",
+        "media_type": "profiles.yaml:profile-video",
+        "primary_source": "subscriptions.yaml:sub-video",
+        "profile_name": "profiles.yaml:profile-video",
+        "quality_profile": "profiles.yaml:profile-video",
+        "schedule_every_hours": "subscriptions.yaml:sub-video",
+        "schedule_mode": "subscriptions.yaml:sub-video",
+        "source_count": "subscriptions.yaml:sub-video",
+        "source_kind": "subscriptions.yaml:sub-video",
+        "sources_signature": "subscriptions.yaml:sub-video",
+        "timezone": "defaults.general",
+        "workspace": "general.yaml"
+      },
+      "override_decisions": [],
+      "postprocessings": [
+        {
+          "kind": "embed_metadata",
+          "enabled": true,
+          "parameters": {
+            "mode": "safe"
+          },
+          "origin": "profiles.yaml:profile-video.postprocessings[2]",
+          "parameter_origins": {
+            "mode": "profiles.yaml:profile-video.postprocessings[2]"
+          }
+        },
+        {
+          "kind": "export_info_json",
+          "enabled": true,
+          "parameters": {
+            "pretty": true
+          },
+          "origin": "subscriptions.yaml:sub-video.postprocessings[2]",
+          "parameter_origins": {
+            "pretty": "subscriptions.yaml:sub-video.postprocessings[2]"
+          }
+        },
+        {
+          "kind": "metadata_text",
+          "enabled": true,
+          "parameters": {
+            "filename": "custom-metadata.txt",
+            "include_description": true
+          },
+          "origin": "subscriptions.yaml:sub-video.postprocessings[0]",
+          "parameter_origins": {
+            "filename": "subscriptions.yaml:sub-video.postprocessings[0]",
+            "include_description": "subscriptions.yaml:sub-video.postprocessings[0]:defaults"
+          }
+        }
+      ],
+      "effective_signature": "219c73705e9bd343e6f57036ce6551a0a430ff200f0a70b36d622a6d6e75daf1"
+    }
+  ],
+  "batch_signature": "2c8a0aa3a5070f807b923aed866a3379e9f4d3ea7b198522398ade13061c71ef"
+}

@@ -1,0 +1,8 @@
+profiles:
+  - name: bad-profile
+    media_type: audio
+    quality_profile: balanced
+    postprocessings:
+      - type: max_duration
+        parameters:
+          seconds: 90

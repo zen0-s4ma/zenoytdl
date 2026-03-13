@@ -88,3 +88,10 @@ Criterios de aceptación de estas pruebas:
 - Integración: `tests/integration/test_override_policies_integration.py`.
 - E2E: `tests/e2e/test_override_policies_flow.py`.
 - Regresión: `tests/regression/test_hito7_override_policies_regression.py`.
+
+
+## Cobertura mínima específica de modelado de postprocesados (Hito 8)
+- Unitarias: `tests/unit/test_postprocessing_resolution.py`.
+- Integración: `tests/integration/test_postprocessing_integration.py`.
+- E2E: `tests/e2e/test_postprocessing_flow.py`.
+- Regresión: `tests/regression/test_hito8_postprocessing_regression.py`.

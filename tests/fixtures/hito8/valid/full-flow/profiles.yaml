@@ -1,0 +1,28 @@
+profiles:
+  - name: profile-video
+    element_type: profile
+    media_type: video
+    quality_profile: hq
+    postprocessings:
+      - type: metadata_text
+        parameters:
+          filename: metadata.txt
+          include_description: true
+      - type: metadata_images
+        parameters:
+          include_thumbnail: true
+          include_banner: false
+      - type: embed_metadata
+        parameters:
+          mode: safe
+      - type: export_info_json
+        parameters:
+          pretty: false
+  - name: profile-shorts
+    element_type: profile
+    media_type: shorts
+    quality_profile: archive
+    postprocessings:
+      - type: max_duration
+        parameters:
+          seconds: 120

@@ -1,0 +1,8 @@
+profiles:
+  - name: pp-profile
+    media_type: shorts
+    quality_profile: balanced
+    postprocessings:
+      - type: max_duration
+        parameters:
+          seconds: 180

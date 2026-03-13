@@ -1,0 +1,8 @@
+profiles:
+  - name: pp-profile
+    media_type: video
+    quality_profile: balanced
+    postprocessings:
+      - type: export_info_json
+        parameters:
+          pretty: true

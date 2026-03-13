@@ -1,0 +1,5 @@
+subscriptions:
+  - name: pp-sub
+    profile: pp-profile
+    sources:
+      - playlist_docs

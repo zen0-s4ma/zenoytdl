@@ -61,6 +61,7 @@ Obligatorias por perfil:
 - `quality_profile`: clave semántica de calidad (ej. `balanced`, `archive`, `compact`).
 
 Opcionales por perfil:
+- `postprocessings`: lista declarativa de postprocesados (modelado formal en Hito 8).
 - cualquier bloque semántico adicional de alto nivel (ej. `retention`).
 
 Reglas:
@@ -81,6 +82,7 @@ Obligatorias por suscripción:
 
 Opcionales:
 - `enabled`: `boolean`.
+- `postprocessings`: lista declarativa para ajuste por suscripción.
 - `schedule` (objeto):
   - `mode`: `manual|interval`.
   - `every_hours`: entero (condicional).

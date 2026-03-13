@@ -1,0 +1,5 @@
+subscriptions:
+  - name: bad-sub
+    profile: bad-profile
+    sources:
+      - channel_audio

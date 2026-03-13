@@ -18,6 +18,7 @@ _ALLOWED_PROFILE_KEYS = {
     "element_type",
     "x-meta",
     "override_policies",
+    "postprocessings",
 }
 _ALLOWED_SUBSCRIPTION_KEYS = {
     "name",
@@ -32,6 +33,7 @@ _ALLOWED_SUBSCRIPTION_KEYS = {
     "max_duration_seconds",
     "x-meta",
     "overrides",
+    "postprocessings",
 }
 _ALLOWED_MEDIA_TYPES = {"audio", "video", "shorts"}
 

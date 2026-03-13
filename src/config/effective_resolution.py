@@ -13,6 +13,32 @@ class EffectiveResolutionError(ValueError):
     """Error al resolver configuración efectiva."""
 
 
+class PostprocessingKind(str, Enum):
+    METADATA_TEXT = "metadata_text"
+    METADATA_IMAGES = "metadata_images"
+    EMBED_METADATA = "embed_metadata"
+    EXPORT_INFO_JSON = "export_info_json"
+    MAX_DURATION = "max_duration"
+
+
+@dataclass(frozen=True)
+class ResolvedPostprocessing:
+    kind: PostprocessingKind
+    enabled: bool
+    parameters: dict[str, str | int | float | bool]
+    origin: str
+    parameter_origins: dict[str, str]
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "kind": self.kind.value,
+            "enabled": self.enabled,
+            "parameters": dict(self.parameters),
+            "origin": self.origin,
+            "parameter_origins": dict(self.parameter_origins),
+        }
+
+
 @dataclass(frozen=True)
 class OverrideDecision:
     field: str
@@ -42,6 +68,7 @@ class EffectiveSubscriptionConfig:
     resolved_options: dict[str, str | int | float | bool]
     value_origins: dict[str, str]
     override_decisions: tuple[OverrideDecision, ...]
+    postprocessings: tuple[ResolvedPostprocessing, ...]
     effective_signature: str
 
     def to_dict(self) -> dict[str, Any]:
@@ -51,6 +78,7 @@ class EffectiveSubscriptionConfig:
             "resolved_options": dict(self.resolved_options),
             "value_origins": dict(self.value_origins),
             "override_decisions": [item.to_dict() for item in self.override_decisions],
+            "postprocessings": [item.to_dict() for item in self.postprocessings],
             "effective_signature": self.effective_signature,
         }
 
@@ -90,6 +118,14 @@ _FIELD_TYPE_RULES: dict[str, type[Any]] = {
     "audio_language": str,
     "video_container": str,
     "max_duration_seconds": int,
+}
+
+_POSTPROCESSING_DEFAULTS: dict[PostprocessingKind, dict[str, str | int | float | bool]] = {
+    PostprocessingKind.METADATA_TEXT: {"filename": "metadata.txt", "include_description": True},
+    PostprocessingKind.METADATA_IMAGES: {"include_thumbnail": True, "include_banner": False},
+    PostprocessingKind.EMBED_METADATA: {"mode": "safe"},
+    PostprocessingKind.EXPORT_INFO_JSON: {"pretty": False},
+    PostprocessingKind.MAX_DURATION: {},
 }
 
 
@@ -150,6 +186,14 @@ def resolve_effective_configs(
             resolved[key] = local_override_values[key]
             origins[key] = local_override_origins[key]
 
+        postprocessings = _resolve_postprocessings(
+            profile_name=profile.name,
+            subscription_name=subscription.name,
+            profile_payload=raw_profiles,
+            raw_subscription=raw_sub,
+            resolved_options=resolved,
+        )
+
         sources_canonical = tuple(sorted({source.strip() for source in subscription.sources}))
         _merge_layer(
             resolved,
@@ -173,6 +217,7 @@ def resolve_effective_configs(
             "profile_id": profile.name,
             "resolved_options": normalized_options,
             "override_decisions": [item.to_dict() for item in decisions],
+            "postprocessings": [item.to_dict() for item in postprocessings],
         }
 
         results.append(
@@ -182,6 +227,7 @@ def resolve_effective_configs(
                 resolved_options=normalized_options,
                 value_origins=normalized_origins,
                 override_decisions=decisions,
+                postprocessings=postprocessings,
                 effective_signature=_hash_payload(signature_payload),
             )
         )
@@ -499,3 +545,180 @@ def _safe_decision_value(value: Any) -> str | int | float | bool:
     if isinstance(value, (str, int, float, bool)):
         return _normalize_scalar(value)
     return json.dumps(value, sort_keys=True, ensure_ascii=False)
+
+
+def _resolve_postprocessings(
+    profile_name: str,
+    subscription_name: str,
+    profile_payload: Any,
+    raw_subscription: dict[str, Any],
+    resolved_options: dict[str, str | int | float | bool],
+) -> tuple[ResolvedPostprocessing, ...]:
+    raw_profile = _find_raw_profile(profile_payload, profile_name)
+    merged: dict[PostprocessingKind, ResolvedPostprocessing] = {}
+
+    for item in _parse_postprocessing_entries(
+        raw_profile.get("postprocessings", []),
+        f"profiles.yaml:{profile_name}",
+    ):
+        merged[item.kind] = item
+
+    for item in _parse_postprocessing_entries(
+        raw_subscription.get("postprocessings", []),
+        f"subscriptions.yaml:{subscription_name}",
+    ):
+        if not item.enabled:
+            merged.pop(item.kind, None)
+            continue
+        if item.kind in merged:
+            base = merged[item.kind]
+            params = dict(base.parameters)
+            param_origins = dict(base.parameter_origins)
+            params.update(item.parameters)
+            param_origins.update(item.parameter_origins)
+            merged[item.kind] = ResolvedPostprocessing(
+                kind=item.kind,
+                enabled=True,
+                parameters=params,
+                origin=item.origin,
+                parameter_origins=param_origins,
+            )
+        else:
+            merged[item.kind] = item
+
+    _validate_postprocessing_set(
+        profile_name=profile_name,
+        subscription_name=subscription_name,
+        postprocessings=tuple(merged.values()),
+        resolved_options=resolved_options,
+    )
+    return tuple(sorted(merged.values(), key=lambda item: item.kind.value))
+
+
+def _find_raw_profile(raw_profiles: Any, profile_name: str) -> dict[str, Any]:
+    if not isinstance(raw_profiles, list):
+        return {}
+    for item in raw_profiles:
+        if isinstance(item, dict) and item.get("name") == profile_name:
+            return item
+    return {}
+
+
+def _parse_postprocessing_entries(raw: Any, origin: str) -> tuple[ResolvedPostprocessing, ...]:
+    if raw is None:
+        return ()
+    if not isinstance(raw, list):
+        raise EffectiveResolutionError(f"{origin}.postprocessings debe ser una lista")
+
+    parsed: list[ResolvedPostprocessing] = []
+    for index, item in enumerate(raw):
+        path = f"{origin}.postprocessings[{index}]"
+        if not isinstance(item, dict):
+            raise EffectiveResolutionError(f"{path} debe ser un objeto")
+        raw_kind = item.get("type")
+        if not isinstance(raw_kind, str):
+            raise EffectiveResolutionError(f"{path}.type es obligatorio y debe ser string")
+        try:
+            kind = PostprocessingKind(raw_kind.strip())
+        except ValueError as exc:
+            raise EffectiveResolutionError(f"{path}.type '{raw_kind}' no está soportado") from exc
+
+        enabled = item.get("enabled", True)
+        if not isinstance(enabled, bool):
+            raise EffectiveResolutionError(f"{path}.enabled debe ser booleano")
+
+        parameters_raw = item.get("parameters", {})
+        if parameters_raw is None:
+            parameters_raw = {}
+        if not isinstance(parameters_raw, dict):
+            raise EffectiveResolutionError(f"{path}.parameters debe ser objeto")
+
+        parameters = dict(_POSTPROCESSING_DEFAULTS[kind])
+        parameter_origins = {key: f"{path}:defaults" for key in parameters}
+        for key in sorted(parameters_raw):
+            if not isinstance(key, str):
+                raise EffectiveResolutionError(f"{path}.parameters contiene clave no string")
+            parameters[key] = _normalize_scalar(parameters_raw[key])
+            parameter_origins[key] = path
+
+        _validate_postprocessing_item(kind=kind, path=path, parameters=parameters)
+
+        parsed.append(
+            ResolvedPostprocessing(
+                kind=kind,
+                enabled=enabled,
+                parameters=parameters,
+                origin=path,
+                parameter_origins=parameter_origins,
+            )
+        )
+    return tuple(parsed)
+
+
+def _validate_postprocessing_item(
+    kind: PostprocessingKind,
+    path: str,
+    parameters: dict[str, str | int | float | bool],
+) -> None:
+    if kind is PostprocessingKind.MAX_DURATION:
+        seconds = parameters.get("seconds")
+        if isinstance(seconds, bool) or not isinstance(seconds, int) or seconds <= 0:
+            raise EffectiveResolutionError(f"{path}.parameters.seconds debe ser int > 0")
+    if kind is PostprocessingKind.METADATA_TEXT:
+        filename = parameters.get("filename")
+        if not isinstance(filename, str) or not filename.strip():
+            raise EffectiveResolutionError(f"{path}.parameters.filename debe ser texto no vacío")
+        include_description = parameters.get("include_description")
+        if not isinstance(include_description, bool):
+            raise EffectiveResolutionError(
+                f"{path}.parameters.include_description debe ser booleano"
+            )
+    if kind is PostprocessingKind.METADATA_IMAGES:
+        for flag in ("include_thumbnail", "include_banner"):
+            if not isinstance(parameters.get(flag), bool):
+                raise EffectiveResolutionError(f"{path}.parameters.{flag} debe ser booleano")
+    if kind is PostprocessingKind.EMBED_METADATA:
+        mode = parameters.get("mode")
+        if mode not in {"safe", "force"}:
+            raise EffectiveResolutionError(f"{path}.parameters.mode debe ser 'safe' o 'force'")
+    if kind is PostprocessingKind.EXPORT_INFO_JSON and not isinstance(
+        parameters.get("pretty"), bool
+    ):
+        raise EffectiveResolutionError(f"{path}.parameters.pretty debe ser booleano")
+
+
+def _validate_postprocessing_set(
+    profile_name: str,
+    subscription_name: str,
+    postprocessings: tuple[ResolvedPostprocessing, ...],
+    resolved_options: dict[str, str | int | float | bool],
+) -> None:
+    kinds = {item.kind for item in postprocessings if item.enabled}
+    if PostprocessingKind.EMBED_METADATA in kinds and not (
+        PostprocessingKind.METADATA_TEXT in kinds or PostprocessingKind.METADATA_IMAGES in kinds
+    ):
+        raise EffectiveResolutionError(
+            "embed_metadata requiere metadata_text o metadata_images activos "
+            f"(perfil={profile_name}, suscripción={subscription_name})"
+        )
+
+    if (
+        PostprocessingKind.MAX_DURATION in kinds
+        and resolved_options.get("media_type") == "audio"
+    ):
+        raise EffectiveResolutionError(
+            "max_duration no es compatible con media_type=audio "
+            f"(perfil={profile_name}, suscripción={subscription_name})"
+        )
+
+    metadata_text = next(
+        (item for item in postprocessings if item.kind is PostprocessingKind.METADATA_TEXT),
+        None,
+    )
+    if metadata_text and PostprocessingKind.EXPORT_INFO_JSON in kinds:
+        filename = metadata_text.parameters.get("filename")
+        if isinstance(filename, str) and filename.endswith(".json"):
+            raise EffectiveResolutionError(
+                "metadata_text con filename JSON es incompatible con export_info_json "
+                f"(perfil={profile_name}, suscripción={subscription_name})"
+            )
