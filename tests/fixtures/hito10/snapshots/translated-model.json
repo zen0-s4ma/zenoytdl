@@ -1,0 +1,61 @@
+[
+  {
+    "is_valid": true,
+    "issues": [],
+    "prepared_translation": {
+      "invocation": {
+        "binary": "ytdl-sub",
+        "extra_args": [
+          "--dry-run"
+        ],
+        "mode": "sub"
+      },
+      "is_valid": true,
+      "issues": [],
+      "mapped_fields": {
+        "media_type": "video",
+        "quality": "bv*+ba/b",
+        "schedule_mode": "interval",
+        "url": "techchannel_source"
+      },
+      "preset": "tv_show",
+      "profile_id": "profile_tv",
+      "subscription_id": "tech_channel",
+      "translation_signature": "3066444630eb7bf3c69c8b25116ae5a4f7d34f82abbbd4c4647645e28b20be32"
+    },
+    "preset_base": "tv_show",
+    "preset_bridge": "tv_show",
+    "profile_id": "profile_tv",
+    "subscription_id": "tech_channel",
+    "translation_signature": "311ee8fc0650c1ee74f454d6f8f4212ffced986e58e92cfaacf1253656d159eb",
+    "ytdl_sub_model": {
+      "integration_version": 2,
+      "meta": {
+        "effective_signature": "5d14cb86127fc7cd53fc9c797d1e7217dc130ae1de078bc90db3a1a4c6f2d2d8",
+        "internal_only_excluded": [
+          "schedule_mode"
+        ],
+        "prepared_translation_signature": "3066444630eb7bf3c69c8b25116ae5a4f7d34f82abbbd4c4647645e28b20be32",
+        "translation_stage": "hito10_ytdl_sub_model"
+      },
+      "subscription": {
+        "id": "tech_channel",
+        "invocation": {
+          "binary": "ytdl-sub",
+          "extra_args": [
+            "--dry-run"
+          ],
+          "mode": "sub"
+        },
+        "options": {
+          "media_type": "video",
+          "quality": "bv*+ba/b",
+          "url": "techchannel_source"
+        },
+        "preset": "tv_show",
+        "preset_bridge": "tv_show",
+        "profile": "profile_tv"
+      }
+    }
+  }
+]

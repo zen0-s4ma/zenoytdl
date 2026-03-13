@@ -43,6 +43,7 @@ class TranslationRule:
     value_mapping: dict[str, str | int | float | bool]
     default_value: str | int | float | bool | None
     required: bool
+    internal_only: bool
 
 
 @dataclass(frozen=True)
@@ -174,6 +175,10 @@ def parse_integration_contract(payload: dict[str, Any]) -> YtdlSubIntegrationCon
             required=_coerce_bool(
                 raw_rule.get("required", False),
                 f"translation_rules.{field}.required",
+            ),
+            internal_only=_coerce_bool(
+                raw_rule.get("internal_only", False),
+                f"translation_rules.{field}.internal_only",
             ),
         )
 

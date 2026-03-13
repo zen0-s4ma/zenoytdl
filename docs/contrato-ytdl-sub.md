@@ -34,6 +34,7 @@ Reglas por campo para traducir valores:
 - `map_values`: mapa explícito de valor origen a valor destino,
 - `default`: valor por defecto opcional,
 - `required`: obliga traducción válida del campo.
+- `internal_only`: permite mapear para validación/traza pero excluir del modelo ytdl-sub traducido (Hito 10).
 
 ### 5) `compatibility`
 Reglas de versión del proveedor:
