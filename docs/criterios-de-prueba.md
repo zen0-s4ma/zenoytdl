@@ -9,6 +9,15 @@
 - Resiliencia
 - Validación de configuración
 
+## Comandos mínimos operativos (Hito 0 en curso)
+- Lint: `python -m ruff check src tests`
+- Unitarias: `python -m pytest tests/unit -m unit`
+- Integración: `python -m pytest tests/integration -m integration`
+- E2E: `python -m pytest tests/e2e -m e2e`
+- Regresión acumulada: `python -m pytest tests/regression -m regression`
+
+Detalle operativo ampliado: `docs/operacion-comandos.md`.
+
 ## Regla de cierre de hito
 Un hito no está cerrado hasta pasar:
 1. pruebas específicas del hito,

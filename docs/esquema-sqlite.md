@@ -46,5 +46,9 @@
 - transición de estado válida en `jobs`.
 - integridad referencial preservada.
 
+## Smoke check de persistencia (Hito 0)
+El bootstrap mínimo del core valida que SQLite puede abrir la ruta de estado y ejecutar `SELECT 1`.
+Este smoke check confirma disponibilidad del runtime y del archivo de estado en entorno limpio.
+
 ## Migraciones
 Toda migración debe ser reversible o, si no lo es, documentar claramente su impacto.
