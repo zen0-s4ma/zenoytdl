@@ -1,4 +1,4 @@
-workspace: /data/zenoytdl
+workspace: /data/library
 default_profile: default
 environment: development
 log_level: INFO
