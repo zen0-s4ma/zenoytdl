@@ -10,6 +10,8 @@ class DependencyStatus:
 
 @dataclass(frozen=True)
 class BootstrapReport:
+    runtime_workspace: str
+    runtime_log_level: str
     config_loaded: bool
     sqlite_ready: bool
     ytdl_sub: DependencyStatus

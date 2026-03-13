@@ -45,8 +45,8 @@ Fortalecer la base técnica mínima del core para arrancar sin deuda inicial, ma
 
 ## 9. Log de progreso
 - [x] Diagnóstico inicial de cobertura Hito 0.
-- [ ] Implementación y pruebas.
-- [ ] Validación final y veredicto de cierre.
+- [x] Implementación y pruebas.
+- [x] Validación final y veredicto de cierre.
 
 ## 10. Decisiones tomadas
 - Se crea este ExecPlan porque el trabajo es multietapa y transversal (src + tests + planes).

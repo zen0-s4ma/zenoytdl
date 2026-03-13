@@ -32,5 +32,7 @@ def test_cli_bootstrap_reports_dependencies_with_fake_binaries(tmp_path) -> None
     assert result.returncode == 0
     assert payload["ok"] is True
     assert payload["sqlite_ready"] is True
+    assert payload["runtime"]["log_level"] == "INFO"
+    assert payload["runtime"]["workspace"]
     assert payload["dependencies"]["ytdl-sub"]["available"] is True
     assert payload["dependencies"]["ffmpeg"]["available"] is True
