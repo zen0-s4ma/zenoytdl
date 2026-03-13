@@ -1,0 +1,6 @@
+subscriptions:
+  - name: podcast-main
+    element_type: subscription
+    profile: unknown-profile
+    sources:
+      - channel_audio

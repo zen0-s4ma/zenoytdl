@@ -1,0 +1,18 @@
+subscriptions:
+  - name: podcast-main
+    element_type: subscription
+    profile: audio-archive
+    media_type: audio
+    audio_language: es
+    sources:
+      - channel_audio
+  - name: docs-main
+    element_type: subscription
+    profile: video-main
+    media_type: video
+    video_container: mkv
+    schedule:
+      mode: interval
+      every_hours: 6
+    sources:
+      - playlist_docs

@@ -10,6 +10,14 @@ from src.config.config_loader import (
     build_config_signature,
     load_parsed_config_bundle,
 )
+from src.config.validation import (
+    SemanticValidationError,
+    ValidationIssue,
+    ValidationReport,
+    ensure_semantic_valid,
+    validate_config_dir,
+    validate_parsed_config_bundle,
+)
 from src.config.yaml_contract import (
     ContractBundle,
     ContractValidationError,
@@ -31,4 +39,10 @@ __all__ = [
     "ContractValidationError",
     "ensure_minimal_config",
     "load_contract_bundle",
+    "SemanticValidationError",
+    "ValidationIssue",
+    "ValidationReport",
+    "ensure_semantic_valid",
+    "validate_config_dir",
+    "validate_parsed_config_bundle",
 ]

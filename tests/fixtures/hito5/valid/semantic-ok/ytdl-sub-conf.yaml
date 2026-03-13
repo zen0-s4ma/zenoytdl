@@ -1,0 +1,6 @@
+integration:
+  provider: ytdl-sub
+  min_version: "2024.01"
+profile_preset_map:
+  archive: audio_preset
+  hq: video_preset

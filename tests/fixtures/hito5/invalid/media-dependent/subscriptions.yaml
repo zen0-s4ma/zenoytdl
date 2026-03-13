@@ -1,0 +1,8 @@
+subscriptions:
+  - name: shorts-sub
+    element_type: subscription
+    profile: shorts-main
+    media_type: shorts
+    max_duration_seconds: 0
+    sources:
+      - playlist_shorts

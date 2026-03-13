@@ -1,0 +1,5 @@
+profiles:
+  - name: audio-archive
+    element_type: profile
+    media_type: audio
+    quality_profile: archive

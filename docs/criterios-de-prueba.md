@@ -70,3 +70,9 @@ Criterios de aceptación de estas pruebas:
 - Integración: `tests/integration/test_config_loader_domain_integration.py`.
 - E2E: `tests/e2e/test_config_loader_flow.py`.
 - Regresión: `tests/regression/test_hito4_config_loader_regression.py`.
+
+## Cobertura mínima específica de validación estructural/semántica (Hito 5)
+- Unitarias: `tests/unit/test_config_validation.py`.
+- Integración: `tests/integration/test_config_validation_integration.py`.
+- E2E: `tests/e2e/test_config_validation_flow.py`.
+- Regresión: `tests/regression/test_hito5_validation_regression.py`.
