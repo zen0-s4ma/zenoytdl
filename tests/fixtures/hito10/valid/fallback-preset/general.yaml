@@ -1,0 +1,6 @@
+workspace: ./workspace
+library_dir: ./workspace/library
+environment: test
+default_profile: profile_tv
+execution:
+  dry_run: true

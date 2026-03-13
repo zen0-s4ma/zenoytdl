@@ -9,6 +9,12 @@ from src.integration.ytdl_sub.contract import (
     prepare_translation_batch,
     prepare_translation_batch_from_bundle,
 )
+from src.integration.ytdl_sub.translator import (
+    TranslatedYtdlSubModel,
+    translate_batch_to_ytdl_sub_model,
+    translate_bundle_to_ytdl_sub_model,
+    translate_effective_config_to_ytdl_sub_model,
+)
 
 __all__ = [
     "IntegrationContractError",
@@ -20,4 +26,8 @@ __all__ = [
     "prepare_translation",
     "prepare_translation_batch",
     "prepare_translation_batch_from_bundle",
+    "TranslatedYtdlSubModel",
+    "translate_effective_config_to_ytdl_sub_model",
+    "translate_batch_to_ytdl_sub_model",
+    "translate_bundle_to_ytdl_sub_model",
 ]

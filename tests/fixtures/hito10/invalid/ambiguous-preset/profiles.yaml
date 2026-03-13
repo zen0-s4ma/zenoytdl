@@ -1,0 +1,5 @@
+profiles:
+  - name: profile_tv
+    element_type: profile
+    media_type: video
+    quality_profile: balanced

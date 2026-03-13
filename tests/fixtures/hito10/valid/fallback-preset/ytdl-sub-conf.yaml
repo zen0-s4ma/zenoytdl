@@ -1,0 +1,37 @@
+integration:
+  provider: ytdl-sub
+  min_version: "2024.10"
+  binary: ytdl-sub
+profile_preset_map:
+  balanced: tv_show
+integration_version: 2
+preset_mapping:
+  balanced: tv_show
+field_mapping:
+  quality_profile: quality
+  media_type: media_type
+  primary_source: url
+translation_rules:
+  quality_profile:
+    map_values:
+      balanced: "bv*+ba/b"
+    required: true
+  media_type:
+    map_values:
+      video: video
+      audio: audio
+    required: true
+compatibility:
+  min_ytdl_sub_version: "2024.10"
+  policy: strict
+fallback_policy:
+  on_missing_field: reject
+  on_missing_preset: use_fallback
+  fallback_preset: fallback_generic
+validation:
+  strict_unknown_fields: false
+  abort_on_partial_translation: true
+invocation:
+  binary: ytdl-sub
+  mode: sub
+  extra_args: []
