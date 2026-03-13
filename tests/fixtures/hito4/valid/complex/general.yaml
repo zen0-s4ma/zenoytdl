@@ -1,0 +1,6 @@
+workspace: ./runtime
+library_dir: ./runtime/library
+environment: staging
+default_profile: archive-video
+execution:
+  dry_run: false

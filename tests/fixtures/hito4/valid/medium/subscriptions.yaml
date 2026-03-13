@@ -1,0 +1,14 @@
+subscriptions:
+  - name: world-news
+    profile: news
+    enabled: true
+    schedule:
+      mode: interval
+      every_hours: 6
+    sources:
+      - playlist_news
+  - name: shorts-feed
+    profile: shorts-compact
+    enabled: false
+    sources:
+      - search_shorts_science

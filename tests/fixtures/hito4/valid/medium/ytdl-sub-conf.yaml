@@ -1,0 +1,9 @@
+integration:
+  provider: ytdl-sub
+  min_version: "2024.03"
+  binary: ./bin/ytdl-sub
+profile_preset_map:
+  balanced: tv_show
+  compact: shorts_fast
+invocation:
+  extra_args: ["--dry-run", "--verbose"]

@@ -2,6 +2,8 @@
 
 ## Alcance normativo
 
+Implementación de parseo/carga (Hito 4): `docs/parseo-carga-hito4.md`.
+
 Este documento define **exclusivamente** el contrato declarativo del Hito 3.
 No incluye:
 - parseo completo a dominio (Hito 4),
