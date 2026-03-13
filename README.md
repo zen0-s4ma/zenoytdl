@@ -603,7 +603,7 @@ La contenerización persigue lograr despliegue reproducible, aislamiento del run
 
 ## Estrategia general de Dockerización
 
-La estrategia general consiste en encapsular Zenoytdl y sus dependencias necesarias dentro de uno o varios contenedores, con volúmenes persistentes para configuración, datos, caché, base de datos y resultados.
+La estrategia general consiste en encapsular Zenoytdl y sus dependencias necesarias dentro de uno o varios contenedores, usando bind mount de configuración en `/config` y persistencia en rutas `/data/...` definidas por contrato de runtime.
 
 ## Estructura de contenedores
 
@@ -771,7 +771,7 @@ Describe variables, montajes, servicios, healthchecks, límites y parámetros ne
 
 ## Ficheros de configuración
 
-### configuracion-general.yaml
+### general.yaml
 
 #### Propósito
 
@@ -796,11 +796,13 @@ Ejemplos de campos esperables:
 #### Ejemplo esperado
 
 ```yaml
-workspace: /data/zenoytdl
+workspace: /data/library
 environment: production
 default_profile: default
 log_level: INFO
 database_path: /data/state.sqlite
+cache_path: /data/cache.sqlite
+compiled_config_dir: /data/compiled-ytdl-sub
 max_parallelism: 2
 ```
 
@@ -1018,7 +1020,7 @@ Y en el futuro puede ampliarse con servicios auxiliares.
 
 #### Observaciones importantes
 
-- debe reflejar correctamente volúmenes persistentes;
+- debe reflejar rutas persistentes del contrato (`/data/library`, `/data/tmp`, `/data/logs`, `/data/state.sqlite`, `/data/cache.sqlite`, `/data/compiled-ytdl-sub`);
 - debe exponer sólo lo necesario;
 - debe definir variables de entorno relevantes;
 - debe incluir healthchecks cuando proceda;

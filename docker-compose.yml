@@ -1,10 +1,29 @@
 services:
   zenoytdl:
     image: zenoytdl:dev
+    container_name: zenoytdl
+    restart: unless-stopped
+    user: "1000:1000"
     volumes:
-      - ./examples/config-minima:/data/config
-      - ./data/cache:/data/cache
-      - ./data/output:/data/output
+      # Configuración por bind mount (contrato de Hito 1)
+      - ./examples/config-minima:/config:ro
+
+      # Persistencia runtime /data (ejemplo; no implica cierre de Hito 22)
+      - ./data/library:/data/library
+      - ./data/tmp:/data/tmp
       - ./data/logs:/data/logs
+      - ./data/compiled-ytdl-sub:/data/compiled-ytdl-sub
+      - ./data/state.sqlite:/data/state.sqlite
+      - ./data/cache.sqlite:/data/cache.sqlite
     environment:
       - ZENOYTDL_LOG_LEVEL=INFO
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "command -v ffmpeg >/dev/null && command -v ffprobe >/dev/null && command -v ytdl-sub >/dev/null && test -d /data/library && test -d /data/logs && test -d /data/compiled-ytdl-sub && test -w /data && test -w /data/logs"
+        ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
