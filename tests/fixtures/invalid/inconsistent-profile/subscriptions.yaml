@@ -1,0 +1,6 @@
+subscriptions:
+  - name: bad-sub
+    profile: does-not-exist
+    enabled: true
+    items:
+      - https://example.com/b

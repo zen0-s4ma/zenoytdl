@@ -1,4 +1,6 @@
-- name: default
-  platform: generic
-  ytdl_options:
-    quality: best
+profiles:
+  - name: default
+    platform: generic
+    preset: base_video
+    ytdl_options:
+      quality: best

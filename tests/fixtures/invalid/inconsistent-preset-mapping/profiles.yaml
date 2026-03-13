@@ -1,6 +1,6 @@
 profiles:
   - name: default
     platform: generic
-    preset: base_video
+    preset: unmapped_preset
     ytdl_options:
       quality: best
