@@ -1,7 +1,7 @@
 .PHONY: lint test-unit test-integration test-e2e test-regression test-all bootstrap
 
 bootstrap:
-	python -m src.api.cli --config tests/fixtures/clean/minimal.yaml
+	PATH="tests/fixtures/bin:$$PATH" python -m src.api.cli --config tests/fixtures/clean/minimal.yaml
 
 lint:
 	python -m ruff check src tests

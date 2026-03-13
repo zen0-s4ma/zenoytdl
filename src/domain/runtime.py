@@ -16,6 +16,7 @@ class BootstrapReport:
     sqlite_ready: bool
     ytdl_sub: DependencyStatus
     ffmpeg: DependencyStatus
+    ffprobe: DependencyStatus
 
     @property
     def ok(self) -> bool:
@@ -24,4 +25,5 @@ class BootstrapReport:
             and self.sqlite_ready
             and self.ytdl_sub.available
             and self.ffmpeg.available
+            and self.ffprobe.available
         )

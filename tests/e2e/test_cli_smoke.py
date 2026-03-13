@@ -36,3 +36,4 @@ def test_cli_bootstrap_reports_dependencies_with_fake_binaries(tmp_path) -> None
     assert payload["runtime"]["workspace"]
     assert payload["dependencies"]["ytdl-sub"]["available"] is True
     assert payload["dependencies"]["ffmpeg"]["available"] is True
+    assert payload["dependencies"]["ffprobe"]["available"] is True

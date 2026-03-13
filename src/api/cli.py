@@ -20,6 +20,7 @@ def build_bootstrap_report(config: str, state_db: str) -> BootstrapReport:
         sqlite_ready=sqlite_smoke_check(state_db),
         ytdl_sub=detect_binary("ytdl-sub"),
         ffmpeg=detect_binary("ffmpeg"),
+        ffprobe=detect_binary("ffprobe"),
     )
 
 
@@ -51,6 +52,10 @@ def main() -> int:
             "ffmpeg": {
                 "available": report.ffmpeg.available,
                 "detail": report.ffmpeg.detail,
+            },
+            "ffprobe": {
+                "available": report.ffprobe.available,
+                "detail": report.ffprobe.detail,
             },
         },
     }
