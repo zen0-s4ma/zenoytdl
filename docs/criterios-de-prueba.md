@@ -45,19 +45,19 @@ La verificación mínima de Hito 0 debe incluir evidencia real de:
 
 
 ## Criterios específicos para colas y caché (Hitos 17-18)
-Estados oficiales a validar en pruebas: `pending`, `running`, `success`, `retry`, `dead_letter`, `cancelled`.
+Estados oficiales a validar en pruebas: `queued`, `scheduled`, `running`, `waiting`, `completed`, `failed`, `retry_pending`, `cancelled`, `dead_letter`.
 
 Cobertura mínima obligatoria de regresión:
-1. flujo de éxito (`pending -> running -> success`),
-2. flujo con reintento (`running -> retry -> pending`),
-3. agotamiento de reintentos y paso a `dead_letter`,
-4. cancelación en `pending` y en `running`,
-5. deduplicación por clave de item/firma y por existencia de job activo.
+1. flujo de éxito (`queued -> running -> completed`),
+2. flujo de planificación/espera (`queued -> scheduled -> waiting -> running -> completed`),
+3. flujo de error controlado (`running -> failed -> retry_pending`),
+4. cancelación en `queued` y en `running`,
+5. deduplicación por firma y por existencia de job activo.
 
 Criterios de aceptación de estas pruebas:
 - no hay transiciones inválidas ni reapertura de estados terminales;
 - `attempts` incrementa de forma consistente por ejecución real;
-- los casos de deduplicación no crean jobs duplicados en `pending|running|retry`.
+- los casos de deduplicación no crean jobs duplicados en `queued|scheduled|running|waiting|retry_pending`.
 
 ## Cobertura mínima específica del contrato YAML (Hito 3)
 - Unitarias: `tests/unit/test_yaml_contract.py`.

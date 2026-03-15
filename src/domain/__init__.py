@@ -8,6 +8,7 @@ from src.domain.models import (
     GeneralConfig,
     Job,
     JobKind,
+    JobPriority,
     JobStatus,
     Override,
     PostProcessing,
@@ -16,6 +17,7 @@ from src.domain.models import (
     Subscription,
     SubscriptionSourceKind,
     normalize_identifier,
+    sign_job,
 )
 from src.domain.runtime import BootstrapReport, DependencyStatus
 from src.domain.serialization import serialize_catalog, serialize_state
@@ -32,6 +34,7 @@ __all__ = [
     "GeneralConfig",
     "Job",
     "JobKind",
+    "JobPriority",
     "JobStatus",
     "Override",
     "PostProcessing",
@@ -40,6 +43,7 @@ __all__ = [
     "Subscription",
     "SubscriptionSourceKind",
     "normalize_identifier",
+    "sign_job",
     "serialize_catalog",
     "serialize_state",
 ]

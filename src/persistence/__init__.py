@@ -3,7 +3,10 @@ from src.persistence.sqlite_state import (
     SCHEMA_VERSION,
     ExecutionPersistenceEnvelope,
     PersistedRunRecord,
+    QueueJobEnvelope,
+    QueueJobRecord,
     SQLiteOperationalState,
+    sign_queue_job,
 )
 
 __all__ = [
@@ -11,5 +14,8 @@ __all__ = [
     "SCHEMA_VERSION",
     "ExecutionPersistenceEnvelope",
     "PersistedRunRecord",
+    "QueueJobEnvelope",
+    "QueueJobRecord",
     "SQLiteOperationalState",
+    "sign_queue_job",
 ]
