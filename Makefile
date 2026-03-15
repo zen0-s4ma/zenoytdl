@@ -1,4 +1,4 @@
-.PHONY: lint test-unit test-integration test-e2e test-regression test-all bootstrap
+.PHONY: lint test-unit test-integration test-e2e test-regression test-all test-hito20 bootstrap
 
 bootstrap:
 	PATH="tests/fixtures/bin:$$PATH" python -m src.api.cli --config tests/fixtures/clean/minimal.yaml
@@ -20,3 +20,7 @@ test-regression:
 
 test-all:
 	python -m pytest -m "unit or integration or e2e or regression"
+
+
+test-hito20:
+	python -m pytest tests/unit/test_hito20_integral_suite.py tests/integration/test_hito20_integral_integration.py tests/e2e/test_hito20_integral_flow.py tests/regression/test_hito20_integral_suite_regression.py

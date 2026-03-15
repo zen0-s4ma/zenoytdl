@@ -161,3 +161,10 @@ Criterios de aceptación de estas pruebas:
   - `python -m pytest tests/e2e/test_hito19_core_api_flow.py`
 - Regresión del contrato API (códigos/payloads/efectos):
   - `python -m pytest tests/regression/test_hito19_core_api_regression.py`
+
+
+## Cobertura mínima específica de suite integral (Hito 20)
+- Unitarias de integridad de suite y cobertura de dominios críticos: `python -m pytest tests/unit/test_hito20_integral_suite.py`.
+- Integración transversal core (validación → resolución → compilación → cola → estado/anti-redescarga/retención/caché): `python -m pytest tests/integration/test_hito20_integral_integration.py`.
+- E2E integral en entorno controlado + comprobación opcional de binario real: `python -m pytest tests/e2e/test_hito20_integral_flow.py`.
+- Regresión específica del hito: `python -m pytest tests/regression/test_hito20_integral_suite_regression.py`.

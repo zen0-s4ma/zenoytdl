@@ -101,3 +101,11 @@ Estado: **en ejecución**. Esta guía define comandos mínimos operativos sin de
 - Integración API + dominio/persistencia/cola/caché: `python -m pytest tests/integration/test_hito19_core_api_integration.py`
 - E2E cliente API -> validación/cola/ejecución/estado: `python -m pytest tests/e2e/test_hito19_core_api_flow.py`
 - Regresión contrato API H19: `python -m pytest tests/regression/test_hito19_core_api_regression.py`
+
+
+## Verificación específica Hito 20 (suite de pruebas integral)
+- Unitarias de integridad de suite H20: `python -m pytest tests/unit/test_hito20_integral_suite.py`
+- Integración transversal del core completo: `python -m pytest tests/integration/test_hito20_integral_integration.py`
+- E2E integral controlado + chequeo opcional de binario real: `python -m pytest tests/e2e/test_hito20_integral_flow.py`
+- Regresión de contratos cruzados del hito: `python -m pytest tests/regression/test_hito20_integral_suite_regression.py`
+- Ejecución focalizada consolidada H20: `python -m pytest tests/unit/test_hito20_integral_suite.py tests/integration/test_hito20_integral_integration.py tests/e2e/test_hito20_integral_flow.py tests/regression/test_hito20_integral_suite_regression.py`
