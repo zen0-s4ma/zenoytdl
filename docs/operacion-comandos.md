@@ -86,3 +86,11 @@ Estado: **en ejecución**. Esta guía define comandos mínimos operativos sin de
 - Integración cola + SQLite + asociación: `python -m pytest tests/integration/test_hito17_queue_integration.py`
 - E2E alta múltiple + consulta cola completa: `python -m pytest tests/e2e/test_hito17_queue_flow.py`
 - Regresión cola canónica: `python -m pytest tests/regression/test_hito17_queue_regression.py`
+
+
+## Verificación específica Hito 18 (colas: ejecución, reintentos y concurrencia)
+- Unitarias runtime/retry/concurrencia/dead-letter: `python -m pytest tests/unit/test_hito18_queue_runtime.py`
+- Unitarias persistencia cola H18: `python -m pytest tests/unit/test_sqlite_operational_state.py -k hito18`
+- Integración workers + persistencia + reglas de retry/dead-letter: `python -m pytest tests/integration/test_hito18_queue_runtime_integration.py`
+- E2E cola poblada -> workers -> estados finales: `python -m pytest tests/e2e/test_hito18_queue_runtime_flow.py`
+- Regresión mixta H18 (success+retry+dead-letter): `python -m pytest tests/regression/test_hito18_queue_runtime_regression.py`

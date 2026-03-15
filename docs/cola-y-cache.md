@@ -121,3 +121,19 @@ Cada avance en cola o caché debe venir con pruebas específicas y regresión ac
   - invalidación por error.
 - Métricas hit/miss por scope disponibles para inspección y pruebas (`metrics_snapshot`).
 - En caso de duda o inconsistencia, se fuerza miss y recomputación para priorizar corrección sobre velocidad.
+
+
+## Estado de implementación en Hito 18 (colas: ejecución, retries y concurrencia)
+- Workers operativos en proceso único (`QueueRuntime`) con selección por prioridad.
+- Concurrencia controlada por dos límites testeables:
+  - máximo global de workers por ciclo,
+  - máximo de jobs simultáneos por `subscription_id`.
+- Deduplicación efectiva en dos niveles:
+  - inserción persistida por firma canónica en estados activos,
+  - deduplicación operativa por claim atómico (`claim_queue_job`) que evita doble ejecución.
+- Reintentos con backoff exponencial acotado (`RetryPolicy`) y programación por `scheduled_at`.
+- Clasificación recuperable/no recuperable basada en severidad de ejecución para decidir retry o `dead_letter`.
+- Dead-letter persistente en `queue_dead_letter` con causa, intentos y trazabilidad temporal.
+- Integración con caché: cacheo de resultados exitosos por firma para evitar retrabajo inmediato en el scheduler.
+- Garantía explícita de incompatibilidad: no se ejecutan en paralelo jobs de la misma suscripción cuando `max_concurrent_by_subscription=1`.
+- Alcance intencional del hito: implementación single-process; sin coordinación distribuida ni workers remotos.

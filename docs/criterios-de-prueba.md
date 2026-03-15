@@ -139,3 +139,15 @@ Criterios de aceptación de estas pruebas:
 - Integración: `tests/integration/test_hito16_cache_integration.py`.
 - E2E: `tests/e2e/test_hito16_cache_flow.py`.
 - Regresión: `tests/regression/test_hito16_cache_regression.py`.
+
+
+## Batería focalizada Hito 18 (colas operativas)
+- Unitarias scheduler/backoff/deduplicación/dead-letter/concurrencia:
+  - `python -m pytest tests/unit/test_hito18_queue_runtime.py`
+  - `python -m pytest tests/unit/test_sqlite_operational_state.py -k hito18`
+- Integración workers + ejecutor controlado + persistencia/caché:
+  - `python -m pytest tests/integration/test_hito18_queue_runtime_integration.py`
+- E2E cola -> workers -> estados finales:
+  - `python -m pytest tests/e2e/test_hito18_queue_runtime_flow.py`
+- Regresión acumulada del hito:
+  - `python -m pytest tests/regression/test_hito18_queue_runtime_regression.py`
