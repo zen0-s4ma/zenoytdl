@@ -1,4 +1,3 @@
-import os
 from pathlib import Path
 
 import pytest
@@ -6,6 +5,7 @@ import pytest
 from src.config.config_loader import load_parsed_config_bundle
 from src.integration.ytdl_sub.compiler import compile_bundle_to_artifacts
 from src.integration.ytdl_sub.executor import execute_compiled_batch
+from tests.helpers.fake_ytdl_sub import make_path_with_fake_binary, write_fake_ytdl_sub
 
 
 @pytest.mark.regression
@@ -14,23 +14,22 @@ def test_hito12_executor_regression_stable_classification_and_traces(tmp_path: P
     compiled = compile_bundle_to_artifacts(bundle, tmp_path / "compiled")
 
     fake_bin = tmp_path / "bin"
-    fake_bin.mkdir()
-    fake = fake_bin / "ytdl-sub"
-    fake.write_text(
-        "#!/usr/bin/env bash\n"
-        "if [[ \"$*\" == *science_channel* ]]; then\n"
-        "  echo \"science-fail\" 1>&2\n"
-        "  exit 23\n"
-        "fi\n"
-        "echo \"tech-ok:$*\"\n"
-        "exit 0\n",
-        encoding="utf-8",
+    write_fake_ytdl_sub(
+        fake_bin,
+        (
+            'import sys\n'
+            'args = " ".join(sys.argv[1:])\n'
+            'if "science_channel" in args:\n'
+            '    print("science-fail", file=sys.stderr)\n'
+            '    raise SystemExit(23)\n'
+            'print("tech-ok:" + args)\n'
+            'raise SystemExit(0)\n'
+        ),
     )
-    fake.chmod(0o755)
 
     results = execute_compiled_batch(
         compiled,
-        env_overrides={"PATH": f"{fake_bin}:{os.environ.get('PATH', '')}"},
+        env_overrides={"PATH": make_path_with_fake_binary(fake_bin)},
         timeout_seconds=5,
     )
 

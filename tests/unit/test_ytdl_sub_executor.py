@@ -1,5 +1,4 @@
 import json
-import os
 from pathlib import Path
 
 import pytest
@@ -13,6 +12,7 @@ from src.integration.ytdl_sub.executor import (
     execute_compiled_artifact,
     prepare_execution_job,
 )
+from tests.helpers.fake_ytdl_sub import make_path_with_fake_binary, write_fake_ytdl_sub
 
 
 @pytest.mark.unit
@@ -23,15 +23,12 @@ def test_hito12_executor_builds_command_from_compiled_artifact(tmp_path: Path) -
     job = prepare_execution_job(artifact)
 
     fake_bin = tmp_path / "bin"
-    fake_bin.mkdir()
-    fake_runner = fake_bin / "ytdl-sub"
-    fake_runner.write_text("#!/usr/bin/env bash\nexit 0\n", encoding="utf-8")
-    fake_runner.chmod(0o755)
+    write_fake_ytdl_sub(fake_bin, "raise SystemExit(0)\n")
 
     command = build_execution_command(
         job,
         global_args=("--verbose",),
-        env_overrides={"PATH": f"{fake_bin}:{os.environ.get('PATH', '')}"},
+        env_overrides={"PATH": make_path_with_fake_binary(fake_bin)},
         timeout_seconds=12.5,
         temporary_root=tmp_path / "tmp-runtime",
     )
