@@ -1,0 +1,5 @@
+integration:
+  min_version: "2024.10"
+profile_preset_map:
+  balanced: tv_show
+  compact: podcast_audio

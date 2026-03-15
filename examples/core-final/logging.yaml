@@ -1,0 +1,4 @@
+level: INFO
+format: text
+sinks:
+  - stdout

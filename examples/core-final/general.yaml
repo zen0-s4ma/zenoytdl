@@ -1,0 +1,4 @@
+workspace: /data/zenoytdl
+environment: production
+default_profile: tv-main
+log_level: INFO

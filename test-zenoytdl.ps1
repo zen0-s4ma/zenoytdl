@@ -206,6 +206,18 @@ python -m pytest tests/e2e/test_hito20_integral_flow.py
 python -m pytest tests/regression/test_hito20_integral_suite_regression.py
 python -m pytest tests/unit/test_hito20_integral_suite.py tests/integration/test_hito20_integral_integration.py tests/e2e/test_hito20_integral_flow.py tests/regression/test_hito20_integral_suite_regression.py
 
+
+
+echo ""
+echo "============================================================"
+echo "🧱 HARDENING CORE · HITO 21"
+echo "============================================================"
+python -m pytest tests/unit/test_hito21_core_hardening.py
+python -m pytest tests/integration/test_hito21_core_hardening_integration.py
+python -m pytest tests/e2e/test_hito21_core_hardening_flow.py
+python -m pytest tests/regression/test_hito21_core_hardening_regression.py
+python -m pytest tests/unit/test_hito21_core_hardening.py tests/integration/test_hito21_core_hardening_integration.py tests/e2e/test_hito21_core_hardening_flow.py tests/regression/test_hito21_core_hardening_regression.py
+
 echo ""
 echo "============================================================"
 echo "🛠️ UTILIDADES Y COMPROBACIONES FINALES"
