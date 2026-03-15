@@ -1,6 +1,7 @@
 __init__
 api
 config
+core
 domain
 integration
 persistence

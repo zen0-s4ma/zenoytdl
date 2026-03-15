@@ -72,3 +72,9 @@ Estado: **en ejecución**. Esta guía define comandos mínimos operativos sin de
 - Integración persistencia+filesystem+purga: `python -m pytest tests/integration/test_hito15_retention_integration.py`
 - E2E flujo multi-item + purga automática: `python -m pytest tests/e2e/test_hito15_retention_flow.py`
 - Regresión dataset sobrecapacidad determinista: `python -m pytest tests/regression/test_hito15_retention_regression.py`
+
+## Verificación específica Hito 16 (sistema de caché)
+- Unitarias caché core: `python -m pytest tests/unit/test_hito16_cache_system.py`
+- Integración caché con validación/traducción/compilación: `python -m pytest tests/integration/test_hito16_cache_integration.py`
+- E2E doble ejecución con menor recomputación: `python -m pytest tests/e2e/test_hito16_cache_flow.py`
+- Regresión de hits/invalidaciones/igualdad funcional: `python -m pytest tests/regression/test_hito16_cache_regression.py`
