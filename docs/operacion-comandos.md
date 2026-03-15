@@ -60,3 +60,9 @@ Estado: **en ejecución**. Esta guía define comandos mínimos operativos sin de
 - E2E de huella persistida completa: `python -m pytest tests/e2e/test_hito13_persistence_flow.py`
 - Regresión Hito 13: `python -m pytest tests/regression/test_hito13_persistence_regression.py`
 
+
+## Verificación específica Hito 14 (anti-redescarga, historial y trazabilidad)
+- Unitarias anti-redescarga/historial: `python -m pytest tests/unit/test_sqlite_operational_state.py -k hito14`
+- Integración anti-redescarga persistida: `python -m pytest tests/integration/test_hito14_anti_redownload_integration.py`
+- E2E primera ejecución + descarte duplicado: `python -m pytest tests/e2e/test_hito14_anti_redownload_flow.py`
+- Regresión duplicado canónico: `python -m pytest tests/regression/test_hito14_anti_redownload_regression.py`

@@ -127,3 +127,9 @@ Criterios de aceptación de estas pruebas:
 - E2E: `tests/e2e/test_hito13_persistence_flow.py`.
 - Regresión: `tests/regression/test_hito13_persistence_regression.py`.
 
+
+## Cobertura mínima específica de anti-redescarga, historial y trazabilidad (Hito 14)
+- Unitarias: `tests/unit/test_sqlite_operational_state.py`.
+- Integración: `tests/integration/test_hito14_anti_redownload_integration.py`.
+- E2E: `tests/e2e/test_hito14_anti_redownload_flow.py`.
+- Regresión: `tests/regression/test_hito14_anti_redownload_regression.py`.

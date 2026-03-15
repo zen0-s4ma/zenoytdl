@@ -59,7 +59,7 @@ Bitácora de eventos operativos.
 - `id` (PK)
 - `run_id` (FK)
 - `subscription_id` (FK)
-- `event_kind` (`download|synchronization|discard|purge`)
+- `event_kind` (`download|synchronization|discard|failure|purge`)
 - `item_identifier`
 - `detail_json`
 - `created_at`
@@ -114,6 +114,12 @@ Estructura mínima para futura cola persistente.
 - `execution_runs.job_id` único para evitar duplicado accidental de huellas.
 - Integridad referencial obligatoria (`PRAGMA foreign_keys = ON`).
 - `known_items` mantiene último estado observado por item/suscripción.
+
+## Reglas operativas Hito 14 (anti-redescarga)
+- La decisión de ejecutar/descartar se calcula contra `known_items` persistido (no memoria efímera).
+- Un item con misma firma (`item_signature`) y estado previo `success|discarded_duplicate` se descarta como duplicado.
+- Un item con misma firma y estado previo `failed` se permite reintentar.
+- `run_events.detail_json` conserva motivo de decisión (`decision_reason`), descarte (`discard_reason`) y fallo (`failure_reason`) para trazabilidad consultable.
 
 ## Smoke check de persistencia (Hito 0)
 Se mantiene el smoke mínimo (`SELECT 1`) para disponibilidad de SQLite, complementado en Hito 13 con inicialización de esquema y escrituras/lecturas reales.
