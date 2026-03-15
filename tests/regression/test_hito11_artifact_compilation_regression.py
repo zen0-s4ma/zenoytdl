@@ -1,4 +1,5 @@
 import json
+import re
 from pathlib import Path
 from typing import Any
 
@@ -29,6 +30,13 @@ def _normalize_hashes(payload: dict[str, Any]) -> dict[str, Any]:
         normalized["batch_signature"] = "<stable-hash>"
 
     for artifact in normalized.get("artifacts", []):
+        layout_name = artifact.get("layout_name")
+        subscription_id = artifact.get("subscription_id")
+        if isinstance(layout_name, str):
+            assert re.fullmatch(r".+--[0-9a-f]{12}", layout_name)
+            if isinstance(subscription_id, str):
+                artifact["layout_name"] = f"{subscription_id}--<stable-hash12>"
+
         for key in [
             "compilation_signature",
             "effective_signature",
