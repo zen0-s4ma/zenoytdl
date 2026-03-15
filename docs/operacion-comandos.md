@@ -46,3 +46,10 @@ Estado: **en ejecución**. Esta guía define comandos mínimos operativos sin de
 - Integración traductor+compilador: `python -m pytest tests/integration/test_artifact_compiler_integration.py`
 - E2E compilación en disco: `python -m pytest tests/e2e/test_artifact_compiler_flow.py`
 - Regresión de artefactos compilados: `python -m pytest tests/regression/test_hito11_artifact_compilation_regression.py`
+
+
+## Verificación específica Hito 12 (ejecución controlada)
+- Unitarias ejecutor: `python -m pytest tests/unit/test_ytdl_sub_executor.py`
+- Integración compilador+ejecutor: `python -m pytest tests/integration/test_ytdl_sub_executor_integration.py`
+- E2E de ejecución controlada: `python -m pytest tests/e2e/test_ytdl_sub_executor_flow.py`
+- Regresión Hito 12: `python -m pytest tests/regression/test_hito12_ytdl_sub_executor_regression.py`

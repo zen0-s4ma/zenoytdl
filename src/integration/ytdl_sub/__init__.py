@@ -17,6 +17,19 @@ from src.integration.ytdl_sub.contract import (
     prepare_translation_batch,
     prepare_translation_batch_from_bundle,
 )
+from src.integration.ytdl_sub.executor import (
+    ExecutedJobResult,
+    ExecutionErrorType,
+    ExecutionJobUnit,
+    ExecutionPreparationError,
+    FailureSeverity,
+    PreparedExecutionCommand,
+    build_execution_command,
+    execute_compiled_artifact,
+    execute_compiled_batch,
+    execute_prepared_command,
+    prepare_execution_job,
+)
 from src.integration.ytdl_sub.translator import (
     TranslatedYtdlSubModel,
     translate_batch_to_ytdl_sub_model,
@@ -44,4 +57,15 @@ __all__ = [
     "compile_translated_model",
     "compile_translated_batch",
     "compile_bundle_to_artifacts",
+    "ExecutionPreparationError",
+    "ExecutionErrorType",
+    "FailureSeverity",
+    "ExecutionJobUnit",
+    "PreparedExecutionCommand",
+    "ExecutedJobResult",
+    "prepare_execution_job",
+    "build_execution_command",
+    "execute_prepared_command",
+    "execute_compiled_artifact",
+    "execute_compiled_batch",
 ]
