@@ -7,7 +7,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-SCHEMA_VERSION = 1
+SCHEMA_VERSION = 2
 
 
 @dataclass(frozen=True)
@@ -85,6 +85,16 @@ class AntiRedownloadDecision:
     previous_status: str | None
 
 
+@dataclass(frozen=True)
+class RetentionPurgeDecision:
+    item_identifier: str
+    item_signature: str
+    publication_at: str | None
+    fallback_at: str
+    storage_path: str | None
+    criterion_used: str
+
+
 class SQLiteOperationalState:
     """Persistencia operativa mínima Hito 13 para estado y trazabilidad."""
 
@@ -143,9 +153,18 @@ class SQLiteOperationalState:
                     last_seen_at TEXT NOT NULL,
                     last_run_id INTEGER,
                     last_status TEXT NOT NULL,
+                    publication_at TEXT,
+                    storage_path TEXT,
+                    retention_sort_at TEXT NOT NULL,
+                    retention_criterion TEXT NOT NULL,
+                    is_purged INTEGER NOT NULL DEFAULT 0,
+                    purged_at TEXT,
+                    purge_reason TEXT,
+                    purge_run_id INTEGER,
                     UNIQUE(subscription_id, item_identifier),
                     FOREIGN KEY (subscription_id) REFERENCES subscriptions(subscription_id),
-                    FOREIGN KEY (last_run_id) REFERENCES execution_runs(id)
+                    FOREIGN KEY (last_run_id) REFERENCES execution_runs(id),
+                    FOREIGN KEY (purge_run_id) REFERENCES execution_runs(id)
                 );
 
                 CREATE TABLE IF NOT EXISTS run_events (
@@ -208,6 +227,7 @@ class SQLiteOperationalState:
                 );
                 """
             )
+            self._migrate_known_items_for_v2(conn)
             conn.execute(f"PRAGMA user_version = {SCHEMA_VERSION}")
             conn.commit()
 
@@ -314,13 +334,29 @@ class SQLiteOperationalState:
                     first_seen_at,
                     last_seen_at,
                     last_run_id,
-                    last_status
-                ) VALUES (?, ?, ?, ?, ?, ?, ?)
+                    last_status,
+                    publication_at,
+                    storage_path,
+                    retention_sort_at,
+                    retention_criterion,
+                    is_purged,
+                    purged_at,
+                    purge_reason,
+                    purge_run_id
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, NULL, NULL, NULL)
                 ON CONFLICT(subscription_id, item_identifier) DO UPDATE SET
                     item_signature=excluded.item_signature,
                     last_seen_at=excluded.last_seen_at,
                     last_run_id=excluded.last_run_id,
-                    last_status=excluded.last_status
+                    last_status=excluded.last_status,
+                    publication_at=excluded.publication_at,
+                    storage_path=excluded.storage_path,
+                    retention_sort_at=excluded.retention_sort_at,
+                    retention_criterion=excluded.retention_criterion,
+                    is_purged=0,
+                    purged_at=NULL,
+                    purge_reason=NULL,
+                    purge_run_id=NULL
                 """,
                 (
                     envelope.subscription_id,
@@ -330,6 +366,10 @@ class SQLiteOperationalState:
                     envelope.finished_at,
                     run_id,
                     envelope.status,
+                    _extract_publication_at(envelope.command_payload),
+                    _extract_storage_path(envelope.command_payload),
+                    _select_retention_sort_at(envelope.command_payload, envelope.finished_at),
+                    _select_retention_criterion(envelope.command_payload),
                 ),
             )
 
@@ -399,7 +439,18 @@ class SQLiteOperationalState:
 
             items = conn.execute(
                 """
-                SELECT item_identifier, item_signature, last_status, first_seen_at, last_seen_at
+                SELECT
+                    item_identifier,
+                    item_signature,
+                    last_status,
+                    first_seen_at,
+                    last_seen_at,
+                    publication_at,
+                    retention_sort_at,
+                    retention_criterion,
+                    is_purged,
+                    purged_at,
+                    purge_reason
                 FROM known_items
                 WHERE subscription_id = ?
                 ORDER BY item_identifier ASC
@@ -449,6 +500,12 @@ class SQLiteOperationalState:
                     "last_status": row["last_status"],
                     "first_seen_at": row["first_seen_at"],
                     "last_seen_at": row["last_seen_at"],
+                    "publication_at": row["publication_at"],
+                    "retention_sort_at": row["retention_sort_at"],
+                    "retention_criterion": row["retention_criterion"],
+                    "is_purged": bool(row["is_purged"]),
+                    "purged_at": row["purged_at"],
+                    "purge_reason": row["purge_reason"],
                 }
                 for row in items
             ],
@@ -477,6 +534,7 @@ class SQLiteOperationalState:
                 SELECT item_signature, last_status
                 FROM known_items
                 WHERE subscription_id = ? AND item_identifier = ?
+                  AND is_purged = 0
                 """,
                 (subscription_id, item_identifier),
             ).fetchone()
@@ -523,6 +581,140 @@ class SQLiteOperationalState:
             reason="state_allows_execution",
             known_item_found=True,
             previous_status=previous_status,
+        )
+
+    def apply_retention_policy(
+        self,
+        *,
+        subscription_id: str,
+        profile_id: str,
+        max_items: int,
+        triggering_run_id: int,
+        reason: str = "max_items_exceeded",
+    ) -> tuple[RetentionPurgeDecision, ...]:
+        if max_items <= 0:
+            raise ValueError("max_items debe ser mayor que cero")
+
+        with self._connect() as conn:
+            active_rows = conn.execute(
+                """
+                SELECT
+                    item_identifier,
+                    item_signature,
+                    publication_at,
+                    first_seen_at,
+                    retention_sort_at,
+                    retention_criterion,
+                    storage_path
+                FROM known_items
+                WHERE subscription_id = ?
+                  AND is_purged = 0
+                ORDER BY
+                    retention_sort_at DESC,
+                    first_seen_at DESC,
+                    item_identifier DESC
+                """,
+                (subscription_id,),
+            ).fetchall()
+
+            if len(active_rows) <= max_items:
+                return tuple()
+
+            purge_rows = active_rows[max_items:]
+            purged_at = _utc_now()
+            decisions: list[RetentionPurgeDecision] = []
+
+            for row in purge_rows:
+                storage_path = row["storage_path"]
+                if isinstance(storage_path, str) and storage_path:
+                    storage = Path(storage_path)
+                    if storage.exists() and storage.is_file():
+                        storage.unlink()
+
+                conn.execute(
+                    """
+                    UPDATE known_items
+                    SET
+                        is_purged = 1,
+                        purged_at = ?,
+                        purge_reason = ?,
+                        purge_run_id = ?
+                    WHERE subscription_id = ? AND item_identifier = ?
+                    """,
+                    (purged_at, reason, triggering_run_id, subscription_id, row["item_identifier"]),
+                )
+                detail = {
+                    "reason": reason,
+                    "max_items": max_items,
+                    "criterion": row["retention_criterion"],
+                    "retention_sort_at": row["retention_sort_at"],
+                    "publication_at": row["publication_at"],
+                    "storage_path": row["storage_path"],
+                    "profile_id": profile_id,
+                }
+                conn.execute(
+                    """
+                    INSERT INTO run_events(
+                        run_id,
+                        subscription_id,
+                        event_kind,
+                        item_identifier,
+                        detail_json,
+                        created_at
+                    ) VALUES (?, ?, ?, ?, ?, ?)
+                    """,
+                    (
+                        triggering_run_id,
+                        subscription_id,
+                        "purge",
+                        row["item_identifier"],
+                        _stable_json(detail),
+                        purged_at,
+                    ),
+                )
+                decisions.append(
+                    RetentionPurgeDecision(
+                        item_identifier=str(row["item_identifier"]),
+                        item_signature=str(row["item_signature"]),
+                        publication_at=row["publication_at"],
+                        fallback_at=str(row["retention_sort_at"]),
+                        storage_path=row["storage_path"],
+                        criterion_used=str(row["retention_criterion"]),
+                    )
+                )
+
+            conn.commit()
+            return tuple(decisions)
+
+    def _migrate_known_items_for_v2(self, conn: sqlite3.Connection) -> None:
+        existing = {
+            row[1]
+            for row in conn.execute("PRAGMA table_info(known_items)").fetchall()
+            if len(row) > 1
+        }
+        migration_columns = (
+            ("publication_at", "TEXT"),
+            ("storage_path", "TEXT"),
+            ("retention_sort_at", "TEXT NOT NULL DEFAULT ''"),
+            ("retention_criterion", "TEXT NOT NULL DEFAULT 'fallback_finished_at'"),
+            ("is_purged", "INTEGER NOT NULL DEFAULT 0"),
+            ("purged_at", "TEXT"),
+            ("purge_reason", "TEXT"),
+            ("purge_run_id", "INTEGER"),
+        )
+        for name, ddl in migration_columns:
+            if name not in existing:
+                conn.execute(f"ALTER TABLE known_items ADD COLUMN {name} {ddl}")
+        conn.execute(
+            """
+            UPDATE known_items
+            SET
+                retention_sort_at = COALESCE(NULLIF(retention_sort_at, ''), last_seen_at),
+                retention_criterion = COALESCE(
+                    NULLIF(retention_criterion, ''),
+                    'fallback_finished_at'
+                )
+            """
         )
 
     def _record_run_events(
@@ -669,3 +861,34 @@ def _utc_now() -> str:
 
 def _stable_json(payload: Any) -> str:
     return json.dumps(payload, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
+
+
+def _extract_publication_at(command_payload: dict[str, Any]) -> str | None:
+    retention = command_payload.get("retention")
+    if isinstance(retention, dict):
+        publication_at = retention.get("publication_at")
+        if isinstance(publication_at, str) and publication_at:
+            return publication_at
+    return None
+
+
+def _extract_storage_path(command_payload: dict[str, Any]) -> str | None:
+    retention = command_payload.get("retention")
+    if isinstance(retention, dict):
+        storage_path = retention.get("storage_path")
+        if isinstance(storage_path, str) and storage_path:
+            return storage_path
+    return None
+
+
+def _select_retention_sort_at(command_payload: dict[str, Any], finished_at: str) -> str:
+    publication_at = _extract_publication_at(command_payload)
+    if publication_at:
+        return publication_at
+    return finished_at
+
+
+def _select_retention_criterion(command_payload: dict[str, Any]) -> str:
+    if _extract_publication_at(command_payload):
+        return "publication_at"
+    return "fallback_finished_at"
