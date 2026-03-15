@@ -167,6 +167,16 @@ python -m pytest tests/regression/test_hito16_cache_regression.py
 
 echo ""
 echo "============================================================"
+echo "🧠 QUEUE SYSTEM · HITO 17"
+echo "============================================================"
+python -m pytest tests/unit/test_hito17_queue_models.py
+python -m pytest tests/unit/test_sqlite_operational_state.py -k hito17
+python -m pytest tests/integration/test_hito17_queue_integration.py
+python -m pytest tests/e2e/test_hito17_queue_flow.py
+python -m pytest tests/regression/test_hito17_queue_regression.py
+
+echo ""
+echo "============================================================"
 echo "🛠️ UTILIDADES Y COMPROBACIONES FINALES"
 echo "============================================================"
 
