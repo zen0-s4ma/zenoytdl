@@ -1,0 +1,28 @@
+{
+  "artifacts": [
+    {
+      "artifact_yaml": "artifact.yaml",
+      "compilation_signature": "e8e92b12b1260f22399b4b191c3ba6d6218fa162fb11bae5674381dc843ad5cc",
+      "effective_signature": "00ad60af0773e23bc0a675f0f54d941b6a554d63d5fac34557ec4c4cd1a53bee",
+      "is_invocable": true,
+      "layout_name": "science_channel--8f42911ed4ae",
+      "metadata_json": "metadata.json",
+      "reused_previous": false,
+      "subscription_id": "science_channel",
+      "translation_signature": "8f42911ed4ae674689c8ef983444e08a4d928c06f8753c55998aa47ffc76cd2e"
+    },
+    {
+      "artifact_yaml": "artifact.yaml",
+      "compilation_signature": "b06b91ef2ed2ace90f8ee6052ddcca772675264d6c5a4d02b9c7d2d3bd764c26",
+      "effective_signature": "f4bf4231666fb2ca63975c2f064bab0f7cb968df77e003282a5b0623a27841fc",
+      "is_invocable": true,
+      "layout_name": "tech_channel--c69a5e6e8e5a",
+      "metadata_json": "metadata.json",
+      "reused_previous": false,
+      "subscription_id": "tech_channel",
+      "translation_signature": "c69a5e6e8e5aede9f9de8eea09f3f4b328272ad42de1b4273ad6dbc1c99a7135"
+    }
+  ],
+  "batch_signature": "79f24b8d21563dbd90e21bb86696fd4bc72b4760ff35c4719d3598abbe49d3a0",
+  "layout_version": 1
+}
