@@ -82,3 +82,21 @@ Cada avance en cola o caché debe venir con pruebas específicas y regresión ac
 - Estas tablas son **solo estructura base** para evolución futura.
 - No hay todavía workers, reintentos completos, deduplicación operativa final ni política de invalidación avanzada (Hitos 17+ y 16).
 
+## Estado de implementación en Hito 16 (caché core)
+- Caché en memoria para datos derivados del core:
+  - validación semántica,
+  - traducción a modelo ytdl-sub,
+  - compilación de artefactos,
+  - resolución de metadatos (`metadata.json -> profile_id`),
+  - estado operativo reciente por suscripción.
+- La fuente de verdad se mantiene en configuración efectiva y estado persistido; la caché solo reutiliza resultados derivados si el contexto sigue siendo válido.
+- Invalidación soportada por:
+  - cambios de fichero (fingerprint `mtime_ns + size`),
+  - cambio de hash de contenido,
+  - cambio de firma global de configuración,
+  - cambio específico de `ytdl-sub-conf`,
+  - TTL por scope,
+  - purga manual por scope o total,
+  - invalidación por error.
+- Métricas hit/miss por scope disponibles para inspección y pruebas (`metrics_snapshot`).
+- En caso de duda o inconsistencia, se fuerza miss y recomputación para priorizar corrección sobre velocidad.

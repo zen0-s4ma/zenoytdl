@@ -10,6 +10,8 @@ src/config/effective_resolution.py
 src/config/runtime_env.py
 src/config/validation.py
 src/config/yaml_contract.py
+src/core/__init__.py
+src/core/cache_system.py
 src/domain/__init__.py
 src/domain/catalog.py
 src/domain/models.py
@@ -21,9 +23,11 @@ src/integration/ytdl_sub/__init__.py
 src/integration/ytdl_sub/compiler.py
 src/integration/ytdl_sub/contract.py
 src/integration/ytdl_sub/executor.py
+src/integration/ytdl_sub/persisted_executor.py
 src/integration/ytdl_sub/translator.py
 src/persistence/__init__.py
 src/persistence/sqlite_health.py
+src/persistence/sqlite_state.py
 src/zenoytdl.egg-info/PKG-INFO
 src/zenoytdl.egg-info/SOURCES.txt
 src/zenoytdl.egg-info/dependency_links.txt

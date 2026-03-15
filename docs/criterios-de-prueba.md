@@ -133,3 +133,9 @@ Criterios de aceptación de estas pruebas:
 - Integración: `tests/integration/test_hito14_anti_redownload_integration.py`.
 - E2E: `tests/e2e/test_hito14_anti_redownload_flow.py`.
 - Regresión: `tests/regression/test_hito14_anti_redownload_regression.py`.
+
+## Cobertura mínima específica de caché operativa (Hito 16)
+- Unitarias: `tests/unit/test_hito16_cache_system.py`.
+- Integración: `tests/integration/test_hito16_cache_integration.py`.
+- E2E: `tests/e2e/test_hito16_cache_flow.py`.
+- Regresión: `tests/regression/test_hito16_cache_regression.py`.
