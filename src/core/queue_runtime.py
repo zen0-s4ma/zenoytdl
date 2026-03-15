@@ -54,11 +54,20 @@ class QueueRuntime:
         retry_policy: RetryPolicy | None = None,
         now_provider: Callable[[], datetime] | None = None,
     ) -> None:
+        if self._invalid_runtime_config(config):
+            raise ValueError(
+                "QueueRuntimeConfig inválida: max_workers>=1 y max_concurrent_by_subscription>=1"
+            )
         self.state = state
         self.cache = cache
         self.config = config or QueueRuntimeConfig()
         self.retry_policy = retry_policy or RetryPolicy()
         self._now_provider = now_provider or (lambda: datetime.now(timezone.utc))
+
+    @staticmethod
+    def _invalid_runtime_config(config: QueueRuntimeConfig | None) -> bool:
+        candidate = config or QueueRuntimeConfig()
+        return candidate.max_workers < 1 or candidate.max_concurrent_by_subscription < 1
 
     def enqueue_execution_job(
         self,

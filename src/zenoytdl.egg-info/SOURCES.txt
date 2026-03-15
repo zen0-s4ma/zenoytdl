@@ -3,6 +3,7 @@ pyproject.toml
 src/__init__.py
 src/api/__init__.py
 src/api/cli.py
+src/api/core_api.py
 src/config/__init__.py
 src/config/bootstrap.py
 src/config/config_loader.py
@@ -12,6 +13,7 @@ src/config/validation.py
 src/config/yaml_contract.py
 src/core/__init__.py
 src/core/cache_system.py
+src/core/queue_runtime.py
 src/domain/__init__.py
 src/domain/catalog.py
 src/domain/models.py

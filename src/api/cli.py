@@ -1,6 +1,7 @@
 import argparse
 import json
 import os
+import sqlite3
 
 from src.config.bootstrap import ConfigBootstrapError, ensure_minimal_config
 from src.config.runtime_env import load_runtime_env
@@ -33,7 +34,32 @@ def main() -> int:
     try:
         report = build_bootstrap_report(args.config, args.state_db)
     except ConfigBootstrapError as exc:
-        print(json.dumps({"ok": False, "error": str(exc)}, ensure_ascii=False))
+        print(
+            json.dumps(
+                {
+                    "ok": False,
+                    "error": {
+                        "code": "CONFIG_BOOTSTRAP_ERROR",
+                        "message": str(exc),
+                    },
+                },
+                ensure_ascii=False,
+            )
+        )
+        return 2
+    except (OSError, sqlite3.Error, ValueError) as exc:
+        print(
+            json.dumps(
+                {
+                    "ok": False,
+                    "error": {
+                        "code": "RUNTIME_BOOTSTRAP_ERROR",
+                        "message": str(exc),
+                    },
+                },
+                ensure_ascii=False,
+            )
+        )
         return 2
 
     payload = {

@@ -1,0 +1,7 @@
+profiles:
+  - name: tv-main
+    media_type: video
+    quality_profile: balanced
+  - name: podcast-main
+    media_type: audio
+    quality_profile: compact

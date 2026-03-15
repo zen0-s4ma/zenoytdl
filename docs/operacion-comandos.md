@@ -109,3 +109,15 @@ Estado: **en ejecución**. Esta guía define comandos mínimos operativos sin de
 - E2E integral controlado + chequeo opcional de binario real: `python -m pytest tests/e2e/test_hito20_integral_flow.py`
 - Regresión de contratos cruzados del hito: `python -m pytest tests/regression/test_hito20_integral_suite_regression.py`
 - Ejecución focalizada consolidada H20: `python -m pytest tests/unit/test_hito20_integral_suite.py tests/integration/test_hito20_integral_integration.py tests/e2e/test_hito20_integral_flow.py tests/regression/test_hito20_integral_suite_regression.py`
+
+
+## Verificación específica Hito 21 (core completo endurecido)
+- Unitarias de endurecimiento: `python -m pytest tests/unit/test_hito21_core_hardening.py`
+- Integración de errores operativos API: `python -m pytest tests/integration/test_hito21_core_hardening_integration.py`
+- E2E CLI con payload de error estable: `python -m pytest tests/e2e/test_hito21_core_hardening_flow.py`
+- Regresión del hito: `python -m pytest tests/regression/test_hito21_core_hardening_regression.py`
+- Ejecución focalizada consolidada H21: `python -m pytest tests/unit/test_hito21_core_hardening.py tests/integration/test_hito21_core_hardening_integration.py tests/e2e/test_hito21_core_hardening_flow.py tests/regression/test_hito21_core_hardening_regression.py`
+
+## Límite explícito tras cierre del core
+A partir de este punto el core queda preparado para iniciar, en un proyecto separado, la construcción de TUI/GUI web.
+Este repositorio mantiene alcance de núcleo operativo (sin frontend, autenticación ni multiusuario).

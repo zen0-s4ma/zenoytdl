@@ -168,3 +168,17 @@ Criterios de aceptación de estas pruebas:
 - Integración transversal core (validación → resolución → compilación → cola → estado/anti-redescarga/retención/caché): `python -m pytest tests/integration/test_hito20_integral_integration.py`.
 - E2E integral en entorno controlado + comprobación opcional de binario real: `python -m pytest tests/e2e/test_hito20_integral_flow.py`.
 - Regresión específica del hito: `python -m pytest tests/regression/test_hito20_integral_suite_regression.py`.
+
+
+## Cobertura mínima específica de cierre core endurecido (Hito 21)
+- Unitarias de endurecimiento de runtime/guard-rails: `python -m pytest tests/unit/test_hito21_core_hardening.py`.
+- Integración de ergonomía de errores en frontera API core: `python -m pytest tests/integration/test_hito21_core_hardening_integration.py`.
+- E2E de CLI con errores estructurados y operables: `python -m pytest tests/e2e/test_hito21_core_hardening_flow.py`.
+- Regresión específica del hito: `python -m pytest tests/regression/test_hito21_core_hardening_regression.py`.
+
+Criterio adicional de cierre Hito 21 (core completo):
+1. batería histórica 0–20 en verde,
+2. batería Hito 21 en verde,
+3. sin defectos críticos abiertos en core,
+4. documentación operativa y técnica sincronizada,
+5. separación explícita respecto a TUI/GUI web (proyecto posterior).

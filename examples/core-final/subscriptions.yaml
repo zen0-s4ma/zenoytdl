@@ -1,0 +1,9 @@
+subscriptions:
+  - name: tv-subscription
+    profile: tv-main
+    sources:
+      - https://example.com/channel/tv
+  - name: podcast-subscription
+    profile: podcast-main
+    sources:
+      - https://example.com/channel/podcast
