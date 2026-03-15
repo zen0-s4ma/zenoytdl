@@ -28,6 +28,8 @@ def execute_batch_with_operational_state(
     global_args: tuple[str, ...] = (),
     env_overrides: dict[str, str] | None = None,
     timeout_seconds: float = 300.0,
+    max_items_by_subscription: dict[str, int] | None = None,
+    item_context_by_subscription: dict[str, dict[str, str | None]] | None = None,
 ) -> tuple[ExecutedJobResult, tuple[PersistedRunRecord, ...]]:
     """Ejecuta el batch con anti-redescarga y persiste estado operativo en SQLite."""
     state.init_schema()
@@ -45,13 +47,21 @@ def execute_batch_with_operational_state(
 
     results: list[ExecutedJobResult] = []
     persisted: list[PersistedRunRecord] = []
-    for artifact in batch.artifacts:
+    for run_index, artifact in enumerate(batch.artifacts, start=1):
         started_at = _utc_now()
-        item_identifier = f"{artifact.subscription_id}::{artifact.compilation_signature[:12]}"
+        context = (item_context_by_subscription or {}).get(artifact.subscription_id, {})
+        item_identifier = context.get(
+            "item_identifier", f"{artifact.subscription_id}::{artifact.compilation_signature[:12]}"
+        )
+        if not isinstance(item_identifier, str) or not item_identifier:
+            raise ValueError("item_context_by_subscription.item_identifier inválido")
+        item_signature = context.get("item_signature") or artifact.compilation_signature
+        if not isinstance(item_signature, str) or not item_signature:
+            raise ValueError("item_context_by_subscription.item_signature inválido")
         decision = state.decide_anti_redownload(
             subscription_id=artifact.subscription_id,
             item_identifier=item_identifier,
-            item_signature=artifact.compilation_signature,
+            item_signature=item_signature,
         )
 
         if decision.action == "discard":
@@ -59,11 +69,15 @@ def execute_batch_with_operational_state(
                 artifact=artifact,
                 reason=decision.reason,
                 previous_status=decision.previous_status,
+                run_index=run_index,
             )
         else:
             result = execute_compiled_artifact(
                 artifact,
-                work_unit_id=f"batch::{artifact.subscription_id}::{artifact.compilation_signature[:8]}",
+                work_unit_id=(
+                    f"batch::{artifact.subscription_id}::{artifact.compilation_signature[:8]}"
+                    f"::{run_index}::{started_at}"
+                ),
                 global_args=global_args,
                 env_overrides=env_overrides,
                 timeout_seconds=timeout_seconds,
@@ -84,7 +98,13 @@ def execute_batch_with_operational_state(
             error_message=result.error_message,
             stdout=result.stdout,
             stderr=result.stderr,
-            command_payload=result.command.to_dict(),
+            command_payload={
+                **result.command.to_dict(),
+                "retention": {
+                    "publication_at": context.get("publication_at"),
+                    "storage_path": context.get("storage_path"),
+                },
+            },
             config_signature=config_signature,
             effective_signature=artifact.effective_signature,
             translation_signature=artifact.translation_signature,
@@ -95,7 +115,7 @@ def execute_batch_with_operational_state(
             finished_at=finished_at,
             duration_ms=max(0, _diff_ms(started_at, finished_at)),
             known_item_identifier=item_identifier,
-            known_item_signature=artifact.compilation_signature,
+            known_item_signature=item_signature,
             decision_reason=decision.reason,
             discard_reason=decision.reason if result.status == "discarded" else None,
             failure_reason=(
@@ -104,7 +124,22 @@ def execute_batch_with_operational_state(
                 else None
             ),
         )
-        persisted.append(state.record_execution(envelope))
+        persisted_run = state.record_execution(envelope)
+        persisted.append(persisted_run)
+
+        max_items = (max_items_by_subscription or {}).get(artifact.subscription_id)
+        if (
+            isinstance(max_items, int)
+            and max_items > 0
+            and result.status == "success"
+            and decision.action != "discard"
+        ):
+            state.apply_retention_policy(
+                subscription_id=artifact.subscription_id,
+                profile_id=result.job.profile_id,
+                max_items=max_items,
+                triggering_run_id=persisted_run.run_id,
+            )
 
     return tuple(results), tuple(persisted)
 
@@ -114,10 +149,14 @@ def _build_discarded_result(
     artifact,
     reason: str,
     previous_status: str | None,
+    run_index: int,
 ) -> ExecutedJobResult:
     job = prepare_execution_job(
         artifact,
-        work_unit_id=f"batch::{artifact.subscription_id}::{artifact.compilation_signature[:8]}::discard",
+        work_unit_id=(
+            f"batch::{artifact.subscription_id}::{artifact.compilation_signature[:8]}"
+            f"::{run_index}::discard"
+        ),
     )
     command = PreparedExecutionCommand(
         binary="",
@@ -157,7 +196,7 @@ def _read_profile_id(metadata_json: str) -> str:
 
 
 def _utc_now() -> str:
-    return datetime.now(timezone.utc).isoformat(timespec="seconds")
+    return datetime.now(timezone.utc).isoformat(timespec="microseconds")
 
 
 def _diff_ms(started_at: str, finished_at: str) -> int:

@@ -4,7 +4,7 @@
 SQLite pasa a ser la **fuente de verdad operativa** del core para estado de suscripciones, ejecuciones, items conocidos y trazabilidad mínima.
 
 ## Versión de esquema
-- `PRAGMA user_version = 1`
+- `PRAGMA user_version = 2`
 
 ## Tablas principales
 ### `subscriptions`
@@ -52,6 +52,14 @@ Registro base de elementos conocidos por suscripción.
 - `last_seen_at`
 - `last_run_id` (FK → `execution_runs.id`)
 - `last_status`
+- `publication_at` (nullable)
+- `storage_path` (nullable)
+- `retention_sort_at` (fecha efectiva usada para ordenar retención)
+- `retention_criterion` (`publication_at|fallback_finished_at`)
+- `is_purged` (0/1)
+- `purged_at` (nullable)
+- `purge_reason` (nullable)
+- `purge_run_id` (FK → `execution_runs.id`, nullable)
 - `UNIQUE(subscription_id, item_identifier)`
 
 ### `run_events`
@@ -120,6 +128,15 @@ Estructura mínima para futura cola persistente.
 - Un item con misma firma (`item_signature`) y estado previo `success|discarded_duplicate` se descarta como duplicado.
 - Un item con misma firma y estado previo `failed` se permite reintentar.
 - `run_events.detail_json` conserva motivo de decisión (`decision_reason`), descarte (`discard_reason`) y fallo (`failure_reason`) para trazabilidad consultable.
+
+## Reglas operativas Hito 15 (retención, purga y limpieza)
+- La retención se evalúa por suscripción (y por tanto por perfil asociado persistido en `subscriptions`).
+- `max_items` define cuántos `known_items` activos (`is_purged = 0`) se conservan.
+- Orden determinista de conservación: `retention_sort_at DESC`, `first_seen_at DESC`, `item_identifier DESC`.
+- `retention_sort_at` usa `publication_at` cuando está disponible; si falta, aplica fallback explícito a `finished_at` de la ejecución.
+- Cuando hay sobrecapacidad, los elementos más antiguos pasan a estado purgado (`is_purged = 1`) y se registra `purged_at`, `purge_reason` y `purge_run_id`.
+- Si el item purgado tiene `storage_path` existente en disco, se elimina el archivo para mantener coherencia DB/disco.
+- Cada purga genera evento `run_events.event_kind = purge` con detalle de causa, criterio y timestamps para trazabilidad consultable.
 
 ## Smoke check de persistencia (Hito 0)
 Se mantiene el smoke mínimo (`SELECT 1`) para disponibilidad de SQLite, complementado en Hito 13 con inicialización de esquema y escrituras/lecturas reales.

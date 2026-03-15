@@ -245,3 +245,159 @@ def test_hito14_retry_after_failure_is_allowed(tmp_path: Path) -> None:
     assert decision.action == "execute"
     assert decision.reason == "retry_after_failure"
     assert decision.previous_status == "failed"
+
+
+@pytest.mark.unit
+def test_hito15_retention_selects_oldest_by_publication_date(tmp_path: Path) -> None:
+    state = SQLiteOperationalState(tmp_path / "state.sqlite")
+    state.init_schema()
+    state.upsert_subscription(
+        subscription_id="tech_channel",
+        profile_id="profile_tv",
+        source_kind="channel",
+        source_value="https://example.invalid/tech",
+        config_signature="cfg-v1",
+    )
+
+    for idx, publication in enumerate(
+        (
+            "2026-01-01T00:00:00+00:00",
+            "2026-01-02T00:00:00+00:00",
+            "2026-01-03T00:00:00+00:00",
+        ),
+        start=1,
+    ):
+        state.record_execution(
+            ExecutionPersistenceEnvelope(
+                job_id=f"job-{idx}",
+                subscription_id="tech_channel",
+                profile_id="profile_tv",
+                status="success",
+                error_type="none",
+                severity="none",
+                exit_code=0,
+                error_message=None,
+                stdout="ok",
+                stderr="",
+                command_payload={
+                    "args": ["ytdl-sub", "sub"],
+                    "retention": {
+                        "publication_at": publication,
+                        "storage_path": str(tmp_path / f"item-{idx}.mkv"),
+                    },
+                },
+                config_signature="cfg-v1",
+                effective_signature="eff-v1",
+                translation_signature="tr-v1",
+                compilation_signature=f"comp-v{idx}",
+                artifact_yaml_path="/tmp/a.yaml",
+                metadata_json_path="/tmp/m.json",
+                started_at=f"2026-01-0{idx}T00:00:00+00:00",
+                finished_at=f"2026-01-0{idx}T00:00:01+00:00",
+                duration_ms=1000,
+                known_item_identifier=f"tech_channel::item-{idx}",
+                known_item_signature=f"sig-{idx}",
+                decision_reason="new_item",
+            )
+        )
+
+    purged = state.apply_retention_policy(
+        subscription_id="tech_channel",
+        profile_id="profile_tv",
+        max_items=2,
+        triggering_run_id=3,
+    )
+    snapshot = state.get_subscription_state("tech_channel")
+
+    assert [item.item_identifier for item in purged] == ["tech_channel::item-1"]
+    assert purged[0].criterion_used == "publication_at"
+    assert sorted(
+        item["item_identifier"] for item in snapshot["known_items"] if item["is_purged"] is False
+    ) == ["tech_channel::item-2", "tech_channel::item-3"]
+
+
+@pytest.mark.unit
+def test_hito15_retention_fallback_uses_finished_at_without_publication_date(
+    tmp_path: Path,
+) -> None:
+    state = SQLiteOperationalState(tmp_path / "state.sqlite")
+    state.init_schema()
+    state.upsert_subscription(
+        subscription_id="science_channel",
+        profile_id="profile_tv",
+        source_kind="channel",
+        source_value="https://example.invalid/science",
+        config_signature="cfg-v1",
+    )
+
+    state.record_execution(
+        ExecutionPersistenceEnvelope(
+            job_id="job-a",
+            subscription_id="science_channel",
+            profile_id="profile_tv",
+            status="success",
+            error_type="none",
+            severity="none",
+            exit_code=0,
+            error_message=None,
+            stdout="ok",
+            stderr="",
+            command_payload={"args": ["ytdl-sub", "sub"]},
+            config_signature="cfg-v1",
+            effective_signature="eff-v1",
+            translation_signature="tr-v1",
+            compilation_signature="comp-a",
+            artifact_yaml_path="/tmp/a.yaml",
+            metadata_json_path="/tmp/m.json",
+            started_at="2026-01-01T00:00:00+00:00",
+            finished_at="2026-01-01T00:00:01+00:00",
+            duration_ms=1000,
+            known_item_identifier="science_channel::a",
+            known_item_signature="sig-a",
+            decision_reason="new_item",
+        )
+    )
+    state.record_execution(
+        ExecutionPersistenceEnvelope(
+            job_id="job-b",
+            subscription_id="science_channel",
+            profile_id="profile_tv",
+            status="success",
+            error_type="none",
+            severity="none",
+            exit_code=0,
+            error_message=None,
+            stdout="ok",
+            stderr="",
+            command_payload={"args": ["ytdl-sub", "sub"]},
+            config_signature="cfg-v1",
+            effective_signature="eff-v1",
+            translation_signature="tr-v1",
+            compilation_signature="comp-b",
+            artifact_yaml_path="/tmp/a.yaml",
+            metadata_json_path="/tmp/m.json",
+            started_at="2026-01-02T00:00:00+00:00",
+            finished_at="2026-01-02T00:00:01+00:00",
+            duration_ms=1000,
+            known_item_identifier="science_channel::b",
+            known_item_signature="sig-b",
+            decision_reason="new_item",
+        )
+    )
+
+    purged = state.apply_retention_policy(
+        subscription_id="science_channel",
+        profile_id="profile_tv",
+        max_items=1,
+        triggering_run_id=2,
+    )
+    snapshot = state.get_subscription_state("science_channel")
+
+    assert [item.item_identifier for item in purged] == ["science_channel::a"]
+    assert purged[0].criterion_used == "fallback_finished_at"
+    assert any(
+        event["event_kind"] == "purge"
+        and event["detail"]["criterion"] == "fallback_finished_at"
+        and event["detail"]["reason"] == "max_items_exceeded"
+        for event in snapshot["events"]
+    )
