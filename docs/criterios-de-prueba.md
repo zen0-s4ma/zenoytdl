@@ -101,3 +101,15 @@ Criterios de aceptación de estas pruebas:
 - Integración: `tests/integration/test_ytdl_sub_contract_integration.py`.
 - E2E: `tests/e2e/test_ytdl_sub_contract_flow.py`.
 - Regresión: `tests/regression/test_hito9_ytdl_sub_contract_regression.py`.
+
+## Cobertura mínima específica de traducción a modelo ytdl-sub (Hito 10)
+- Unitarias: `tests/unit/test_ytdl_sub_translation.py`.
+- Integración: `tests/integration/test_ytdl_sub_translation_integration.py`.
+- E2E: `tests/e2e/test_ytdl_sub_translation_flow.py`.
+- Regresión: `tests/regression/test_hito10_ytdl_sub_translation_regression.py`.
+
+## Cobertura mínima específica de compilación de artefactos (Hito 11)
+- Unitarias: `tests/unit/test_artifact_compiler.py`.
+- Integración: `tests/integration/test_artifact_compiler_integration.py`.
+- E2E: `tests/e2e/test_artifact_compiler_flow.py`.
+- Regresión: `tests/regression/test_hito11_artifact_compilation_regression.py`.

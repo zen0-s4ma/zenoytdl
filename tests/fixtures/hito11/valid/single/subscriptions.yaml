@@ -1,0 +1,13 @@
+subscriptions:
+  - name: tech_channel
+    element_type: subscription
+    profile: profile_tv
+    enabled: true
+    sources:
+      - techchannel_source
+    schedule:
+      mode: interval
+      every_hours: 12
+    overrides:
+      quality_profile: balanced
+      media_type: video

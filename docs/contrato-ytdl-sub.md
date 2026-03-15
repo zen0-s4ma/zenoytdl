@@ -78,3 +78,11 @@ El contrato produce razones trazables cuando una configuración efectiva no tien
 - El contrato consume `EffectiveSubscriptionConfig` (Hitos 6–8).
 - No invoca binarios ni compila artefactos (Hitos 10+ fuera de alcance).
 - El mapeo vive en `ytdl-sub-conf.yaml`, no en `if/else` dispersos.
+
+## Handoff a compilación (Hito 11)
+La salida de traducción válida (Hito 10) se consume por el compilador de artefactos (Hito 11) con estos requisitos mínimos:
+- `ytdl_sub_model.subscription.invocation.binary` y `mode` deben existir para considerarse invocable;
+- `meta.effective_signature` y `translation_signature` se propagan a metadatos compilados;
+- cualquier traducción con `issues` no se compila.
+
+El contrato de integración sigue siendo declarativo (`ytdl-sub-conf.yaml`); Hito 11 únicamente materializa su resultado en disco.

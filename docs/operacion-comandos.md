@@ -40,3 +40,9 @@ Estado: **en ejecución**. Esta guía define comandos mínimos operativos sin de
 ## Smoke bootstrap con dependencias reales
 - Linux/macOS: `make bootstrap` (incluye `tests/fixtures/bin` en `PATH` para smoke reproducible)
 - Windows PowerShell: `./scripts/bootstrap-dev.ps1`
+
+## Verificación específica Hito 11 (compilación)
+- Unitarias compilador: `python -m pytest tests/unit/test_artifact_compiler.py`
+- Integración traductor+compilador: `python -m pytest tests/integration/test_artifact_compiler_integration.py`
+- E2E compilación en disco: `python -m pytest tests/e2e/test_artifact_compiler_flow.py`
+- Regresión de artefactos compilados: `python -m pytest tests/regression/test_hito11_artifact_compilation_regression.py`
