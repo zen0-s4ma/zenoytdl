@@ -142,3 +142,106 @@ def test_hito13_serialization_of_run_state_is_stable(tmp_path: Path) -> None:
         "finished_at": "2026-01-01T00:00:02+00:00",
         "duration_ms": 2000,
     }
+
+
+@pytest.mark.unit
+def test_hito14_duplicate_detection_uses_persisted_known_items(tmp_path: Path) -> None:
+    state = SQLiteOperationalState(tmp_path / "state.sqlite")
+    state.init_schema()
+    state.upsert_subscription(
+        subscription_id="tech_channel",
+        profile_id="podcast_profile",
+        source_kind="channel",
+        source_value="https://example.invalid/tech",
+        config_signature="cfg-signature",
+    )
+
+    state.record_execution(
+        ExecutionPersistenceEnvelope(
+            job_id="job-1",
+            subscription_id="tech_channel",
+            profile_id="podcast_profile",
+            status="success",
+            error_type="none",
+            severity="none",
+            exit_code=0,
+            error_message=None,
+            stdout="ok",
+            stderr="",
+            command_payload={"args": ["ytdl-sub", "sub"]},
+            config_signature="cfg-signature",
+            effective_signature="eff-signature",
+            translation_signature="tr-signature",
+            compilation_signature="comp-signature",
+            artifact_yaml_path="/tmp/artifact.yaml",
+            metadata_json_path="/tmp/metadata.json",
+            started_at="2026-01-01T00:00:00+00:00",
+            finished_at="2026-01-01T00:00:01+00:00",
+            duration_ms=1000,
+            known_item_identifier="tech_channel::comp-signat",
+            known_item_signature="comp-signature",
+            decision_reason="new_item",
+        )
+    )
+
+    decision = state.decide_anti_redownload(
+        subscription_id="tech_channel",
+        item_identifier="tech_channel::comp-signat",
+        item_signature="comp-signature",
+    )
+
+    assert decision.action == "discard"
+    assert decision.reason == "duplicate_already_processed"
+    assert decision.previous_status == "success"
+
+
+@pytest.mark.unit
+def test_hito14_retry_after_failure_is_allowed(tmp_path: Path) -> None:
+    state = SQLiteOperationalState(tmp_path / "state.sqlite")
+    state.init_schema()
+    state.upsert_subscription(
+        subscription_id="science_channel",
+        profile_id="video_profile",
+        source_kind="channel",
+        source_value="https://example.invalid/science",
+        config_signature="cfg-v1",
+    )
+
+    state.record_execution(
+        ExecutionPersistenceEnvelope(
+            job_id="job-failed",
+            subscription_id="science_channel",
+            profile_id="video_profile",
+            status="failed",
+            error_type="non_zero_exit",
+            severity="recoverable",
+            exit_code=29,
+            error_message="boom",
+            stdout="",
+            stderr="boom",
+            command_payload={"args": ["ytdl-sub", "sub"]},
+            config_signature="cfg-v1",
+            effective_signature="eff-v1",
+            translation_signature="tr-v1",
+            compilation_signature="comp-v1",
+            artifact_yaml_path="/tmp/artifact.yaml",
+            metadata_json_path="/tmp/metadata.json",
+            started_at="2026-01-01T00:00:00+00:00",
+            finished_at="2026-01-01T00:00:01+00:00",
+            duration_ms=1000,
+            known_item_identifier="science_channel::comp-v1",
+            known_item_signature="comp-v1",
+            decision_reason="new_item",
+            failure_reason="non_zero_exit:boom",
+        )
+    )
+
+    decision = state.decide_anti_redownload(
+        subscription_id="science_channel",
+        item_identifier="science_channel::comp-v1",
+        item_signature="comp-v1",
+    )
+
+    assert decision.action == "execute"
+    assert decision.reason == "retry_after_failure"
+    assert decision.previous_status == "failed"

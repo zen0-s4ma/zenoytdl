@@ -72,6 +72,17 @@ class ExecutionPersistenceEnvelope:
     duration_ms: int
     known_item_identifier: str
     known_item_signature: str
+    decision_reason: str | None = None
+    discard_reason: str | None = None
+    failure_reason: str | None = None
+
+
+@dataclass(frozen=True)
+class AntiRedownloadDecision:
+    action: str
+    reason: str
+    known_item_found: bool
+    previous_status: str | None
 
 
 class SQLiteOperationalState:
@@ -395,6 +406,15 @@ class SQLiteOperationalState:
                 """,
                 (subscription_id,),
             ).fetchall()
+            events = conn.execute(
+                """
+                SELECT run_id, event_kind, item_identifier, detail_json, created_at
+                FROM run_events
+                WHERE subscription_id = ?
+                ORDER BY id ASC
+                """,
+                (subscription_id,),
+            ).fetchall()
 
         return {
             "subscription": {
@@ -432,7 +452,78 @@ class SQLiteOperationalState:
                 }
                 for row in items
             ],
+            "events": [
+                {
+                    "run_id": row["run_id"],
+                    "event_kind": row["event_kind"],
+                    "item_identifier": row["item_identifier"],
+                    "detail": json.loads(row["detail_json"]),
+                    "created_at": row["created_at"],
+                }
+                for row in events
+            ],
         }
+
+    def decide_anti_redownload(
+        self,
+        *,
+        subscription_id: str,
+        item_identifier: str,
+        item_signature: str,
+    ) -> AntiRedownloadDecision:
+        with self._connect() as conn:
+            row = conn.execute(
+                """
+                SELECT item_signature, last_status
+                FROM known_items
+                WHERE subscription_id = ? AND item_identifier = ?
+                """,
+                (subscription_id, item_identifier),
+            ).fetchone()
+
+        if row is None:
+            return AntiRedownloadDecision(
+                action="execute",
+                reason="new_item",
+                known_item_found=False,
+                previous_status=None,
+            )
+
+        previous_status = str(row["last_status"])
+        previous_signature = str(row["item_signature"])
+        if previous_signature == item_signature and previous_status in {
+            "success",
+            "discarded_duplicate",
+        }:
+            return AntiRedownloadDecision(
+                action="discard",
+                reason="duplicate_already_processed",
+                known_item_found=True,
+                previous_status=previous_status,
+            )
+
+        if previous_signature == item_signature and previous_status == "failed":
+            return AntiRedownloadDecision(
+                action="execute",
+                reason="retry_after_failure",
+                known_item_found=True,
+                previous_status=previous_status,
+            )
+
+        if previous_signature != item_signature:
+            return AntiRedownloadDecision(
+                action="execute",
+                reason="item_signature_changed",
+                known_item_found=True,
+                previous_status=previous_status,
+            )
+
+        return AntiRedownloadDecision(
+            action="execute",
+            reason="state_allows_execution",
+            known_item_found=True,
+            previous_status=previous_status,
+        )
 
     def _record_run_events(
         self,
@@ -445,6 +536,7 @@ class SQLiteOperationalState:
             "status": envelope.status,
             "error_type": envelope.error_type,
             "compilation_signature": envelope.compilation_signature,
+            "decision_reason": envelope.decision_reason,
         }
         conn.execute(
             """
@@ -469,10 +561,24 @@ class SQLiteOperationalState:
 
         if envelope.status == "success":
             event_kind = "download"
-            detail = {"stdout_size": len(envelope.stdout), "stderr_size": len(envelope.stderr)}
-        else:
+            detail = {
+                "stdout_size": len(envelope.stdout),
+                "stderr_size": len(envelope.stderr),
+                "decision_reason": envelope.decision_reason,
+            }
+        elif envelope.status == "discarded":
             event_kind = "discard"
-            detail = {"error_message": envelope.error_message or ""}
+            detail = {
+                "discard_reason": envelope.discard_reason,
+                "previous_state": envelope.decision_reason,
+            }
+        else:
+            event_kind = "failure"
+            detail = {
+                "error_message": envelope.error_message or "",
+                "failure_reason": envelope.failure_reason,
+                "error_type": envelope.error_type,
+            }
 
         conn.execute(
             """
