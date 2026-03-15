@@ -86,3 +86,13 @@ La salida de traducción válida (Hito 10) se consume por el compilador de artef
 - cualquier traducción con `issues` no se compila.
 
 El contrato de integración sigue siendo declarativo (`ytdl-sub-conf.yaml`); Hito 11 únicamente materializa su resultado en disco.
+
+
+## Handoff a ejecución controlada (Hito 12)
+La salida compilada invocable del Hito 11 se ejecuta por un módulo encapsulado que:
+- construye comando reproducible desde `artifact.yaml` + parámetros globales de ejecución;
+- resuelve binario en `PATH` efectivo y soporta `cwd`, `env_overrides`, timeout y temporal aislado;
+- captura `stdout`, `stderr`, `exit_code` y los serializa junto al `job_id`/unidad de trabajo;
+- clasifica fallos en categorías estables (`binary_not_found`, `timeout`, `non_zero_exit`, `invalid_compiled_artifact`, `environment_error`).
+
+Se mantiene el desacoplamiento: el contrato YAML sigue siendo declarativo; la ejecución real ocurre fuera del contrato, en la capa de integración runtime.

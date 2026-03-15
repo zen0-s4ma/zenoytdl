@@ -113,3 +113,10 @@ Criterios de aceptación de estas pruebas:
 - Integración: `tests/integration/test_artifact_compiler_integration.py`.
 - E2E: `tests/e2e/test_artifact_compiler_flow.py`.
 - Regresión: `tests/regression/test_hito11_artifact_compilation_regression.py`.
+
+
+## Cobertura mínima específica de ejecución controlada ytdl-sub (Hito 12)
+- Unitarias: `tests/unit/test_ytdl_sub_executor.py`.
+- Integración: `tests/integration/test_ytdl_sub_executor_integration.py`.
+- E2E: `tests/e2e/test_ytdl_sub_executor_flow.py`.
+- Regresión: `tests/regression/test_hito12_ytdl_sub_executor_regression.py`.
