@@ -6,6 +6,7 @@ import pytest
 from src.persistence.sqlite_state import (
     SCHEMA_VERSION,
     ExecutionPersistenceEnvelope,
+    QueueJobEnvelope,
     SQLiteOperationalState,
 )
 
@@ -432,3 +433,40 @@ def test_hito17_schema_queue_backlog_has_persisted_job_model_columns(tmp_path: P
         "created_at",
         "updated_at",
     }.issubset(columns)
+
+
+@pytest.mark.unit
+def test_hito18_queue_claim_retry_and_dead_letter_lifecycle(tmp_path: Path) -> None:
+    state = SQLiteOperationalState(tmp_path / "state.sqlite")
+    state.init_schema()
+    state.enqueue_job(
+        QueueJobEnvelope(
+            job_id="h18-job",
+            queue_kind="sync",
+            priority=90,
+            subscription_id="sub-h18",
+            payload={"segment": "all"},
+            max_attempts=2,
+        )
+    )
+
+    runnable = state.list_runnable_queue_jobs(now="2099-01-01T00:00:00+00:00")
+    assert [job.job_id for job in runnable] == ["h18-job"]
+
+    claimed = state.claim_queue_job(job_id="h18-job")
+    assert claimed is not None and claimed.status == "running"
+
+    retry = state.schedule_queue_retry(job_id="h18-job", scheduled_at="2099-01-01T01:00:00+00:00")
+    assert retry.status == "retry_pending"
+    assert retry.attempts == 1
+
+    state.transition_queue_job_status(job_id="h18-job", next_status="queued")
+    state.claim_queue_job(job_id="h18-job")
+    dead = state.dead_letter_queue_job(
+        job_id="h18-job", error_type="non_recoverable", error_message="boom"
+    )
+    assert dead.status == "dead_letter"
+
+    dead_letters = state.list_dead_letters()
+    assert len(dead_letters) == 1
+    assert dead_letters[0].job_id == "h18-job"

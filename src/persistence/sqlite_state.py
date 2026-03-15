@@ -131,6 +131,20 @@ class QueueJobRecord:
     updated_at: str
 
 
+@dataclass(frozen=True)
+class QueueDeadLetterRecord:
+    job_id: str
+    signature: str
+    queue_kind: str
+    subscription_id: str | None
+    profile_id: str | None
+    attempts: int
+    max_attempts: int
+    error_type: str
+    error_message: str
+    failed_at: str
+
+
 _ACTIVE_QUEUE_STATES = frozenset({"queued", "scheduled", "running", "waiting", "retry_pending"})
 
 _QUEUE_ALLOWED_TRANSITIONS: dict[str, frozenset[str]] = {
@@ -290,6 +304,20 @@ class SQLiteOperationalState:
                     created_at TEXT NOT NULL,
                     updated_at TEXT NOT NULL,
                     UNIQUE(cache_scope, cache_key)
+                );
+
+                CREATE TABLE IF NOT EXISTS queue_dead_letter (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    job_id TEXT NOT NULL,
+                    signature TEXT NOT NULL,
+                    queue_kind TEXT NOT NULL,
+                    subscription_id TEXT,
+                    profile_id TEXT,
+                    attempts INTEGER NOT NULL,
+                    max_attempts INTEGER NOT NULL,
+                    error_type TEXT NOT NULL,
+                    error_message TEXT NOT NULL,
+                    failed_at TEXT NOT NULL
                 );
                 """
             )
@@ -845,13 +873,16 @@ class SQLiteOperationalState:
             if next_status not in allowed:
                 raise ValueError(f"transición inválida: {current_status} -> {next_status}")
             updated_at = _utc_now()
+            scheduled_at = row["scheduled_at"]
+            if next_status in {"queued", "running", "completed", "dead_letter", "cancelled"}:
+                scheduled_at = None
             conn.execute(
                 """
                 UPDATE queue_backlog
-                SET status = ?, updated_at = ?
+                SET status = ?, scheduled_at = ?, updated_at = ?
                 WHERE job_id = ?
                 """,
-                (next_status, updated_at, job_id),
+                (next_status, scheduled_at, updated_at, job_id),
             )
             conn.commit()
             updated = conn.execute(
@@ -888,6 +919,170 @@ class SQLiteOperationalState:
         if row is None:
             return None
         return _row_to_queue_job(row)
+
+    def list_runnable_queue_jobs(self, *, now: str | None = None) -> tuple[QueueJobRecord, ...]:
+        now_value = now or _utc_now()
+        with self._connect() as conn:
+            rows = conn.execute(
+                """
+                SELECT *
+                FROM queue_backlog
+                WHERE status IN ('queued', 'scheduled', 'retry_pending')
+                  AND (scheduled_at IS NULL OR scheduled_at <= ?)
+                ORDER BY priority DESC, created_at ASC
+                """,
+                (now_value,),
+            ).fetchall()
+        return tuple(_row_to_queue_job(row) for row in rows)
+
+    def claim_queue_job(self, *, job_id: str) -> QueueJobRecord | None:
+        now = _utc_now()
+        with self._connect() as conn:
+            updated = conn.execute(
+                """
+                UPDATE queue_backlog
+                SET status = 'running', updated_at = ?
+                WHERE job_id = ?
+                  AND status IN ('queued', 'scheduled', 'retry_pending')
+                  AND (scheduled_at IS NULL OR scheduled_at <= ?)
+                """,
+                (now, job_id, now),
+            )
+            if updated.rowcount == 0:
+                return None
+            conn.commit()
+            row = conn.execute("SELECT * FROM queue_backlog WHERE job_id = ?", (job_id,)).fetchone()
+        return _row_to_queue_job(row)
+
+    def complete_queue_job(self, *, job_id: str) -> QueueJobRecord:
+        now = _utc_now()
+        with self._connect() as conn:
+            conn.execute(
+                """
+                UPDATE queue_backlog
+                SET status = 'completed', scheduled_at = NULL, updated_at = ?
+                WHERE job_id = ?
+                """,
+                (now, job_id),
+            )
+            conn.commit()
+            row = conn.execute("SELECT * FROM queue_backlog WHERE job_id = ?", (job_id,)).fetchone()
+            if row is None:
+                raise KeyError(f"job no encontrado: {job_id}")
+        return _row_to_queue_job(row)
+
+    def schedule_queue_retry(
+        self,
+        *,
+        job_id: str,
+        scheduled_at: str,
+    ) -> QueueJobRecord:
+        now = _utc_now()
+        with self._connect() as conn:
+            row = conn.execute(
+                "SELECT attempts FROM queue_backlog WHERE job_id = ?",
+                (job_id,),
+            ).fetchone()
+            if row is None:
+                raise KeyError(f"job no encontrado: {job_id}")
+            attempts = int(row["attempts"]) + 1
+            conn.execute(
+                """
+                UPDATE queue_backlog
+                SET status = 'retry_pending', attempts = ?, scheduled_at = ?, updated_at = ?
+                WHERE job_id = ?
+                """,
+                (attempts, scheduled_at, now, job_id),
+            )
+            conn.commit()
+            updated = conn.execute(
+                "SELECT * FROM queue_backlog WHERE job_id = ?",
+                (job_id,),
+            ).fetchone()
+        return _row_to_queue_job(updated)
+
+    def dead_letter_queue_job(
+        self,
+        *,
+        job_id: str,
+        error_type: str,
+        error_message: str,
+    ) -> QueueJobRecord:
+        now = _utc_now()
+        with self._connect() as conn:
+            row = conn.execute("SELECT * FROM queue_backlog WHERE job_id = ?", (job_id,)).fetchone()
+            if row is None:
+                raise KeyError(f"job no encontrado: {job_id}")
+            attempts = int(row["attempts"]) + 1
+            conn.execute(
+                """
+                UPDATE queue_backlog
+                SET status = 'dead_letter', attempts = ?, scheduled_at = NULL, updated_at = ?
+                WHERE job_id = ?
+                """,
+                (attempts, now, job_id),
+            )
+            conn.execute(
+                """
+                INSERT INTO queue_dead_letter(
+                    job_id, signature, queue_kind, subscription_id, profile_id,
+                    attempts, max_attempts, error_type, error_message, failed_at
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                """,
+                (
+                    row["job_id"],
+                    row["signature"],
+                    row["queue_kind"],
+                    row["subscription_id"],
+                    row["profile_id"],
+                    attempts,
+                    row["max_attempts"],
+                    error_type,
+                    error_message,
+                    now,
+                ),
+            )
+            conn.commit()
+            updated = conn.execute(
+                "SELECT * FROM queue_backlog WHERE job_id = ?",
+                (job_id,),
+            ).fetchone()
+        return _row_to_queue_job(updated)
+
+    def list_dead_letters(self) -> tuple[QueueDeadLetterRecord, ...]:
+        with self._connect() as conn:
+            rows = conn.execute(
+                """
+                SELECT
+                    job_id,
+                    signature,
+                    queue_kind,
+                    subscription_id,
+                    profile_id,
+                    attempts,
+                    max_attempts,
+                    error_type,
+                    error_message,
+                    failed_at
+                FROM queue_dead_letter
+                ORDER BY id ASC
+                """
+            ).fetchall()
+        return tuple(
+            QueueDeadLetterRecord(
+                job_id=str(row["job_id"]),
+                signature=str(row["signature"]),
+                queue_kind=str(row["queue_kind"]),
+                subscription_id=row["subscription_id"],
+                profile_id=row["profile_id"],
+                attempts=int(row["attempts"]),
+                max_attempts=int(row["max_attempts"]),
+                error_type=str(row["error_type"]),
+                error_message=str(row["error_message"]),
+                failed_at=str(row["failed_at"]),
+            )
+            for row in rows
+        )
 
 
     def _migrate_queue_backlog_for_v3(self, conn: sqlite3.Connection) -> None:

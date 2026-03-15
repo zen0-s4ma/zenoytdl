@@ -177,6 +177,16 @@ python -m pytest tests/regression/test_hito17_queue_regression.py
 
 echo ""
 echo "============================================================"
+echo "⚙️ QUEUE RUNTIME · HITO 18"
+echo "============================================================"
+python -m pytest tests/unit/test_hito18_queue_runtime.py
+python -m pytest tests/unit/test_sqlite_operational_state.py -k hito18
+python -m pytest tests/integration/test_hito18_queue_runtime_integration.py
+python -m pytest tests/e2e/test_hito18_queue_runtime_flow.py
+python -m pytest tests/regression/test_hito18_queue_runtime_regression.py
+
+echo ""
+echo "============================================================"
 echo "🛠️ UTILIDADES Y COMPROBACIONES FINALES"
 echo "============================================================"
 
