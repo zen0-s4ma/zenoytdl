@@ -2,49 +2,67 @@
 
 ## Jobs y estados
 Conjunto oficial de estados de jobs (alineado con hitos y pruebas):
-- `pending`: job en cola, pendiente de ser tomado por un worker.
+- `queued`: job creado en cola persistida.
+- `scheduled`: job planificado para ejecución posterior.
 - `running`: job en ejecución activa.
-- `success`: job completado correctamente.
-- `retry`: job fallido con reintento programado y aún dentro del presupuesto de intentos.
-- `dead_letter`: job fallido de forma terminal tras agotar reintentos o por error no recuperable.
-- `cancelled`: job cancelado por operador o por apagado controlado antes de completarse.
+- `waiting`: job en espera por dependencia externa/recurso.
+- `completed`: job completado correctamente.
+- `failed`: job fallido (sin consumirlo automáticamente).
+- `retry_pending`: job marcado para posible reintento futuro.
+- `cancelled`: job cancelado por operador o apagado controlado.
+- `dead_letter`: job fallido terminal.
 
 ## Transiciones válidas
 
 Reglas de transición permitidas:
-- `pending -> running`
-- `pending -> cancelled`
-- `running -> success`
-- `running -> retry`
-- `running -> cancelled`
-- `running -> dead_letter`
-- `retry -> pending`
-- `retry -> cancelled`
-- `retry -> dead_letter`
+- `queued -> scheduled|running|cancelled`
+- `scheduled -> running|waiting|retry_pending|cancelled`
+- `running -> waiting|completed|failed|retry_pending|cancelled|dead_letter`
+- `waiting -> scheduled|running|retry_pending|cancelled`
+- `failed -> retry_pending|cancelled|dead_letter`
+- `retry_pending -> queued|scheduled|cancelled|dead_letter`
 
 Reglas de consistencia:
-- `success`, `dead_letter` y `cancelled` son estados terminales.
-- No existe transición directa `pending -> success`.
-- No existe reapertura de terminales (`success|dead_letter|cancelled`) a estados activos.
+- `completed`, `dead_letter` y `cancelled` son estados terminales.
+- No existe transición directa `queued -> completed` sin pasar por estado operativo.
+- No existe reapertura de terminales (`completed|dead_letter|cancelled`) a estados activos.
 
 ### Diagrama de transición de estados
 
 ```mermaid
 stateDiagram-v2
-    [*] --> pending
-    pending --> running
-    pending --> cancelled
+    [*] --> queued
+    queued --> scheduled
+    queued --> running
+    queued --> cancelled
 
-    running --> success
-    running --> retry
+    scheduled --> running
+    scheduled --> waiting
+    scheduled --> retry_pending
+    scheduled --> cancelled
+
+    running --> waiting
+    running --> completed
+    running --> failed
+    running --> retry_pending
     running --> cancelled
     running --> dead_letter
 
-    retry --> pending
-    retry --> cancelled
-    retry --> dead_letter
+    waiting --> scheduled
+    waiting --> running
+    waiting --> retry_pending
+    waiting --> cancelled
 
-    success --> [*]
+    failed --> retry_pending
+    failed --> cancelled
+    failed --> dead_letter
+
+    retry_pending --> queued
+    retry_pending --> scheduled
+    retry_pending --> cancelled
+    retry_pending --> dead_letter
+
+    completed --> [*]
     dead_letter --> [*]
     cancelled --> [*]
 ```
@@ -63,24 +81,27 @@ stateDiagram-v2
 
 Relación con colas:
 - si hay `cache hit` válido, el job no se encola (deduplicación preventiva);
-- si un job ya existe en `pending|running|retry`, no se debe duplicar;
+- si un job ya existe en `queued|scheduled|running|waiting|retry_pending`, no se debe duplicar;
 - `dead_letter` conserva trazabilidad y no invalida automáticamente caché previa de éxito.
 
 ## Escenarios mínimos de regresión
 
-1. **Éxito**: `pending -> running -> success` y registro consistente de intentos.
-2. **Retry**: `pending -> running -> retry -> pending -> running -> success` dentro del límite.
-3. **Dead-letter**: agotamiento de intentos con `running -> retry` repetido y cierre en `dead_letter`.
-4. **Cancelación**: cancelación en `pending` y en `running`, ambas sin reapertura posterior.
+1. **Éxito**: `queued -> running -> completed` y registro consistente de intentos.
+2. **Retry-pending**: `queued -> running -> failed -> retry_pending -> queued` (sin activación automática en este hito).
+3. **Dead-letter**: transición terminal controlada hacia `dead_letter`.
+4. **Cancelación**: cancelación en `queued` y en `running`, ambas sin reapertura posterior.
 5. **Deduplicación**: doble trigger del mismo item no crea job duplicado cuando ya existe uno activo o cuando aplica caché válida.
 
 ## Regla de validación por hito
 Cada avance en cola o caché debe venir con pruebas específicas y regresión acumulada. Solo al cerrar el hito correspondiente puede reflejarse en el README como capacidad confirmada.
 
-## Estado de soporte base en Hito 13
-- Se incorpora persistencia preparatoria en SQLite con tablas `queue_backlog` y `cache_index`.
-- Estas tablas son **solo estructura base** para evolución futura.
-- No hay todavía workers, reintentos completos, deduplicación operativa final ni política de invalidación avanzada (Hitos 17+ y 16).
+## Estado de implementación en Hito 17 (colas: modelo + persistencia)
+- Se consolida `queue_backlog` como modelo de jobs persistidos en SQLite.
+- Se soportan clases de cola: `validation`, `compilation`, `sync`, `download`, `postprocessing`, `maintenance`.
+- Se soportan prioridades y orden por prioridad para consulta operativa.
+- Se soporta firma canónica para deduplicación de jobs activos.
+- Se soporta asociación del job a `subscription_id`, `profile_id` y/o recurso (`resource_kind`, `resource_id`).
+- Aún no hay workers reales, dispatcher automático, retries activos ni concurrencia (Hito 18+).
 
 ## Estado de implementación en Hito 16 (caché core)
 - Caché en memoria para datos derivados del core:

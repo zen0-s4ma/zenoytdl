@@ -4,7 +4,7 @@
 SQLite pasa a ser la **fuente de verdad operativa** del core para estado de suscripciones, ejecuciones, items conocidos y trazabilidad mínima.
 
 ## Versión de esquema
-- `PRAGMA user_version = 2`
+- `PRAGMA user_version = 3`
 
 ## Tablas principales
 ### `subscriptions`
@@ -94,17 +94,32 @@ Métricas por ejecución.
 
 ## Soporte base preparatorio (sin lógica completa Hito 14+)
 ### `queue_backlog`
-Estructura mínima para futura cola persistente.
+Modelo persistido de jobs de cola (Hito 17).
 - `id` (PK)
-- `subscription_id`
-- `dedupe_key`
-- `state`
-- `priority`
+- `job_id` (UNIQUE)
+- `queue_kind` (`validation|compilation|sync|download|postprocessing|maintenance`)
+- `status` (`queued|scheduled|running|waiting|completed|failed|retry_pending|cancelled|dead_letter`)
+- `priority` (entero mayor = más prioritario)
+- `signature` (firma canónica de deduplicación)
+- `subscription_id` (nullable)
+- `profile_id` (nullable)
+- `resource_kind` (nullable)
+- `resource_id` (nullable)
+- `payload_json`
 - `attempts`
 - `max_attempts`
+- `scheduled_at` (nullable)
 - `created_at`
 - `updated_at`
-- `UNIQUE(subscription_id, dedupe_key)`
+- Índices:
+  - `idx_queue_backlog_order(status, priority DESC, created_at ASC)`
+  - `idx_queue_backlog_signature(signature)`
+
+Reglas base Hito 17:
+- La cola no es efímera: SQLite es fuente de verdad.
+- Un job debe asociarse al menos a `subscription_id`, `profile_id` o `resource_id`.
+- La deduplicación usa firma canónica por `queue_kind + asociación + payload` para evitar duplicados activos.
+- No incluye workers/scheduler concurrente/consumo automático (Hito 18+).
 
 ### `cache_index`
 Índice mínimo para futuras entradas de caché.

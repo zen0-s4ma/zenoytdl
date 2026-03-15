@@ -1,7 +1,9 @@
 from __future__ import annotations
 
+import hashlib
+import json
 from dataclasses import dataclass, field
-from enum import Enum
+from enum import Enum, IntEnum
 from typing import Mapping
 
 PrimitiveValue = str | int | float | bool
@@ -25,17 +27,64 @@ class PostProcessingKind(str, Enum):
 
 
 class JobKind(str, Enum):
-    COMPILE = "compile"
+    VALIDATION = "validation"
+    COMPILATION = "compilation"
     SYNC = "sync"
+    DOWNLOAD = "download"
+    POSTPROCESSING = "postprocessing"
     MAINTENANCE = "maintenance"
+    COMPILE = "compilation"
+
+
+class JobPriority(IntEnum):
+    LOW = 10
+    NORMAL = 50
+    HIGH = 80
+    CRITICAL = 100
 
 
 class JobStatus(str, Enum):
-    PENDING = "pending"
+    QUEUED = "queued"
+    SCHEDULED = "scheduled"
     RUNNING = "running"
-    SUCCESS = "success"
+    WAITING = "waiting"
+    COMPLETED = "completed"
     FAILED = "failed"
+    RETRY_PENDING = "retry_pending"
     CANCELLED = "cancelled"
+    DEAD_LETTER = "dead_letter"
+    PENDING = "queued"
+    SUCCESS = "completed"
+
+
+_JOB_ALLOWED_TRANSITIONS: dict[JobStatus, frozenset[JobStatus]] = {
+    JobStatus.QUEUED: frozenset({JobStatus.SCHEDULED, JobStatus.RUNNING, JobStatus.CANCELLED}),
+    JobStatus.SCHEDULED: frozenset(
+        {JobStatus.RUNNING, JobStatus.WAITING, JobStatus.CANCELLED, JobStatus.RETRY_PENDING}
+    ),
+    JobStatus.RUNNING: frozenset(
+        {
+            JobStatus.WAITING,
+            JobStatus.COMPLETED,
+            JobStatus.FAILED,
+            JobStatus.RETRY_PENDING,
+            JobStatus.CANCELLED,
+            JobStatus.DEAD_LETTER,
+        }
+    ),
+    JobStatus.WAITING: frozenset(
+        {JobStatus.SCHEDULED, JobStatus.RUNNING, JobStatus.RETRY_PENDING, JobStatus.CANCELLED}
+    ),
+    JobStatus.RETRY_PENDING: frozenset(
+        {JobStatus.QUEUED, JobStatus.SCHEDULED, JobStatus.CANCELLED, JobStatus.DEAD_LETTER}
+    ),
+    JobStatus.COMPLETED: frozenset(),
+    JobStatus.FAILED: frozenset(
+        {JobStatus.RETRY_PENDING, JobStatus.DEAD_LETTER, JobStatus.CANCELLED}
+    ),
+    JobStatus.CANCELLED: frozenset(),
+    JobStatus.DEAD_LETTER: frozenset(),
+}
 
 
 class CompiledArtifactFormat(str, Enum):
@@ -220,25 +269,99 @@ class Job:
     id: str
     job_kind: JobKind
     status: JobStatus
-    effective_config_id: str
+    effective_config_id: str | None = None
     artifact_id: str | None = None
     attempts: int = 0
+    priority: int = int(JobPriority.NORMAL)
+    subscription_id: str | None = None
+    profile_id: str | None = None
+    resource_kind: str | None = None
+    resource_id: str | None = None
+    payload: NormalizedMap = field(default_factory=dict)
+    signature: str | None = None
 
     def __post_init__(self) -> None:
         object.__setattr__(self, "id", normalize_identifier(self.id, "job.id"))
-        object.__setattr__(
-            self,
-            "effective_config_id",
-            normalize_identifier(self.effective_config_id, "job.effective_config_id"),
-        )
+        if self.effective_config_id:
+            object.__setattr__(
+                self,
+                "effective_config_id",
+                normalize_identifier(self.effective_config_id, "job.effective_config_id"),
+            )
         if self.artifact_id:
             object.__setattr__(
                 self,
                 "artifact_id",
                 normalize_identifier(self.artifact_id, "job.artifact_id"),
             )
+        if self.subscription_id:
+            object.__setattr__(
+                self,
+                "subscription_id",
+                normalize_identifier(self.subscription_id, "job.subscription_id"),
+            )
+        if self.profile_id:
+            object.__setattr__(
+                self,
+                "profile_id",
+                normalize_identifier(self.profile_id, "job.profile_id"),
+            )
+        if self.resource_kind:
+            object.__setattr__(self, "resource_kind", self.resource_kind.strip())
+        if self.resource_id:
+            object.__setattr__(self, "resource_id", self.resource_id.strip())
+        normalized_payload = _normalize_mapping(self.payload, "job.payload")
+        object.__setattr__(self, "payload", normalized_payload)
         if self.attempts < 0:
             raise DomainValidationError("job.attempts no puede ser negativo")
+        if self.priority < 0:
+            raise DomainValidationError("job.priority no puede ser negativo")
+        if (
+            self.subscription_id is None
+            and self.profile_id is None
+            and self.resource_id is None
+            and self.effective_config_id is None
+        ):
+            raise DomainValidationError(
+                "job debe asociarse al menos a subscription_id, profile_id, "
+                "resource_id o effective_config_id"
+            )
+        signature = self.signature or sign_job(
+            job_kind=self.job_kind,
+            subscription_id=self.subscription_id,
+            profile_id=self.profile_id,
+            resource_kind=self.resource_kind,
+            resource_id=self.resource_id,
+            payload=self.payload,
+        )
+        object.__setattr__(self, "signature", signature)
+
+    def can_transition_to(self, next_status: JobStatus) -> bool:
+        return next_status in _JOB_ALLOWED_TRANSITIONS[self.status]
+
+
+def sign_job(
+    *,
+    job_kind: JobKind,
+    subscription_id: str | None,
+    profile_id: str | None,
+    resource_kind: str | None,
+    resource_id: str | None,
+    payload: Mapping[str, PrimitiveValue],
+) -> str:
+    canonical = {
+        "job_kind": job_kind.value,
+        "subscription_id": subscription_id,
+        "profile_id": profile_id,
+        "resource_kind": resource_kind,
+        "resource_id": resource_id,
+        "payload": dict(sorted(payload.items())),
+    }
+    return hashlib.sha256(
+        json.dumps(canonical, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode(
+            "utf-8"
+        )
+    ).hexdigest()
 
 
 @dataclass(frozen=True)

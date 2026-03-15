@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import json
 import sqlite3
 from dataclasses import dataclass
@@ -7,7 +8,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-SCHEMA_VERSION = 2
+SCHEMA_VERSION = 3
 
 
 @dataclass(frozen=True)
@@ -93,6 +94,59 @@ class RetentionPurgeDecision:
     fallback_at: str
     storage_path: str | None
     criterion_used: str
+
+@dataclass(frozen=True)
+class QueueJobEnvelope:
+    job_id: str
+    queue_kind: str
+    priority: int
+    subscription_id: str | None = None
+    profile_id: str | None = None
+    resource_kind: str | None = None
+    resource_id: str | None = None
+    payload: dict[str, Any] | None = None
+    status: str = "queued"
+    attempts: int = 0
+    max_attempts: int = 1
+    scheduled_at: str | None = None
+    signature: str | None = None
+
+
+@dataclass(frozen=True)
+class QueueJobRecord:
+    job_id: str
+    queue_kind: str
+    status: str
+    priority: int
+    signature: str
+    subscription_id: str | None
+    profile_id: str | None
+    resource_kind: str | None
+    resource_id: str | None
+    payload: dict[str, Any]
+    attempts: int
+    max_attempts: int
+    scheduled_at: str | None
+    created_at: str
+    updated_at: str
+
+
+_ACTIVE_QUEUE_STATES = frozenset({"queued", "scheduled", "running", "waiting", "retry_pending"})
+
+_QUEUE_ALLOWED_TRANSITIONS: dict[str, frozenset[str]] = {
+    "queued": frozenset({"scheduled", "running", "cancelled"}),
+    "scheduled": frozenset({"running", "waiting", "retry_pending", "cancelled"}),
+    "running": frozenset(
+        {"waiting", "completed", "failed", "retry_pending", "cancelled", "dead_letter"}
+    ),
+    "waiting": frozenset({"scheduled", "running", "retry_pending", "cancelled"}),
+    "retry_pending": frozenset({"queued", "scheduled", "cancelled", "dead_letter"}),
+    "completed": frozenset(),
+    "failed": frozenset({"retry_pending", "dead_letter", "cancelled"}),
+    "cancelled": frozenset(),
+    "dead_letter": frozenset(),
+}
+
 
 
 class SQLiteOperationalState:
@@ -204,16 +258,28 @@ class SQLiteOperationalState:
 
                 CREATE TABLE IF NOT EXISTS queue_backlog (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    subscription_id TEXT NOT NULL,
-                    dedupe_key TEXT NOT NULL,
-                    state TEXT NOT NULL,
+                    job_id TEXT NOT NULL UNIQUE,
+                    queue_kind TEXT NOT NULL,
+                    status TEXT NOT NULL,
                     priority INTEGER NOT NULL,
+                    signature TEXT NOT NULL,
+                    subscription_id TEXT,
+                    profile_id TEXT,
+                    resource_kind TEXT,
+                    resource_id TEXT,
+                    payload_json TEXT NOT NULL,
                     attempts INTEGER NOT NULL,
                     max_attempts INTEGER NOT NULL,
+                    scheduled_at TEXT,
                     created_at TEXT NOT NULL,
-                    updated_at TEXT NOT NULL,
-                    UNIQUE(subscription_id, dedupe_key)
+                    updated_at TEXT NOT NULL
                 );
+
+                CREATE INDEX IF NOT EXISTS idx_queue_backlog_order
+                ON queue_backlog(status, priority DESC, created_at ASC);
+
+                CREATE INDEX IF NOT EXISTS idx_queue_backlog_signature
+                ON queue_backlog(signature);
 
                 CREATE TABLE IF NOT EXISTS cache_index (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -228,6 +294,7 @@ class SQLiteOperationalState:
                 """
             )
             self._migrate_known_items_for_v2(conn)
+            self._migrate_queue_backlog_for_v3(conn)
             conn.execute(f"PRAGMA user_version = {SCHEMA_VERSION}")
             conn.commit()
 
@@ -686,6 +753,231 @@ class SQLiteOperationalState:
             conn.commit()
             return tuple(decisions)
 
+
+    def enqueue_job(self, envelope: QueueJobEnvelope) -> tuple[QueueJobRecord, bool]:
+        if (
+            envelope.subscription_id is None
+            and envelope.profile_id is None
+            and envelope.resource_id is None
+        ):
+            raise ValueError("queue job debe asociarse a subscription_id, profile_id o resource_id")
+        payload = envelope.payload or {}
+        signature = envelope.signature or sign_queue_job(
+            queue_kind=envelope.queue_kind,
+            subscription_id=envelope.subscription_id,
+            profile_id=envelope.profile_id,
+            resource_kind=envelope.resource_kind,
+            resource_id=envelope.resource_id,
+            payload=payload,
+        )
+        now = _utc_now()
+        with self._connect() as conn:
+            existing = conn.execute(
+                f"""
+                SELECT *
+                FROM queue_backlog
+                WHERE signature = ?
+                  AND status IN ({','.join('?' for _ in _ACTIVE_QUEUE_STATES)})
+                ORDER BY priority DESC, created_at ASC
+                LIMIT 1
+                """,
+                (signature, *_ACTIVE_QUEUE_STATES),
+            ).fetchone()
+            if existing is not None:
+                return (_row_to_queue_job(existing), False)
+
+            conn.execute(
+                """
+                INSERT INTO queue_backlog(
+                    job_id, queue_kind, status, priority, signature,
+                    subscription_id, profile_id, resource_kind, resource_id, payload_json,
+                    attempts, max_attempts, scheduled_at, created_at, updated_at
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                """,
+                (
+                    envelope.job_id,
+                    envelope.queue_kind,
+                    envelope.status,
+                    envelope.priority,
+                    signature,
+                    envelope.subscription_id,
+                    envelope.profile_id,
+                    envelope.resource_kind,
+                    envelope.resource_id,
+                    _stable_json(payload),
+                    envelope.attempts,
+                    envelope.max_attempts,
+                    envelope.scheduled_at,
+                    now,
+                    now,
+                ),
+            )
+            conn.commit()
+
+        return (
+            QueueJobRecord(
+                job_id=envelope.job_id,
+                queue_kind=envelope.queue_kind,
+                status=envelope.status,
+                priority=envelope.priority,
+                signature=signature,
+                subscription_id=envelope.subscription_id,
+                profile_id=envelope.profile_id,
+                resource_kind=envelope.resource_kind,
+                resource_id=envelope.resource_id,
+                payload=payload,
+                attempts=envelope.attempts,
+                max_attempts=envelope.max_attempts,
+                scheduled_at=envelope.scheduled_at,
+                created_at=now,
+                updated_at=now,
+            ),
+            True,
+        )
+
+    def transition_queue_job_status(self, *, job_id: str, next_status: str) -> QueueJobRecord:
+        with self._connect() as conn:
+            row = conn.execute("SELECT * FROM queue_backlog WHERE job_id = ?", (job_id,)).fetchone()
+            if row is None:
+                raise KeyError(f"job no encontrado: {job_id}")
+            current_status = str(row["status"])
+            allowed = _QUEUE_ALLOWED_TRANSITIONS.get(current_status, frozenset())
+            if next_status not in allowed:
+                raise ValueError(f"transición inválida: {current_status} -> {next_status}")
+            updated_at = _utc_now()
+            conn.execute(
+                """
+                UPDATE queue_backlog
+                SET status = ?, updated_at = ?
+                WHERE job_id = ?
+                """,
+                (next_status, updated_at, job_id),
+            )
+            conn.commit()
+            updated = conn.execute(
+                "SELECT * FROM queue_backlog WHERE job_id = ?",
+                (job_id,),
+            ).fetchone()
+        return _row_to_queue_job(updated)
+
+    def list_queue_jobs(self, *, include_terminal: bool = True) -> tuple[QueueJobRecord, ...]:
+        with self._connect() as conn:
+            if include_terminal:
+                rows = conn.execute(
+                    """
+                    SELECT *
+                    FROM queue_backlog
+                    ORDER BY priority DESC, created_at ASC
+                    """
+                ).fetchall()
+            else:
+                rows = conn.execute(
+                    f"""
+                    SELECT *
+                    FROM queue_backlog
+                    WHERE status IN ({','.join('?' for _ in _ACTIVE_QUEUE_STATES)})
+                    ORDER BY priority DESC, created_at ASC
+                    """,
+                    tuple(_ACTIVE_QUEUE_STATES),
+                ).fetchall()
+        return tuple(_row_to_queue_job(row) for row in rows)
+
+    def get_queue_job(self, job_id: str) -> QueueJobRecord | None:
+        with self._connect() as conn:
+            row = conn.execute("SELECT * FROM queue_backlog WHERE job_id = ?", (job_id,)).fetchone()
+        if row is None:
+            return None
+        return _row_to_queue_job(row)
+
+
+    def _migrate_queue_backlog_for_v3(self, conn: sqlite3.Connection) -> None:
+        existing = {
+            row[1]
+            for row in conn.execute("PRAGMA table_info(queue_backlog)").fetchall()
+            if len(row) > 1
+        }
+        if "job_id" in existing:
+            return
+
+        conn.executescript(
+            """
+            ALTER TABLE queue_backlog RENAME TO queue_backlog_legacy;
+
+            CREATE TABLE queue_backlog (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                job_id TEXT NOT NULL UNIQUE,
+                queue_kind TEXT NOT NULL,
+                status TEXT NOT NULL,
+                priority INTEGER NOT NULL,
+                signature TEXT NOT NULL,
+                subscription_id TEXT,
+                profile_id TEXT,
+                resource_kind TEXT,
+                resource_id TEXT,
+                payload_json TEXT NOT NULL,
+                attempts INTEGER NOT NULL,
+                max_attempts INTEGER NOT NULL,
+                scheduled_at TEXT,
+                created_at TEXT NOT NULL,
+                updated_at TEXT NOT NULL
+            );
+
+            CREATE INDEX IF NOT EXISTS idx_queue_backlog_order
+            ON queue_backlog(status, priority DESC, created_at ASC);
+
+            CREATE INDEX IF NOT EXISTS idx_queue_backlog_signature
+            ON queue_backlog(signature);
+            """
+        )
+
+        legacy_rows = conn.execute(
+            """
+            SELECT
+                subscription_id,
+                dedupe_key,
+                state,
+                priority,
+                attempts,
+                max_attempts,
+                created_at,
+                updated_at
+            FROM queue_backlog_legacy
+            """
+        ).fetchall()
+        for row in legacy_rows:
+            payload = {"legacy_dedupe_key": row["dedupe_key"]}
+            signature = sign_queue_job(
+                queue_kind="maintenance",
+                subscription_id=row["subscription_id"],
+                profile_id=None,
+                resource_kind=None,
+                resource_id=None,
+                payload=payload,
+            )
+            conn.execute(
+                """
+                INSERT INTO queue_backlog(
+                    job_id, queue_kind, status, priority, signature, subscription_id, profile_id,
+                    resource_kind, resource_id, payload_json, attempts, max_attempts,
+                    scheduled_at, created_at, updated_at
+                ) VALUES (?, ?, ?, ?, ?, ?, NULL, NULL, NULL, ?, ?, ?, NULL, ?, ?)
+                """,
+                (
+                    f"legacy::{row['subscription_id']}::{row['dedupe_key']}",
+                    "maintenance",
+                    row["state"],
+                    row["priority"],
+                    signature,
+                    row["subscription_id"],
+                    _stable_json(payload),
+                    row["attempts"],
+                    row["max_attempts"],
+                    row["created_at"],
+                    row["updated_at"],
+                ),
+            )
+        conn.execute("DROP TABLE queue_backlog_legacy")
+
     def _migrate_known_items_for_v2(self, conn: sqlite3.Connection) -> None:
         existing = {
             row[1]
@@ -863,6 +1155,53 @@ def _stable_json(payload: Any) -> str:
     return json.dumps(payload, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
 
 
+
+
+def sign_queue_job(
+    *,
+    queue_kind: str,
+    subscription_id: str | None,
+    profile_id: str | None,
+    resource_kind: str | None,
+    resource_id: str | None,
+    payload: dict[str, Any],
+) -> str:
+    canonical = {
+        "queue_kind": queue_kind,
+        "subscription_id": subscription_id,
+        "profile_id": profile_id,
+        "resource_kind": resource_kind,
+        "resource_id": resource_id,
+        "payload": payload,
+    }
+    return hashlib.sha256(
+        json.dumps(
+            canonical,
+            sort_keys=True,
+            separators=(",", ":"),
+            ensure_ascii=False,
+        ).encode("utf-8")
+    ).hexdigest()
+
+
+def _row_to_queue_job(row: sqlite3.Row) -> QueueJobRecord:
+    return QueueJobRecord(
+        job_id=str(row["job_id"]),
+        queue_kind=str(row["queue_kind"]),
+        status=str(row["status"]),
+        priority=int(row["priority"]),
+        signature=str(row["signature"]),
+        subscription_id=row["subscription_id"],
+        profile_id=row["profile_id"],
+        resource_kind=row["resource_kind"],
+        resource_id=row["resource_id"],
+        payload=json.loads(str(row["payload_json"])),
+        attempts=int(row["attempts"]),
+        max_attempts=int(row["max_attempts"]),
+        scheduled_at=row["scheduled_at"],
+        created_at=str(row["created_at"]),
+        updated_at=str(row["updated_at"]),
+    )
 def _extract_publication_at(command_payload: dict[str, Any]) -> str | None:
     retention = command_payload.get("retention")
     if isinstance(retention, dict):

@@ -78,3 +78,11 @@ Estado: **en ejecución**. Esta guía define comandos mínimos operativos sin de
 - Integración caché con validación/traducción/compilación: `python -m pytest tests/integration/test_hito16_cache_integration.py`
 - E2E doble ejecución con menor recomputación: `python -m pytest tests/e2e/test_hito16_cache_flow.py`
 - Regresión de hits/invalidaciones/igualdad funcional: `python -m pytest tests/regression/test_hito16_cache_regression.py`
+
+
+## Verificación específica Hito 17 (colas: modelo y persistencia)
+- Unitarias entidad/transiciones/firma: `python -m pytest tests/unit/test_hito17_queue_models.py`
+- Unitarias esquema persistente cola: `python -m pytest tests/unit/test_sqlite_operational_state.py -k hito17`
+- Integración cola + SQLite + asociación: `python -m pytest tests/integration/test_hito17_queue_integration.py`
+- E2E alta múltiple + consulta cola completa: `python -m pytest tests/e2e/test_hito17_queue_flow.py`
+- Regresión cola canónica: `python -m pytest tests/regression/test_hito17_queue_regression.py`

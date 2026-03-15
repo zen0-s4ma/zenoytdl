@@ -401,3 +401,34 @@ def test_hito15_retention_fallback_uses_finished_at_without_publication_date(
         and event["detail"]["reason"] == "max_items_exceeded"
         for event in snapshot["events"]
     )
+
+
+@pytest.mark.unit
+def test_hito17_schema_queue_backlog_has_persisted_job_model_columns(tmp_path: Path) -> None:
+    state = SQLiteOperationalState(tmp_path / "state.sqlite")
+    state.init_schema()
+
+    with sqlite3.connect(tmp_path / "state.sqlite") as conn:
+        columns = {
+            row[1]
+            for row in conn.execute("PRAGMA table_info(queue_backlog)").fetchall()
+            if len(row) > 1
+        }
+
+    assert {
+        "job_id",
+        "queue_kind",
+        "status",
+        "priority",
+        "signature",
+        "subscription_id",
+        "profile_id",
+        "resource_kind",
+        "resource_id",
+        "payload_json",
+        "attempts",
+        "max_attempts",
+        "scheduled_at",
+        "created_at",
+        "updated_at",
+    }.issubset(columns)
