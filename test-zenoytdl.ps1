@@ -189,6 +189,10 @@ echo ""
 echo "============================================================"
 echo "⚙️ API · HITO 19"
 echo "============================================================"
+python -m pytest tests/unit/test_hito19_core_api.py
+python -m pytest tests/integration/test_hito19_core_api_integration.py
+python -m pytest tests/e2e/test_hito19_core_api_flow.py
+python -m pytest tests/regression/test_hito19_core_api_regression.py
 
 
 echo ""
