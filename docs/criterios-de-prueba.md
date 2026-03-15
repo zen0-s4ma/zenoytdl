@@ -120,3 +120,10 @@ Criterios de aceptación de estas pruebas:
 - Integración: `tests/integration/test_ytdl_sub_executor_integration.py`.
 - E2E: `tests/e2e/test_ytdl_sub_executor_flow.py`.
 - Regresión: `tests/regression/test_hito12_ytdl_sub_executor_regression.py`.
+
+## Cobertura mínima específica de persistencia y estado operativo SQLite (Hito 13)
+- Unitarias: `tests/unit/test_sqlite_operational_state.py`.
+- Integración: `tests/integration/test_hito13_persistence_integration.py`.
+- E2E: `tests/e2e/test_hito13_persistence_flow.py`.
+- Regresión: `tests/regression/test_hito13_persistence_regression.py`.
+

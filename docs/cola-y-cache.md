@@ -76,3 +76,9 @@ Relación con colas:
 
 ## Regla de validación por hito
 Cada avance en cola o caché debe venir con pruebas específicas y regresión acumulada. Solo al cerrar el hito correspondiente puede reflejarse en el README como capacidad confirmada.
+
+## Estado de soporte base en Hito 13
+- Se incorpora persistencia preparatoria en SQLite con tablas `queue_backlog` y `cache_index`.
+- Estas tablas son **solo estructura base** para evolución futura.
+- No hay todavía workers, reintentos completos, deduplicación operativa final ni política de invalidación avanzada (Hitos 17+ y 16).
+

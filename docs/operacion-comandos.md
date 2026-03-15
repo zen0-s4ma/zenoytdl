@@ -53,3 +53,10 @@ Estado: **en ejecución**. Esta guía define comandos mínimos operativos sin de
 - Integración compilador+ejecutor: `python -m pytest tests/integration/test_ytdl_sub_executor_integration.py`
 - E2E de ejecución controlada: `python -m pytest tests/e2e/test_ytdl_sub_executor_flow.py`
 - Regresión Hito 12: `python -m pytest tests/regression/test_hito12_ytdl_sub_executor_regression.py`
+
+## Verificación específica Hito 13 (persistencia SQLite operativa)
+- Unitarias persistencia/repositorios: `python -m pytest tests/unit/test_sqlite_operational_state.py`
+- Integración ejecutor+persistencia: `python -m pytest tests/integration/test_hito13_persistence_integration.py`
+- E2E de huella persistida completa: `python -m pytest tests/e2e/test_hito13_persistence_flow.py`
+- Regresión Hito 13: `python -m pytest tests/regression/test_hito13_persistence_regression.py`
+
