@@ -30,6 +30,7 @@ from src.integration.ytdl_sub.executor import (
     execute_prepared_command,
     prepare_execution_job,
 )
+from src.integration.ytdl_sub.persisted_executor import execute_batch_with_operational_state
 from src.integration.ytdl_sub.translator import (
     TranslatedYtdlSubModel,
     translate_batch_to_ytdl_sub_model,
@@ -68,4 +69,5 @@ __all__ = [
     "execute_prepared_command",
     "execute_compiled_artifact",
     "execute_compiled_batch",
+    "execute_batch_with_operational_state",
 ]
