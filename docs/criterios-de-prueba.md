@@ -151,3 +151,13 @@ Criterios de aceptación de estas pruebas:
   - `python -m pytest tests/e2e/test_hito18_queue_runtime_flow.py`
 - Regresión acumulada del hito:
   - `python -m pytest tests/regression/test_hito18_queue_runtime_regression.py`
+
+## Batería focalizada Hito 19 (API propia del core)
+- Unitarias handlers/controladores + serialización + validación de payload:
+  - `python -m pytest tests/unit/test_hito19_core_api.py`
+- Integración API con dominio/persistencia/cola/caché:
+  - `python -m pytest tests/integration/test_hito19_core_api_integration.py`
+- E2E cliente API -> validación/cola/ejecución/estado:
+  - `python -m pytest tests/e2e/test_hito19_core_api_flow.py`
+- Regresión del contrato API (códigos/payloads/efectos):
+  - `python -m pytest tests/regression/test_hito19_core_api_regression.py`

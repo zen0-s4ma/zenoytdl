@@ -94,3 +94,10 @@ Estado: **en ejecución**. Esta guía define comandos mínimos operativos sin de
 - Integración workers + persistencia + reglas de retry/dead-letter: `python -m pytest tests/integration/test_hito18_queue_runtime_integration.py`
 - E2E cola poblada -> workers -> estados finales: `python -m pytest tests/e2e/test_hito18_queue_runtime_flow.py`
 - Regresión mixta H18 (success+retry+dead-letter): `python -m pytest tests/regression/test_hito18_queue_runtime_regression.py`
+
+
+## Verificación específica Hito 19 (API propia del core)
+- Unitarias handlers/serialización/payload: `python -m pytest tests/unit/test_hito19_core_api.py`
+- Integración API + dominio/persistencia/cola/caché: `python -m pytest tests/integration/test_hito19_core_api_integration.py`
+- E2E cliente API -> validación/cola/ejecución/estado: `python -m pytest tests/e2e/test_hito19_core_api_flow.py`
+- Regresión contrato API H19: `python -m pytest tests/regression/test_hito19_core_api_regression.py`
