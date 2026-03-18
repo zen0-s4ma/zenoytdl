@@ -91,3 +91,30 @@ powershell -ExecutionPolicy Bypass -File .\test-zenoytdl\run-e2e.ps1 -ClearDownl
 
 powershell -ExecutionPolicy Bypass -File .\test-zenoytdl\validate-downloads.ps1 -DryRun:$true
 powershell -ExecutionPolicy Bypass -File .\test-zenoytdl\validate-downloads.ps1 -DryRun:$false
+
+# ============================================================
+# 4) test-trim-only.ps1
+#    Parámetro:
+#      -DryRun:$true / $false
+# ============================================================
+
+powershell -ExecutionPolicy Bypass -File .\test-zenoytdl\test-trim-only.ps1 -DryRun:$true
+powershell -ExecutionPolicy Bypass -File .\test-zenoytdl\test-trim-only.ps1 -DryRun:$false
+
+# ============================================================
+# 5) test-beets-only.ps1
+#    Parámetro:
+#      -DryRun:$true / $false
+# ============================================================
+
+powershell -ExecutionPolicy Bypass -File .\test-zenoytdl\test-beets-only.ps1 -DryRun:$true
+powershell -ExecutionPolicy Bypass -File .\test-zenoytdl\test-beets-only.ps1 -DryRun:$false
+
+# ============================================================
+# 6) _run-all-test.ps1
+#    Ejecuta toda la batería completa en orden lógico
+#    y genera un reporte maestro resumido con referencias
+#    a todos los logs del proceso
+# ============================================================
+
+powershell -ExecutionPolicy Bypass -File .\test-zenoytdl\_run-all-test.ps1
