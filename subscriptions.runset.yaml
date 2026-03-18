@@ -8,6 +8,48 @@ canales-youtube-ramon-alvarez-de-mon-ramonalvarezdemon:
     only_recent_max_files: 3
     only_recent_date_range: 100years
     tv_show_name: ramon-alvarez-de-mon
+podcast-entrevistas-geoestratego-oficial:
+  ~entrevistas-geoestratego-oficial:
+    url: https://www.youtube.com/@geoestratego_oficial/videos
+    enable_resolution_assert: false
+    subscription_root_sanitized: entrevistas
+    source_target_sanitized: geoestratego-oficial
+    download_strategy: channel
+    only_recent_max_files: 3
+    only_recent_date_range: 100years
+    filter_duration_min_s: 300
+podcast-entrevistas-pl01fnqnul7ykui7id1lwxkz8ho3j8l8of:
+  ~entrevistas-pl01fnqnul7ykui7id1lwxkz8ho3j8l8of:
+    url: https://www.youtube.com/playlist?list=PL01FNQnUl7YKuI7iD1lwxKz8Ho3J8L8Of
+    enable_resolution_assert: false
+    subscription_root_sanitized: entrevistas
+    source_target_sanitized: pl01fnqnul7ykui7id1lwxkz8ho3j8l8of
+    download_strategy: playlist
+    only_recent_max_files: 3
+    only_recent_date_range: 100years
+    filter_duration_min_s: 300
+tv-serie-lolete-kerios:
+  ~lolete-kerios:
+    url: https://www.youtube.com/@Kerios/videos
+    enable_resolution_assert: false
+    subscription_root_sanitized: lolete
+    source_target_sanitized: kerios
+    download_strategy: channel
+    only_recent_max_files: 3
+    only_recent_date_range: 100years
+    filter_duration_min_s: 300
+    tv_show_name: lolete
+tv-serie-lolete-nickdaboom:
+  ~lolete-nickdaboom:
+    url: https://www.youtube.com/@nickdaboom/videos
+    enable_resolution_assert: false
+    subscription_root_sanitized: lolete
+    source_target_sanitized: nickdaboom
+    download_strategy: channel
+    only_recent_max_files: 3
+    only_recent_date_range: 100years
+    filter_duration_min_s: 300
+    tv_show_name: lolete
 music-playlist-music-playlist-prueba-plcajstgncmdxgfdpc5aenevprzgcr-kut:
   ~music-playlist-prueba-plcajstgncmdxgfdpc5aenevprzgcr-kut:
     url: https://www.youtube.com/playlist?list=PLcajSTgNCmdXgFdPc5aeNEVPrzGcr_kUt

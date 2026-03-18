@@ -22,7 +22,7 @@ Este documento reúne muchos ejemplos prácticos del proyecto para ayudarte a:
 Ruta de configuración:
 
 ```powershell
-E:\Docker_folders\streaming2\ytdl-sub\config
+E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl
 ```
 
 Ruta host de descargas:
@@ -54,11 +54,11 @@ Contenedores habituales:
 Casi todos los workflows parten de esta base:
 
 ```powershell
-cd E:\Docker_folders\streaming2\ytdl-sub\config
+cd E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl
 python .\generate-ytdl-config.py
 python .\prepare-subscriptions-runset.py
 docker cp .\trim-ambience-video.py ytdl-sub:/tmp/trim-ambience-video.py
-docker exec ytdl-sub sh -lc 'ytdl-sub --config /config/config.generated.yaml sub /config/subscriptions.runset.yaml'
+docker exec ytdl-sub sh -lc 'ytdl-sub --config /config/zenoytdl/config.generated.yaml sub /config/zenoytdl/subscriptions.runset.yaml'
 ```
 
 ---
@@ -75,7 +75,7 @@ Ningún fichero de salida multimedia.
 ### Cómo lanzarlo
 
 ```powershell
-cd E:\Docker_folders\streaming2\ytdl-sub\config
+cd E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl
 python .\generate-ytdl-config.py
 ```
 
@@ -93,7 +93,7 @@ Objetivo: ver qué suscripciones tocaría ejecutar y cuáles saltaría.
 ### Cómo lanzarlo
 
 ```powershell
-cd E:\Docker_folders\streaming2\ytdl-sub\config
+cd E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl
 python .\generate-ytdl-config.py
 python .\prepare-subscriptions-runset.py
 Get-Content .\subscriptions.runset.yaml
@@ -113,11 +113,11 @@ Objetivo: workflow estándar end-to-end.
 ### Cómo lanzarlo
 
 ```powershell
-cd E:\Docker_folders\streaming2\ytdl-sub\config
+cd E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl
 python .\generate-ytdl-config.py
 python .\prepare-subscriptions-runset.py
 docker cp .\trim-ambience-video.py ytdl-sub:/tmp/trim-ambience-video.py
-docker exec ytdl-sub sh -lc 'ytdl-sub --config /config/config.generated.yaml sub /config/subscriptions.runset.yaml'
+docker exec ytdl-sub sh -lc 'ytdl-sub --config /config/zenoytdl/config.generated.yaml sub /config/zenoytdl/subscriptions.runset.yaml'
 if (Test-Path '.\.recent-items-state.pending.json') {
   Move-Item '.\.recent-items-state.pending.json' '.\.recent-items-state.json' -Force
 }
@@ -128,7 +128,7 @@ Para `music-playlist` añade:
 
 ```powershell
 powershell.exe -ExecutionPolicy Bypass -File ".\clean-music-filenames.ps1" -TargetDir "E:\Docker_folders\ydtl-custom-downloads\Music-Playlist\music-playlist-prueba"
-docker exec beets-streaming2 sh -lc 'beet -v -c /config/beets.music-playlist.yaml import -s -q /downloads/Music-Playlist/music-playlist-prueba'
+docker exec beets-streaming2 sh -lc 'beet -v -c /config/zenoytdl/beets.music-playlist.yaml import -s -q /downloads/Music-Playlist/music-playlist-prueba'
 ```
 
 ---
@@ -140,7 +140,7 @@ Objetivo: compilar únicamente presets y suscripciones de un `profile_type`.
 ### Cómo lanzarlo
 
 ```powershell
-cd E:\Docker_folders\streaming2\ytdl-sub\config
+cd E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl
 python .\generate-ytdl-config.py --only-profile music-playlist
 ```
 
@@ -188,7 +188,7 @@ subscriptions:
 ```powershell
 python .\generate-ytdl-config.py
 python .\prepare-subscriptions-runset.py
-docker exec ytdl-sub sh -lc 'ytdl-sub --config /config/config.generated.yaml sub /config/subscriptions.runset.yaml'
+docker exec ytdl-sub sh -lc 'ytdl-sub --config /config/zenoytdl/config.generated.yaml sub /config/zenoytdl/subscriptions.runset.yaml'
 ```
 
 ### Resultado esperado
@@ -217,7 +217,7 @@ subscriptions:
 ```powershell
 python .\generate-ytdl-config.py
 python .\prepare-subscriptions-runset.py
-docker exec ytdl-sub sh -lc 'ytdl-sub --config /config/config.generated.yaml sub /config/subscriptions.runset.yaml'
+docker exec ytdl-sub sh -lc 'ytdl-sub --config /config/zenoytdl/config.generated.yaml sub /config/zenoytdl/subscriptions.runset.yaml'
 ```
 
 ---
@@ -241,7 +241,7 @@ subscriptions:
 ```powershell
 python .\generate-ytdl-config.py
 python .\prepare-subscriptions-runset.py
-docker exec ytdl-sub sh -lc 'ytdl-sub --config /config/config.generated.yaml sub /config/subscriptions.runset.yaml'
+docker exec ytdl-sub sh -lc 'ytdl-sub --config /config/zenoytdl/config.generated.yaml sub /config/zenoytdl/subscriptions.runset.yaml'
 ```
 
 ### Resultado esperado
@@ -270,7 +270,7 @@ subscriptions:
 ```powershell
 python .\generate-ytdl-config.py
 python .\prepare-subscriptions-runset.py
-docker exec ytdl-sub sh -lc 'ytdl-sub --config /config/config.generated.yaml sub /config/subscriptions.runset.yaml'
+docker exec ytdl-sub sh -lc 'ytdl-sub --config /config/zenoytdl/config.generated.yaml sub /config/zenoytdl/subscriptions.runset.yaml'
 ```
 
 ---
@@ -299,7 +299,7 @@ subscriptions:
 ```powershell
 python .\generate-ytdl-config.py
 python .\prepare-subscriptions-runset.py
-docker exec ytdl-sub sh -lc 'ytdl-sub --config /config/config.generated.yaml sub /config/subscriptions.runset.yaml'
+docker exec ytdl-sub sh -lc 'ytdl-sub --config /config/zenoytdl/config.generated.yaml sub /config/zenoytdl/subscriptions.runset.yaml'
 ```
 
 ### Resultado esperado
@@ -325,9 +325,9 @@ subscriptions:
 ```powershell
 python .\generate-ytdl-config.py
 python .\prepare-subscriptions-runset.py
-docker exec ytdl-sub sh -lc 'ytdl-sub --config /config/config.generated.yaml sub /config/subscriptions.runset.yaml'
+docker exec ytdl-sub sh -lc 'ytdl-sub --config /config/zenoytdl/config.generated.yaml sub /config/zenoytdl/subscriptions.runset.yaml'
 powershell.exe -ExecutionPolicy Bypass -File ".\clean-music-filenames.ps1" -TargetDir "E:\Docker_folders\ydtl-custom-downloads\Music-Playlist\synthwave-nocturno"
-docker exec beets-streaming2 sh -lc 'beet -v -c /config/beets.music-playlist.yaml import -s -q /downloads/Music-Playlist/synthwave-nocturno'
+docker exec beets-streaming2 sh -lc 'beet -v -c /config/zenoytdl/beets.music-playlist.yaml import -s -q /downloads/Music-Playlist/synthwave-nocturno'
 ```
 
 ---
@@ -353,7 +353,7 @@ subscriptions:
 python .\generate-ytdl-config.py
 python .\prepare-subscriptions-runset.py
 docker cp .\trim-ambience-video.py ytdl-sub:/tmp/trim-ambience-video.py
-docker exec ytdl-sub sh -lc 'ytdl-sub --config /config/config.generated.yaml sub /config/subscriptions.runset.yaml'
+docker exec ytdl-sub sh -lc 'ytdl-sub --config /config/zenoytdl/config.generated.yaml sub /config/zenoytdl/subscriptions.runset.yaml'
 docker exec ytdl-sub sh -lc 'python /tmp/trim-ambience-video.py --input "/downloads/Ambience-Video/lluvia-neon/fakeambience001.mp4" --max-duration 3h3m3s --replace'
 ```
 
@@ -380,7 +380,7 @@ subscriptions:
 python .\generate-ytdl-config.py
 python .\prepare-subscriptions-runset.py
 docker cp .\trim-ambience-video.py ytdl-sub:/tmp/trim-ambience-video.py
-docker exec ytdl-sub sh -lc 'ytdl-sub --config /config/config.generated.yaml sub /config/subscriptions.runset.yaml'
+docker exec ytdl-sub sh -lc 'ytdl-sub --config /config/zenoytdl/config.generated.yaml sub /config/zenoytdl/subscriptions.runset.yaml'
 docker exec ytdl-sub sh -lc 'python /tmp/trim-ambience-video.py --input "/downloads/Ambience-Audio/bosque-profundo/fakeforestaud01.mp3" --max-duration 3h3m3s --replace'
 ```
 
@@ -412,7 +412,7 @@ subscriptions:
 ```powershell
 python .\generate-ytdl-config.py
 python .\prepare-subscriptions-runset.py
-docker exec ytdl-sub sh -lc 'ytdl-sub --config /config/config.generated.yaml sub /config/subscriptions.runset.yaml'
+docker exec ytdl-sub sh -lc 'ytdl-sub --config /config/zenoytdl/config.generated.yaml sub /config/zenoytdl/subscriptions.runset.yaml'
 ```
 
 ---
@@ -437,7 +437,7 @@ subscriptions:
 ```powershell
 python .\generate-ytdl-config.py
 python .\prepare-subscriptions-runset.py
-docker exec ytdl-sub sh -lc 'ytdl-sub --config /config/config.generated.yaml sub /config/subscriptions.runset.yaml'
+docker exec ytdl-sub sh -lc 'ytdl-sub --config /config/zenoytdl/config.generated.yaml sub /config/zenoytdl/subscriptions.runset.yaml'
 ```
 
 ---
@@ -460,9 +460,9 @@ subscriptions:
 ```powershell
 python .\generate-ytdl-config.py
 python .\prepare-subscriptions-runset.py
-docker exec ytdl-sub sh -lc 'ytdl-sub --config /config/config.generated.yaml sub /config/subscriptions.runset.yaml'
+docker exec ytdl-sub sh -lc 'ytdl-sub --config /config/zenoytdl/config.generated.yaml sub /config/zenoytdl/subscriptions.runset.yaml'
 powershell.exe -ExecutionPolicy Bypass -File ".\clean-music-filenames.ps1" -TargetDir "E:\Docker_folders\ydtl-custom-downloads\Music-Playlist\pop-esencial"
-docker exec beets-streaming2 sh -lc 'beet -v -c /config/beets.music-playlist.yaml import -s -q /downloads/Music-Playlist/pop-esencial'
+docker exec beets-streaming2 sh -lc 'beet -v -c /config/zenoytdl/beets.music-playlist.yaml import -s -q /downloads/Music-Playlist/pop-esencial'
 ```
 
 ---
@@ -488,7 +488,7 @@ subscriptions:
 python .\generate-ytdl-config.py
 python .\prepare-subscriptions-runset.py
 Get-Content .\subscriptions.runset.yaml
-docker exec ytdl-sub sh -lc 'ytdl-sub --config /config/config.generated.yaml sub /config/subscriptions.runset.yaml'
+docker exec ytdl-sub sh -lc 'ytdl-sub --config /config/zenoytdl/config.generated.yaml sub /config/zenoytdl/subscriptions.runset.yaml'
 ```
 
 ### Qué observar
@@ -514,7 +514,7 @@ subscriptions:
 ```powershell
 python .\generate-ytdl-config.py
 python .\prepare-subscriptions-runset.py
-docker exec ytdl-sub sh -lc 'ytdl-sub --config /config/config.generated.yaml sub /config/subscriptions.runset.yaml'
+docker exec ytdl-sub sh -lc 'ytdl-sub --config /config/zenoytdl/config.generated.yaml sub /config/zenoytdl/subscriptions.runset.yaml'
 ```
 
 ---
@@ -540,7 +540,7 @@ subscriptions:
 python .\generate-ytdl-config.py
 python .\prepare-subscriptions-runset.py
 docker cp .\trim-ambience-video.py ytdl-sub:/tmp/trim-ambience-video.py
-docker exec ytdl-sub sh -lc 'ytdl-sub --config /config/config.generated.yaml sub /config/subscriptions.runset.yaml'
+docker exec ytdl-sub sh -lc 'ytdl-sub --config /config/zenoytdl/config.generated.yaml sub /config/zenoytdl/subscriptions.runset.yaml'
 docker exec ytdl-sub sh -lc 'python /tmp/trim-ambience-video.py --input "/downloads/Ambience-Video/cafe-noche/fakeambiencecafe.mov" --max-duration 2h15m --replace --faststart'
 ```
 
@@ -567,7 +567,7 @@ subscriptions:
 python .\generate-ytdl-config.py
 python .\prepare-subscriptions-runset.py
 docker cp .\trim-ambience-video.py ytdl-sub:/tmp/trim-ambience-video.py
-docker exec ytdl-sub sh -lc 'ytdl-sub --config /config/config.generated.yaml sub /config/subscriptions.runset.yaml'
+docker exec ytdl-sub sh -lc 'ytdl-sub --config /config/zenoytdl/config.generated.yaml sub /config/zenoytdl/subscriptions.runset.yaml'
 docker exec ytdl-sub sh -lc 'python /tmp/trim-ambience-video.py --input "/downloads/Ambience-Audio/mar-profundo/fakemarprofundo77.wav" --max-duration 1h45m --replace'
 ```
 
@@ -688,7 +688,7 @@ subscriptions:
 python .\generate-ytdl-config.py
 python .\prepare-subscriptions-runset.py
 docker cp .\trim-ambience-video.py ytdl-sub:/tmp/trim-ambience-video.py
-docker exec ytdl-sub sh -lc 'ytdl-sub --config /config/config.generated.yaml sub /config/subscriptions.runset.yaml'
+docker exec ytdl-sub sh -lc 'ytdl-sub --config /config/zenoytdl/config.generated.yaml sub /config/zenoytdl/subscriptions.runset.yaml'
 ```
 
 ---
@@ -703,9 +703,9 @@ Quieres iterar sobre `music-playlist`, limpieza de nombres y beets, sin tocar el
 ```powershell
 python .\generate-ytdl-config.py --only-profile music-playlist
 python .\prepare-subscriptions-runset.py
-docker exec ytdl-sub sh -lc 'ytdl-sub --config /config/config.generated.yaml sub /config/subscriptions.runset.yaml'
+docker exec ytdl-sub sh -lc 'ytdl-sub --config /config/zenoytdl/config.generated.yaml sub /config/zenoytdl/subscriptions.runset.yaml'
 powershell.exe -ExecutionPolicy Bypass -File ".\clean-music-filenames.ps1" -TargetDir "E:\Docker_folders\ydtl-custom-downloads\Music-Playlist\noche-electronica"
-docker exec beets-streaming2 sh -lc 'beet -v -c /config/beets.music-playlist.yaml import -s -q /downloads/Music-Playlist/noche-electronica'
+docker exec beets-streaming2 sh -lc 'beet -v -c /config/zenoytdl/beets.music-playlist.yaml import -s -q /downloads/Music-Playlist/noche-electronica'
 ```
 
 ---
@@ -716,7 +716,7 @@ docker exec beets-streaming2 sh -lc 'beet -v -c /config/beets.music-playlist.yam
 python .\generate-ytdl-config.py --only-profile ambience-video
 python .\prepare-subscriptions-runset.py
 docker cp .\trim-ambience-video.py ytdl-sub:/tmp/trim-ambience-video.py
-docker exec ytdl-sub sh -lc 'ytdl-sub --config /config/config.generated.yaml sub /config/subscriptions.runset.yaml'
+docker exec ytdl-sub sh -lc 'ytdl-sub --config /config/zenoytdl/config.generated.yaml sub /config/zenoytdl/subscriptions.runset.yaml'
 ```
 
 Y luego recorte:
@@ -899,7 +899,7 @@ Escenario:
 ```powershell
 python .\prepare-subscriptions-runset.py
 Get-Content .\subscriptions.runset.yaml
-docker exec ytdl-sub sh -lc 'ytdl-sub --config /config/config.generated.yaml sub /config/subscriptions.runset.yaml'
+docker exec ytdl-sub sh -lc 'ytdl-sub --config /config/zenoytdl/config.generated.yaml sub /config/zenoytdl/subscriptions.runset.yaml'
 ```
 
 ---
@@ -948,7 +948,7 @@ powershell.exe -ExecutionPolicy Bypass -File ".\clean-music-filenames.ps1" -Targ
 ### Luego beets
 
 ```powershell
-docker exec beets-streaming2 sh -lc 'beet -v -c /config/beets.music-playlist.yaml import -s -q /downloads/Music-Playlist/music-playlist-prueba'
+docker exec beets-streaming2 sh -lc 'beet -v -c /config/zenoytdl/beets.music-playlist.yaml import -s -q /downloads/Music-Playlist/music-playlist-prueba'
 ```
 
 ---
@@ -1033,7 +1033,7 @@ subscriptions:
 python .\generate-ytdl-config.py
 python .\prepare-subscriptions-runset.py
 docker cp .\trim-ambience-video.py ytdl-sub:/tmp/trim-ambience-video.py
-docker exec ytdl-sub sh -lc 'ytdl-sub --config /config/config.generated.yaml sub /config/subscriptions.runset.yaml'
+docker exec ytdl-sub sh -lc 'ytdl-sub --config /config/zenoytdl/config.generated.yaml sub /config/zenoytdl/subscriptions.runset.yaml'
 ```
 
 ---
@@ -1070,7 +1070,7 @@ subscriptions:
 ```powershell
 python .\generate-ytdl-config.py
 python .\prepare-subscriptions-runset.py
-docker exec ytdl-sub sh -lc 'ytdl-sub --config /config/config.generated.yaml sub /config/subscriptions.runset.yaml'
+docker exec ytdl-sub sh -lc 'ytdl-sub --config /config/zenoytdl/config.generated.yaml sub /config/zenoytdl/subscriptions.runset.yaml'
 ```
 
 ---
@@ -1118,9 +1118,9 @@ subscriptions:
 python .\generate-ytdl-config.py
 python .\prepare-subscriptions-runset.py
 docker cp .\trim-ambience-video.py ytdl-sub:/tmp/trim-ambience-video.py
-docker exec ytdl-sub sh -lc 'ytdl-sub --config /config/config.generated.yaml sub /config/subscriptions.runset.yaml'
+docker exec ytdl-sub sh -lc 'ytdl-sub --config /config/zenoytdl/config.generated.yaml sub /config/zenoytdl/subscriptions.runset.yaml'
 powershell.exe -ExecutionPolicy Bypass -File ".\clean-music-filenames.ps1" -TargetDir "E:\Docker_folders\ydtl-custom-downloads\Music-Playlist\clasicos-remaster"
-docker exec beets-streaming2 sh -lc 'beet -v -c /config/beets.music-playlist.yaml import -s -q /downloads/Music-Playlist/clasicos-remaster'
+docker exec beets-streaming2 sh -lc 'beet -v -c /config/zenoytdl/beets.music-playlist.yaml import -s -q /downloads/Music-Playlist/clasicos-remaster'
 ```
 
 ---
@@ -1137,7 +1137,7 @@ $runsetInfo = Get-Item $runsetPath
 if ($runsetInfo.Length -le 5) {
   Write-Host "[INFO] subscriptions.runset.yaml esta vacio: no toca descargar nada."
 } else {
-  docker exec ytdl-sub sh -lc 'ytdl-sub --config /config/config.generated.yaml sub /config/subscriptions.runset.yaml'
+  docker exec ytdl-sub sh -lc 'ytdl-sub --config /config/zenoytdl/config.generated.yaml sub /config/zenoytdl/subscriptions.runset.yaml'
 }
 ```
 
@@ -1149,12 +1149,12 @@ if ($runsetInfo.Length -le 5) {
 python .\generate-ytdl-config.py
 python .\prepare-subscriptions-runset.py
 docker cp .\trim-ambience-video.py ytdl-sub:/tmp/trim-ambience-video.py
-docker exec ytdl-sub sh -lc 'ytdl-sub --config /config/config.generated.yaml sub /config/subscriptions.runset.yaml'
+docker exec ytdl-sub sh -lc 'ytdl-sub --config /config/zenoytdl/config.generated.yaml sub /config/zenoytdl/subscriptions.runset.yaml'
 if (Test-Path '.\.recent-items-state.pending.json') {
   Move-Item '.\.recent-items-state.pending.json' '.\.recent-items-state.json' -Force
 }
 powershell.exe -ExecutionPolicy Bypass -File ".\clean-music-filenames.ps1" -TargetDir "E:\Docker_folders\ydtl-custom-downloads\Music-Playlist\clasicos-remaster"
-docker exec beets-streaming2 sh -lc 'beet -v -c /config/beets.music-playlist.yaml import -s -q /downloads/Music-Playlist/clasicos-remaster'
+docker exec beets-streaming2 sh -lc 'beet -v -c /config/zenoytdl/beets.music-playlist.yaml import -s -q /downloads/Music-Playlist/clasicos-remaster'
 docker exec ytdl-sub sh -lc 'find /downloads/Ambience-Video -type f \( -iname "*.mp4" -o -iname "*.mkv" -o -iname "*.webm" -o -iname "*.mov" -o -iname "*.m4v" -o -iname "*.avi" \) -exec python /tmp/trim-ambience-video.py --input "{}" --max-duration 03:03:03 --replace \;'
 docker exec ytdl-sub sh -lc 'find /downloads/Ambience-Audio -type f \( -iname "*.mp3" -o -iname "*.m4a" -o -iname "*.aac" -o -iname "*.opus" -o -iname "*.ogg" -o -iname "*.wav" -o -iname "*.flac" \) -exec python /tmp/trim-ambience-video.py --input "{}" --max-duration 03:03:03 --replace \;'
 ```
@@ -1177,7 +1177,7 @@ python .\generate-ytdl-config.py --only-profile podcast
 Get-Content .\config.generated.yaml -TotalCount 200
 Get-Content .\subscriptions.generated.yaml
 python .\prepare-subscriptions-runset.py
-docker exec ytdl-sub sh -lc 'ytdl-sub --config /config/config.generated.yaml sub /config/subscriptions.runset.yaml'
+docker exec ytdl-sub sh -lc 'ytdl-sub --config /config/zenoytdl/config.generated.yaml sub /config/zenoytdl/subscriptions.runset.yaml'
 docker exec ytdl-sub sh -lc 'ls -lah /config/logs'
 ```
 
@@ -1202,7 +1202,7 @@ subscriptions:
 python .\generate-ytdl-config.py
 python .\prepare-subscriptions-runset.py
 Get-Content .\subscriptions.generated.yaml
-docker exec ytdl-sub sh -lc 'ytdl-sub --config /config/config.generated.yaml sub /config/subscriptions.runset.yaml'
+docker exec ytdl-sub sh -lc 'ytdl-sub --config /config/zenoytdl/config.generated.yaml sub /config/zenoytdl/subscriptions.runset.yaml'
 ```
 
 ---
@@ -1242,7 +1242,7 @@ subscriptions:
 python .\generate-ytdl-config.py
 python .\prepare-subscriptions-runset.py
 docker cp .\trim-ambience-video.py ytdl-sub:/tmp/trim-ambience-video.py
-docker exec ytdl-sub sh -lc 'ytdl-sub --config /config/config.generated.yaml sub /config/subscriptions.runset.yaml'
+docker exec ytdl-sub sh -lc 'ytdl-sub --config /config/zenoytdl/config.generated.yaml sub /config/zenoytdl/subscriptions.runset.yaml'
 ```
 
 ---
@@ -1368,14 +1368,14 @@ subscriptions:
 python .\generate-ytdl-config.py
 python .\prepare-subscriptions-runset.py
 docker cp .\trim-ambience-video.py ytdl-sub:/tmp/trim-ambience-video.py
-docker exec ytdl-sub sh -lc 'ytdl-sub --config /config/config.generated.yaml sub /config/subscriptions.runset.yaml'
+docker exec ytdl-sub sh -lc 'ytdl-sub --config /config/zenoytdl/config.generated.yaml sub /config/zenoytdl/subscriptions.runset.yaml'
 if (Test-Path '.\.recent-items-state.pending.json') {
   Move-Item '.\.recent-items-state.pending.json' '.\.recent-items-state.json' -Force
 }
 powershell.exe -ExecutionPolicy Bypass -File ".\clean-music-filenames.ps1" -TargetDir "E:\Docker_folders\ydtl-custom-downloads\Music-Playlist\ambient-electronica"
 powershell.exe -ExecutionPolicy Bypass -File ".\clean-music-filenames.ps1" -TargetDir "E:\Docker_folders\ydtl-custom-downloads\Music-Playlist\clasicos-orquestales"
-docker exec beets-streaming2 sh -lc 'beet -v -c /config/beets.music-playlist.yaml import -s -q /downloads/Music-Playlist/ambient-electronica'
-docker exec beets-streaming2 sh -lc 'beet -v -c /config/beets.music-playlist.yaml import -s -q /downloads/Music-Playlist/clasicos-orquestales'
+docker exec beets-streaming2 sh -lc 'beet -v -c /config/zenoytdl/beets.music-playlist.yaml import -s -q /downloads/Music-Playlist/ambient-electronica'
+docker exec beets-streaming2 sh -lc 'beet -v -c /config/zenoytdl/beets.music-playlist.yaml import -s -q /downloads/Music-Playlist/clasicos-orquestales'
 docker exec ytdl-sub sh -lc 'find /downloads/Ambience-Video/ciudad-futurista -maxdepth 1 -type f \( -iname "*.mp4" -o -iname "*.mkv" -o -iname "*.webm" -o -iname "*.mov" -o -iname "*.m4v" -o -iname "*.avi" \) -exec python /tmp/trim-ambience-video.py --input "{}" --max-duration 03:03:03 --replace \;'
 docker exec ytdl-sub sh -lc 'find /downloads/Ambience-Audio/estudio-profundo -maxdepth 1 -type f \( -iname "*.mp3" -o -iname "*.m4a" -o -iname "*.aac" -o -iname "*.opus" -o -iname "*.ogg" -o -iname "*.wav" -o -iname "*.flac" \) -exec python /tmp/trim-ambience-video.py --input "{}" --max-duration 03:03:03 --replace \;'
 powershell.exe -ExecutionPolicy Bypass -File ".\validate-test-e2e-perfiles-subscriptions.ps1"
@@ -1563,7 +1563,7 @@ subscriptions:
 #### Paso 1 — regeneración
 
 ```powershell
-cd E:\Docker_folders\streaming2\ytdl-sub\config
+cd E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl
 python .\generate-ytdl-config.py
 ```
 
@@ -1583,7 +1583,7 @@ docker cp .\trim-ambience-video.py ytdl-sub:/tmp/trim-ambience-video.py
 #### Paso 4 — descarga real
 
 ```powershell
-docker exec ytdl-sub sh -lc 'ytdl-sub --config /config/config.generated.yaml sub /config/subscriptions.runset.yaml'
+docker exec ytdl-sub sh -lc 'ytdl-sub --config /config/zenoytdl/config.generated.yaml sub /config/zenoytdl/subscriptions.runset.yaml'
 ```
 
 #### Paso 5 — consolidar estado
@@ -1604,8 +1604,8 @@ powershell.exe -ExecutionPolicy Bypass -File ".\clean-music-filenames.ps1" -Targ
 #### Paso 7 — etiquetado con beets
 
 ```powershell
-docker exec beets-streaming2 sh -lc 'beet -v -c /config/beets.music-playlist.yaml import -s -q /downloads/Music-Playlist/archivo-electronico'
-docker exec beets-streaming2 sh -lc 'beet -v -c /config/beets.music-playlist.yaml import -s -q /downloads/Music-Playlist/canciones-cinematograficas'
+docker exec beets-streaming2 sh -lc 'beet -v -c /config/zenoytdl/beets.music-playlist.yaml import -s -q /downloads/Music-Playlist/archivo-electronico'
+docker exec beets-streaming2 sh -lc 'beet -v -c /config/zenoytdl/beets.music-playlist.yaml import -s -q /downloads/Music-Playlist/canciones-cinematograficas'
 ```
 
 #### Paso 8 — recorte de ambience video

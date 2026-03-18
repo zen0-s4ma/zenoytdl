@@ -386,7 +386,7 @@ docker cp .\trim-ambience-video.py ytdl-sub:/tmp/trim-ambience-video.py
 5. Ejecutar `ytdl-sub` sobre el runset real:
 
 ```powershell
-docker exec ytdl-sub sh -lc 'ytdl-sub --config /config/config.generated.yaml sub /config/subscriptions.runset.yaml'
+docker exec ytdl-sub sh -lc 'ytdl-sub --config /config/zenoytdl/config.generated.yaml sub /config/zenoytdl/subscriptions.runset.yaml'
 ```
 
 6. Si existe `.recent-items-state.pending.json`, promoverlo a estado definitivo:
@@ -399,7 +399,7 @@ Move-Item '.\.recent-items-state.pending.json' '.\.recent-items-state.json' -For
 
 ```powershell
 powershell.exe -ExecutionPolicy Bypass -File ".\clean-music-filenames.ps1" -TargetDir "E:\Docker_folders\ydtl-custom-downloads\Music-Playlist\music-playlist-prueba"
-docker exec beets-streaming2 sh -lc 'beet -v -c /config/beets.music-playlist.yaml import -s -q /downloads/Music-Playlist/music-playlist-prueba'
+docker exec beets-streaming2 sh -lc 'beet -v -c /config/zenoytdl/beets.music-playlist.yaml import -s -q /downloads/Music-Playlist/music-playlist-prueba'
 ```
 
 8. Lanzar trim de ambience-video y ambience-audio. El test E2E oficial del proyecto ya encapsula estos pasos. fileciteturn2file12
@@ -418,7 +418,7 @@ python .\prepare-subscriptions-runset.py
 Luego se ejecuta normalmente el runset:
 
 ```powershell
-docker exec ytdl-sub sh -lc 'ytdl-sub --config /config/config.generated.yaml sub /config/subscriptions.runset.yaml'
+docker exec ytdl-sub sh -lc 'ytdl-sub --config /config/zenoytdl/config.generated.yaml sub /config/zenoytdl/subscriptions.runset.yaml'
 ```
 
 Este modo es útil para iterar sobre un perfil sin regenerar los demás. fileciteturn1file8
@@ -447,11 +447,11 @@ En validación real se confirmó que este flujo descarga bien, embebe thumbnails
 La forma estándar, tal como está reflejada en el E2E, es:
 
 ```powershell
-Set-Location "E:\Docker_folders\streaming2\ytdl-sub\config"
+Set-Location "E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl"
 python .\generate-ytdl-config.py
 python .\prepare-subscriptions-runset.py
 docker cp .\trim-ambience-video.py ytdl-sub:/tmp/trim-ambience-video.py
-docker exec ytdl-sub sh -lc 'ytdl-sub --config /config/config.generated.yaml sub /config/subscriptions.runset.yaml'
+docker exec ytdl-sub sh -lc 'ytdl-sub --config /config/zenoytdl/config.generated.yaml sub /config/zenoytdl/subscriptions.runset.yaml'
 Move-Item '.\.recent-items-state.pending.json' '.\.recent-items-state.json' -Force
 ```
 
@@ -462,7 +462,7 @@ Después, ejecutar los postprocesos necesarios por perfil. fileciteturn2fi
 ```powershell
 python .\generate-ytdl-config.py --only-profile podcast
 python .\prepare-subscriptions-runset.py
-docker exec ytdl-sub sh -lc 'ytdl-sub --config /config/config.generated.yaml sub /config/subscriptions.runset.yaml'
+docker exec ytdl-sub sh -lc 'ytdl-sub --config /config/zenoytdl/config.generated.yaml sub /config/zenoytdl/subscriptions.runset.yaml'
 ```
 
 Cambia `podcast` por cualquier `profile_type` sanitizado soportado, por ejemplo:
@@ -499,14 +499,14 @@ Get-Content .\subscriptions.runset.yaml
 ### Modo 3: Ejecución real completa
 
 ```powershell
-docker exec ytdl-sub sh -lc 'ytdl-sub --config /config/config.generated.yaml sub /config/subscriptions.runset.yaml'
+docker exec ytdl-sub sh -lc 'ytdl-sub --config /config/zenoytdl/config.generated.yaml sub /config/zenoytdl/subscriptions.runset.yaml'
 ```
 
 ### Modo 4: Sólo limpieza y metadata musical
 
 ```powershell
 powershell.exe -ExecutionPolicy Bypass -File ".\clean-music-filenames.ps1" -TargetDir "E:\Docker_folders\ydtl-custom-downloads\Music-Playlist\music-playlist-prueba"
-docker exec beets-streaming2 sh -lc 'beet -v -c /config/beets.music-playlist.yaml import -s -q /downloads/Music-Playlist/music-playlist-prueba'
+docker exec beets-streaming2 sh -lc 'beet -v -c /config/zenoytdl/beets.music-playlist.yaml import -s -q /downloads/Music-Playlist/music-playlist-prueba'
 ```
 
 ### Modo 5: Sólo trim de ambience
