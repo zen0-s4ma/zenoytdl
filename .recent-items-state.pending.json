@@ -1,28 +1,28 @@
 {
   "sources": {
-    "podcast-entrevistas-geoestratego-oficial": {
-      "profile_name": "Podcast",
-      "profile_type": "Podcast",
-      "custom_name": "entrevistas",
-      "url": "https://www.youtube.com/@geoestratego_oficial/videos",
+    "tv-serie-lolete-kerios": {
+      "profile_name": "TV-Serie",
+      "profile_type": "TV-Serie",
+      "custom_name": "lolete",
+      "url": "https://www.youtube.com/@Kerios/videos",
       "max_items": 2,
       "selected_ids": [
-        "fTOBXLMNDIo",
-        "OUYcBfDAZd0"
+        "Bzogn-6GlrY",
+        "t22v6NOu6Vo"
       ],
       "download_strategy": "channel"
     },
-    "podcast-entrevistas-pl01fnqnul7ykui7id1lwxkz8ho3j8l8of": {
-      "profile_name": "Podcast",
-      "profile_type": "Podcast",
-      "custom_name": "entrevistas",
-      "url": "https://www.youtube.com/playlist?list=PL01FNQnUl7YKuI7iD1lwxKz8Ho3J8L8Of",
+    "tv-serie-lolete-nickdaboom": {
+      "profile_name": "TV-Serie",
+      "profile_type": "TV-Serie",
+      "custom_name": "lolete",
+      "url": "https://www.youtube.com/@nickdaboom/videos",
       "max_items": 2,
       "selected_ids": [
-        "CpSRqC69JGY",
-        "wbf_ojq7rW8"
+        "ak9hYD5ENcw",
+        "acPIYqJ020g"
       ],
-      "download_strategy": "playlist"
+      "download_strategy": "channel"
     }
   }
 }

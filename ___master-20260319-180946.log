@@ -108,3 +108,18 @@ Script     : .\test-zenoytdl\run-profile-test.ps1
 Argumentos : -ProfileName Podcast -ClearDownloads:$false -DryRun:$false
 Completados: 4
 Pendientes : 11
+
+[OK] [5/15] Podcast pasada 1
+DuraciÃ³n paso : 00:09:33
+Acumulado OK  : 5
+Fallos        : 0
+Quedan        : 10
+Tiempo total  : 00:14:27
+
+================================================================================
+LANZANDO [6/15] TV-Serie pasada 1
+================================================================================
+Script     : .\test-zenoytdl\run-profile-test.ps1
+Argumentos : -ProfileName TV-Serie -ClearDownloads:$false -DryRun:$false
+Completados: 5
+Pendientes : 10

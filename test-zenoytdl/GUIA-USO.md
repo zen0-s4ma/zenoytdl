@@ -1,51 +1,69 @@
-# Guía de uso — test-zenoytdl
+# Guía de uso actualizada — `test-zenoytdl`
 
-Esta carpeta sustituye a los tests antiguos con una estructura nueva, logs por ejecución y lanzadores reutilizables.
+Esta carpeta contiene la suite de pruebas nueva del proyecto y es la forma recomendada de validar cambios en perfiles, generación, runset, postprocesos y descargas.
 
-## Contenido
-
-- `_shared.ps1`: funciones comunes, utilidades de logging, filtrado del runset y postprocesos.
-- `run-profile-test.ps1`: ejecuta un único perfil.
-- `run-e2e.ps1`: ejecuta todos los perfiles uno detrás de otro.
-- `validate-downloads.ps1`: hace la validación global y genera un log amplio de inventario, conteos, ffprobe y logs de contenedores.
-- `logs/`: aquí se crea automáticamente un subárbol por test y timestamp.
-
-## Requisitos asumidos
-
-- Esta carpeta debe quedar dentro del proyecto, como hermana de los ficheros reales (`profiles-custom.yml`, `subscription-custom.yml`, `generate-ytdl-config.py`, etc.).
-- El proyecto debe seguir viviendo en la ruta que ya usas dentro del contenedor: `/config/zenoytdl`.
-- Deben existir los contenedores `ytdl-sub` y `beets-streaming2`.
-- Debe estar disponible `python` en Windows y en el contenedor `ytdl-sub`.
+---
 
 ## Ubicación esperada
 
 ```text
-E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\
-├── profiles-custom.yml
-├── subscription-custom.yml
-├── generate-ytdl-config.py
-├── prepare-subscriptions-runset.py
-├── trim-ambience-video.py
-├── clean-music-filenames.ps1
-├── ...
-└── test-zenoytdl\
-    ├── _shared.ps1
-    ├── run-profile-test.ps1
-    ├── run-e2e.ps1
-    ├── validate-downloads.ps1
-    ├── GUIA-USO.md
-    └── logs\
+E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\test-zenoytdl
 ```
 
-## 1) Lanzar un único perfil
+Su carpeta padre debe ser la raíz real del proyecto:
 
-Sintaxis:
-
-```powershell
-powershell -ExecutionPolicy Bypass -File .\test-zenoytdl\run-profile-test.ps1 -ProfileName "<PERFIL>" -ClearDownloads:$false -DryRun:$false
+```text
+E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl
 ```
 
-Perfiles válidos:
+---
+
+## Qué hay en esta carpeta
+
+- `_shared.ps1`: funciones comunes de logging, Docker, filtrado y postproceso.
+- `run-profile-test.ps1`: prueba un único perfil.
+- `run-e2e.ps1`: recorre todos los perfiles.
+- `validate-downloads.ps1`: inventario y validación final.
+- `test-beets-only.ps1`: prueba aislada de importación con beets.
+- `test-trim-only.ps1`: prueba aislada del trim.
+- `clean-windows-environment.ps1`: limpieza del entorno.
+- `_run-all-test.ps1`: batería completa.
+- `listado-comandos-lanzar-ps1.txt`: chuleta de comandos.
+- `logs\`: árbol de logs por timestamp.
+
+---
+
+## Requisitos
+
+### Host Windows
+
+- PowerShell
+- Python
+- Docker funcionando
+
+### Contenedores
+
+- `ytdl-sub`
+- `beets-streaming2`
+
+### Herramientas internas esperadas
+
+En `ytdl-sub`:
+
+- `ytdl-sub`
+- `python`
+- `ffmpeg`
+- `ffprobe`
+
+En `beets-streaming2`:
+
+- `beet`
+
+---
+
+## Convención de perfiles válidos
+
+Perfiles aceptados por la suite:
 
 - `Canales-youtube`
 - `Podcast`
@@ -54,100 +72,242 @@ Perfiles válidos:
 - `Ambience-Video`
 - `Ambience-Audio`
 
-Ejemplos:
+---
+
+## 1. `run-profile-test.ps1`
+
+Sirve para probar un único perfil de forma controlada.
+
+### Sintaxis
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\test-zenoytdl\run-profile-test.ps1 -ProfileName "Music-Playlist" -ClearDownloads:$true -DryRun:$false
+powershell -ExecutionPolicy Bypass -File .\test-zenoytdl\run-profile-test.ps1 -ProfileName "<PERFIL>" -ClearDownloads:$false -DryRun:$false
 ```
 
-```powershell
-powershell -ExecutionPolicy Bypass -File .\test-zenoytdl\run-profile-test.ps1 -ProfileName "Ambience-Video" -ClearDownloads:$false -DryRun:$true
-```
+### Parámetros
+
+- `-ProfileName`: nombre exacto del perfil
+- `-ClearDownloads:$true/$false`: si limpia las descargas del perfil antes de ejecutar
+- `-DryRun:$true/$false`: si ejecuta de verdad o solo deja preparado el flujo
 
 ### Qué hace
 
-- opcionalmente borra las descargas del perfil elegido;
-- limpia locks y `working_directory`;
-- regenera `config.generated.yaml` y `subscriptions.runset.yaml`;
-- filtra el runset para dejar solo el perfil pedido;
-- si no está en dry-run, ejecuta la descarga real;
-- si aplica, ejecuta postproceso (`beets` o `trim`);
-- captura logs relevantes del contenedor;
-- informa al final de la ruta exacta de logs.
+1. crea contexto de logs;
+2. valida el nombre del perfil;
+3. resetea estado temporal y working dirs;
+4. genera YAML (`generate-ytdl-config.py`);
+5. prepara runset inteligente (`prepare-subscriptions-runset.py`);
+6. filtra el runset al perfil pedido;
+7. si no es dry-run, ejecuta `ytdl-sub` sobre `subscriptions.runset.filtered.yaml`;
+8. promueve `.recent-items-state.pending.filtered.json` a estado definitivo si corresponde;
+9. lanza postproceso específico según perfil;
+10. captura logs relevantes.
 
-## 2) Lanzar el E2E completo
+### Postproceso automático por perfil
 
-Sintaxis:
+- `Music-Playlist` → `beets`
+- `Ambience-Video` → trim
+- `Ambience-Audio` → trim
+- resto → sin postproceso específico
+
+### Ejemplos
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\test-zenoytdl\run-profile-test.ps1 -ProfileName "Podcast" -ClearDownloads:$false -DryRun:$false
+```
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\test-zenoytdl\run-profile-test.ps1 -ProfileName "Ambience-Video" -ClearDownloads:$true -DryRun:$false
+```
+
+---
+
+## 2. `run-e2e.ps1`
+
+Ejecuta todos los perfiles en secuencia y al final dispara `validate-downloads.ps1`.
+
+### Sintaxis
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\test-zenoytdl\run-e2e.ps1 -ClearDownloads:$false -DryRun:$false
 ```
 
-Ejemplos:
+### Parámetros
 
-```powershell
-powershell -ExecutionPolicy Bypass -File .\test-zenoytdl\run-e2e.ps1 -ClearDownloads:$true -DryRun:$true
-```
+- `-ClearDownloads:$true/$false`
+- `-DryRun:$true/$false`
+
+### Ejemplo
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\test-zenoytdl\run-e2e.ps1 -ClearDownloads:$false -DryRun:$false
 ```
 
-### Qué hace
+---
 
-- llama a `run-profile-test.ps1` para cada perfil;
-- conserva logs separados por hijo y otro log maestro del E2E;
-- al final llama automáticamente a `validate-downloads.ps1`.
+## 3. `validate-downloads.ps1`
 
-## 3) Lanzar solo el validador
+Hace una validación amplia sin modificar el contenido.
 
-Sintaxis:
+### Sintaxis
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\test-zenoytdl\validate-downloads.ps1 -DryRun:$false
 ```
 
-Ejemplo:
+### Qué revisa
+
+- ficheros de control del proyecto;
+- árboles de salida de cada perfil;
+- conteos de medios por extensión;
+- `ffprobe` sobre audio y vídeo;
+- logs recientes de contenedores.
+
+---
+
+## 4. `test-beets-only.ps1`
+
+Prueba aislada del pipeline de metadatos.
+
+### Qué hace
+
+- limpia un directorio de prueba;
+- genera un MP3 sintético con metadata basura;
+- ejecuta importación de `beets`;
+- deja rastro en logs para comprobar el comportamiento.
+
+### Ejemplo
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\test-zenoytdl\validate-downloads.ps1 -DryRun:$true
+powershell -ExecutionPolicy Bypass -File .\test-zenoytdl\test-beets-only.ps1 -DryRun:$false
 ```
 
-### Qué valida
+---
 
-- existencia y fecha de los YAML y estados;
-- árbol completo de rutas por perfil;
-- conteo de ficheros por extensión relevante;
-- inspección `ffprobe` de audio/vídeo;
-- logs recientes de `ytdl-sub` y `beets`;
-- working directory y restos temporales.
+## 5. `test-trim-only.ps1`
 
-## Estructura de logs
+Prueba aislada del script `trim-ambience-video.py`.
 
-Cada script crea:
+### Qué hace
+
+- crea un MP4 sintético de prueba;
+- copia el script real de trim al contenedor;
+- recorta a 5 segundos;
+- valida duración final.
+
+### Ejemplo
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\test-zenoytdl\test-trim-only.ps1 -DryRun:$false
+```
+
+---
+
+## 6. `clean-windows-environment.ps1`
+
+Limpia el entorno antes de una tanda de tests.
+
+### Sintaxis general
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\test-zenoytdl\clean-windows-environment.ps1 -CleanLogs
+```
+
+### Con perfil concreto
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\test-zenoytdl\clean-windows-environment.ps1 -ProfileName "Music-Playlist" -CleanLogs
+```
+
+### Qué limpia
+
+En local:
+
+- `subscriptions.runset.yaml`
+- `subscriptions.runset.filtered.yaml`
+- `.recent-items-state.pending.json`
+- `.recent-items-state.pending.filtered.json`
+- resetea `.recent-items-state.json`
+- opcionalmente limpia `test-zenoytdl\logs`
+
+En `ytdl-sub`:
+
+- descargas del perfil o de todos
+- working dirs
+- locks
+- runsets temporales
+- estados pendientes
+
+En `beets-streaming2`:
+
+- descargas del perfil o de todos
+- `musiclibrary.db`
+- `beets-import.log`
+
+---
+
+## 7. `_run-all-test.ps1`
+
+Lanza toda la batería nueva en orden lógico.
+
+### Ejemplo
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\test-zenoytdl\_run-all-test.ps1
+```
+
+---
+
+## 8. Logs y trazabilidad
+
+Cada ejecución crea su propio contexto de logs dentro de `test-zenoytdl\logs\...`.
+
+Al final de los scripts se muestran normalmente:
+
+- `Main log`
+- `Transcript`
+- carpeta completa de ejecución
+
+Esto hace mucho más fácil localizar:
+
+- comandos realmente lanzados;
+- salida de Docker;
+- errores del perfil;
+- resultado de `beets` o `trim`.
+
+---
+
+## 9. Flujo recomendado de trabajo
+
+### Cuando tocas un perfil concreto
+
+1. editas YAML o código;
+2. pruebas `test-beets-only.ps1` o `test-trim-only.ps1` si aplica;
+3. lanzas `run-profile-test.ps1` para ese perfil;
+4. revisas logs;
+5. rematas con `validate-downloads.ps1`.
+
+### Cuando tocas partes transversales
+
+1. `clean-windows-environment.ps1 -CleanLogs`
+2. `_run-all-test.ps1`
+3. `validate-downloads.ps1`
+
+---
+
+## 10. Ficheros filtrados que usa esta suite
+
+La suite nueva no trabaja solo con el runset general; además crea y usa:
+
+- `subscriptions.runset.filtered.yaml`
+- `.recent-items-state.pending.filtered.json`
+
+Eso permite probar un solo perfil sin romper la lógica general del planificador.
+
+---
+
+## 11. Ruta donde debe ir esta guía
 
 ```text
-test-zenoytdl\logs\<nombre-test>\yyyyMMdd-HHmmss\
+E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\test-zenoytdl\GUIA-USO.md
 ```
-
-Dentro encontrarás normalmente:
-
-- `<test>.log`: log principal de ejecución.
-- `<test>.transcript.log`: transcript completo de PowerShell.
-- `<test>.summary.log`: resumen con rutas clave.
-
-## Nota importante sobre dry-run
-
-En estos tests, `dry-run` significa:
-
-- sí se regeneran YAML, estado pendiente y runset filtrado;
-- sí se inspecciona y se deja log de lo que tocaría ejecutarse;
-- no se lanza la descarga real de `ytdl-sub`;
-- no se ejecutan postprocesos.
-
-## Orden recomendado de prueba
-
-1. `run-profile-test.ps1` con un perfil y `-DryRun:$true`
-2. `run-profile-test.ps1` con ese perfil y `-DryRun:$false`
-3. `validate-downloads.ps1`
-4. `run-e2e.ps1`

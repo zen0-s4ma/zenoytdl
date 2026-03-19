@@ -1,140 +1,45 @@
-# dossier-tecnico.md
+# Dossier técnico actualizado — ZenoYTDL
 
-# Dossier técnico avanzado del proyecto
+## 1. Resumen técnico
 
-## 1. Resumen ejecutivo técnico
+ZenoYTDL implementa una mini-plataforma declarativa para construir colecciones multimedia tipadas a partir de YouTube usando `ytdl-sub`, PowerShell, Python y postprocesos específicos por dominio.
 
-Este proyecto implementa una capa declarativa y orquestada sobre `ytdl-sub` para construir una biblioteca multimedia estructurada a partir de fuentes de YouTube, con estas propiedades clave:
+El sistema queda dividido en cinco capas:
 
-- modelado funcional por perfiles;
-- configuración humana compacta;
-- generación automática de YAML reales compatibles con `ytdl-sub`;
-- ejecución inteligente basada en estado previo y conteo local;
-- postproceso especializado por dominio:
-  - `music-playlist` -> limpieza + enriquecimiento con `beets`;
-  - `ambience-video` / `ambience-audio` -> recorte posterior con `ffmpeg`;
-- validación end-to-end con scripts PowerShell y shell embebido;
-- persistencia operativa mediante logs, estado JSON y estructura estable de salida.
-
-El sistema no se limita a “descargar vídeos”. En realidad actúa como una mini-plataforma de compilación y ejecución para colecciones multimedia tipadas.
+1. **Modelo declarativo**: `profiles-custom.yml` y `subscription-custom.yml`
+2. **Compilación**: `generate-ytdl-config.py`
+3. **Planificación inteligente**: `prepare-subscriptions-runset.py`
+4. **Ejecución**: `ytdl-sub` en Docker
+5. **Postproceso y validación**: `beets`, `trim-ambience-video.py`, PowerShell de tests
 
 ---
 
-## 2. Objetivo técnico real
+## 2. Objetivo de diseño
 
-El objetivo no es escribir YAML de `ytdl-sub` a mano para cada caso, sino disponer de:
+El objetivo real no es descargar “vídeos sueltos”, sino expresar comportamientos de biblioteca.
 
-1. un modelo declarativo de alto nivel;
-2. un generador que traduzca ese modelo a sintaxis real válida;
-3. una preparación inteligente de ejecución que evite trabajo redundante;
-4. una capa de validación y postproceso dependiente del tipo de medio.
+Ejemplos:
 
-En otras palabras, el proyecto separa:
+- un canal como serie ordenada por fecha;
+- una playlist como biblioteca de audio con metadatos enriquecidos;
+- un vídeo de ambience como activo recortado a una duración operativa máxima.
 
-- **intención funcional** -> `profiles-custom.yml` + `subscription-custom.yml`
-- **compilación** -> `generate-ytdl-config.py`
-- **planificación** -> `prepare-subscriptions-runset.py`
-- **ejecución** -> `ytdl-sub`
-- **postproceso especializado** -> `clean-music-filenames.ps1`, `beets`, `trim-ambience-video.py`
-- **validación** -> `test-e2e-perfiles-subscriptions.ps1`, `validate-test-e2e-perfiles-subscriptions.ps1`, `bloque1-test.ps1`, `bloque2-test.ps1`
+Por eso el proyecto no trabaja directamente con YAML manual de `ytdl-sub`, sino con un modelo más compacto que luego compila.
 
 ---
 
-## 3. Topología lógica del sistema
+## 3. Entradas declarativas
 
-## 3.1. Entradas declarativas
+## 3.1 `profiles-custom.yml`
 
-### `profiles-custom.yml`
-Define familias funcionales, defaults y semántica de perfil.
+Contiene una lista `profiles:` donde cada entrada define:
 
-Ejemplos de perfiles observados:
-- `Canales-youtube`
-- `Podcast`
-- `TV-Serie`
-- `Music-Playlist`
-- `Ambience-Video`
-- `Ambience-Audio`
+- `profile_name`
+- `profile_type`
+- `defaults`
 
-### `subscription-custom.yml`
-Instancia perfiles concretos mediante:
-- `custom_name`
-- una o varias `sources`
-- overrides por fuente como `url`, `max_items`, `quality`, `format`, `min_duration`, `max_duration`, etc.
+Los defaults actuales observables incluyen:
 
----
-
-## 3.2. Artefactos generados
-
-### `config.generated.yaml`
-Contiene:
-- `configuration`
-- `presets`
-
-Cada preset está ya transformado al esquema que realmente entiende `ytdl-sub`.
-
-### `subscriptions.generated.yaml`
-Mapa final de suscripciones instanciadas por preset.
-
-### `beets.music-playlist.yaml`
-Se genera solo si el conjunto resultante incluye `music-playlist`.
-
-### `subscriptions.runset.yaml`
-Subconjunto ejecutable derivado del estado actual del sistema.
-
-### `.recent-items-state.pending.json`
-Estado provisional calculado durante la preparación.
-
-### `.recent-items-state.json`
-Estado consolidado y operativo tras una ejecución exitosa.
-
----
-
-## 3.3. Salidas multimedia
-
-Rutas observadas:
-- `/downloads/Canales-youtube/{subscription_root}`
-- `/downloads/Podcast/{subscription_root}/{source_target}`
-- `/downloads/TV-Serie/{subscription_root}`
-- `/downloads/Music-Playlist/{subscription_root}`
-- `/downloads/Ambience-Video/{subscription_root}`
-- `/downloads/Ambience-Audio/{subscription_root}`
-
-En host Windows, el proyecto se ha validado sobre:
-
-```text
-E:\Docker_folders\ydtl-custom-downloads
-```
-
----
-
-## 4. Modelo de datos funcional
-
-## 4.1. Perfil vs suscripción vs fuente
-
-### Perfil
-Es la clase funcional:
-- define defaults;
-- define el comportamiento semántico esperado;
-- controla cómo se construye el preset de `ytdl-sub`.
-
-### Suscripción
-Es una entidad lógica agrupadora:
-- tiene un `custom_name`;
-- puede tener una o múltiples fuentes;
-- comparte raíz de salida.
-
-### Fuente
-Es la unidad concreta de entrada:
-- una URL de canal;
-- una playlist;
-- un single video;
-- con overrides específicos.
-
----
-
-## 4.2. Parámetros observados
-
-### A nivel de defaults
 - `max_items`
 - `quality`
 - `format`
@@ -144,674 +49,410 @@ Es la unidad concreta de entrada:
 - `embed_thumbnail`
 - `audio_quality`
 
-### A nivel de source
-- `url`
-- overrides puntuales de los mismos parámetros
+El código normaliza los perfiles y los indexa por `profile_name`.
+
+## 3.2 `subscription-custom.yml`
+
+Contiene una lista `subscriptions:` donde cada entrada define:
+
+- `profile_name`
+- `custom_name`
+- `sources[]`
+
+Cada `source` debe tener al menos `url` y puede sobrescribir parámetros heredados.
 
 ---
 
-## 4.3. Semántica diferenciada por perfil
+## 4. Compilador: `generate-ytdl-config.py`
 
-### `Canales-youtube`
-- estructura tipo Jellyfin TV Show by Date;
-- resolución acotada;
-- normalmente usa top reciente con `max_items > 0`.
+## 4.1 Responsabilidades
 
-### `Podcast`
-- descarga audio, no vídeo;
-- activa `audio_extract`;
-- usa `output_directory` que incluye raíz y `source_target`.
+- cargar YAML fuente;
+- validar estructura mínima;
+- fusionar defaults del perfil con overrides por fuente;
+- detectar estrategia de descarga a partir de la URL;
+- generar presets y suscripciones reales;
+- construir `beets.music-playlist.yaml` cuando aplica.
 
-### `TV-Serie`
-- varias fuentes pueden converger sobre una serie lógica única;
-- estructura pensada para Jellyfin;
-- usa `tv_show_name`.
+## 4.2 Artefactos generados
 
-### `Music-Playlist`
-- salida plana por carpeta;
-- habitualmente `max_items = 0` para colección completa;
-- enriquecimiento posterior con beets.
-
-### `ambience-video`
-- `max_duration` no es filtro de entrada;
-- se convierte en `postprocess_trim_max_s`;
-- recorte posterior tras descarga.
-
-### `ambience-audio`
-- mismo enfoque conceptual que `ambience-video`, pero en audio.
-
----
-
-## 5. Anatomía interna de `generate-ytdl-config.py`
-
-## 5.1. Responsabilidad principal
-
-Este script actúa como compilador del modelo declarativo a artefactos concretos de ejecución.
-
-Sus salidas principales son:
 - `config.generated.yaml`
 - `subscriptions.generated.yaml`
-- opcionalmente `beets.music-playlist.yaml`
+- `beets.music-playlist.yaml`
 
----
+## 4.3 Normalización clave
 
-## 5.2. Decisiones de diseño detectables
+### `slugify()`
+Se usa extensivamente para:
 
-### Base directory autorreferenciada
-Usa:
-
-```python
-BASE_DIR = Path(__file__).resolve().parent
-```
-
-Con ello desacopla las rutas del cwd siempre que los ficheros estén en la misma carpeta.
-
-### IO YAML segura
-- valida existencia;
-- usa `yaml.safe_load`;
-- serializa con `safe_dump`;
-- mantiene `allow_unicode=True`, `sort_keys=False`, `width=1000`.
-
-### `slugify`
-Normaliza:
-- minúsculas;
-- NFKD;
-- ASCII;
-- guiones;
-- colapsado de separadores.
-
-Esto afecta a:
 - nombres de preset;
 - nombres de suscripción;
-- nombres de raíz;
-- `source_target`.
+- `subscription_root`;
+- `source_target` extraído de URL.
+
+### `extract_source_target_from_url()`
+Soporta detección desde:
+
+- `watch?v=`
+- `playlist?list=`
+- `/@handle`
+- `/channel/...`
+- `/user/...`
+- `/c/...`
+- URLs cortas `youtu.be/...`
+
+### `detect_download_strategy()`
+Distingue entre:
+
+- `single_video`
+- `playlist`
+- `channel`
 
 ---
 
-## 5.3. Detección de tipo de fuente
+## 5. Traducción funcional por perfil
 
-La extracción de `source_target` se basa en parseo de URL:
-- `watch?v=...`
-- `list=...`
-- `youtube.com/@...`
-- `youtube.com/channel/...`
-- `youtube.com/user/...`
-- `youtube.com/c/...`
-- `youtu.be/...`
-- último segmento de path como fallback
+## 5.1 Canales-youtube
 
-Esto resuelve un problema clave: poder construir identificadores estables y directorios consistentes sin depender de naming arbitrario.
+Preset generado:
 
----
-
-## 5.4. Separación entre `preset_name` y `subscription_name`
-
-El generador construye:
-- `preset_name = "{profile_key}-{subscription_root}-{source_target}"`
-- `subscription_name = "{subscription_root}-{source_target}"`
-
-Este detalle es importante:
-- evita colisiones;
-- mantiene unicidad global de preset;
-- permite conservar una raíz lógica (`subscription_root`) y una diferenciación por fuente.
-
----
-
-## 5.5. Mapeo semántico de duración
-
-El generador distingue dos usos de `max_duration`:
-
-### Perfiles normales
-Se transforma en:
-- `filter_duration_max_s`
-
-### Perfiles ambience
-Se transforma en:
-- `postprocess_trim_max_s`
-
-Esa separación evita el error conceptual de usar un filtro de entrada donde realmente se desea un recorte posterior del fichero final.
-
----
-
-## 5.6. Inclusión condicional de `beets.music-playlist.yaml`
-
-La variable `includes_music_playlist` se activa al detectar el profile slug `music-playlist`.
-
-Esto demuestra una decisión de diseño interesante:
-- el postproceso musical es tratado como capacidad adicional;
-- no contamina el resto de perfiles.
-
----
-
-## 5.7. Estructura base de configuración
-
-`config.generated.yaml` incorpora:
-
-```yaml
-configuration:
-  working_directory: /tmp/ytdl-sub-working-directory
-  file_name_max_bytes: 255
-  persist_logs:
-    keep_successful_logs: true
-    logs_directory: /config/logs
-  lock_directory: /tmp
-```
-
-Implicaciones:
-- los logs viven de forma persistente;
-- el workdir es efímero y limpiable;
-- los locks se centralizan en `/tmp`;
-- hay control explícito del largo máximo del nombre de fichero.
-
----
-
-## 5.8. Presets construidos por tipo
-
-El script fabrica presets reales, no abstractos. Ejemplos observados:
 - `Jellyfin TV Show by Date`
-- `Max 720p`
-- `Only Recent`
+- opcional `Max 720p` / `Max 1080p`
+- opcional `Only Recent`
+
+Overrides principales:
+
+- `tv_show_directory = /downloads/Canales-youtube`
+- `enable_throttle_protection`
+
+Semántica:
+
+- colección tratada como serie por fecha;
+- `tv_show_name = subscription_root`.
+
+## 5.2 Podcast
+
+Preset generado:
+
 - `Filter Duration`
 - `Max MP3 Quality`
+- opcional `Only Recent`
 
-Además aplica overrides específicos como:
-- `enable_throttle_protection: false`
-- `tv_show_directory`
-- `output_options`
-- `audio_extract`
-- `merge_output_format`
+Salida:
 
-La presencia de estas piezas confirma que el generador traduce del modelo conceptual al dialecto real de `ytdl-sub`, corrigiendo incompatibilidades históricas ya resueltas.
+```text
+/downloads/Podcast/{subscription_root_sanitized}/{source_target_sanitized}
+```
+
+Audio extract:
+
+- `enable: true`
+- `codec: mp3`
+- `quality: 0`
+
+## 5.3 TV-Serie
+
+Preset generado:
+
+- `Jellyfin TV Show by Date`
+- opcional `Max 720p` / `Max 1080p`
+- opcional `Only Recent`
+- `Filter Duration`
+
+Además fuerza:
+
+- `merge_output_format = format`
+- `tv_show_name = subscription_root`
+
+## 5.4 Music-Playlist
+
+Preset generado:
+
+- `Max MP3 Quality`
+- opcional `Only Recent`
+
+Salida:
+
+```text
+/downloads/Music-Playlist/{subscription_root_sanitized}
+```
+
+Archivo de descarga:
+
+- `maintain_download_archive: true`
+
+Postproceso esperado:
+
+- importación singleton con `beets`
+- limpieza previa de nombres si el workflow lo incluye
+
+## 5.5 Ambience-Video
+
+No usa `Only Recent`.
+
+Salida:
+
+```text
+/downloads/Ambience-Video/{subscription_root_sanitized}
+```
+
+Comportamiento clave:
+
+- descarga vídeo;
+- el `max_duration` no se traduce a filtro de descarga, sino a `postprocess_trim_max_s`.
+
+## 5.6 Ambience-Audio
+
+Salida:
+
+```text
+/downloads/Ambience-Audio/{subscription_root_sanitized}
+```
+
+Comportamiento clave:
+
+- extrae audio MP3;
+- el `max_duration` se usa también como `postprocess_trim_max_s`.
 
 ---
 
-## 6. Anatomía interna de `prepare-subscriptions-runset.py`
+## 6. Planificador: `prepare-subscriptions-runset.py`
 
-## 6.1. Responsabilidad principal
+## 6.1 Responsabilidades
 
-Este script no descarga nada. Su función es preparar el plan de ejecución mínimo necesario para esa pasada.
+- cargar perfiles y suscripciones originales;
+- cargar `subscriptions.generated.yaml`;
+- leer estado anterior;
+- inspeccionar ficheros ya existentes dentro del contenedor `ytdl-sub`;
+- consultar IDs recientes remotos;
+- seleccionar qué entradas deben ir al runset.
 
-Produce:
+## 6.2 Artefactos generados
+
 - `subscriptions.runset.yaml`
 - `.recent-items-state.pending.json`
 
----
+## 6.3 Estado persistente
 
-## 6.2. Idea arquitectónica clave
+- estado consolidado: `.recent-items-state.json`
+- estado pendiente: `.recent-items-state.pending.json`
 
-No todas las suscripciones generadas deben ejecutarse cada vez.
+La suite nueva añade además una variante filtrada por perfil:
 
-El script compara:
-- estado previo (`.recent-items-state.json`);
-- contenido resoluble remoto (IDs recientes o completos);
-- conteo local real de ficheros;
-- estrategia de descarga de la URL.
+- `subscriptions.runset.filtered.yaml`
+- `.recent-items-state.pending.filtered.json`
 
-Con eso decide:
-- `RUN`
-- `SKIP`
+## 6.4 Reglas de medios observables
 
----
+`MEDIA_RULES` codifica carpetas y extensiones por perfil:
 
-## 6.3. `MEDIA_RULES`
+- `Canales-youtube` → vídeo
+- `Podcast` → mp3
+- `TV-Serie` → vídeo
+- `Music-Playlist` → mp3
+- `Ambience-Video` → vídeo
+- `Ambience-Audio` → audio multiformato
 
-Define por perfil:
-- directorio esperado;
-- extensiones válidas
+## 6.5 Lógica de selección
 
-Esto permite:
-- conteo local de ficheros;
-- verificación física de existencia;
-- razonamiento homogéneo por familia.
+A alto nivel, el planificador compara:
 
-Es un pivot estructural del sistema.
+- IDs recientes detectados en la fuente remota;
+- número esperado según `max_items`;
+- número real de ficheros presentes;
+- snapshot previo almacenado.
 
----
+Resultado práctico:
 
-## 6.4. Estrategias de descarga
-
-La lógica trabaja con al menos estas estrategias:
-- `channel`
-- `playlist`
-- `single_video`
-
-Consecuencias:
-
-### Canal / playlist con `max_items > 0`
-Se obtienen los IDs recientes top N y se compara:
-- contra conteo local esperado;
-- contra el estado previo.
-
-### Canal / playlist con `max_items = 0`
-Se resuelve la fuente completa, y se detecta:
-- descarga inicial completa;
-- consolidación sin reejecución;
-- fuente completa intacta;
-- fuente completa cambiada.
-
-### Single video
-Se usa una lista de un único `selected_id`.
+- si una fuente ya está satisfecha, puede quedar fuera del runset;
+- si hay novedad, falta material o cambió el conjunto esperado, entra en el runset.
 
 ---
 
-## 6.5. Heurística de decisión
+## 7. Suite de pruebas nueva: `test-zenoytdl`
 
-### Caso A — faltan ficheros locales
-`RUN`
+## 7.1 Motivo
 
-### Caso B — top reciente intacto
-`SKIP`
+La carpeta `test-zenoytdl` reemplaza la necesidad de depender solo del script E2E legacy y aporta:
 
-### Caso C — cambió top reciente
-`RUN`
+- contextos de ejecución por prueba;
+- logs por timestamp;
+- filtrado de runset por perfil;
+- postprocesos invocables de forma homogénea;
+- tests aislados de `beets` y `trim`.
 
-### Caso D — no hay estado previo pero ya hay local
-Consolidación sin reejecución en algunos flujos.
+## 7.2 Fichero base `_shared.ps1`
 
-### Caso E — no se pudieron resolver IDs
-`RUN` conservador.
+Define utilidades para:
 
-Este diseño prioriza:
-- evitar redescarga redundante;
-- no dejar pasar faltantes reales;
-- no bloquearse por incapacidad temporal de resolver la fuente.
+- localizar raíz del proyecto;
+- localizar carpeta de logs;
+- ejecutar expresiones con logging;
+- ejecutar scripts shell dentro de Docker;
+- filtrar el runset a uno o varios perfiles;
+- copiar el script de trim al contenedor;
+- promover el estado pendiente a definitivo;
+- capturar logs relevantes de `ytdl-sub` y `beets-streaming2`.
 
----
+## 7.3 `run-profile-test.ps1`
 
-## 6.6. Estado pendiente y commit diferido
+Pipeline general:
 
-El script escribe un estado **pending** en vez de tocar directamente el estado estable.
+1. validar nombre de perfil;
+2. limpieza opcional de descargas del perfil;
+3. reset de estado temporal;
+4. regeneración del YAML;
+5. preparación del runset;
+6. filtrado a un solo perfil;
+7. ejecución real o dry-run;
+8. promoción del estado si procede;
+9. postproceso específico;
+10. captura de logs.
 
-Eso es una excelente decisión de robustez:
-- si la ejecución falla, no “miente” sobre el sistema;
-- solo se consolida a `.recent-items-state.json` tras una pasada satisfactoria.
+## 7.4 `run-e2e.ps1`
 
----
+Recorre todos los perfiles definidos por `_shared.ps1` y al final lanza `validate-downloads.ps1`.
 
-## 7. Postproceso musical
+## 7.5 `validate-downloads.ps1`
 
-## 7.1. `clean-music-filenames.ps1`
+Realiza:
 
-Este script limpia nombres antes de la importación en beets.
+- inventario de ficheros de control del proyecto;
+- inventario de árboles de salida por perfil;
+- conteo por extensiones relevantes;
+- `ffprobe` sobre medios descargados;
+- captura de logs.
 
-### Qué hace
-- normaliza espacios;
-- reemplaza variantes Unicode de guiones;
-- elimina marcadores como:
-  - `[Official Video]`
-  - `[Official Audio]`
-  - `(Remastered 2011)`
-  - `(Lyric Video)`
-  - `(HD)`
-  - etc.
-- simplifica versiones “cover”;
-- evita nombres vacíos;
-- detecta colisiones;
-- renombra solo si el resultado cambió.
+## 7.6 `test-beets-only.ps1`
 
-### Por qué existe
-Los títulos de YouTube suelen ser ruidosos y reducen drásticamente el matching con bases de datos musicales. La limpieza previa aumenta la calidad de emparejamiento de beets.
+Test aislado de metadatos:
 
----
+- crea un MP3 sintético con metadata “sucia”;
+- lanza importación con `beets`;
+- comprueba resultado de importación y logs.
 
-## 7.2. `beets.music-playlist.yaml`
+## 7.7 `test-trim-only.ps1`
 
-### Configuración observada
-- `directory: /downloads/Music-Playlist`
-- `library: /config/musiclibrary.db`
-- plugins:
-  - `fromfilename`
-  - `chroma`
-  - `discogs`
-  - `lastgenre`
-  - `scrub`
-  - `fetchart`
-  - `embedart`
+Test aislado de recorte:
 
-### Política de import
-- `write: true`
-- `move: false`
-- `copy: false`
-- `resume: false`
-- `incremental: false`
-- `singletons: true`
-- `group_albums: false`
-- `default_action: apply`
-- `none_rec_action: skip`
-- log persistido en `/config/logs/beets-import.log`
+- genera un MP4 sintético de prueba;
+- copia `trim-ambience-video.py` al contenedor;
+- recorta a 5 segundos;
+- valida duración final con `ffprobe`.
 
-### Implicación operativa
-El pipeline musical no intenta forzar álbumes ni mover ficheros. Se centra en:
-- enriquecer singles/temas;
-- escribir metadata cuando hay match razonable;
-- saltar limpiamente cuando no lo hay.
+## 7.8 `clean-windows-environment.ps1`
+
+Limpia:
+
+- logs locales si se pide;
+- generados temporales locales;
+- estado local;
+- descargas, locks y working dirs en `ytdl-sub`;
+- descargas, DB y logs en `beets-streaming2`.
+
+## 7.9 `_run-all-test.ps1`
+
+Ejecuta batería completa en orden lógico.
+
+## 7.10 `run-master-tests.ps1`
+
+Sigue existiendo en la raíz y abre pruebas en terminales nuevas usando un orquestador maestro. Es útil como secuencia exhaustiva, pero la carpeta `test-zenoytdl` concentra la suite nueva.
 
 ---
 
-## 7.3. Contenedor beets separado
+## 8. Scripts legacy en raíz
 
-La ejecución real se hace en `beets-streaming2`, no en `ytdl-sub`.
+## 8.1 `test-e2e-perfiles-subscriptions.ps1`
 
-Ventajas:
-- aislamiento de responsabilidad;
-- posibilidad de tener librería db separada;
-- toolchain acústica y plugins encapsulados.
+Workflow más monolítico que:
 
----
+- genera configuración;
+- prepara runset;
+- ejecuta `ytdl-sub`;
+- limpia nombres de música;
+- lanza `beets`;
+- recorta ambience;
+- valida resultado.
 
-## 8. Postproceso ambience
+## 8.2 `validate-test-e2e-perfiles-subscriptions.ps1`
 
-## 8.1. `trim-ambience-video.py`
+Validador asociado al E2E legacy.
 
-Pese al nombre, el script sirve tanto para vídeo como para audio.
-
-### Capacidades
-- parsea duraciones tipo `3h3m3s` o `HH:MM:SS`;
-- distingue extensiones de vídeo y audio;
-- recorta desde el inicio;
-- usa `ffmpeg -c copy` para máxima velocidad;
-- valida con `ffprobe`;
-- gestiona reemplazo atómico del original;
-- soporta `--faststart`;
-- soporta `--skip-output-probe`.
+Estos scripts no están mal, pero la estructura nueva es más modular y trazable.
 
 ---
 
-## 8.2. Estrategia de recorte
+## 9. Dependencias operativas
 
-### Filosofía
-No se filtra la entrada por duración máxima en perfiles ambience. Primero se descarga el activo y luego se recorta al máximo deseado.
+### Windows host
 
-### Beneficios
-- mejor control del fichero final;
-- independencia de metadatos de duración remotos;
-- coherencia con el caso “single_video ambience muy largo”.
+- PowerShell
+- Python
+- Docker
+
+### Contenedor `ytdl-sub`
+
+- `ytdl-sub`
+- Python
+- `ffmpeg`
+- `ffprobe`
+
+### Contenedor `beets-streaming2`
+
+- `beet`
+- acceso a `/config/zenoytdl`
+- acceso a `/downloads/Music-Playlist`
 
 ---
 
-## 8.3. Tolerancia de “ya recortado”
+## 10. Rutas clave del sistema
 
-La constante:
+### Proyecto
 
-```python
-ALREADY_TRIMMED_TOLERANCE_SECONDS = 2.0
+```text
+E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl
 ```
 
-permite idempotencia práctica:
-- si el fichero ya está dentro del límite + tolerancia, no se re-recorta.
+### Descargas host
+
+```text
+E:\Docker_folders\ydtl-custom-downloads
+```
+
+### Rutas internas más usadas
+
+```text
+/config/zenoytdl/config.generated.yaml
+/config/zenoytdl/subscriptions.runset.yaml
+/config/zenoytdl/subscriptions.runset.filtered.yaml
+/config/zenoytdl/beets.music-playlist.yaml
+/downloads/Canales-youtube
+/downloads/Podcast
+/downloads/TV-Serie
+/downloads/Music-Playlist
+/downloads/Ambience-Video
+/downloads/Ambience-Audio
+/config/logs
+```
 
 ---
 
-## 8.4. Reemplazo robusto
+## 11. Riesgos y consideraciones reales
 
-El recorte:
-1. genera temporal `.trimmed`;
-2. mueve original a `.bak`;
-3. sustituye;
-4. limpia backup.
-
-Si algo falla durante el replace, intenta restaurar el original.
-
-Es una implementación razonablemente segura para automatización.
+- `Music-Playlist` con `max_items: 0` equivale a no limitar por recencia.
+- `Podcast` y `Music-Playlist` fuerzan MP3 aunque la fuente original sea vídeo.
+- `Ambience-*` depende de recorte posterior; si no se lanza trim, el material puede quedar demasiado largo.
+- El runset inteligente depende del estado JSON y del conteo real dentro de `/downloads`, así que borrar descargas sin resetear estado puede alterar el comportamiento esperado.
+- La suite nueva reduce ese riesgo porque ofrece limpieza, filtrado y promoción controlada del estado.
 
 ---
 
-## 9. Scripts de prueba y validación
-
-## 9.1. `test-e2e-perfiles-subscriptions.ps1`
-
-Es el orquestador real de la prueba integral.
-
-### Etapas observadas
-1. preparar contexto sin borrar descargas existentes;
-2. regenerar YAML;
-3. preparar runset;
-4. copiar script de trim al contenedor;
-5. ejecutar ytdl-sub real;
-6. consolidar estado pending -> estable;
-7. limpieza musical;
-8. importación beets;
-9. recorte ambience-video;
-10. recorte ambience-audio.
-
-### Valor técnico
-Es más que un test. Es una receta operacional reproducible.
-
----
-
-## 9.2. `validate-test-e2e-perfiles-subscriptions.ps1`
-
-Es el verificador posterior.
-
-### Inspecciones que realiza
-- cabeceras y tamaños de YAML generados;
-- árboles de salida;
-- conteos por tipo;
-- duraciones y tamaño de medios;
-- inspección de streams con ffprobe;
-- comprobación de duración final del trim;
-- búsqueda de residuos `.bak`, `.tmp`, `.part`, `.trimmed`;
-- revisión de logs;
-- estado de `/tmp` y del working_directory.
-
-### Valor técnico
-Cubre tanto consistencia lógica como integridad física del sistema.
-
----
-
-## 9.3. `bloque1-test.ps1` y `bloque2-test.ps1`
-
-Están orientados a comprobar `music-playlist` en dos fases:
-
-### Bloque 1
-- reset de directorio de salida;
-- limpieza de workdir;
-- borrado de logs asociados;
-- reset de db/log de beets;
-- ejecución e2e;
-- conteo de MP3;
-- localización de log final.
-
-### Bloque 2
-- nueva pasada sobre estado ya existente;
-- conteo final;
-- comprobación de entradas “already been recorded in the archive”;
-- revisión de últimas líneas del log de beets.
-
-### Valor técnico
-Permiten demostrar no solo “descarga”, sino también comportamiento incremental y ausencia de trabajo redundante.
-
----
-
-## 10. Contratos implícitos del sistema
-
-## 10.1. Contrato de directorio común
-
-Todos los scripts asumen que:
-- los YAML custom;
-- los generados;
-- los scripts Python/PS1
-
-coexisten en el mismo directorio de configuración.
-
----
-
-## 10.2. Contrato de nombres de perfil
-
-`profile_name` y `profile_type` deben estar alineados funcionalmente. El generador usa `profile_type` como referencia semántica real.
-
----
-
-## 10.3. Contrato de volumen Docker
-
-El sistema asume:
-- `/config` persistente;
-- `/downloads` persistente;
-- contenedor `ytdl-sub` con `yt-dlp`, `ffmpeg`, shell;
-- contenedor `beets-streaming2` con beets operativo.
-
----
-
-## 10.4. Contrato de extensiones por familia
-
-El conteo y la verificación dependen de extensiones definidas en `MEDIA_RULES`. Si introduces nuevos formatos, conviene ampliar esa tabla o el runset tomará decisiones erróneas sobre existencia local.
-
----
-
-## 11. Flujo técnico completo
-
-## 11.1. Cadena de procesamiento
-
-1. se editan `profiles-custom.yml` y/o `subscription-custom.yml`;
-2. `generate-ytdl-config.py` compila el modelo;
-3. `prepare-subscriptions-runset.py` decide qué ejecutar;
-4. `ytdl-sub` consume `config.generated.yaml` + `subscriptions.runset.yaml`;
-5. se consolida el estado;
-6. si hay música:
-   - limpieza de nombres;
-   - beets import;
-7. si hay ambience:
-   - recorte posterior;
-8. validación con scripts e inspecciones.
-
----
-
-## 11.2. Principio de idempotencia aproximada
-
-No es una idempotencia matemática perfecta, pero el diseño la busca mediante:
-- `maintain_download_archive: true`;
-- comparación de IDs recientes;
-- uso de estado estable/pending;
-- saltos en runset;
-- tolerancia de trim;
-- comportamiento no destructivo de beets para no-match.
-
----
-
-## 12. Riesgos y puntos delicados
-
-## 12.1. Dependencia del naming remoto
-YouTube puede cambiar nombres, disponibilidad o estructura de entradas.
-
-## 12.2. Matching imperfecto en música
-Beets depende de la calidad del nombre y de la existencia de candidatos razonables.
-
-## 12.3. Fragilidad ante cambios en formatos remotos
-Si cambia el comportamiento de `yt-dlp` o de la fuente, el modelo puede seguir siendo correcto pero fallar operativamente.
-
-## 12.4. Estado incoherente si se omite el commit
-Si no se mueve `.recent-items-state.pending.json` a `.recent-items-state.json`, el runset inteligente perderá parte de su sentido incremental.
-
-## 12.5. Extensiones no contempladas
-El conteo local y las decisiones del runset dependen de conjuntos de extensiones conocidas.
-
----
-
-## 13. Mejores prácticas técnicas recomendadas
-
-## 13.1. Mantener custom y generated separados
-Nunca edites a mano los generados como fuente de verdad.
-
-## 13.2. Regenerar antes de preparar runset
-Evita planes de ejecución basados en artefactos obsoletos.
-
-## 13.3. Consolidar estado solo tras éxito
-Mantiene la honestidad del sistema.
-
-## 13.4. Ejecutar limpieza musical antes de beets
-Mejora notablemente el matching.
-
-## 13.5. Validar con ffprobe
-Especialmente en ambience, donde importa el medio final real, no solo que “el comando terminó”.
-
----
-
-## 14. Posibles extensiones futuras
-
-## 14.1. Generalizar postprocesos por tipo
-Pasar de scripts ad hoc a una tabla declarativa de postprocesos.
-
-## 14.2. Motor de selección por políticas
-Ejemplo:
-- latest N
-- latest by date range
-- full sync
-- rolling window
-
-## 14.3. Estado por hash o manifest local
-Además de selected IDs, guardar inventario local más rico.
-
-## 14.4. Validación estructural previa
-Añadir schema validation explícita para custom YAML antes de compilar.
-
-## 14.5. Reporting HTML/Markdown automático
-Generar un informe de cada ejecución con:
-- runset;
-- tiempos;
-- ficheros añadidos;
-- errores;
-- métricas por perfil.
-
----
-
-## 15. Lectura técnica de los ficheros del proyecto
-
-### `profiles-custom.yml`
-Declaración de defaults por tipo.
-
-### `subscription-custom.yml`
-Instanciación operativa real.
-
-### `generate-ytdl-config.py`
-Compilador principal.
-
-### `prepare-subscriptions-runset.py`
-Planificador incremental.
-
-### `config.generated.yaml`
-Configuración final consumible por `ytdl-sub`.
-
-### `subscriptions.generated.yaml`
-Mapa completo de trabajo.
-
-### `subscriptions.runset.yaml`
-Subconjunto ejecutable de la pasada.
-
-### `beets.music-playlist.yaml`
-Política de enriquecimiento musical.
-
-### `clean-music-filenames.ps1`
-Pre-normalización heurística de títulos.
-
-### `trim-ambience-video.py`
-Postproceso de recorte con ffmpeg/ffprobe.
-
-### `test-e2e-perfiles-subscriptions.ps1`
-Workflow integral real.
-
-### `validate-test-e2e-perfiles-subscriptions.ps1`
-Validación técnica exhaustiva.
-
-### `bloque1-test.ps1`
-Prueba inicial intensiva de music-playlist.
-
-### `bloque2-test.ps1`
-Prueba incremental de segunda pasada.
-
-### `estado_perfiles_ytdl_sub_actualizado_v4.md`
-Histórico técnico-funcional y estado de cierre de perfiles.
-
----
-
-## 16. Conclusión técnica
-
-El proyecto ya no es simplemente una colección de scripts, sino una arquitectura ligera de ingestión multimedia declarativa con:
-
-- compilación de configuración;
-- planificación incremental;
-- tratamiento semántico por tipo de contenido;
-- postproceso especializado;
-- observabilidad suficiente para operar y depurar;
-- validación reproducible.
-
-La pieza más importante conceptualmente no es la descarga, sino la **traducción estable entre el modelo funcional deseado y el comportamiento real del stack**. Esa traducción es la que hace viable escalar perfiles, variar fuentes, probar cambios y conservar coherencia operativa sin rehacer manualmente YAML complejos en cada iteración.
+## 12. Recomendación de operación
+
+Para trabajo diario:
+
+1. editar YAML fuente;
+2. lanzar `run-profile-test.ps1` para el perfil que toque;
+3. revisar logs en `test-zenoytdl\logs\...`;
+4. usar `validate-downloads.ps1` cuando cierres una tanda importante;
+5. reservar `_run-all-test.ps1` o `run-master-tests.ps1` para regresión completa.

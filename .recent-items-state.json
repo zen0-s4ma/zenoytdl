@@ -1,16 +1,28 @@
 {
   "sources": {
-    "canales-youtube-ramon-alvarez-de-mon-ramonalvarezdemon": {
-      "profile_name": "Canales-youtube",
-      "profile_type": "Canales-youtube",
-      "custom_name": "ramon-alvarez-de-mon",
-      "url": "https://www.youtube.com/@RamonAlvarezdeMon/videos",
+    "podcast-entrevistas-geoestratego-oficial": {
+      "profile_name": "Podcast",
+      "profile_type": "Podcast",
+      "custom_name": "entrevistas",
+      "url": "https://www.youtube.com/@geoestratego_oficial/videos",
       "max_items": 2,
       "selected_ids": [
-        "wgtkCGW9nTk",
-        "eYxbnIVGjdo"
+        "fTOBXLMNDIo",
+        "OUYcBfDAZd0"
       ],
       "download_strategy": "channel"
+    },
+    "podcast-entrevistas-pl01fnqnul7ykui7id1lwxkz8ho3j8l8of": {
+      "profile_name": "Podcast",
+      "profile_type": "Podcast",
+      "custom_name": "entrevistas",
+      "url": "https://www.youtube.com/playlist?list=PL01FNQnUl7YKuI7iD1lwxKz8Ho3J8L8Of",
+      "max_items": 2,
+      "selected_ids": [
+        "CpSRqC69JGY",
+        "wbf_ojq7rW8"
+      ],
+      "download_strategy": "playlist"
     }
   }
 }

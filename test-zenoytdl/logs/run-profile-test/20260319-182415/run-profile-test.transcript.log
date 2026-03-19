@@ -1,0 +1,44 @@
+﻿**********************
+Inicio de la transcripción de Windows PowerShell
+Hora de inicio: 20260319182415
+Nombre de usuario: ZENOVERSO\Zeno Sama
+Usuario RunAs: ZENOVERSO\Zeno Sama
+Nombre de la configuración: 
+Máquina: ZENOVERSO (Microsoft Windows NT 10.0.22631.0)
+Aplicación host: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -NoLogo -NoExit -ExecutionPolicy Bypass -File C:\Users\ZENOSA~1\AppData\Local\Temp\zeno-wrapper-run-profile-test-9e209de7295544f49b080aa507f46a56.ps1
+Id. de proceso: 20512
+PSVersion: 5.1.22621.6133
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.22621.6133
+BuildVersion: 10.0.22621.6133
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+[2026-03-19 18:24:15] [STEP] ============================================================================
+[2026-03-19 18:24:15] [STEP] Inicio lanzador de perfil
+[2026-03-19 18:24:15] [STEP] ============================================================================
+[2026-03-19 18:24:15] [INFO] Perfil: TV-Serie
+[2026-03-19 18:24:15] [INFO] ClearDownloads: False
+[2026-03-19 18:24:15] [INFO] DryRun: False
+[2026-03-19 18:24:15] [INFO] Project root: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl
+[2026-03-19 18:24:15] [INFO] No se ejecuta limpieza previa.
+[2026-03-19 18:24:15] [STEP] ============================================================================
+[2026-03-19 18:24:15] [STEP] Limpieza de locks, working directory y restos temporales
+[2026-03-19 18:24:15] [STEP] ============================================================================
+[2026-03-19 18:24:15] [INFO] Ejecutando [reset-workdir-cp]: docker cp "C:\Users\ZENOSA~1\AppData\Local\Temp\zenotest-b58f878310d24103b589c380ca57fa8a.sh" ytdl-sub:/tmp/zenotest-b58f878310d24103b589c380ca57fa8a.sh
+0
+[2026-03-19 18:24:15] [INFO] Ejecutando [reset-workdir-exec]: docker exec ytdl-sub sh /tmp/zenotest-b58f878310d24103b589c380ca57fa8a.sh
+0
+[2026-03-19 18:24:17] [STEP] ============================================================================
+[2026-03-19 18:24:17] [STEP] GeneraciÃ³n de YAML y runset
+[2026-03-19 18:24:17] [STEP] ============================================================================
+[2026-03-19 18:24:17] [INFO] Ejecutando [generate-ytdl-config]: python -u .\generate-ytdl-config.py
+Generaci�n completada correctamente.
+Directorio base: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl
+Generado: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\config.generated.yaml
+Generado: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\subscriptions.generated.yaml
+Generado: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\beets.music-playlist.yaml
+0
+[2026-03-19 18:24:17] [INFO] Ejecutando [prepare-subscriptions-runset]: python -u .\prepare-subscriptions-runset.py --profile-name "TV-Serie"
