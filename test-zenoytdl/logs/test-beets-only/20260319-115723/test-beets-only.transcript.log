@@ -1,0 +1,83 @@
+﻿**********************
+Inicio de la transcripción de Windows PowerShell
+Hora de inicio: 20260319115723
+Nombre de usuario: ZENOVERSO\Zeno Sama
+Usuario RunAs: ZENOVERSO\Zeno Sama
+Nombre de la configuración: 
+Máquina: ZENOVERSO (Microsoft Windows NT 10.0.22631.0)
+Aplicación host: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypass -File .\test-zenoytdl\test-beets-only.ps1 -DryRun:False
+Id. de proceso: 32580
+PSVersion: 5.1.22621.6133
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.22621.6133
+BuildVersion: 10.0.22621.6133
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+[2026-03-19 11:57:23] [STEP] ============================================================================
+[2026-03-19 11:57:23] [STEP] Inicio test aislado de beets
+[2026-03-19 11:57:23] [STEP] ============================================================================
+[2026-03-19 11:57:23] [INFO] DryRun: False
+[2026-03-19 11:57:23] [STEP] ============================================================================
+[2026-03-19 11:57:23] [STEP] Limpieza previa del entorno beets
+[2026-03-19 11:57:23] [STEP] ============================================================================
+[2026-03-19 11:57:23] [INFO] Ejecutando [beets-cleanup-cp]: docker cp "C:\Users\ZENOSA~1\AppData\Local\Temp\zenotest-c898dc9ccc7c4161b49d6d8160075828.sh" beets-streaming2:/tmp/zenotest-c898dc9ccc7c4161b49d6d8160075828.sh
+0
+[2026-03-19 11:57:23] [INFO] Ejecutando [beets-cleanup-exec]: docker exec beets-streaming2 sh /tmp/zenotest-c898dc9ccc7c4161b49d6d8160075828.sh
+0
+[2026-03-19 11:57:24] [STEP] ============================================================================
+[2026-03-19 11:57:24] [STEP] GeneraciÃ³n de MP3 de prueba con metadata embebida sucia
+[2026-03-19 11:57:24] [STEP] ============================================================================
+[2026-03-19 11:57:24] [INFO] Ejecutando [beets-generate-raw-cp]: docker cp "C:\Users\ZENOSA~1\AppData\Local\Temp\zenotest-8ac3124ef0c34dc9a5c754d282064455.sh" beets-streaming2:/tmp/zenotest-8ac3124ef0c34dc9a5c754d282064455.sh
+0
+[2026-03-19 11:57:24] [INFO] Ejecutando [beets-generate-raw-exec]: docker exec beets-streaming2 sh /tmp/zenotest-8ac3124ef0c34dc9a5c754d282064455.sh
+[RAW-MP3]
+-rw-r--r-- 1 root root 56K Mar 19 11:57 /downloads/Music-Playlist/__test_beets_only/Nothing Else Matters - Metallica.raw.mp3
+[RAW-METADATA]
+TAG:title=BASURA TITLE
+TAG:artist=BASURA ARTIST
+TAG:album=BASURA ALBUM
+TAG:genre=BASURA GENRE
+TAG:comment=BASURA COMMENT
+TAG:encoder=Lavf62.3.100
+0
+[2026-03-19 11:57:25] [STEP] ============================================================================
+[2026-03-19 11:57:25] [STEP] Limpieza total de metadata embebida y renombrado final realista
+[2026-03-19 11:57:25] [STEP] ============================================================================
+[2026-03-19 11:57:25] [INFO] Ejecutando [beets-clean-metadata-cp]: docker cp "C:\Users\ZENOSA~1\AppData\Local\Temp\zenotest-793a6a3909784226b7515e41438344c7.sh" beets-streaming2:/tmp/zenotest-793a6a3909784226b7515e41438344c7.sh
+0
+[2026-03-19 11:57:25] [INFO] Ejecutando [beets-clean-metadata-exec]: docker exec beets-streaming2 sh /tmp/zenotest-793a6a3909784226b7515e41438344c7.sh
+[CLEAN-MP3]
+-rw-r--r-- 1 root root 54K Mar 19 11:57 /downloads/Music-Playlist/__test_beets_only/Nothing Else Matters - Metallica.mp3
+[CLEAN-METADATA]
+TAG:encoder=Lavf62.3.100
+0
+[2026-03-19 11:57:25] [STEP] ============================================================================
+[2026-03-19 11:57:25] [STEP] ValidaciÃ³n de que la metadata previa ha sido eliminada
+[2026-03-19 11:57:25] [STEP] ============================================================================
+[2026-03-19 11:57:25] [INFO] Ejecutando [beets-precheck-clean-cp]: docker cp "C:\Users\ZENOSA~1\AppData\Local\Temp\zenotest-423d60430a2347759d91b033c40f6577.sh" beets-streaming2:/tmp/zenotest-423d60430a2347759d91b033c40f6577.sh
+0
+[2026-03-19 11:57:26] [INFO] Ejecutando [beets-precheck-clean-exec]: docker exec beets-streaming2 sh /tmp/zenotest-423d60430a2347759d91b033c40f6577.sh
+TAG:encoder=Lavf62.3.100
+[OK] No queda metadata sucia embebida
+0
+[2026-03-19 11:57:26] [STEP] ============================================================================
+[2026-03-19 11:57:26] [STEP] Import real con beets
+[2026-03-19 11:57:26] [STEP] ============================================================================
+[2026-03-19 11:57:26] [INFO] Ejecutando [beets-import-real-cp]: docker cp "C:\Users\ZENOSA~1\AppData\Local\Temp\zenotest-82d1d7c5b6864f72b4f307d14d9ba574.sh" beets-streaming2:/tmp/zenotest-82d1d7c5b6864f72b4f307d14d9ba574.sh
+0
+[2026-03-19 11:57:26] [INFO] Ejecutando [beets-import-real-exec]: docker exec beets-streaming2 sh /tmp/zenotest-82d1d7c5b6864f72b4f307d14d9ba574.sh
+PS>ErrorTerminación(docker.exe): "Se detuvo el comando en ejecución porque la variable de preferencia "ErrorActionPreference" o un parámetro común se han establecido en Stop: overlaying configuration: /config/zenoytdl/beets.music-playlist.yaml"
+>> ErrorTerminación(docker.exe): "Se detuvo el comando en ejecución porque la variable de preferencia "ErrorActionPreference" o un parámetro común se han establecido en Stop: overlaying configuration: /config/zenoytdl/beets.music-playlist.yaml"
+>> ErrorTerminación(docker.exe): "Se detuvo el comando en ejecución porque la variable de preferencia "ErrorActionPreference" o un parámetro común se han establecido en Stop: overlaying configuration: /config/zenoytdl/beets.music-playlist.yaml"
+PS>ErrorTerminación(docker.exe): "Se detuvo el comando en ejecución porque la variable de preferencia "ErrorActionPreference" o un parámetro común se han establecido en Stop: overlaying configuration: /config/zenoytdl/beets.music-playlist.yaml"
+Logs principales:
+- Main log: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\test-zenoytdl\logs\test-beets-only\20260319-115723\test-beets-only.log
+- Transcript: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\test-zenoytdl\logs\test-beets-only\20260319-115723\test-beets-only.transcript.log
+- Carpeta ejecuciÃ³n: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\test-zenoytdl\logs\test-beets-only\20260319-115723
+**********************
+Fin de la transcripción de Windows PowerShell
+Hora de finalización: 20260319115727
+**********************

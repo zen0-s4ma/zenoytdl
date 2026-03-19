@@ -7,9 +7,9 @@
       "url": "https://www.youtube.com/@RamonAlvarezdeMon/videos",
       "max_items": 3,
       "selected_ids": [
-        "0l5B7wLQ2UM",
-        "zRTZ7m8Psg0",
-        "iQ4nSLB47pw"
+        "z1JJNJH0md4",
+        "uPqLb-PEcN8",
+        "0l5B7wLQ2UM"
       ],
       "download_strategy": "channel"
     },
@@ -20,9 +20,9 @@
       "url": "https://www.youtube.com/@geoestratego_oficial/videos",
       "max_items": 3,
       "selected_ids": [
-        "QlpikMlYDMQ",
-        "9VcX7o6bWYI",
-        "yJAaRjpphME"
+        "fTOBXLMNDIo",
+        "OUYcBfDAZd0",
+        "xMQHg4sIQDE"
       ],
       "download_strategy": "channel"
     },
@@ -59,9 +59,9 @@
       "url": "https://www.youtube.com/@nickdaboom/videos",
       "max_items": 3,
       "selected_ids": [
+        "acPIYqJ020g",
         "36-O0FFAQOQ",
-        "KhSceJL6_A8",
-        "1k6Zi3-P914"
+        "KhSceJL6_A8"
       ],
       "download_strategy": "channel"
     },
@@ -190,17 +190,6 @@
         "q8xQixwWVgo"
       ],
       "download_strategy": "playlist"
-    },
-    "ambience-video-ambience-video-prueba-5-4krux2iky": {
-      "profile_name": "Ambience-Video",
-      "profile_type": "ambience-video",
-      "custom_name": "ambience-video-prueba",
-      "url": "https://www.youtube.com/watch?v=5_4KRUx2iKY",
-      "max_items": 3,
-      "selected_ids": [
-        "5-4krux2iky"
-      ],
-      "download_strategy": "single_video"
     },
     "ambience-video-ambience-video-prueba-vr4savpspea": {
       "profile_name": "Ambience-Video",

@@ -42,12 +42,6 @@ subscriptions:
 - profile_name: Ambience-Video
   custom_name: ambience-video-prueba
   sources:
-  - url: https://www.youtube.com/watch?v=5_4KRUx2iKY
-    quality: 1080p
-    format: mp4
-    min_duration: ''
-    max_duration: 3h3m3s
-    audio_quality: best
   - url: https://www.youtube.com/watch?v=vr4sAvPSpEA
     quality: 720p
     format: mp4

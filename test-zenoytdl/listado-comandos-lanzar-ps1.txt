@@ -118,3 +118,10 @@ powershell -ExecutionPolicy Bypass -File .\test-zenoytdl\test-beets-only.ps1 -Dr
 # ============================================================
 
 powershell -ExecutionPolicy Bypass -File .\test-zenoytdl\_run-all-test.ps1
+
+# ============================================================
+# 7) clean-windows-environment.ps1
+#    Limpia el entorno para que esté limpio al completo tanto de descargas como de temporales
+# ============================================================
+
+powershell -ExecutionPolicy Bypass -File .\test-zenoytdl\clean-windows-environment.ps1

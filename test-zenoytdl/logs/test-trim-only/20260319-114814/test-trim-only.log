@@ -1,0 +1,39 @@
+﻿[2026-03-19 11:48:14] [STEP] ============================================================================
+[2026-03-19 11:48:14] [STEP] Inicio test aislado de trim
+[2026-03-19 11:48:14] [STEP] ============================================================================
+[2026-03-19 11:48:14] [INFO] DryRun: False
+[2026-03-19 11:48:14] [STEP] ============================================================================
+[2026-03-19 11:48:14] [STEP] Limpieza previa del entorno de prueba
+[2026-03-19 11:48:14] [STEP] ============================================================================
+[2026-03-19 11:48:14] [INFO] Ejecutando [trim-cleanup-cp]: docker cp "C:\Users\ZENOSA~1\AppData\Local\Temp\zenotest-fb0b850f5e744ee298889781f6316320.sh" ytdl-sub:/tmp/zenotest-fb0b850f5e744ee298889781f6316320.sh
+
+### BEGIN trim-cleanup-cp
+docker cp "C:\Users\ZENOSA~1\AppData\Local\Temp\zenotest-fb0b850f5e744ee298889781f6316320.sh" ytdl-sub:/tmp/zenotest-fb0b850f5e744ee298889781f6316320.sh
+
+
+### END trim-cleanup-cp (exit=0)
+
+[2026-03-19 11:48:15] [INFO] Ejecutando [trim-cleanup-exec]: docker exec ytdl-sub sh /tmp/zenotest-fb0b850f5e744ee298889781f6316320.sh
+
+### BEGIN trim-cleanup-exec
+docker exec ytdl-sub sh /tmp/zenotest-fb0b850f5e744ee298889781f6316320.sh
+
+
+### END trim-cleanup-exec (exit=0)
+
+[2026-03-19 11:48:15] [STEP] ============================================================================
+[2026-03-19 11:48:15] [STEP] GeneraciÃ³n de vÃ­deo sintÃ©tico rÃ¡pido
+[2026-03-19 11:48:15] [STEP] ============================================================================
+[2026-03-19 11:48:15] [INFO] Ejecutando [trim-generate-input-cp]: docker cp "C:\Users\ZENOSA~1\AppData\Local\Temp\zenotest-d509d69e4cfc458db6beff1fa238f9ae.sh" ytdl-sub:/tmp/zenotest-d509d69e4cfc458db6beff1fa238f9ae.sh
+
+### BEGIN trim-generate-input-cp
+docker cp "C:\Users\ZENOSA~1\AppData\Local\Temp\zenotest-d509d69e4cfc458db6beff1fa238f9ae.sh" ytdl-sub:/tmp/zenotest-d509d69e4cfc458db6beff1fa238f9ae.sh
+
+
+### END trim-generate-input-cp (exit=0)
+
+[2026-03-19 11:48:15] [INFO] Ejecutando [trim-generate-input-exec]: docker exec ytdl-sub sh /tmp/zenotest-d509d69e4cfc458db6beff1fa238f9ae.sh
+
+### BEGIN trim-generate-input-exec
+docker exec ytdl-sub sh /tmp/zenotest-d509d69e4cfc458db6beff1fa238f9ae.sh
+

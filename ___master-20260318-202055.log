@@ -1,0 +1,112 @@
+﻿**********************
+Inicio de la transcripción de Windows PowerShell
+Hora de inicio: 20260318202055
+Nombre de usuario: ZENOVERSO\Zeno Sama
+Usuario RunAs: ZENOVERSO\Zeno Sama
+Nombre de la configuración: 
+Máquina: ZENOVERSO (Microsoft Windows NT 10.0.22631.0)
+Aplicación host: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypass -File .\run-master-tests.ps1
+Id. de proceso: 22280
+PSVersion: 5.1.22621.6133
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.22621.6133
+BuildVersion: 10.0.22621.6133
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+La transcripción ha comenzado. El archivo de salida es E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\___master-20260318-202055.log
+Master log: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\___master-20260318-202055.log
+
+/downloads/Ambience-Video/ambience-video-prueba
+/downloads/Canales-youtube
+/downloads/Music-Playlist
+/downloads/Music-Playlist/music-playlist-prueba
+/downloads/Music-Playlist/music-playlist-prueba-beets-test
+/downloads/Music-Playlist/music-playlist-prueba-beets-test-10
+/downloads/Podcast
+/downloads/Podcast/entrevistas
+/downloads/TV-Serie
+/downloads/TV-Serie/lolete
+
+[beets /config]
+/config
+/config/.bashrc
+/config/.cache
+/config/.cache/deno
+/config/.cache/gstreamer-1.0
+/config/.cron.log
+/config/.recent-items-state.json
+/config/.ytdl-sub-lock
+/config/.ytdl-sub-lock/_config_.ytdl-sub-working-directory
+/config/.ytdl-sub-working-directory
+/config/beets.sh
+/config/config.yaml
+/config/crontabs
+/config/crontabs/abc
+/config/crontabs/root
+/config/examples
+/config/examples/README.md
+/config/examples/advanced
+/config/examples/music_subscriptions.yaml
+/config/examples/music_video_subscriptions.yaml
+/config/examples/tv_show_subscriptions.yaml
+/config/library.db
+/config/logs
+/config/logs
+/config/probe.txt
+/config/subscriptions.yaml
+/config/zenoytdl
+/config/zenoytdl/.git
+/config/zenoytdl/.recent-items-state.pending.filtered.json
+/config/zenoytdl/.recent-items-state.pending.json
+/config/zenoytdl/DOSSIER-TECNICO.md
+/config/zenoytdl/EJEMPLOS.md
+/config/zenoytdl/README-mudanza-ruta.txt
+/config/zenoytdl/README.md
+/config/zenoytdl/___master-20260318-201904.log
+/config/zenoytdl/___master-20260318-202055.log
+/config/zenoytdl/beets.music-playlist.yaml
+/config/zenoytdl/beets.sh
+/config/zenoytdl/bloque1-music-playlist-20260318-180044.log
+/config/zenoytdl/bloque1-test.ps1
+/config/zenoytdl/bloque2-test.ps1
+/config/zenoytdl/clean-music-filenames.ps1
+/config/zenoytdl/config.generated.yaml
+/config/zenoytdl/generate-ytdl-config.py
+/config/zenoytdl/prepare-subscriptions-runset.py
+/config/zenoytdl/profiles-custom.yml
+/config/zenoytdl/run-master-tests.ps1
+/config/zenoytdl/subscription-custom.yml
+/config/zenoytdl/subscriptions.generated.yaml
+/config/zenoytdl/subscriptions.runset.filtered.yaml
+/config/zenoytdl/subscriptions.runset.yaml
+/config/zenoytdl/test-e2e-perfiles-subscriptions.ps1
+/config/zenoytdl/test-zenoytdl
+/config/zenoytdl/test-zenoytdl.zip
+/config/zenoytdl/trim-ambience-video.py
+/config/zenoytdl/validate-test-e2e-perfiles-subscriptions.ps1
+
+Entorno limpio.
+La carpeta de logs local NO ha sido tocada.
+Ya puedes lanzar:
+powershell -ExecutionPolicy Bypass -File .\test-zenoytdl\_run-all-test.ps1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+**********************
+Fin de la transcripción de Windows PowerShell
+Hora de finalización: 20260318211437
+**********************

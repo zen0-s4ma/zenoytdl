@@ -1,0 +1,327 @@
+﻿**********************
+Inicio de la transcripción de Windows PowerShell
+Hora de inicio: 20260319125150
+Nombre de usuario: ZENOVERSO\Zeno Sama
+Usuario RunAs: ZENOVERSO\Zeno Sama
+Nombre de la configuración: 
+Máquina: ZENOVERSO (Microsoft Windows NT 10.0.22631.0)
+Aplicación host: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypass -File .\test-zenoytdl\run-profile-test.ps1 -ProfileName Ambience-Audio -ClearDownloads:False -DryRun:False
+Id. de proceso: 33636
+PSVersion: 5.1.22621.6133
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.22621.6133
+BuildVersion: 10.0.22621.6133
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+[2026-03-19 12:51:50] [STEP] ============================================================================
+[2026-03-19 12:51:50] [STEP] Inicio lanzador de perfil
+[2026-03-19 12:51:50] [STEP] ============================================================================
+[2026-03-19 12:51:50] [INFO] Perfil: Ambience-Audio
+[2026-03-19 12:51:50] [INFO] ClearDownloads: False
+[2026-03-19 12:51:50] [INFO] DryRun: False
+[2026-03-19 12:51:50] [INFO] Project root: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl
+[2026-03-19 12:51:50] [INFO] No se ejecuta limpieza global previa.
+[2026-03-19 12:51:50] [STEP] ============================================================================
+[2026-03-19 12:51:50] [STEP] Limpieza de locks, working directory y restos temporales
+[2026-03-19 12:51:50] [STEP] ============================================================================
+[2026-03-19 12:51:50] [INFO] Ejecutando [reset-workdir-cp]: docker cp "C:\Users\ZENOSA~1\AppData\Local\Temp\zenotest-3ab3ccdac067440fa6c778c00d80d565.sh" ytdl-sub:/tmp/zenotest-3ab3ccdac067440fa6c778c00d80d565.sh
+0
+[2026-03-19 12:51:51] [INFO] Ejecutando [reset-workdir-exec]: docker exec ytdl-sub sh /tmp/zenotest-3ab3ccdac067440fa6c778c00d80d565.sh
+0
+[2026-03-19 12:51:53] [STEP] ============================================================================
+[2026-03-19 12:51:53] [STEP] GeneraciÃ³n de YAML y runset completo
+[2026-03-19 12:51:53] [STEP] ============================================================================
+[2026-03-19 12:51:53] [INFO] Ejecutando [generate-ytdl-config]: python -u .\generate-ytdl-config.py
+Generaci�n completada correctamente.
+Directorio base: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl
+Generado: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\config.generated.yaml
+Generado: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\subscriptions.generated.yaml
+Generado: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\beets.music-playlist.yaml
+0
+[2026-03-19 12:51:53] [INFO] Ejecutando [prepare-subscriptions-runset]: python -u .\prepare-subscriptions-runset.py
+
+[2026-03-19 12:51:53] ============================================================
+[2026-03-19 12:51:53] PREPARAR RUNSET INTELIGENTE DE SUSCRIPCIONES
+[2026-03-19 12:51:53] ============================================================
+
+[2026-03-19 12:51:53] [INFO] Cargando YAML: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\profiles-custom.yml
+[2026-03-19 12:51:53] [INFO] Cargando YAML: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\subscription-custom.yml
+[2026-03-19 12:51:53] [INFO] Cargando YAML: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\subscriptions.generated.yaml
+[2026-03-19 12:51:53] [INFO] Cargando JSON: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\.recent-items-state.json
+[2026-03-19 12:51:53] [INFO] Perfiles cargados: 6
+[2026-03-19 12:51:53] [INFO] Suscripciones cargadas: 6
+[2026-03-19 12:51:53] [INFO] Entradas generadas disponibles: 8
+[2026-03-19 12:51:53] [INFO] Fuentes totales a evaluar: 8
+[2026-03-19 12:51:53] [STEP] Suscripci�n 1/6: profile=Canales-youtube custom_name=ramon-alvarez-de-mon
+[2026-03-19 12:51:53] [STEP] Evaluando fuente 1/8
+
+[2026-03-19 12:51:53] ------------------------------------------------------------
+[2026-03-19 12:51:53] [SOURCE 1/8] canales-youtube-ramon-alvarez-de-mon-ramonalvarezdemon
+[2026-03-19 12:51:53]   profile_name      : Canales-youtube
+[2026-03-19 12:51:53]   profile_key       : canales-youtube
+[2026-03-19 12:51:53]   custom_name       : ramon-alvarez-de-mon
+[2026-03-19 12:51:53]   subscription_root : ramon-alvarez-de-mon
+[2026-03-19 12:51:53]   source_target     : ramonalvarezdemon
+[2026-03-19 12:51:53]   max_items         : 3
+[2026-03-19 12:51:53]   url               : https://www.youtube.com/@RamonAlvarezdeMon/videos
+[2026-03-19 12:51:53] [STEP] Ejecutando subprocess: docker_count_files path=/downloads/Canales-youtube/ramon-alvarez-de-mon
+[2026-03-19 12:51:54] [INFO] Subprocess terminado en 0.19s con rc=0: docker_count_files path=/downloads/Canales-youtube/ramon-alvarez-de-mon
+[2026-03-19 12:51:54] [INFO] Conteo de ficheros en /downloads/Canales-youtube/ramon-alvarez-de-mon: 3
+[2026-03-19 12:51:54] [INFO] Estrategia detectada: channel
+[2026-03-19 12:51:54] [INFO] Output dir: /downloads/Canales-youtube/ramon-alvarez-de-mon
+[2026-03-19 12:51:54] [INFO] Ficheros locales detectados: 3
+[2026-03-19 12:51:54] [INFO] IDs previos guardados: 0
+[2026-03-19 12:51:54] [INFO] Resolviendo TOP 3 IDs recientes de la fuente: https://www.youtube.com/@RamonAlvarezdeMon/videos
+[2026-03-19 12:51:54] [STEP] Ejecutando subprocess: docker exec ytdl-sub yt-dlp --dump-single-json --flat-playlist --ignore-errors --no-warnings https://www.youtube.com/@RamonAlvarezdeMon/videos
+[2026-03-19 12:53:13] [INFO] Subprocess terminado en 79.12s con rc=0: docker exec ytdl-sub yt-dlp --dump-single-json --flat-playlist --ignore-errors --no-warnings https://www.youtube.com/@RamonAlvarezdeMon/videos
+[2026-03-19 12:53:13] [INFO] IDs resueltos (top 3): 3
+[2026-03-19 12:53:13] [INFO] IDs seleccionados ahora: 3
+[2026-03-19 12:53:13] [INFO] Ficheros esperados seg�n top: 3
+[2026-03-19 12:53:13] [RUN] canales-youtube-ramon-alvarez-de-mon-ramonalvarezdemon -> el top reciente cambi�; toca descargar y purgar
+[2026-03-19 12:53:13] [INFO] Acumulado: RUN=1 | SKIP=0
+[2026-03-19 12:53:13] [STEP] Fuente 1/8 terminada
+[2026-03-19 12:53:13] [STEP] Suscripci�n 2/6: profile=Podcast custom_name=entrevistas
+[2026-03-19 12:53:13] [STEP] Evaluando fuente 2/8
+
+[2026-03-19 12:53:13] ------------------------------------------------------------
+[2026-03-19 12:53:13] [SOURCE 2/8] podcast-entrevistas-geoestratego-oficial
+[2026-03-19 12:53:13]   profile_name      : Podcast
+[2026-03-19 12:53:13]   profile_key       : podcast
+[2026-03-19 12:53:13]   custom_name       : entrevistas
+[2026-03-19 12:53:13]   subscription_root : entrevistas
+[2026-03-19 12:53:13]   source_target     : geoestratego-oficial
+[2026-03-19 12:53:13]   max_items         : 3
+[2026-03-19 12:53:13]   url               : https://www.youtube.com/@geoestratego_oficial/videos
+[2026-03-19 12:53:13] [STEP] Ejecutando subprocess: docker_count_files path=/downloads/Podcast/entrevistas/geoestratego-oficial
+[2026-03-19 12:53:13] [INFO] Subprocess terminado en 0.17s con rc=0: docker_count_files path=/downloads/Podcast/entrevistas/geoestratego-oficial
+[2026-03-19 12:53:13] [INFO] Conteo de ficheros en /downloads/Podcast/entrevistas/geoestratego-oficial: 3
+[2026-03-19 12:53:13] [INFO] Estrategia detectada: channel
+[2026-03-19 12:53:13] [INFO] Output dir: /downloads/Podcast/entrevistas/geoestratego-oficial
+[2026-03-19 12:53:13] [INFO] Ficheros locales detectados: 3
+[2026-03-19 12:53:13] [INFO] IDs previos guardados: 0
+[2026-03-19 12:53:13] [INFO] Resolviendo TOP 3 IDs recientes de la fuente: https://www.youtube.com/@geoestratego_oficial/videos
+[2026-03-19 12:53:13] [STEP] Ejecutando subprocess: docker exec ytdl-sub yt-dlp --dump-single-json --flat-playlist --ignore-errors --no-warnings https://www.youtube.com/@geoestratego_oficial/videos
+[2026-03-19 12:53:23] [INFO] Subprocess terminado en 10.01s con rc=0: docker exec ytdl-sub yt-dlp --dump-single-json --flat-playlist --ignore-errors --no-warnings https://www.youtube.com/@geoestratego_oficial/videos
+[2026-03-19 12:53:23] [INFO] IDs resueltos (top 3): 3
+[2026-03-19 12:53:23] [INFO] IDs seleccionados ahora: 3
+[2026-03-19 12:53:23] [INFO] Ficheros esperados seg�n top: 3
+[2026-03-19 12:53:23] [RUN] podcast-entrevistas-geoestratego-oficial -> el top reciente cambi�; toca descargar y purgar
+[2026-03-19 12:53:23] [INFO] Acumulado: RUN=2 | SKIP=0
+[2026-03-19 12:53:23] [STEP] Fuente 2/8 terminada
+[2026-03-19 12:53:23] [STEP] Evaluando fuente 3/8
+
+[2026-03-19 12:53:23] ------------------------------------------------------------
+[2026-03-19 12:53:23] [SOURCE 3/8] podcast-entrevistas-pl01fnqnul7ykui7id1lwxkz8ho3j8l8of
+[2026-03-19 12:53:23]   profile_name      : Podcast
+[2026-03-19 12:53:23]   profile_key       : podcast
+[2026-03-19 12:53:23]   custom_name       : entrevistas
+[2026-03-19 12:53:23]   subscription_root : entrevistas
+[2026-03-19 12:53:23]   source_target     : pl01fnqnul7ykui7id1lwxkz8ho3j8l8of
+[2026-03-19 12:53:23]   max_items         : 3
+[2026-03-19 12:53:23]   url               : https://www.youtube.com/playlist?list=PL01FNQnUl7YKuI7iD1lwxKz8Ho3J8L8Of
+[2026-03-19 12:53:23] [STEP] Ejecutando subprocess: docker_count_files path=/downloads/Podcast/entrevistas/pl01fnqnul7ykui7id1lwxkz8ho3j8l8of
+[2026-03-19 12:53:23] [INFO] Subprocess terminado en 0.16s con rc=0: docker_count_files path=/downloads/Podcast/entrevistas/pl01fnqnul7ykui7id1lwxkz8ho3j8l8of
+[2026-03-19 12:53:23] [INFO] Conteo de ficheros en /downloads/Podcast/entrevistas/pl01fnqnul7ykui7id1lwxkz8ho3j8l8of: 3
+[2026-03-19 12:53:23] [INFO] Estrategia detectada: playlist
+[2026-03-19 12:53:23] [INFO] Output dir: /downloads/Podcast/entrevistas/pl01fnqnul7ykui7id1lwxkz8ho3j8l8of
+[2026-03-19 12:53:23] [INFO] Ficheros locales detectados: 3
+[2026-03-19 12:53:23] [INFO] IDs previos guardados: 0
+[2026-03-19 12:53:23] [INFO] Resolviendo TOP 3 IDs recientes de la fuente: https://www.youtube.com/playlist?list=PL01FNQnUl7YKuI7iD1lwxKz8Ho3J8L8Of
+[2026-03-19 12:53:23] [STEP] Ejecutando subprocess: docker exec ytdl-sub yt-dlp --dump-single-json --flat-playlist --ignore-errors --no-warnings https://www.youtube.com/playlist?list=PL01FNQnUl7YKuI7iD1lwxKz8Ho3J8L8Of
+[2026-03-19 12:53:26] [INFO] Subprocess terminado en 2.83s con rc=0: docker exec ytdl-sub yt-dlp --dump-single-json --flat-playlist --ignore-errors --no-warnings https://www.youtube.com/playlist?list=PL01FNQnUl7YKuI7iD1lwxKz8Ho3J8L8Of
+[2026-03-19 12:53:26] [INFO] IDs resueltos (top 3): 3
+[2026-03-19 12:53:26] [INFO] IDs seleccionados ahora: 3
+[2026-03-19 12:53:26] [INFO] Ficheros esperados seg�n top: 3
+[2026-03-19 12:53:26] [RUN] podcast-entrevistas-pl01fnqnul7ykui7id1lwxkz8ho3j8l8of -> el top reciente cambi�; toca descargar y purgar
+[2026-03-19 12:53:26] [INFO] Acumulado: RUN=3 | SKIP=0
+[2026-03-19 12:53:26] [STEP] Fuente 3/8 terminada
+[2026-03-19 12:53:26] [STEP] Suscripci�n 3/6: profile=TV-Serie custom_name=lolete
+[2026-03-19 12:53:26] [STEP] Evaluando fuente 4/8
+
+[2026-03-19 12:53:26] ------------------------------------------------------------
+[2026-03-19 12:53:26] [SOURCE 4/8] tv-serie-lolete-kerios
+[2026-03-19 12:53:26]   profile_name      : TV-Serie
+[2026-03-19 12:53:26]   profile_key       : tv-serie
+[2026-03-19 12:53:26]   custom_name       : lolete
+[2026-03-19 12:53:26]   subscription_root : lolete
+[2026-03-19 12:53:26]   source_target     : kerios
+[2026-03-19 12:53:26]   max_items         : 3
+[2026-03-19 12:53:26]   url               : https://www.youtube.com/@Kerios/videos
+[2026-03-19 12:53:26] [STEP] Ejecutando subprocess: docker_count_files path=/downloads/TV-Serie/lolete
+[2026-03-19 12:53:26] [INFO] Subprocess terminado en 0.28s con rc=0: docker_count_files path=/downloads/TV-Serie/lolete
+[2026-03-19 12:53:26] [INFO] Conteo de ficheros en /downloads/TV-Serie/lolete: 6
+[2026-03-19 12:53:26] [INFO] Estrategia detectada: channel
+[2026-03-19 12:53:26] [INFO] Output dir: /downloads/TV-Serie/lolete
+[2026-03-19 12:53:26] [INFO] Ficheros locales detectados: 6
+[2026-03-19 12:53:26] [INFO] IDs previos guardados: 0
+[2026-03-19 12:53:26] [INFO] Resolviendo TOP 3 IDs recientes de la fuente: https://www.youtube.com/@Kerios/videos
+[2026-03-19 12:53:26] [STEP] Ejecutando subprocess: docker exec ytdl-sub yt-dlp --dump-single-json --flat-playlist --ignore-errors --no-warnings https://www.youtube.com/@Kerios/videos
+[2026-03-19 12:54:08] [INFO] Subprocess terminado en 41.32s con rc=0: docker exec ytdl-sub yt-dlp --dump-single-json --flat-playlist --ignore-errors --no-warnings https://www.youtube.com/@Kerios/videos
+[2026-03-19 12:54:08] [INFO] IDs resueltos (top 3): 3
+[2026-03-19 12:54:08] [INFO] IDs seleccionados ahora: 3
+[2026-03-19 12:54:08] [INFO] Ficheros esperados seg�n top: 3
+[2026-03-19 12:54:08] [RUN] tv-serie-lolete-kerios -> el top reciente cambi�; toca descargar y purgar
+[2026-03-19 12:54:08] [INFO] Acumulado: RUN=4 | SKIP=0
+[2026-03-19 12:54:08] [STEP] Fuente 4/8 terminada
+[2026-03-19 12:54:08] [STEP] Evaluando fuente 5/8
+
+[2026-03-19 12:54:08] ------------------------------------------------------------
+[2026-03-19 12:54:08] [SOURCE 5/8] tv-serie-lolete-nickdaboom
+[2026-03-19 12:54:08]   profile_name      : TV-Serie
+[2026-03-19 12:54:08]   profile_key       : tv-serie
+[2026-03-19 12:54:08]   custom_name       : lolete
+[2026-03-19 12:54:08]   subscription_root : lolete
+[2026-03-19 12:54:08]   source_target     : nickdaboom
+[2026-03-19 12:54:08]   max_items         : 3
+[2026-03-19 12:54:08]   url               : https://www.youtube.com/@nickdaboom/videos
+[2026-03-19 12:54:08] [STEP] Ejecutando subprocess: docker_count_files path=/downloads/TV-Serie/lolete
+[2026-03-19 12:54:08] [INFO] Subprocess terminado en 0.14s con rc=0: docker_count_files path=/downloads/TV-Serie/lolete
+[2026-03-19 12:54:08] [INFO] Conteo de ficheros en /downloads/TV-Serie/lolete: 6
+[2026-03-19 12:54:08] [INFO] Estrategia detectada: channel
+[2026-03-19 12:54:08] [INFO] Output dir: /downloads/TV-Serie/lolete
+[2026-03-19 12:54:08] [INFO] Ficheros locales detectados: 6
+[2026-03-19 12:54:08] [INFO] IDs previos guardados: 0
+[2026-03-19 12:54:08] [INFO] Resolviendo TOP 3 IDs recientes de la fuente: https://www.youtube.com/@nickdaboom/videos
+[2026-03-19 12:54:08] [STEP] Ejecutando subprocess: docker exec ytdl-sub yt-dlp --dump-single-json --flat-playlist --ignore-errors --no-warnings https://www.youtube.com/@nickdaboom/videos
+[2026-03-19 12:54:48] [INFO] Subprocess terminado en 40.28s con rc=0: docker exec ytdl-sub yt-dlp --dump-single-json --flat-playlist --ignore-errors --no-warnings https://www.youtube.com/@nickdaboom/videos
+[2026-03-19 12:54:48] [INFO] IDs resueltos (top 3): 3
+[2026-03-19 12:54:48] [INFO] IDs seleccionados ahora: 3
+[2026-03-19 12:54:48] [INFO] Ficheros esperados seg�n top: 3
+[2026-03-19 12:54:48] [RUN] tv-serie-lolete-nickdaboom -> el top reciente cambi�; toca descargar y purgar
+[2026-03-19 12:54:48] [INFO] Acumulado: RUN=5 | SKIP=0
+[2026-03-19 12:54:48] [STEP] Fuente 5/8 terminada
+[2026-03-19 12:54:48] [STEP] Suscripci�n 4/6: profile=Music-Playlist custom_name=music-playlist-prueba
+[2026-03-19 12:54:48] [STEP] Evaluando fuente 6/8
+
+[2026-03-19 12:54:48] ------------------------------------------------------------
+[2026-03-19 12:54:48] [SOURCE 6/8] music-playlist-music-playlist-prueba-plcajstgncmdxgfdpc5aenevprzgcr-kut
+[2026-03-19 12:54:48]   profile_name      : Music-Playlist
+[2026-03-19 12:54:48]   profile_key       : music-playlist
+[2026-03-19 12:54:48]   custom_name       : music-playlist-prueba
+[2026-03-19 12:54:48]   subscription_root : music-playlist-prueba
+[2026-03-19 12:54:48]   source_target     : plcajstgncmdxgfdpc5aenevprzgcr-kut
+[2026-03-19 12:54:48]   max_items         : 0
+[2026-03-19 12:54:48]   url               : https://www.youtube.com/playlist?list=PLcajSTgNCmdXgFdPc5aeNEVPrzGcr_kUt
+[2026-03-19 12:54:48] [STEP] Ejecutando subprocess: docker_count_files path=/downloads/Music-Playlist/music-playlist-prueba
+[2026-03-19 12:54:48] [INFO] Subprocess terminado en 0.15s con rc=0: docker_count_files path=/downloads/Music-Playlist/music-playlist-prueba
+[2026-03-19 12:54:48] [INFO] Conteo de ficheros en /downloads/Music-Playlist/music-playlist-prueba: 105
+[2026-03-19 12:54:48] [INFO] Estrategia detectada: playlist
+[2026-03-19 12:54:48] [INFO] Output dir: /downloads/Music-Playlist/music-playlist-prueba
+[2026-03-19 12:54:48] [INFO] Ficheros locales detectados: 105
+[2026-03-19 12:54:48] [INFO] IDs previos guardados: 0
+[2026-03-19 12:54:48] [INFO] Resolviendo TODOS los IDs de la fuente: https://www.youtube.com/playlist?list=PLcajSTgNCmdXgFdPc5aeNEVPrzGcr_kUt
+[2026-03-19 12:54:48] [STEP] Ejecutando subprocess: docker exec ytdl-sub yt-dlp --dump-single-json --flat-playlist --ignore-errors --no-warnings https://www.youtube.com/playlist?list=PLcajSTgNCmdXgFdPc5aeNEVPrzGcr_kUt
+[2026-03-19 12:54:51] [INFO] Subprocess terminado en 2.49s con rc=0: docker exec ytdl-sub yt-dlp --dump-single-json --flat-playlist --ignore-errors --no-warnings https://www.youtube.com/playlist?list=PLcajSTgNCmdXgFdPc5aeNEVPrzGcr_kUt
+[2026-03-19 12:54:51] [INFO] IDs resueltos (completo): 116
+[2026-03-19 12:54:51] [INFO] IDs seleccionados ahora (fuente completa): 116
+[2026-03-19 12:54:51] [SKIP] music-playlist-music-playlist-prueba-plcajstgncmdxgfdpc5aenevprzgcr-kut -> ya existe contenido local; se consolida estado sin reejecutar
+[2026-03-19 12:54:51] [INFO] Acumulado: RUN=5 | SKIP=1
+[2026-03-19 12:54:51] [STEP] Fuente 6/8 terminada
+[2026-03-19 12:54:51] [STEP] Suscripci�n 5/6: profile=Ambience-Video custom_name=ambience-video-prueba
+[2026-03-19 12:54:51] [STEP] Evaluando fuente 7/8
+
+[2026-03-19 12:54:51] ------------------------------------------------------------
+[2026-03-19 12:54:51] [SOURCE 7/8] ambience-video-ambience-video-prueba-vr4savpspea
+[2026-03-19 12:54:51]   profile_name      : Ambience-Video
+[2026-03-19 12:54:51]   profile_key       : ambience-video
+[2026-03-19 12:54:51]   custom_name       : ambience-video-prueba
+[2026-03-19 12:54:51]   subscription_root : ambience-video-prueba
+[2026-03-19 12:54:51]   source_target     : vr4savpspea
+[2026-03-19 12:54:51]   max_items         : 3
+[2026-03-19 12:54:51]   url               : https://www.youtube.com/watch?v=vr4sAvPSpEA
+[2026-03-19 12:54:51] [STEP] Ejecutando subprocess: docker_count_files path=/downloads/Ambience-Video/ambience-video-prueba
+[2026-03-19 12:54:51] [INFO] Subprocess terminado en 0.19s con rc=0: docker_count_files path=/downloads/Ambience-Video/ambience-video-prueba
+[2026-03-19 12:54:51] [INFO] Conteo de ficheros en /downloads/Ambience-Video/ambience-video-prueba: 2
+[2026-03-19 12:54:51] [INFO] Estrategia detectada: single_video
+[2026-03-19 12:54:51] [INFO] Output dir: /downloads/Ambience-Video/ambience-video-prueba
+[2026-03-19 12:54:51] [INFO] Ficheros locales detectados: 2
+[2026-03-19 12:54:51] [INFO] IDs previos guardados: 1
+[2026-03-19 12:54:51] [INFO] Single video target: vr4savpspea
+[2026-03-19 12:54:51] [SKIP] ambience-video-ambience-video-prueba-vr4savpspea -> single video intacto; no toca descargar
+[2026-03-19 12:54:51] [INFO] Acumulado: RUN=5 | SKIP=2
+[2026-03-19 12:54:51] [STEP] Fuente 7/8 terminada
+[2026-03-19 12:54:51] [STEP] Suscripci�n 6/6: profile=Ambience-Audio custom_name=ambience-audio-prueba
+[2026-03-19 12:54:51] [STEP] Evaluando fuente 8/8
+
+[2026-03-19 12:54:51] ------------------------------------------------------------
+[2026-03-19 12:54:51] [SOURCE 8/8] ambience-audio-ambience-audio-prueba-gr-vejtzbso
+[2026-03-19 12:54:51]   profile_name      : Ambience-Audio
+[2026-03-19 12:54:51]   profile_key       : ambience-audio
+[2026-03-19 12:54:51]   custom_name       : ambience-audio-prueba
+[2026-03-19 12:54:51]   subscription_root : ambience-audio-prueba
+[2026-03-19 12:54:51]   source_target     : gr-vejtzbso
+[2026-03-19 12:54:51]   max_items         : 3
+[2026-03-19 12:54:51]   url               : https://www.youtube.com/watch?v=GR_vEjTZBso
+[2026-03-19 12:54:51] [STEP] Ejecutando subprocess: docker_count_files path=/downloads/Ambience-Audio/ambience-audio-prueba
+[2026-03-19 12:54:51] [INFO] Subprocess terminado en 0.18s con rc=0: docker_count_files path=/downloads/Ambience-Audio/ambience-audio-prueba
+[2026-03-19 12:54:51] [INFO] Conteo de ficheros en /downloads/Ambience-Audio/ambience-audio-prueba: 1
+[2026-03-19 12:54:51] [INFO] Estrategia detectada: single_video
+[2026-03-19 12:54:51] [INFO] Output dir: /downloads/Ambience-Audio/ambience-audio-prueba
+[2026-03-19 12:54:51] [INFO] Ficheros locales detectados: 1
+[2026-03-19 12:54:51] [INFO] IDs previos guardados: 0
+[2026-03-19 12:54:51] [INFO] Single video target: gr-vejtzbso
+[2026-03-19 12:54:51] [SKIP] ambience-audio-ambience-audio-prueba-gr-vejtzbso -> single video ya presente; se consolida estado sin reejecutar
+[2026-03-19 12:54:51] [INFO] Acumulado: RUN=5 | SKIP=3
+[2026-03-19 12:54:51] [STEP] Fuente 8/8 terminada
+
+[2026-03-19 12:54:51] ============================================================
+[2026-03-19 12:54:51] ESCRIBIENDO RESULTADOS
+[2026-03-19 12:54:51] ============================================================
+
+[2026-03-19 12:54:51] [INFO] Escribiendo YAML: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\subscriptions.runset.yaml
+[2026-03-19 12:54:51] [INFO] Escribiendo JSON: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\.recent-items-state.pending.json
+
+[2026-03-19 12:54:51] [OK] Runset generado: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\subscriptions.runset.yaml
+[2026-03-19 12:54:51] [OK] Estado pendiente: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\.recent-items-state.pending.json
+[2026-03-19 12:54:51] [OK] Suscripciones a ejecutar: 5
+[2026-03-19 12:54:51] [OK] Resumen final: RUN=5 | SKIP=3
+0
+[2026-03-19 12:54:51] [INFO] Ejecutando [filter-runset-profiles]: python -u "C:\Users\ZENOSA~1\AppData\Local\Temp\zenotest-1ca3e9b532de493a9dd759be72198124.py" "E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl" "Ambience-Audio"
+E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl/subscriptions.runset.filtered.yaml
+E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl/.recent-items-state.pending.filtered.json
+0
+0
+[2026-03-19 12:54:52] [INFO] Ejecutando [copy-trim-script]: docker cp "E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\trim-ambience-video.py" ytdl-sub:/tmp/trim-ambience-video.py
+0
+[2026-03-19 12:54:52] [STEP] ============================================================================
+[2026-03-19 12:54:52] [STEP] InspecciÃ³n del runset filtrado
+[2026-03-19 12:54:52] [STEP] ============================================================================
+[2026-03-19 12:54:52] [WARN] El runset filtrado estÃ¡ vacÃ­o; no hay nada que ejecutar.
+[2026-03-19 12:54:52] [WARN] No se promueve estado porque el runset filtrado estÃ¡ vacÃ­o.
+[2026-03-19 12:54:52] [WARN] No hay entradas reales en el runset filtrado; se omite cualquier postproceso.
+[2026-03-19 12:54:52] [STEP] ============================================================================
+[2026-03-19 12:54:52] [STEP] Captura de logs relevantes de contenedores
+[2026-03-19 12:54:52] [STEP] ============================================================================
+[2026-03-19 12:54:52] [INFO] Ejecutando [collect-ytdl-logs-cp]: docker cp "C:\Users\ZENOSA~1\AppData\Local\Temp\zenotest-2765d66d3185481b842cfdf25818dc5c.sh" ytdl-sub:/tmp/zenotest-2765d66d3185481b842cfdf25818dc5c.sh
+0
+[2026-03-19 12:54:52] [INFO] Ejecutando [collect-ytdl-logs-exec]: docker exec ytdl-sub sh /tmp/zenotest-2765d66d3185481b842cfdf25818dc5c.sh
+[LOGS /config/logs]
+total 0
+drwxr-xr-x 1 abc users 4.0K Mar 19 12:44 .
+drwxrwxrwx 1 abc users 4.0K Mar 19 12:44 ..
+
+[ULTIMOS LOGS YTDL-SUB]
+
+[WORKING DIRECTORY]
+0
+[2026-03-19 12:54:53] [INFO] Ejecutando [collect-beets-logs-cp]: docker cp "C:\Users\ZENOSA~1\AppData\Local\Temp\zenotest-bc7066c8759844a38904f48fda186bad.sh" beets-streaming2:/tmp/zenotest-bc7066c8759844a38904f48fda186bad.sh
+0
+[2026-03-19 12:54:54] [INFO] Ejecutando [collect-beets-logs-exec]: docker exec beets-streaming2 sh /tmp/zenotest-bc7066c8759844a38904f48fda186bad.sh
+[BEETS LOG]
+[INFO] No existe /config/logs/beets-import.log
+0
+[2026-03-19 12:54:55] [STEP] ============================================================================
+[2026-03-19 12:54:55] [STEP] Fin lanzador de perfil
+[2026-03-19 12:54:55] [STEP] ============================================================================
+[2026-03-19 12:54:55] [OK] EjecuciÃ³n completada correctamente.
+Logs principales:
+- Main log: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\test-zenoytdl\logs\run-profile-test\20260319-125150\run-profile-test.log
+- Transcript: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\test-zenoytdl\logs\run-profile-test\20260319-125150\run-profile-test.transcript.log
+- Carpeta ejecuciÃ³n: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\test-zenoytdl\logs\run-profile-test\20260319-125150
+**********************
+Fin de la transcripción de Windows PowerShell
+Hora de finalización: 20260319125455
+**********************

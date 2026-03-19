@@ -1,0 +1,26 @@
+{
+  "sources": {
+    "ambience-video-ambience-video-prueba-5-4krux2iky": {
+      "profile_name": "Ambience-Video",
+      "profile_type": "ambience-video",
+      "custom_name": "ambience-video-prueba",
+      "url": "https://www.youtube.com/watch?v=5_4KRUx2iKY",
+      "max_items": 3,
+      "selected_ids": [
+        "5-4krux2iky"
+      ],
+      "download_strategy": "single_video"
+    },
+    "ambience-video-ambience-video-prueba-vr4savpspea": {
+      "profile_name": "Ambience-Video",
+      "profile_type": "ambience-video",
+      "custom_name": "ambience-video-prueba",
+      "url": "https://www.youtube.com/watch?v=vr4sAvPSpEA",
+      "max_items": 3,
+      "selected_ids": [
+        "vr4savpspea"
+      ],
+      "download_strategy": "single_video"
+    }
+  }
+}

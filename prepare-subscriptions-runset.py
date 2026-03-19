@@ -3,8 +3,10 @@ from __future__ import annotations
 import json
 import subprocess
 import sys
+import time
 import unicodedata
 import re
+from datetime import datetime
 from pathlib import Path
 from typing import Any
 from urllib.parse import parse_qs, urlparse
@@ -49,20 +51,55 @@ MEDIA_RULES = {
 }
 
 
+def now_str() -> str:
+    return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+
+def log(level: str, message: str) -> None:
+    print(f"[{now_str()}] [{level}] {message}", flush=True)
+
+
+def info(message: str) -> None:
+    log("INFO", message)
+
+
+def step(message: str) -> None:
+    log("STEP", message)
+
+
+def ok(message: str) -> None:
+    log("OK", message)
+
+
+def warn(message: str) -> None:
+    log("WARN", message)
+
+
 def fail(message: str) -> None:
-    print(f"ERROR: {message}", file=sys.stderr)
+    print(f"[{now_str()}] [ERROR] {message}", file=sys.stderr, flush=True)
     sys.exit(1)
+
+
+def print_separator(title: str | None = None) -> None:
+    print("", flush=True)
+    print(f"[{now_str()}] ============================================================", flush=True)
+    if title:
+        print(f"[{now_str()}] {title}", flush=True)
+        print(f"[{now_str()}] ============================================================", flush=True)
+    print("", flush=True)
 
 
 def load_yaml(path: Path) -> Any:
     if not path.exists():
         fail(f"No existe el fichero requerido: {path}")
+    info(f"Cargando YAML: {path}")
     with path.open("r", encoding="utf-8") as fh:
         data = yaml.safe_load(fh)
     return data if data is not None else {}
 
 
 def dump_yaml(path: Path, data: Any) -> None:
+    info(f"Escribiendo YAML: {path}")
     with path.open("w", encoding="utf-8", newline="\n") as fh:
         yaml.safe_dump(
             data,
@@ -75,15 +112,19 @@ def dump_yaml(path: Path, data: Any) -> None:
 
 
 def dump_json(path: Path, data: Any) -> None:
+    info(f"Escribiendo JSON: {path}")
     path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 
 def load_json(path: Path) -> dict[str, Any]:
     if not path.exists():
+        warn(f"No existe estado previo: {path} (se usará vacío)")
         return {}
     try:
+        info(f"Cargando JSON: {path}")
         return json.loads(path.read_text(encoding="utf-8"))
     except Exception:
+        warn(f"No se pudo leer correctamente {path}; se usará estado vacío")
         return {}
 
 
@@ -186,8 +227,11 @@ def deep_merge(base: dict[str, Any], override: dict[str, Any]) -> dict[str, Any]
     return result
 
 
-def run_subprocess(cmd: list[str], *, input_text: str | None = None) -> subprocess.CompletedProcess[str]:
-    return subprocess.run(
+def run_subprocess(cmd: list[str], *, input_text: str | None = None, description: str | None = None) -> subprocess.CompletedProcess[str]:
+    shown = description or " ".join(cmd)
+    step(f"Ejecutando subprocess: {shown}")
+    started = time.time()
+    cp = subprocess.run(
         cmd,
         input=input_text,
         capture_output=True,
@@ -195,10 +239,16 @@ def run_subprocess(cmd: list[str], *, input_text: str | None = None) -> subproce
         encoding="utf-8",
         errors="replace",
     )
+    elapsed = time.time() - started
+    info(f"Subprocess terminado en {elapsed:.2f}s con rc={cp.returncode}: {shown}")
+    if cp.stderr and cp.stderr.strip():
+        warn(f"stderr de subprocess ({shown}):\n{cp.stderr.strip()[:1500]}")
+    return cp
 
 
 def docker_exec_json(cmd: list[str]) -> Any:
-    cp = run_subprocess(["docker", "exec", YTDL_CONTAINER, *cmd])
+    shown = "docker exec " + YTDL_CONTAINER + " " + " ".join(cmd)
+    cp = run_subprocess(["docker", "exec", YTDL_CONTAINER, *cmd], description=shown)
     if cp.returncode != 0:
         raise RuntimeError(cp.stderr.strip() or cp.stdout.strip() or f"docker exec failed: {' '.join(cmd)}")
     try:
@@ -214,12 +264,19 @@ def docker_count_files(path: str, extensions: set[str]) -> int:
         'find "{path}" -type f \\( {find_parts} \\) | wc -l; '
         "else echo 0; fi"
     ).format(path=path, find_parts=find_parts)
-    cp = run_subprocess(["docker", "exec", YTDL_CONTAINER, "sh", "-lc", script])
+    cp = run_subprocess(
+        ["docker", "exec", YTDL_CONTAINER, "sh", "-lc", script],
+        description=f"docker_count_files path={path}",
+    )
     if cp.returncode != 0:
+        warn(f"No se pudo contar ficheros en {path}; se usará 0")
         return 0
     try:
-        return int((cp.stdout or "0").strip())
+        count = int((cp.stdout or "0").strip())
+        info(f"Conteo de ficheros en {path}: {count}")
+        return count
     except Exception:
+        warn(f"No se pudo parsear el conteo de {path}; se usará 0")
         return 0
 
 
@@ -256,6 +313,7 @@ def select_entries(entries: list[dict[str, Any]], max_items: int | None = None) 
 
 
 def get_all_ids(url: str) -> list[str]:
+    info(f"Resolviendo TODOS los IDs de la fuente: {url}")
     data = docker_exec_json([
         "yt-dlp",
         "--dump-single-json",
@@ -266,10 +324,13 @@ def get_all_ids(url: str) -> list[str]:
     ])
     entries = data.get("entries") or []
     selected = select_entries(entries, max_items=None)
-    return [item["id"] for item in selected]
+    ids = [item["id"] for item in selected]
+    info(f"IDs resueltos (completo): {len(ids)}")
+    return ids
 
 
 def get_latest_top_ids(url: str, max_items: int) -> list[str]:
+    info(f"Resolviendo TOP {max_items} IDs recientes de la fuente: {url}")
     data = docker_exec_json([
         "yt-dlp",
         "--dump-single-json",
@@ -280,7 +341,9 @@ def get_latest_top_ids(url: str, max_items: int) -> list[str]:
     ])
     entries = data.get("entries") or []
     selected = select_entries(entries, max_items=max_items)
-    return [item["id"] for item in selected]
+    ids = [item["id"] for item in selected]
+    info(f"IDs resueltos (top {max_items}): {len(ids)}")
+    return ids
 
 
 def build_output_dir(profile_key: str, subscription_root: str, source_target: str) -> str | None:
@@ -291,23 +354,33 @@ def build_output_dir(profile_key: str, subscription_root: str, source_target: st
 
 
 def main() -> None:
+    print_separator("PREPARAR RUNSET INTELIGENTE DE SUSCRIPCIONES")
+
     profiles = normalize_profiles(load_yaml(PROFILES_FILE))
     subscriptions = normalize_subscriptions(load_yaml(SUBSCRIPTIONS_FILE))
     generated = load_yaml(SUBSCRIPTIONS_GENERATED_FILE)
-
     current_state = load_json(STATE_FILE)
 
     runset: dict[str, Any] = {}
     pending_state: dict[str, Any] = {"sources": {}}
 
-    print("")
-    print("============================================================")
-    print("PREPARAR RUNSET INTELIGENTE DE SUSCRIPCIONES")
-    print("============================================================")
+    info(f"Perfiles cargados: {len(profiles)}")
+    info(f"Suscripciones cargadas: {len(subscriptions)}")
+    info(f"Entradas generadas disponibles: {len(generated) if isinstance(generated, dict) else 0}")
 
-    for subscription in subscriptions:
+    total_sources = sum(len(subscription["sources"]) for subscription in subscriptions)
+    info(f"Fuentes totales a evaluar: {total_sources}")
+
+    source_counter = 0
+    run_count = 0
+    skip_count = 0
+
+    for subscription_index, subscription in enumerate(subscriptions, start=1):
         profile_name = subscription["profile_name"]
         custom_name = subscription["custom_name"]
+
+        step(f"Suscripción {subscription_index}/{len(subscriptions)}: profile={profile_name} custom_name={custom_name}")
+
         if profile_name not in profiles:
             raise ValueError(f"Perfil no definido: {profile_name}")
 
@@ -317,6 +390,9 @@ def main() -> None:
         subscription_root = slugify(custom_name)
 
         for source in subscription["sources"]:
+            source_counter += 1
+            step(f"Evaluando fuente {source_counter}/{total_sources}")
+
             merged = deep_merge(defaults, source)
             max_items = parse_max_items(merged.get("max_items"), default=3)
             url = str(source.get("url") or "").strip()
@@ -326,6 +402,17 @@ def main() -> None:
             generated_entry = generated.get(preset_name)
             if not generated_entry:
                 raise ValueError(f"No existe entrada generada para preset {preset_name}")
+
+            print("", flush=True)
+            print(f"[{now_str()}] ------------------------------------------------------------", flush=True)
+            print(f"[{now_str()}] [SOURCE {source_counter}/{total_sources}] {preset_name}", flush=True)
+            print(f"[{now_str()}]   profile_name      : {profile_name}", flush=True)
+            print(f"[{now_str()}]   profile_key       : {profile_key}", flush=True)
+            print(f"[{now_str()}]   custom_name       : {custom_name}", flush=True)
+            print(f"[{now_str()}]   subscription_root : {subscription_root}", flush=True)
+            print(f"[{now_str()}]   source_target     : {source_target}", flush=True)
+            print(f"[{now_str()}]   max_items         : {max_items}", flush=True)
+            print(f"[{now_str()}]   url               : {url}", flush=True)
 
             download_strategy = detect_download_strategy(url)
             include = True
@@ -341,10 +428,18 @@ def main() -> None:
                 else 0
             )
 
+            info(f"Estrategia detectada: {download_strategy}")
+            info(f"Output dir: {output_dir}")
+            info(f"Ficheros locales detectados: {current_count}")
+            info(f"IDs previos guardados: {len(previous_ids)}")
+
             if profile_key in MEDIA_RULES and download_strategy in {"channel", "playlist"}:
                 if max_items > 0:
                     selected_ids = get_latest_top_ids(url, max_items)
                     expected_count = min(max_items, len(selected_ids)) if selected_ids else max_items
+
+                    info(f"IDs seleccionados ahora: {len(selected_ids)}")
+                    info(f"Ficheros esperados según top: {expected_count}")
 
                     if not selected_ids:
                         include = True
@@ -360,6 +455,8 @@ def main() -> None:
                         reason = "el top reciente cambió; toca descargar y purgar"
                 else:
                     selected_ids = get_all_ids(url)
+
+                    info(f"IDs seleccionados ahora (fuente completa): {len(selected_ids)}")
 
                     if not selected_ids:
                         include = True
@@ -378,6 +475,8 @@ def main() -> None:
                         reason = "la fuente completa cambió; toca descargar"
             elif profile_key in MEDIA_RULES and download_strategy == "single_video":
                 selected_ids = [source_target]
+
+                info(f"Single video target: {source_target}")
 
                 if current_count == 0:
                     include = True
@@ -405,18 +504,35 @@ def main() -> None:
             }
 
             status = "RUN" if include else "SKIP"
-            print(f"[{status}] {preset_name} -> {reason}")
+            print(f"[{now_str()}] [{status}] {preset_name} -> {reason}", flush=True)
 
             if include:
-                runset[preset_name] = generated_entry
+                run_count += 1
+                enriched = dict(generated_entry)
+                enriched["profile_name"] = profile_name
+                enriched["profile_type"] = profile["profile_type"]
+                enriched["custom_name"] = custom_name
+                enriched["source_url"] = url
+                enriched["source_target"] = source_target
+                enriched["subscription_root"] = subscription_root
+                runset[preset_name] = enriched
+            else:
+                skip_count += 1
+
+            info(f"Acumulado: RUN={run_count} | SKIP={skip_count}")
+            step(f"Fuente {source_counter}/{total_sources} terminada")
+
+    print_separator("ESCRIBIENDO RESULTADOS")
 
     dump_yaml(RUNSET_OUTPUT_FILE, runset)
     dump_json(PENDING_STATE_FILE, pending_state)
 
-    print("")
-    print(f"Runset generado: {RUNSET_OUTPUT_FILE}")
-    print(f"Estado pendiente: {PENDING_STATE_FILE}")
-    print(f"Suscripciones a ejecutar: {len(runset)}")
+    print("", flush=True)
+    ok(f"Runset generado: {RUNSET_OUTPUT_FILE}")
+    ok(f"Estado pendiente: {PENDING_STATE_FILE}")
+    ok(f"Suscripciones a ejecutar: {len(runset)}")
+    ok(f"Resumen final: RUN={run_count} | SKIP={skip_count}")
+    print("", flush=True)
 
 
 if __name__ == "__main__":

@@ -88,19 +88,6 @@ presets:
       enable: true
       codec: mp3
       quality: 0
-  ambience-video-ambience-video-prueba-5-4krux2iky:
-    preset:
-    - Max 1080p
-    overrides:
-      enable_throttle_protection: false
-    embed_thumbnail: false
-    output_options:
-      output_directory: /downloads/Ambience-Video/{subscription_root_sanitized}
-      file_name: '{title_sanitized}.{ext}'
-      maintain_download_archive: true
-    download: '{url}'
-    ytdl_options:
-      merge_output_format: mp4
   ambience-video-ambience-video-prueba-vr4savpspea:
     preset:
     - Max 720p

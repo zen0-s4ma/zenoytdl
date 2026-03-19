@@ -57,14 +57,6 @@ music-playlist-music-playlist-prueba-plcajstgncmdxgfdpc5aenevprzgcr-kut:
     subscription_root_sanitized: music-playlist-prueba
     source_target_sanitized: plcajstgncmdxgfdpc5aenevprzgcr-kut
     download_strategy: playlist
-ambience-video-ambience-video-prueba-5-4krux2iky:
-  ~ambience-video-prueba-5-4krux2iky:
-    url: https://www.youtube.com/watch?v=5_4KRUx2iKY
-    enable_resolution_assert: false
-    subscription_root_sanitized: ambience-video-prueba
-    source_target_sanitized: 5-4krux2iky
-    download_strategy: single_video
-    postprocess_trim_max_s: 10983
 ambience-video-ambience-video-prueba-vr4savpspea:
   ~ambience-video-prueba-vr4savpspea:
     url: https://www.youtube.com/watch?v=vr4sAvPSpEA

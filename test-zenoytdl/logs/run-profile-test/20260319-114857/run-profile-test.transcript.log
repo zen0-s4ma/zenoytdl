@@ -1,0 +1,89 @@
+﻿**********************
+Inicio de la transcripción de Windows PowerShell
+Hora de inicio: 20260319114857
+Nombre de usuario: ZENOVERSO\Zeno Sama
+Usuario RunAs: ZENOVERSO\Zeno Sama
+Nombre de la configuración: 
+Máquina: ZENOVERSO (Microsoft Windows NT 10.0.22631.0)
+Aplicación host: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypass -File .\test-zenoytdl\run-profile-test.ps1 -ProfileName Ambience-Video -ClearDownloads:False -DryRun:False
+Id. de proceso: 32360
+PSVersion: 5.1.22621.6133
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.22621.6133
+BuildVersion: 10.0.22621.6133
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+[2026-03-19 11:48:57] [STEP] ============================================================================
+[2026-03-19 11:48:58] [STEP] Inicio lanzador de perfil
+[2026-03-19 11:48:58] [STEP] ============================================================================
+[2026-03-19 11:48:58] [INFO] Perfil: Ambience-Video
+[2026-03-19 11:48:58] [INFO] ClearDownloads: False
+[2026-03-19 11:48:58] [INFO] DryRun: False
+[2026-03-19 11:48:58] [INFO] Project root: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl
+[2026-03-19 11:48:58] [INFO] No se ejecuta limpieza global previa.
+[2026-03-19 11:48:58] [STEP] ============================================================================
+[2026-03-19 11:48:58] [STEP] Limpieza de locks, working directory y restos temporales
+[2026-03-19 11:48:58] [STEP] ============================================================================
+[2026-03-19 11:48:58] [INFO] Ejecutando [reset-workdir-cp]: docker cp "C:\Users\ZENOSA~1\AppData\Local\Temp\zenotest-431737c729514a598800fb6e34b3bd6a.sh" ytdl-sub:/tmp/zenotest-431737c729514a598800fb6e34b3bd6a.sh
+0
+[2026-03-19 11:48:58] [INFO] Ejecutando [reset-workdir-exec]: docker exec ytdl-sub sh /tmp/zenotest-431737c729514a598800fb6e34b3bd6a.sh
+0
+[2026-03-19 11:49:00] [STEP] ============================================================================
+[2026-03-19 11:49:00] [STEP] GeneraciÃ³n de YAML y runset completo
+[2026-03-19 11:49:00] [STEP] ============================================================================
+[2026-03-19 11:49:00] [INFO] Ejecutando [generate-ytdl-config]: python -u .\generate-ytdl-config.py
+Generaci�n completada correctamente.
+Directorio base: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl
+Generado: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\config.generated.yaml
+Generado: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\subscriptions.generated.yaml
+Generado: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\beets.music-playlist.yaml
+0
+[2026-03-19 11:49:01] [INFO] Ejecutando [prepare-subscriptions-runset]: python -u .\prepare-subscriptions-runset.py
+
+[2026-03-19 11:49:01] ============================================================
+[2026-03-19 11:49:01] PREPARAR RUNSET INTELIGENTE DE SUSCRIPCIONES
+[2026-03-19 11:49:01] ============================================================
+
+[2026-03-19 11:49:01] [INFO] Cargando YAML: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\profiles-custom.yml
+[2026-03-19 11:49:01] [INFO] Cargando YAML: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\subscription-custom.yml
+[2026-03-19 11:49:01] [INFO] Cargando YAML: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\subscriptions.generated.yaml
+[2026-03-19 11:49:01] [INFO] Cargando JSON: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\.recent-items-state.json
+[2026-03-19 11:49:01] [INFO] Perfiles cargados: 6
+[2026-03-19 11:49:01] [INFO] Suscripciones cargadas: 6
+[2026-03-19 11:49:01] [INFO] Entradas generadas disponibles: 9
+[2026-03-19 11:49:01] [INFO] Fuentes totales a evaluar: 9
+[2026-03-19 11:49:01] [STEP] Suscripci�n 1/6: profile=Canales-youtube custom_name=ramon-alvarez-de-mon
+
+[2026-03-19 11:49:01] ------------------------------------------------------------
+[2026-03-19 11:49:01] [SOURCE 1/9] canales-youtube-ramon-alvarez-de-mon-ramonalvarezdemon
+[2026-03-19 11:49:01]   profile_name      : Canales-youtube
+[2026-03-19 11:49:01]   profile_key       : canales-youtube
+[2026-03-19 11:49:01]   custom_name       : ramon-alvarez-de-mon
+[2026-03-19 11:49:01]   subscription_root : ramon-alvarez-de-mon
+[2026-03-19 11:49:01]   source_target     : ramonalvarezdemon
+[2026-03-19 11:49:01]   max_items         : 3
+[2026-03-19 11:49:01]   url               : https://www.youtube.com/@RamonAlvarezdeMon/videos
+[2026-03-19 11:49:01] [STEP] Ejecutando subprocess: docker_count_files path=/downloads/Canales-youtube/ramon-alvarez-de-mon
+[2026-03-19 11:49:01] [INFO] Subprocess terminado en 0.55s con rc=0: docker_count_files path=/downloads/Canales-youtube/ramon-alvarez-de-mon
+[2026-03-19 11:49:01] [INFO] Conteo de ficheros en /downloads/Canales-youtube/ramon-alvarez-de-mon: 3
+[2026-03-19 11:49:01] [INFO] Estrategia detectada: channel
+[2026-03-19 11:49:01] [INFO] Output dir: /downloads/Canales-youtube/ramon-alvarez-de-mon
+[2026-03-19 11:49:01] [INFO] Ficheros locales detectados: 3
+[2026-03-19 11:49:01] [INFO] IDs previos guardados: 0
+[2026-03-19 11:49:01] [INFO] Resolviendo TOP 3 IDs recientes de la fuente: https://www.youtube.com/@RamonAlvarezdeMon/videos
+[2026-03-19 11:49:01] [STEP] Ejecutando subprocess: docker exec ytdl-sub yt-dlp --dump-single-json --flat-playlist --ignore-errors --no-warnings https://www.youtube.com/@RamonAlvarezdeMon/videos
+PS>ErrorTerminación(): "Se ha detenido la canalización."
+>> ErrorTerminación(): "Se ha detenido la canalización."
+>> ErrorTerminación(): "Se ha detenido la canalización."
+PS>ErrorTerminación(): "Se ha detenido la canalización."
+Logs principales:
+- Main log: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\test-zenoytdl\logs\run-profile-test\20260319-114857\run-profile-test.log
+- Transcript: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\test-zenoytdl\logs\run-profile-test\20260319-114857\run-profile-test.transcript.log
+- Carpeta ejecuciÃ³n: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\test-zenoytdl\logs\run-profile-test\20260319-114857
+**********************
+Fin de la transcripción de Windows PowerShell
+Hora de finalización: 20260319114948
+**********************

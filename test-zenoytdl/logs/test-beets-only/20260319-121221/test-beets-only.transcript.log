@@ -1,0 +1,162 @@
+﻿**********************
+Inicio de la transcripción de Windows PowerShell
+Hora de inicio: 20260319121221
+Nombre de usuario: ZENOVERSO\Zeno Sama
+Usuario RunAs: ZENOVERSO\Zeno Sama
+Nombre de la configuración: 
+Máquina: ZENOVERSO (Microsoft Windows NT 10.0.22631.0)
+Aplicación host: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypass -File .\test-zenoytdl\test-beets-only.ps1 -DryRun:False
+Id. de proceso: 36368
+PSVersion: 5.1.22621.6133
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.22621.6133
+BuildVersion: 10.0.22621.6133
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+[2026-03-19 12:12:21] [STEP] ============================================================================
+[2026-03-19 12:12:21] [STEP] Inicio test aislado de beets
+[2026-03-19 12:12:21] [STEP] ============================================================================
+[2026-03-19 12:12:21] [INFO] DryRun: False
+[2026-03-19 12:12:21] [STEP] ============================================================================
+[2026-03-19 12:12:21] [STEP] Limpieza previa del entorno beets
+[2026-03-19 12:12:21] [STEP] ============================================================================
+[2026-03-19 12:12:21] [INFO] Ejecutando [beets-cleanup-cp]: docker cp "C:\Users\ZENOSA~1\AppData\Local\Temp\zenotest-9dedec77336f441b8522aac20d32699e.sh" beets-streaming2:/tmp/zenotest-9dedec77336f441b8522aac20d32699e.sh
+0
+[2026-03-19 12:12:22] [INFO] Ejecutando [beets-cleanup-exec]: docker exec beets-streaming2 sh /tmp/zenotest-9dedec77336f441b8522aac20d32699e.sh
+0
+[2026-03-19 12:12:22] [STEP] ============================================================================
+[2026-03-19 12:12:22] [STEP] GeneraciÃ³n de MP3 de prueba con metadata embebida sucia
+[2026-03-19 12:12:22] [STEP] ============================================================================
+[2026-03-19 12:12:22] [INFO] Ejecutando [beets-generate-raw-cp]: docker cp "C:\Users\ZENOSA~1\AppData\Local\Temp\zenotest-71b8e9efe4b248ca805004beebca1408.sh" beets-streaming2:/tmp/zenotest-71b8e9efe4b248ca805004beebca1408.sh
+0
+[2026-03-19 12:12:23] [INFO] Ejecutando [beets-generate-raw-exec]: docker exec beets-streaming2 sh /tmp/zenotest-71b8e9efe4b248ca805004beebca1408.sh
+[RAW-MP3]
+-rw-r--r-- 1 root root 56K Mar 19 12:12 /downloads/Music-Playlist/__test_beets_only/Nothing Else Matters - Metallica.raw.mp3
+[RAW-METADATA]
+TAG:title=BASURA TITLE
+TAG:artist=BASURA ARTIST
+TAG:album=BASURA ALBUM
+TAG:genre=BASURA GENRE
+TAG:comment=BASURA COMMENT
+TAG:encoder=Lavf62.3.100
+0
+[2026-03-19 12:12:24] [STEP] ============================================================================
+[2026-03-19 12:12:24] [STEP] Limpieza total de metadata embebida y renombrado final realista
+[2026-03-19 12:12:24] [STEP] ============================================================================
+[2026-03-19 12:12:24] [INFO] Ejecutando [beets-clean-metadata-cp]: docker cp "C:\Users\ZENOSA~1\AppData\Local\Temp\zenotest-d27cce6f5dfe4db7973bb8c5ec8fe8f9.sh" beets-streaming2:/tmp/zenotest-d27cce6f5dfe4db7973bb8c5ec8fe8f9.sh
+0
+[2026-03-19 12:12:24] [INFO] Ejecutando [beets-clean-metadata-exec]: docker exec beets-streaming2 sh /tmp/zenotest-d27cce6f5dfe4db7973bb8c5ec8fe8f9.sh
+[CLEAN-MP3]
+-rw-r--r-- 1 root root 54K Mar 19 12:12 /downloads/Music-Playlist/__test_beets_only/Nothing Else Matters - Metallica.mp3
+[CLEAN-METADATA]
+TAG:encoder=Lavf62.3.100
+0
+[2026-03-19 12:12:25] [STEP] ============================================================================
+[2026-03-19 12:12:25] [STEP] ValidaciÃ³n de que la metadata previa ha sido eliminada
+[2026-03-19 12:12:25] [STEP] ============================================================================
+[2026-03-19 12:12:25] [INFO] Ejecutando [beets-precheck-clean-cp]: docker cp "C:\Users\ZENOSA~1\AppData\Local\Temp\zenotest-8587562c48ab426ba3751403809acfb5.sh" beets-streaming2:/tmp/zenotest-8587562c48ab426ba3751403809acfb5.sh
+0
+[2026-03-19 12:12:26] [INFO] Ejecutando [beets-precheck-clean-exec]: docker exec beets-streaming2 sh /tmp/zenotest-8587562c48ab426ba3751403809acfb5.sh
+TAG:encoder=Lavf62.3.100
+[OK] No queda metadata sucia embebida
+0
+[2026-03-19 12:12:26] [STEP] ============================================================================
+[2026-03-19 12:12:26] [STEP] Import real, modificaciÃ³n y escritura con beets
+[2026-03-19 12:12:26] [STEP] ============================================================================
+[2026-03-19 12:12:26] [INFO] Ejecutando [beets-import-real-cp]: docker cp "C:\Users\ZENOSA~1\AppData\Local\Temp\zenotest-72804bdfeeac46d1a38ca04f708dea2c.sh" beets-streaming2:/tmp/zenotest-72804bdfeeac46d1a38ca04f708dea2c.sh
+0
+[2026-03-19 12:12:26] [INFO] Ejecutando [beets-import-real-exec]: docker exec beets-streaming2 sh /tmp/zenotest-72804bdfeeac46d1a38ca04f708dea2c.sh
+[BEET-LIST-BEFORE]
+ -  - 
+Modifying 1 items.
+ -  - 
+  album:  -> [1;32mMetallica[39;49;00m
+  artist:  -> [1;32mMetallica[39;49;00m
+  title:  -> [1;32mNothing Else Matters[39;49;00m
+  year: [1;31m0000[39;49;00m -> [1;32m1991[39;49;00m
+Metallica - Metallica - Nothing Else Matters
+[BEETS-DB]
+-rw-r--r-- 1 root root 48K Mar 19 12:12 /config/musiclibrary.db
+-rw-r--r-- 1 abc users 48K Mar 18 20:21 /config/library.db
+[BEETS-LOG-TAIL]
+import started Thu Mar 19 12:12:30 2026
+[BEET-LIST-AFTER]
+Metallica - Nothing Else Matters - Metallica - 1991
+[POST-BEETS-METADATA]
+TAG:title=Nothing Else Matters
+TAG:artist=Metallica
+TAG:track=0/0
+TAG:album=Metallica
+TAG:disc=0/0
+TAG:date=1991
+TAG:TBPM=0
+TAG:compilation=0
+TAG:TDOR=0000
+TAG:lyrics-XXX=
+TAG:TIPL=arranger
+[OK] Beets ha escrito metadata embebida vÃ¡lida en el MP3 de prueba
+overlaying configuration: /config/zenoytdl/beets.music-playlist.yaml
+user configuration: /config/config.yaml
+data directory: /config
+plugin paths: []
+Loading plugins: chroma, discogs, embedart, fetchart, fromfilename, lastgenre, scrub
+lastgenre: Loading whitelist /lsiopy/lib/python3.12/site-packages/beetsplug/lastgenre/genres.txt
+fetchart: lastfm: Disabling art source due to missing key
+fetchart: google: Disabling art source due to missing key
+Sending event: pluginload
+library database: /config/musiclibrary.db
+library directory: /downloads/Music-Playlist
+Sending event: library_opened
+Sending event: import_begin
+Sending event: import_task_created
+/downloads/Music-Playlist/__test_beets_only/Nothing Else Matters - Metallica.mp3
+0 of 1 items replaced
+Sending event: database_change
+lastgenre:  -  - 
+Sending event: database_change
+Sending event: database_change
+Sending event: import_task_files
+Sending event: write
+Sending event: after_write
+Sending event: item_imported
+Sending event: import
+Sending event: cli_exit
+0
+[2026-03-19 12:12:36] [STEP] ============================================================================
+[2026-03-19 12:12:36] [STEP] Inventario final de la carpeta de prueba
+[2026-03-19 12:12:36] [STEP] ============================================================================
+[2026-03-19 12:12:36] [INFO] Ejecutando [beets-final-tree-cp]: docker cp "C:\Users\ZENOSA~1\AppData\Local\Temp\zenotest-3add6b6cce704ee3a133dc0a58be65c2.sh" beets-streaming2:/tmp/zenotest-3add6b6cce704ee3a133dc0a58be65c2.sh
+0
+[2026-03-19 12:12:36] [INFO] Ejecutando [beets-final-tree-exec]: docker exec beets-streaming2 sh /tmp/zenotest-3add6b6cce704ee3a133dc0a58be65c2.sh
+[FINAL-TREE]
+/downloads/Music-Playlist/__test_beets_only
+/downloads/Music-Playlist/__test_beets_only/Nothing Else Matters - Metallica.mp3
+0
+[2026-03-19 12:12:37] [STEP] ============================================================================
+[2026-03-19 12:12:37] [STEP] Captura final de logs relevantes
+[2026-03-19 12:12:37] [STEP] ============================================================================
+[2026-03-19 12:12:37] [INFO] Ejecutando [beets-log-capture-cp]: docker cp "C:\Users\ZENOSA~1\AppData\Local\Temp\zenotest-08684ec319da4b94a94271dfdc084b64.sh" beets-streaming2:/tmp/zenotest-08684ec319da4b94a94271dfdc084b64.sh
+0
+[2026-03-19 12:12:38] [INFO] Ejecutando [beets-log-capture-exec]: docker exec beets-streaming2 sh /tmp/zenotest-08684ec319da4b94a94271dfdc084b64.sh
+[BEETS-LOG]
+import started Thu Mar 19 12:12:30 2026
+
+[LIBRARIES]
+-rw-r--r-- 1 root root 48K Mar 19 12:12 /config/musiclibrary.db
+-rw-r--r-- 1 abc users 48K Mar 18 20:21 /config/library.db
+0
+[2026-03-19 12:12:38] [STEP] ============================================================================
+[2026-03-19 12:12:38] [STEP] Fin test aislado de beets
+[2026-03-19 12:12:38] [STEP] ============================================================================
+[2026-03-19 12:12:38] [OK] Test de beets completado correctamente.
+Logs principales:
+- Main log: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\test-zenoytdl\logs\test-beets-only\20260319-121221\test-beets-only.log
+- Transcript: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\test-zenoytdl\logs\test-beets-only\20260319-121221\test-beets-only.transcript.log
+- Carpeta ejecuciÃ³n: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\test-zenoytdl\logs\test-beets-only\20260319-121221
+**********************
+Fin de la transcripción de Windows PowerShell
+Hora de finalización: 20260319121238
+**********************
