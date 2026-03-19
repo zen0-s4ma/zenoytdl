@@ -1,0 +1,138 @@
+﻿**********************
+Inicio de la transcripción de Windows PowerShell
+Hora de inicio: 20260319181442
+Nombre de usuario: ZENOVERSO\Zeno Sama
+Usuario RunAs: ZENOVERSO\Zeno Sama
+Nombre de la configuración: 
+Máquina: ZENOVERSO (Microsoft Windows NT 10.0.22631.0)
+Aplicación host: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -NoLogo -NoExit -ExecutionPolicy Bypass -File C:\Users\ZENOSA~1\AppData\Local\Temp\zeno-wrapper-run-profile-test-cfed6dba2ed04cd1a383be8d89049e98.ps1
+Id. de proceso: 11880
+PSVersion: 5.1.22621.6133
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.22621.6133
+BuildVersion: 10.0.22621.6133
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+[2026-03-19 18:14:42] [STEP] ============================================================================
+[2026-03-19 18:14:42] [STEP] Inicio lanzador de perfil
+[2026-03-19 18:14:42] [STEP] ============================================================================
+[2026-03-19 18:14:42] [INFO] Perfil: Podcast
+[2026-03-19 18:14:42] [INFO] ClearDownloads: False
+[2026-03-19 18:14:42] [INFO] DryRun: False
+[2026-03-19 18:14:42] [INFO] Project root: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl
+[2026-03-19 18:14:42] [INFO] No se ejecuta limpieza previa.
+[2026-03-19 18:14:42] [STEP] ============================================================================
+[2026-03-19 18:14:42] [STEP] Limpieza de locks, working directory y restos temporales
+[2026-03-19 18:14:42] [STEP] ============================================================================
+[2026-03-19 18:14:42] [INFO] Ejecutando [reset-workdir-cp]: docker cp "C:\Users\ZENOSA~1\AppData\Local\Temp\zenotest-40ec29031cc840ad9bbe90f6d6927696.sh" ytdl-sub:/tmp/zenotest-40ec29031cc840ad9bbe90f6d6927696.sh
+0
+[2026-03-19 18:14:42] [INFO] Ejecutando [reset-workdir-exec]: docker exec ytdl-sub sh /tmp/zenotest-40ec29031cc840ad9bbe90f6d6927696.sh
+0
+[2026-03-19 18:14:43] [STEP] ============================================================================
+[2026-03-19 18:14:43] [STEP] GeneraciÃ³n de YAML y runset
+[2026-03-19 18:14:43] [STEP] ============================================================================
+[2026-03-19 18:14:43] [INFO] Ejecutando [generate-ytdl-config]: python -u .\generate-ytdl-config.py
+Generaci�n completada correctamente.
+Directorio base: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl
+Generado: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\config.generated.yaml
+Generado: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\subscriptions.generated.yaml
+Generado: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\beets.music-playlist.yaml
+0
+[2026-03-19 18:14:44] [INFO] Ejecutando [prepare-subscriptions-runset]: python -u .\prepare-subscriptions-runset.py --profile-name "Podcast"
+
+[2026-03-19 18:14:44] ============================================================
+[2026-03-19 18:14:44] PREPARAR RUNSET INTELIGENTE DE SUSCRIPCIONES
+[2026-03-19 18:14:44] ============================================================
+
+[2026-03-19 18:14:44] [INFO] Cargando YAML: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\profiles-custom.yml
+[2026-03-19 18:14:44] [INFO] Cargando YAML: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\subscription-custom.yml
+[2026-03-19 18:14:44] [INFO] Cargando YAML: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\subscriptions.generated.yaml
+[2026-03-19 18:14:44] [INFO] Cargando JSON: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\.recent-items-state.json
+[2026-03-19 18:14:44] [INFO] Scope de perfiles solicitado: Podcast
+[2026-03-19 18:14:44] [INFO] Perfiles cargados: 6
+[2026-03-19 18:14:44] [INFO] Suscripciones cargadas tras filtro: 1
+[2026-03-19 18:14:44] [INFO] Entradas generadas disponibles: 8
+[2026-03-19 18:14:44] [INFO] Fuentes totales a evaluar: 2
+[2026-03-19 18:14:44] [STEP] Suscripci�n 1/1: profile=Podcast custom_name=entrevistas
+[2026-03-19 18:14:44] [STEP] Evaluando fuente 1/2
+
+[2026-03-19 18:14:44] ------------------------------------------------------------
+[2026-03-19 18:14:44] [SOURCE 1/2] podcast-entrevistas-geoestratego-oficial
+[2026-03-19 18:14:44]   profile_name      : Podcast
+[2026-03-19 18:14:44]   profile_key       : podcast
+[2026-03-19 18:14:44]   custom_name       : entrevistas
+[2026-03-19 18:14:44]   subscription_root : entrevistas
+[2026-03-19 18:14:44]   source_target     : geoestratego-oficial
+[2026-03-19 18:14:44]   max_items         : 2
+[2026-03-19 18:14:44]   url               : https://www.youtube.com/@geoestratego_oficial/videos
+[2026-03-19 18:14:44] [STEP] Ejecutando subprocess: docker_count_files path=/downloads/Podcast/entrevistas/geoestratego-oficial
+[2026-03-19 18:14:44] [INFO] Subprocess terminado en 0.21s con rc=0: docker_count_files path=/downloads/Podcast/entrevistas/geoestratego-oficial
+[2026-03-19 18:14:44] [INFO] Conteo de ficheros en /downloads/Podcast/entrevistas/geoestratego-oficial: 0
+[2026-03-19 18:14:44] [INFO] Estrategia detectada: channel
+[2026-03-19 18:14:44] [INFO] Output dir: /downloads/Podcast/entrevistas/geoestratego-oficial
+[2026-03-19 18:14:44] [INFO] Ficheros locales detectados: 0
+[2026-03-19 18:14:44] [INFO] IDs previos guardados: 0
+[2026-03-19 18:14:44] [INFO] Resolviendo TOP 2 IDs recientes de la fuente: https://www.youtube.com/@geoestratego_oficial/videos
+[2026-03-19 18:14:44] [STEP] Ejecutando subprocess: docker exec ytdl-sub yt-dlp --dump-single-json --flat-playlist --ignore-errors --no-warnings https://www.youtube.com/@geoestratego_oficial/videos
+[2026-03-19 18:14:51] [INFO] Subprocess terminado en 7.44s con rc=0: docker exec ytdl-sub yt-dlp --dump-single-json --flat-playlist --ignore-errors --no-warnings https://www.youtube.com/@geoestratego_oficial/videos
+[2026-03-19 18:14:51] [INFO] IDs resueltos (top 2): 2
+[2026-03-19 18:14:51] [INFO] IDs seleccionados ahora: 2
+[2026-03-19 18:14:51] [INFO] Ficheros esperados seg�n top: 2
+[2026-03-19 18:14:51] [RUN] podcast-entrevistas-geoestratego-oficial -> faltan ficheros locales (0/2)
+[2026-03-19 18:14:51] [INFO] Acumulado: RUN=1 | SKIP=0
+[2026-03-19 18:14:51] [STEP] Fuente 1/2 terminada
+[2026-03-19 18:14:51] [STEP] Evaluando fuente 2/2
+
+[2026-03-19 18:14:51] ------------------------------------------------------------
+[2026-03-19 18:14:51] [SOURCE 2/2] podcast-entrevistas-pl01fnqnul7ykui7id1lwxkz8ho3j8l8of
+[2026-03-19 18:14:51]   profile_name      : Podcast
+[2026-03-19 18:14:51]   profile_key       : podcast
+[2026-03-19 18:14:51]   custom_name       : entrevistas
+[2026-03-19 18:14:51]   subscription_root : entrevistas
+[2026-03-19 18:14:51]   source_target     : pl01fnqnul7ykui7id1lwxkz8ho3j8l8of
+[2026-03-19 18:14:51]   max_items         : 2
+[2026-03-19 18:14:51]   url               : https://www.youtube.com/playlist?list=PL01FNQnUl7YKuI7iD1lwxKz8Ho3J8L8Of
+[2026-03-19 18:14:51] [STEP] Ejecutando subprocess: docker_count_files path=/downloads/Podcast/entrevistas/pl01fnqnul7ykui7id1lwxkz8ho3j8l8of
+[2026-03-19 18:14:52] [INFO] Subprocess terminado en 0.29s con rc=0: docker_count_files path=/downloads/Podcast/entrevistas/pl01fnqnul7ykui7id1lwxkz8ho3j8l8of
+[2026-03-19 18:14:52] [INFO] Conteo de ficheros en /downloads/Podcast/entrevistas/pl01fnqnul7ykui7id1lwxkz8ho3j8l8of: 0
+[2026-03-19 18:14:52] [INFO] Estrategia detectada: playlist
+[2026-03-19 18:14:52] [INFO] Output dir: /downloads/Podcast/entrevistas/pl01fnqnul7ykui7id1lwxkz8ho3j8l8of
+[2026-03-19 18:14:52] [INFO] Ficheros locales detectados: 0
+[2026-03-19 18:14:52] [INFO] IDs previos guardados: 0
+[2026-03-19 18:14:52] [INFO] Resolviendo TOP 2 IDs recientes de la fuente: https://www.youtube.com/playlist?list=PL01FNQnUl7YKuI7iD1lwxKz8Ho3J8L8Of
+[2026-03-19 18:14:52] [STEP] Ejecutando subprocess: docker exec ytdl-sub yt-dlp --dump-single-json --flat-playlist --ignore-errors --no-warnings https://www.youtube.com/playlist?list=PL01FNQnUl7YKuI7iD1lwxKz8Ho3J8L8Of
+[2026-03-19 18:14:55] [INFO] Subprocess terminado en 3.65s con rc=0: docker exec ytdl-sub yt-dlp --dump-single-json --flat-playlist --ignore-errors --no-warnings https://www.youtube.com/playlist?list=PL01FNQnUl7YKuI7iD1lwxKz8Ho3J8L8Of
+[2026-03-19 18:14:55] [INFO] IDs resueltos (top 2): 2
+[2026-03-19 18:14:55] [INFO] IDs seleccionados ahora: 2
+[2026-03-19 18:14:55] [INFO] Ficheros esperados seg�n top: 2
+[2026-03-19 18:14:55] [RUN] podcast-entrevistas-pl01fnqnul7ykui7id1lwxkz8ho3j8l8of -> faltan ficheros locales (0/2)
+[2026-03-19 18:14:55] [INFO] Acumulado: RUN=2 | SKIP=0
+[2026-03-19 18:14:55] [STEP] Fuente 2/2 terminada
+
+[2026-03-19 18:14:55] ============================================================
+[2026-03-19 18:14:55] ESCRIBIENDO RESULTADOS
+[2026-03-19 18:14:55] ============================================================
+
+[2026-03-19 18:14:55] [INFO] Escribiendo YAML: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\subscriptions.runset.yaml
+[2026-03-19 18:14:55] [INFO] Escribiendo JSON: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\.recent-items-state.pending.json
+
+[2026-03-19 18:14:55] [OK] Runset generado: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\subscriptions.runset.yaml
+[2026-03-19 18:14:55] [OK] Estado pendiente: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\.recent-items-state.pending.json
+[2026-03-19 18:14:55] [OK] Suscripciones a ejecutar: 2
+[2026-03-19 18:14:55] [OK] Resumen final: RUN=2 | SKIP=0
+0
+[2026-03-19 18:14:55] [INFO] Runset filtrado preparado desde el runset ya scoped por prepare-subscriptions-runset.py
+[2026-03-19 18:14:55] [INFO] Perfiles solicitados: Podcast
+[2026-03-19 18:14:55] [INFO] Runset filtrado: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\subscriptions.runset.filtered.yaml
+[2026-03-19 18:14:55] [INFO] Estado pendiente filtrado: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\.recent-items-state.pending.filtered.json
+[2026-03-19 18:14:55] [INFO] Entradas detectadas en runset filtrado: 2
+[2026-03-19 18:14:55] [STEP] ============================================================================
+[2026-03-19 18:14:55] [STEP] InspecciÃ³n del runset filtrado
+[2026-03-19 18:14:55] [STEP] ============================================================================
+[2026-03-19 18:14:55] [STEP] ============================================================================
+[2026-03-19 18:14:55] [STEP] EjecuciÃ³n real de ytdl-sub sobre el runset filtrado
+[2026-03-19 18:14:55] [STEP] ============================================================================
+[2026-03-19 18:14:55] [INFO] Ejecutando [ytdl-sub-sub]: docker exec ytdl-sub ytdl-sub --config /config/zenoytdl/config.generated.yaml sub /config/zenoytdl/subscriptions.runset.filtered.yaml

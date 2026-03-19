@@ -5,7 +5,7 @@ canales-youtube-ramon-alvarez-de-mon-ramonalvarezdemon:
     subscription_root_sanitized: ramon-alvarez-de-mon
     source_target_sanitized: ramonalvarezdemon
     download_strategy: channel
-    only_recent_max_files: 3
+    only_recent_max_files: 2
     only_recent_date_range: 100years
     tv_show_name: ramon-alvarez-de-mon
 podcast-entrevistas-geoestratego-oficial:
@@ -15,7 +15,7 @@ podcast-entrevistas-geoestratego-oficial:
     subscription_root_sanitized: entrevistas
     source_target_sanitized: geoestratego-oficial
     download_strategy: channel
-    only_recent_max_files: 3
+    only_recent_max_files: 2
     only_recent_date_range: 100years
     filter_duration_min_s: 300
 podcast-entrevistas-pl01fnqnul7ykui7id1lwxkz8ho3j8l8of:
@@ -25,7 +25,7 @@ podcast-entrevistas-pl01fnqnul7ykui7id1lwxkz8ho3j8l8of:
     subscription_root_sanitized: entrevistas
     source_target_sanitized: pl01fnqnul7ykui7id1lwxkz8ho3j8l8of
     download_strategy: playlist
-    only_recent_max_files: 3
+    only_recent_max_files: 2
     only_recent_date_range: 100years
     filter_duration_min_s: 300
 tv-serie-lolete-kerios:
@@ -35,7 +35,7 @@ tv-serie-lolete-kerios:
     subscription_root_sanitized: lolete
     source_target_sanitized: kerios
     download_strategy: channel
-    only_recent_max_files: 3
+    only_recent_max_files: 2
     only_recent_date_range: 100years
     filter_duration_min_s: 300
     tv_show_name: lolete
@@ -46,7 +46,7 @@ tv-serie-lolete-nickdaboom:
     subscription_root_sanitized: lolete
     source_target_sanitized: nickdaboom
     download_strategy: channel
-    only_recent_max_files: 3
+    only_recent_max_files: 2
     only_recent_date_range: 100years
     filter_duration_min_s: 300
     tv_show_name: lolete

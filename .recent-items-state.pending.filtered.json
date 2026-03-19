@@ -1,15 +1,28 @@
 {
   "sources": {
-    "ambience-audio-ambience-audio-prueba-gr-vejtzbso": {
-      "profile_name": "Ambience-Audio",
-      "profile_type": "ambience-audio",
-      "custom_name": "ambience-audio-prueba",
-      "url": "https://www.youtube.com/watch?v=GR_vEjTZBso",
-      "max_items": 3,
+    "podcast-entrevistas-geoestratego-oficial": {
+      "profile_name": "Podcast",
+      "profile_type": "Podcast",
+      "custom_name": "entrevistas",
+      "url": "https://www.youtube.com/@geoestratego_oficial/videos",
+      "max_items": 2,
       "selected_ids": [
-        "gr-vejtzbso"
+        "fTOBXLMNDIo",
+        "OUYcBfDAZd0"
       ],
-      "download_strategy": "single_video"
+      "download_strategy": "channel"
+    },
+    "podcast-entrevistas-pl01fnqnul7ykui7id1lwxkz8ho3j8l8of": {
+      "profile_name": "Podcast",
+      "profile_type": "Podcast",
+      "custom_name": "entrevistas",
+      "url": "https://www.youtube.com/playlist?list=PL01FNQnUl7YKuI7iD1lwxKz8Ho3J8L8Of",
+      "max_items": 2,
+      "selected_ids": [
+        "CpSRqC69JGY",
+        "wbf_ojq7rW8"
+      ],
+      "download_strategy": "playlist"
     }
   }
 }

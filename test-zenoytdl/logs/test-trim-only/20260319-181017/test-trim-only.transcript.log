@@ -1,0 +1,519 @@
+﻿**********************
+Inicio de la transcripción de Windows PowerShell
+Hora de inicio: 20260319181017
+Nombre de usuario: ZENOVERSO\Zeno Sama
+Usuario RunAs: ZENOVERSO\Zeno Sama
+Nombre de la configuración: 
+Máquina: ZENOVERSO (Microsoft Windows NT 10.0.22631.0)
+Aplicación host: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -NoLogo -NoExit -ExecutionPolicy Bypass -File C:\Users\ZENOSA~1\AppData\Local\Temp\zeno-wrapper-test-trim-only-481dbb9b2ce84204bf2303601f51727e.ps1
+Id. de proceso: 23232
+PSVersion: 5.1.22621.6133
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.22621.6133
+BuildVersion: 10.0.22621.6133
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+[2026-03-19 18:10:17] [STEP] ============================================================================
+[2026-03-19 18:10:17] [STEP] Inicio test aislado de trim
+[2026-03-19 18:10:17] [STEP] ============================================================================
+[2026-03-19 18:10:17] [INFO] DryRun: False
+[2026-03-19 18:10:17] [STEP] ============================================================================
+[2026-03-19 18:10:17] [STEP] Limpieza previa del entorno de prueba
+[2026-03-19 18:10:17] [STEP] ============================================================================
+[2026-03-19 18:10:17] [INFO] Ejecutando [trim-cleanup-cp]: docker cp "C:\Users\ZENOSA~1\AppData\Local\Temp\zenotest-e47cf740cc914331bf0f1e325284878c.sh" ytdl-sub:/tmp/zenotest-e47cf740cc914331bf0f1e325284878c.sh
+0
+[2026-03-19 18:10:17] [INFO] Ejecutando [trim-cleanup-exec]: docker exec ytdl-sub sh /tmp/zenotest-e47cf740cc914331bf0f1e325284878c.sh
+0
+[2026-03-19 18:10:18] [STEP] ============================================================================
+[2026-03-19 18:10:18] [STEP] GeneraciÃ³n de vÃ­deo sintÃ©tico rÃ¡pido
+[2026-03-19 18:10:18] [STEP] ============================================================================
+[2026-03-19 18:10:18] [INFO] Ejecutando [trim-generate-input-cp]: docker cp "C:\Users\ZENOSA~1\AppData\Local\Temp\zenotest-0ffa0947dd7c49c9b72aa84015b472e6.sh" ytdl-sub:/tmp/zenotest-0ffa0947dd7c49c9b72aa84015b472e6.sh
+0
+[2026-03-19 18:10:18] [INFO] Ejecutando [trim-generate-input-exec]: docker exec ytdl-sub sh /tmp/zenotest-0ffa0947dd7c49c9b72aa84015b472e6.sh
+[INPUT-CREATED]
+-rw-r--r-- 1 root root 270K Mar 19 18:10 /downloads/__test_trim_only/input-trim-test.mp4
+[INPUT-PROBE]
+duration=12.000000
+size=276037
+codec_name=h264
+codec_type=video
+width=640
+height=360
+codec_name=aac
+codec_type=audio
+sample_rate=48000
+channels=1
+0
+[2026-03-19 18:10:25] [STEP] ============================================================================
+[2026-03-19 18:10:25] [STEP] Copiar script real de trim al contenedor
+[2026-03-19 18:10:25] [STEP] ============================================================================
+[2026-03-19 18:10:25] [INFO] Ejecutando [copy-trim-script]: docker cp "E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\trim-ambience-video.py" ytdl-sub:/tmp/trim-ambience-video.py
+0
+[2026-03-19 18:10:25] [STEP] ============================================================================
+[2026-03-19 18:10:25] [STEP] EjecuciÃ³n real del trim
+[2026-03-19 18:10:25] [STEP] ============================================================================
+[2026-03-19 18:10:25] [INFO] Ejecutando [trim-execution-cp]: docker cp "C:\Users\ZENOSA~1\AppData\Local\Temp\zenotest-611640ac6e6a470c8c9742e1ab94405a.sh" ytdl-sub:/tmp/zenotest-611640ac6e6a470c8c9742e1ab94405a.sh
+0
+[2026-03-19 18:10:25] [INFO] Ejecutando [trim-execution-exec]: docker exec ytdl-sub sh /tmp/zenotest-611640ac6e6a470c8c9742e1ab94405a.sh
+[INFO] Entrada: /downloads/__test_trim_only/input-trim-test.mp4
+[INFO] Tamaño entrada: 0.26 MiB
+[INFO] Streams entrada: video:h264, audio:aac
+[INFO] Duración entrada: 12.000s (00:00:12)
+[INFO] Límite pedido   : 5s (00:00:05)
+[INFO] Tolerancia      : 2.000s
+[INFO] Lanzando ffmpeg...
+[INFO] Comando:
+ffmpeg -hide_banner -nostdin -y -progress pipe:1 -nostats -loglevel error -fflags +genpts -i /downloads/__test_trim_only/input-trim-test.mp4 -t 5 -map 0 -c copy -avoid_negative_ts make_zero /downloads/__test_trim_only/input-trim-test.trimmed.mp4
+[FFMPEG-RAW] frame=127
+[FFMPEG-RAW] fps=0.00
+[FFMPEG-RAW] stream_0_0_q=-1.0
+[FFMPEG-RAW] bitrate= 184.8kbits/s
+[FFMPEG-RAW] total_size=117340
+[FFMPEG-RAW] out_time_us=5080000
+[FFMPEG-RAW] out_time_ms=5080000
+[FFMPEG-RAW] out_time=00:00:05.080000
+[FFMPEG-RAW] dup_frames=0
+[FFMPEG-RAW] drop_frames=0
+[FFMPEG-RAW] speed=1.04e+03x
+[FFMPEG] progreso=100.00% out_time=00:00:05 objetivo=00:00:05 speed=1.04e+03x fps=0.00 bytes=117340                                         [FFMPEG] progreso=100.00% out_time=00:00:05 objetivo=00:00:05 speed=1.04e+03x fps=0.00 bytes=117340                                         
+[INFO] Temporal generado: /downloads/__test_trim_only/input-trim-test.trimmed.mp4
+[INFO] Tamaño temporal  : 0.11 MiB
+[OK]   Recorte terminado en 0.08s
+[WARN] Se omite ffprobe final de validación por velocidad (--skip-output-probe).
+[INFO] Sustituyendo original por fichero recortado...
+[OK]   Original sustituido correctamente: /downloads/__test_trim_only/input-trim-test.mp4
+/downloads/__test_trim_only/input-trim-test.mp4
+[AFTER-TRIM]
+-rw-r--r-- 1 root root 115K Mar 19 18:10 /downloads/__test_trim_only/input-trim-test.mp4
+[AFTER-TRIM-PROBE]
+duration=5.102000
+size=117340
+codec_name=h264
+codec_type=video
+width=640
+height=360
+codec_name=aac
+codec_type=audio
+sample_rate=48000
+channels=1
+[OK] Duracion tras trim valida: 5.102s <= 5.6s
+0
+[2026-03-19 18:10:26] [STEP] ============================================================================
+[2026-03-19 18:10:26] [STEP] Listado final del directorio de prueba
+[2026-03-19 18:10:26] [STEP] ============================================================================
+[2026-03-19 18:10:26] [INFO] Ejecutando [trim-final-tree-cp]: docker cp "C:\Users\ZENOSA~1\AppData\Local\Temp\zenotest-df14b3492b474e1780dd8fe18514fb51.sh" ytdl-sub:/tmp/zenotest-df14b3492b474e1780dd8fe18514fb51.sh
+0
+[2026-03-19 18:10:27] [INFO] Ejecutando [trim-final-tree-exec]: docker exec ytdl-sub sh /tmp/zenotest-df14b3492b474e1780dd8fe18514fb51.sh
+[FINAL-TREE]
+/downloads/__test_trim_only
+/downloads/__test_trim_only/input-trim-test.mp4
+0
+[2026-03-19 18:10:27] [STEP] ============================================================================
+[2026-03-19 18:10:27] [STEP] Captura de logs relevantes de contenedores
+[2026-03-19 18:10:27] [STEP] ============================================================================
+[2026-03-19 18:10:27] [INFO] Ejecutando [collect-ytdl-logs-cp]: docker cp "C:\Users\ZENOSA~1\AppData\Local\Temp\zenotest-cc2a1c781b354e34ab0d59d7668339fa.sh" ytdl-sub:/tmp/zenotest-cc2a1c781b354e34ab0d59d7668339fa.sh
+0
+[2026-03-19 18:10:27] [INFO] Ejecutando [collect-ytdl-logs-exec]: docker exec ytdl-sub sh /tmp/zenotest-cc2a1c781b354e34ab0d59d7668339fa.sh
+[LOGS /config/logs]
+total 400K
+drwxr-xr-x 1 abc  users 4.0K Mar 19 18:10 .
+drwxrwxrwx 1 abc  users 4.0K Mar 19 18:10 ..
+-rw-r--r-- 1 abc  users 270K Mar 19 16:32 2026-03-19-163233.ambience-video-prueba-vr4savpspea.success.log
+-rw-r--r-- 1 abc  users  61K Mar 19 17:46 2026-03-19-174619.ramon-alvarez-de-mon-ramonalvarezdemon.success.log
+-rw-r--r-- 1 abc  users  61K Mar 19 17:58 2026-03-19-175858.ramon-alvarez-de-mon-ramonalvarezdemon.success.log
+-rw-r--r-- 1 root root    40 Mar 19 18:10 beets-import.log
+
+[ULTIMOS LOGS YTDL-SUB]
+------------------------------------------------------------
+/config/logs/2026-03-19-163233.ambience-video-prueba-vr4savpspea.success.log
+[ytdl-sub:yt-dlp] [download]  69.0% of  257.07MiB at    6.94MiB/s ETA 00:11
+[ytdl-sub:yt-dlp] [download]  69.4% of  257.07MiB at    8.51MiB/s ETA 00:09
+[ytdl-sub:yt-dlp] [download]  70.2% of  257.07MiB at    9.80MiB/s ETA 00:07
+[ytdl-sub:yt-dlp] [download]  71.7% of  257.07MiB at   10.79MiB/s ETA 00:06
+[ytdl-sub:yt-dlp] [download]  72.3% of  257.07MiB at   11.36MiB/s ETA 00:06
+[ytdl-sub:yt-dlp] [download]  72.3% of  257.07MiB at  Unknown B/s ETA Unknown
+[ytdl-sub:yt-dlp] [download]  72.3% of  257.07MiB at    1.78MiB/s ETA 00:40  
+[ytdl-sub:yt-dlp] [download]  72.3% of  257.07MiB at    1.43MiB/s ETA 00:49
+[ytdl-sub:yt-dlp] [download]  72.3% of  257.07MiB at    2.54MiB/s ETA 00:28
+[ytdl-sub:yt-dlp] [download]  72.4% of  257.07MiB at    4.26MiB/s ETA 00:16
+[ytdl-sub:yt-dlp] [download]  72.4% of  257.07MiB at    7.08MiB/s ETA 00:10
+[ytdl-sub:yt-dlp] [download]  72.4% of  257.07MiB at   11.60MiB/s ETA 00:06
+[ytdl-sub:yt-dlp] [download]  72.4% of  257.07MiB at   10.90MiB/s ETA 00:06
+[ytdl-sub:yt-dlp] [download]  72.5% of  257.07MiB at    7.35MiB/s ETA 00:09
+[ytdl-sub:yt-dlp] [download]  72.7% of  257.07MiB at    7.35MiB/s ETA 00:09
+[ytdl-sub:yt-dlp] [download]  73.1% of  257.07MiB at    7.75MiB/s ETA 00:08
+[ytdl-sub:yt-dlp] [download]  73.9% of  257.07MiB at    5.00MiB/s ETA 00:13
+[ytdl-sub:yt-dlp] [download]  75.3% of  257.07MiB at    4.99MiB/s ETA 00:12
+[ytdl-sub:yt-dlp] [download]  76.2% of  257.07MiB at    5.32MiB/s ETA 00:11
+[ytdl-sub:yt-dlp] [download]  76.2% of  257.07MiB at  409.20KiB/s ETA 02:33
+[ytdl-sub:yt-dlp] [download]  76.2% of  257.07MiB at  988.60KiB/s ETA 01:03
+[ytdl-sub:yt-dlp] [download]  76.2% of  257.07MiB at    1.96MiB/s ETA 00:31
+[ytdl-sub:yt-dlp] [download]  76.2% of  257.07MiB at    1.11MiB/s ETA 00:55
+[ytdl-sub:yt-dlp] [download]  76.2% of  257.07MiB at    1.70MiB/s ETA 00:36
+[ytdl-sub:yt-dlp] [download]  76.2% of  257.07MiB at    1.77MiB/s ETA 00:34
+[ytdl-sub:yt-dlp] [download]  76.3% of  257.07MiB at 1001.38KiB/s ETA 01:02
+[ytdl-sub:yt-dlp] [download]  76.3% of  257.07MiB at    1.76MiB/s ETA 00:34
+[ytdl-sub:yt-dlp] [download]  76.4% of  257.07MiB at    3.07MiB/s ETA 00:19
+[ytdl-sub:yt-dlp] [download]  76.6% of  257.07MiB at    4.85MiB/s ETA 00:12
+[ytdl-sub:yt-dlp] [download]  77.0% of  257.07MiB at    6.86MiB/s ETA 00:08
+[ytdl-sub:yt-dlp] [download]  77.8% of  257.07MiB at    9.32MiB/s ETA 00:06
+[ytdl-sub:yt-dlp] [download]  79.3% of  257.07MiB at   11.91MiB/s ETA 00:04
+[ytdl-sub:yt-dlp] [download]  79.9% of  257.07MiB at   12.52MiB/s ETA 00:04
+[ytdl-sub:yt-dlp] [download]  79.9% of  257.07MiB at  346.01KiB/s ETA 02:33
+[ytdl-sub:yt-dlp] [download]  79.9% of  257.07MiB at  851.98KiB/s ETA 01:02
+[ytdl-sub:yt-dlp] [download]  79.9% of  257.07MiB at    1.70MiB/s ETA 00:30
+[ytdl-sub:yt-dlp] [download]  79.9% of  257.07MiB at    3.21MiB/s ETA 00:16
+[ytdl-sub:yt-dlp] [download]  79.9% of  257.07MiB at    4.19MiB/s ETA 00:12
+[ytdl-sub:yt-dlp] [download]  79.9% of  257.07MiB at    5.19MiB/s ETA 00:09
+[ytdl-sub:yt-dlp] [download]  80.0% of  257.07MiB at    6.11MiB/s ETA 00:08
+[ytdl-sub:yt-dlp] [download]  80.0% of  257.07MiB at    8.12MiB/s ETA 00:06
+[ytdl-sub:yt-dlp] [download]  80.1% of  257.07MiB at    8.89MiB/s ETA 00:05
+[ytdl-sub:yt-dlp] [download]  80.3% of  257.07MiB at    4.08MiB/s ETA 00:12
+[ytdl-sub:yt-dlp] [download]  80.7% of  257.07MiB at    6.42MiB/s ETA 00:07
+[ytdl-sub:yt-dlp] [download]  81.5% of  257.07MiB at    8.52MiB/s ETA 00:05
+[ytdl-sub:yt-dlp] [download]  83.0% of  257.07MiB at   11.14MiB/s ETA 00:03
+[ytdl-sub:yt-dlp] [download]  83.7% of  257.07MiB at   11.65MiB/s ETA 00:03
+[ytdl-sub:yt-dlp] [download]  83.7% of  257.07MiB at  Unknown B/s ETA Unknown
+[ytdl-sub:yt-dlp] [download]  83.7% of  257.07MiB at  914.66KiB/s ETA 00:47  
+[ytdl-sub:yt-dlp] [download]  83.7% of  257.07MiB at    1.68MiB/s ETA 00:25
+[ytdl-sub:yt-dlp] [download]  83.7% of  257.07MiB at    2.91MiB/s ETA 00:14
+[ytdl-sub:yt-dlp] [download]  83.7% of  257.07MiB at    5.45MiB/s ETA 00:07
+[ytdl-sub:yt-dlp] [download]  83.7% of  257.07MiB at   10.05MiB/s ETA 00:04
+[ytdl-sub:yt-dlp] [download]  83.7% of  257.07MiB at   11.62MiB/s ETA 00:03
+[ytdl-sub:yt-dlp] [download]  83.8% of  257.07MiB at   14.79MiB/s ETA 00:02
+[ytdl-sub:yt-dlp] [download]  83.9% of  257.07MiB at   18.01MiB/s ETA 00:02
+[ytdl-sub:yt-dlp] [download]  84.1% of  257.07MiB at   15.66MiB/s ETA 00:02
+[ytdl-sub:yt-dlp] [download]  84.4% of  257.07MiB at   10.15MiB/s ETA 00:03
+[ytdl-sub:yt-dlp] [download]  85.2% of  257.07MiB at   11.11MiB/s ETA 00:03
+[ytdl-sub:yt-dlp] [download]  86.8% of  257.07MiB at   11.54MiB/s ETA 00:02
+[ytdl-sub:yt-dlp] [download]  87.4% of  257.07MiB at   11.72MiB/s ETA 00:02
+[ytdl-sub:yt-dlp] [download]  87.4% of  257.07MiB at  Unknown B/s ETA Unknown
+[ytdl-sub:yt-dlp] [download]  87.4% of  257.07MiB at  Unknown B/s ETA Unknown
+[ytdl-sub:yt-dlp] [download]  87.4% of  257.07MiB at    5.07MiB/s ETA 00:06  
+[ytdl-sub:yt-dlp] [download]  87.4% of  257.07MiB at    7.79MiB/s ETA 00:04
+[ytdl-sub:yt-dlp] [download]  87.4% of  257.07MiB at    8.83MiB/s ETA 00:03
+[ytdl-sub:yt-dlp] [download]  87.4% of  257.07MiB at    7.92MiB/s ETA 00:04
+[ytdl-sub:yt-dlp] [download]  87.4% of  257.07MiB at    6.33MiB/s ETA 00:05
+[ytdl-sub:yt-dlp] [download]  87.5% of  257.07MiB at   10.37MiB/s ETA 00:03
+[ytdl-sub:yt-dlp] [download]  87.6% of  257.07MiB at   11.85MiB/s ETA 00:02
+[ytdl-sub:yt-dlp] [download]  87.8% of  257.07MiB at   11.29MiB/s ETA 00:02
+[ytdl-sub:yt-dlp] [download]  88.2% of  257.07MiB at   10.88MiB/s ETA 00:02
+[ytdl-sub:yt-dlp] [download]  88.9% of  257.07MiB at    7.36MiB/s ETA 00:03
+[ytdl-sub:yt-dlp] [download]  90.5% of  257.07MiB at    7.29MiB/s ETA 00:03
+[ytdl-sub:yt-dlp] [download]  91.1% of  257.07MiB at    7.78MiB/s ETA 00:02
+[ytdl-sub:yt-dlp] [download]  91.1% of  257.07MiB at  Unknown B/s ETA Unknown
+[ytdl-sub:yt-dlp] [download]  91.1% of  257.07MiB at    1.35MiB/s ETA 00:17  
+[ytdl-sub:yt-dlp] [download]  91.1% of  257.07MiB at    2.36MiB/s ETA 00:09
+[ytdl-sub:yt-dlp] [download]  91.1% of  257.07MiB at    1.71MiB/s ETA 00:13
+[ytdl-sub:yt-dlp] [download]  91.1% of  257.07MiB at    3.25MiB/s ETA 00:07
+[ytdl-sub:yt-dlp] [download]  91.1% of  257.07MiB at    4.99MiB/s ETA 00:04
+[ytdl-sub:yt-dlp] [download]  91.1% of  257.07MiB at    7.53MiB/s ETA 00:03
+[ytdl-sub:yt-dlp] [download]  91.2% of  257.07MiB at   13.48MiB/s ETA 00:01
+[ytdl-sub:yt-dlp] [download]  91.3% of  257.07MiB at    9.11MiB/s ETA 00:02
+[ytdl-sub:yt-dlp] [download]  91.5% of  257.07MiB at   11.64MiB/s ETA 00:01
+[ytdl-sub:yt-dlp] [download]  91.9% of  257.07MiB at   11.39MiB/s ETA 00:01
+[ytdl-sub:yt-dlp] [download]  92.7% of  257.07MiB at   11.69MiB/s ETA 00:01
+[ytdl-sub:yt-dlp] [download]  94.2% of  257.07MiB at   12.73MiB/s ETA 00:01
+[ytdl-sub:yt-dlp] [download]  95.0% of  257.07MiB at   12.54MiB/s ETA 00:01
+[ytdl-sub:yt-dlp] [download]  95.0% of  257.07MiB at  354.22KiB/s ETA 00:39
+[ytdl-sub:yt-dlp] [download]  95.0% of  257.07MiB at  738.95KiB/s ETA 00:17
+[ytdl-sub:yt-dlp] [download]  95.0% of  257.07MiB at    1.52MiB/s ETA 00:08
+[ytdl-sub:yt-dlp] [download]  95.0% of  257.07MiB at    2.07MiB/s ETA 00:06
+[ytdl-sub:yt-dlp] [download]  95.0% of  257.07MiB at    3.58MiB/s ETA 00:03
+[ytdl-sub:yt-dlp] [download]  95.0% of  257.07MiB at    6.71MiB/s ETA 00:01
+[ytdl-sub:yt-dlp] [download]  95.0% of  257.07MiB at    8.17MiB/s ETA 00:01
+[ytdl-sub:yt-dlp] [download]  95.1% of  257.07MiB at   11.17MiB/s ETA 00:01
+[ytdl-sub:yt-dlp] [download]  95.2% of  257.07MiB at   13.32MiB/s ETA 00:00
+[ytdl-sub:yt-dlp] [download]  95.4% of  257.07MiB at   14.81MiB/s ETA 00:00
+[ytdl-sub:yt-dlp] [download]  95.7% of  257.07MiB at   12.47MiB/s ETA 00:00
+[ytdl-sub:yt-dlp] [download]  96.5% of  257.07MiB at   12.83MiB/s ETA 00:00
+[ytdl-sub:yt-dlp] [download]  98.1% of  257.07MiB at   10.66MiB/s ETA 00:00
+[ytdl-sub:yt-dlp] [download]  98.8% of  257.07MiB at   10.01MiB/s ETA 00:00
+[ytdl-sub:yt-dlp] [download]  98.8% of  257.07MiB at  869.65KiB/s ETA 00:03
+[ytdl-sub:yt-dlp] [download]  98.8% of  257.07MiB at  794.38KiB/s ETA 00:04
+[ytdl-sub:yt-dlp] [download]  98.8% of  257.07MiB at    1.13MiB/s ETA 00:02
+[ytdl-sub:yt-dlp] [download]  98.8% of  257.07MiB at    1.19MiB/s ETA 00:02
+[ytdl-sub:yt-dlp] [download]  98.8% of  257.07MiB at    2.18MiB/s ETA 00:01
+[ytdl-sub:yt-dlp] [download]  98.8% of  257.07MiB at    3.99MiB/s ETA 00:00
+[ytdl-sub:yt-dlp] [download]  98.8% of  257.07MiB at    1.57MiB/s ETA 00:01
+[ytdl-sub:yt-dlp] [download]  98.9% of  257.07MiB at    2.60MiB/s ETA 00:01
+[ytdl-sub:yt-dlp] [download]  99.0% of  257.07MiB at    4.24MiB/s ETA 00:00
+[ytdl-sub:yt-dlp] [download]  99.1% of  257.07MiB at    5.36MiB/s ETA 00:00
+[ytdl-sub:yt-dlp] [download]  99.5% of  257.07MiB at    7.19MiB/s ETA 00:00
+[ytdl-sub:yt-dlp] [download] 100.0% of  257.07MiB at    7.32MiB/s ETA 00:00
+[ytdl-sub:yt-dlp] [download] 100% of  257.07MiB in 00:00:29 at 8.65MiB/s   
+[ytdl-sub:yt-dlp] [Merger] Merging formats into "/tmp/ytdl-sub-working-directory/ambience-video-prueba-vr4savpspea/vr4sAvPSpEA.mp4"
+[ytdl-sub:yt-dlp] Deleting original file /tmp/ytdl-sub-working-directory/ambience-video-prueba-vr4savpspea/vr4sAvPSpEA.f398.mp4 (pass -k to keep)
+[ytdl-sub:yt-dlp] Deleting original file /tmp/ytdl-sub-working-directory/ambience-video-prueba-vr4savpspea/vr4sAvPSpEA.f251.webm (pass -k to keep)
+[ytdl-sub:ffmpeg] Running /usr/bin/ffmpeg -y -bitexact -i /tmp/ytdl-sub-working-directory/ambience-video-prueba-vr4savpspea/vr4sAvPSpEA.webp /tmp/ytdl-sub-working-directory/ambience-video-prueba-vr4savpspea/vr4sAvPSpEA.jpg
+------------------------------------------------------------
+/config/logs/2026-03-19-174619.ramon-alvarez-de-mon-ramonalvarezdemon.success.log
+[ytdl-sub:yt-dlp] [youtube] wgtkCGW9nTk: Downloading m3u8 information
+[ytdl-sub:yt-dlp] [info] wgtkCGW9nTk: Downloading 1 format(s): 398+251
+[ytdl-sub:yt-dlp] [info] Downloading video thumbnail 41 ...
+[ytdl-sub:yt-dlp] [info] Writing video thumbnail 41 to: /tmp/ytdl-sub-working-directory/ramon-alvarez-de-mon-ramonalvarezdemon/wgtkCGW9nTk.webp
+[ytdl-sub:yt-dlp] [download] Destination: /tmp/ytdl-sub-working-directory/ramon-alvarez-de-mon-ramonalvarezdemon/wgtkCGW9nTk.f398.mp4
+[ytdl-sub:yt-dlp] [download]   0.0% of   34.50MiB at  Unknown B/s ETA Unknown
+[ytdl-sub:yt-dlp] [download]   0.0% of   34.50MiB at  Unknown B/s ETA Unknown
+[ytdl-sub:yt-dlp] [download]   0.0% of   34.50MiB at    4.80MiB/s ETA 00:07  
+[ytdl-sub:yt-dlp] [download]   0.0% of   34.50MiB at    7.64MiB/s ETA 00:04
+[ytdl-sub:yt-dlp] [download]   0.1% of   34.50MiB at  561.83KiB/s ETA 01:03
+[ytdl-sub:yt-dlp] [download]   0.2% of   34.50MiB at    1.01MiB/s ETA 00:34
+[ytdl-sub:yt-dlp] [download]   0.4% of   34.50MiB at    1.77MiB/s ETA 00:19
+[ytdl-sub:yt-dlp] [download]   0.7% of   34.50MiB at    2.04MiB/s ETA 00:16
+[ytdl-sub:yt-dlp] [download]   1.4% of   34.50MiB at    3.23MiB/s ETA 00:10
+[ytdl-sub:yt-dlp] [download]   2.9% of   34.50MiB at    4.90MiB/s ETA 00:06
+[ytdl-sub:yt-dlp] [download]   5.8% of   34.50MiB at    6.40MiB/s ETA 00:05
+[ytdl-sub:yt-dlp] [download]  11.6% of   34.50MiB at    7.20MiB/s ETA 00:04
+[ytdl-sub:yt-dlp] [download]  23.2% of   34.50MiB at    8.28MiB/s ETA 00:03
+[ytdl-sub:yt-dlp] [download]  28.2% of   34.50MiB at    8.96MiB/s ETA 00:02
+[ytdl-sub:yt-dlp] [download]  28.2% of   34.50MiB at  193.38KiB/s ETA 02:11
+[ytdl-sub:yt-dlp] [download]  28.2% of   34.50MiB at  492.58KiB/s ETA 00:51
+[ytdl-sub:yt-dlp] [download]  28.2% of   34.50MiB at    1.00MiB/s ETA 00:24
+[ytdl-sub:yt-dlp] [download]  28.2% of   34.50MiB at    2.02MiB/s ETA 00:12
+[ytdl-sub:yt-dlp] [download]  28.3% of   34.50MiB at    3.51MiB/s ETA 00:07
+[ytdl-sub:yt-dlp] [download]  28.4% of   34.50MiB at    5.48MiB/s ETA 00:04
+[ytdl-sub:yt-dlp] [download]  28.6% of   34.50MiB at    8.84MiB/s ETA 00:02
+[ytdl-sub:yt-dlp] [download]  28.9% of   34.50MiB at   12.09MiB/s ETA 00:02
+[ytdl-sub:yt-dlp] [download]  29.6% of   34.50MiB at   10.88MiB/s ETA 00:02
+[ytdl-sub:yt-dlp] [download]  31.1% of   34.50MiB at   12.75MiB/s ETA 00:01
+[ytdl-sub:yt-dlp] [download]  34.0% of   34.50MiB at   11.44MiB/s ETA 00:01
+[ytdl-sub:yt-dlp] [download]  39.8% of   34.50MiB at   12.35MiB/s ETA 00:01
+[ytdl-sub:yt-dlp] [download]  51.4% of   34.50MiB at   13.28MiB/s ETA 00:01
+[ytdl-sub:yt-dlp] [download]  56.0% of   34.50MiB at   13.07MiB/s ETA 00:01
+[ytdl-sub:yt-dlp] [download]  56.0% of   34.50MiB at  Unknown B/s ETA Unknown
+[ytdl-sub:yt-dlp] [download]  56.0% of   34.50MiB at  Unknown B/s ETA Unknown
+[ytdl-sub:yt-dlp] [download]  56.0% of   34.50MiB at    2.90MiB/s ETA 00:05  
+[ytdl-sub:yt-dlp] [download]  56.1% of   34.50MiB at    4.39MiB/s ETA 00:03
+[ytdl-sub:yt-dlp] [download]  56.1% of   34.50MiB at    7.57MiB/s ETA 00:02
+[ytdl-sub:yt-dlp] [download]  56.2% of   34.50MiB at   13.17MiB/s ETA 00:01
+[ytdl-sub:yt-dlp] [download]  56.4% of   34.50MiB at   11.26MiB/s ETA 00:01
+[ytdl-sub:yt-dlp] [download]  56.7% of   34.50MiB at   10.51MiB/s ETA 00:01
+[ytdl-sub:yt-dlp] [download]  57.5% of   34.50MiB at   10.27MiB/s ETA 00:01
+[ytdl-sub:yt-dlp] [download]  58.9% of   34.50MiB at   10.95MiB/s ETA 00:01
+[ytdl-sub:yt-dlp] [download]  61.8% of   34.50MiB at    8.56MiB/s ETA 00:01
+[ytdl-sub:yt-dlp] [download]  67.6% of   34.50MiB at    9.68MiB/s ETA 00:01
+[ytdl-sub:yt-dlp] [download]  79.2% of   34.50MiB at   12.12MiB/s ETA 00:00
+[ytdl-sub:yt-dlp] [download]  83.6% of   34.50MiB at   12.81MiB/s ETA 00:00
+[ytdl-sub:yt-dlp] [download]  83.6% of   34.50MiB at  Unknown B/s ETA Unknown
+[ytdl-sub:yt-dlp] [download]  83.6% of   34.50MiB at  Unknown B/s ETA Unknown
+[ytdl-sub:yt-dlp] [download]  83.6% of   34.50MiB at    6.66MiB/s ETA 00:00  
+[ytdl-sub:yt-dlp] [download]  83.6% of   34.50MiB at    9.87MiB/s ETA 00:00
+[ytdl-sub:yt-dlp] [download]  83.7% of   34.50MiB at   15.11MiB/s ETA 00:00
+[ytdl-sub:yt-dlp] [download]  83.8% of   34.50MiB at   16.21MiB/s ETA 00:00
+[ytdl-sub:yt-dlp] [download]  83.9% of   34.50MiB at   17.56MiB/s ETA 00:00
+[ytdl-sub:yt-dlp] [download]  84.3% of   34.50MiB at   16.43MiB/s ETA 00:00
+[ytdl-sub:yt-dlp] [download]  85.0% of   34.50MiB at   17.55MiB/s ETA 00:00
+[ytdl-sub:yt-dlp] [download]  86.5% of   34.50MiB at   18.20MiB/s ETA 00:00
+[ytdl-sub:yt-dlp] [download]  89.4% of   34.50MiB at   17.41MiB/s ETA 00:00
+[ytdl-sub:yt-dlp] [download]  95.2% of   34.50MiB at   11.31MiB/s ETA 00:00
+[ytdl-sub:yt-dlp] [download] 100.0% of   34.50MiB at   11.15MiB/s ETA 00:00
+[ytdl-sub:yt-dlp] [download] 100% of   34.50MiB in 00:00:03 at 10.52MiB/s  
+[ytdl-sub:yt-dlp] [download] Destination: /tmp/ytdl-sub-working-directory/ramon-alvarez-de-mon-ramonalvarezdemon/wgtkCGW9nTk.f251.webm
+[ytdl-sub:yt-dlp] [download]   0.0% of    9.01MiB at  Unknown B/s ETA Unknown
+[ytdl-sub:yt-dlp] [download]   0.0% of    9.01MiB at    2.66MiB/s ETA 00:03  
+[ytdl-sub:yt-dlp] [download]   0.1% of    9.01MiB at    4.48MiB/s ETA 00:02
+[ytdl-sub:yt-dlp] [download]   0.2% of    9.01MiB at    5.71MiB/s ETA 00:01
+[ytdl-sub:yt-dlp] [download]   0.3% of    9.01MiB at    9.53MiB/s ETA 00:00
+[ytdl-sub:yt-dlp] [download]   0.7% of    9.01MiB at    9.74MiB/s ETA 00:00
+[ytdl-sub:yt-dlp] [download]   1.4% of    9.01MiB at   12.40MiB/s ETA 00:00
+[ytdl-sub:yt-dlp] [download]   2.8% of    9.01MiB at   10.33MiB/s ETA 00:00
+[ytdl-sub:yt-dlp] [download]   5.5% of    9.01MiB at   11.75MiB/s ETA 00:00
+[ytdl-sub:yt-dlp] [download]  11.1% of    9.01MiB at   11.99MiB/s ETA 00:00
+[ytdl-sub:yt-dlp] [download]  22.2% of    9.01MiB at   11.57MiB/s ETA 00:00
+[ytdl-sub:yt-dlp] [download]  44.4% of    9.01MiB at   12.67MiB/s ETA 00:00
+[ytdl-sub:yt-dlp] [download]  88.7% of    9.01MiB at    7.41MiB/s ETA 00:00
+[ytdl-sub:yt-dlp] [download] 100.0% of    9.01MiB at    7.59MiB/s ETA 00:00
+[ytdl-sub:yt-dlp] [download] 100% of    9.01MiB in 00:00:01 at 7.41MiB/s   
+[ytdl-sub:yt-dlp] [Merger] Merging formats into "/tmp/ytdl-sub-working-directory/ramon-alvarez-de-mon-ramonalvarezdemon/wgtkCGW9nTk.mp4"
+[ytdl-sub:yt-dlp] Deleting original file /tmp/ytdl-sub-working-directory/ramon-alvarez-de-mon-ramonalvarezdemon/wgtkCGW9nTk.f398.mp4 (pass -k to keep)
+[ytdl-sub:yt-dlp] Deleting original file /tmp/ytdl-sub-working-directory/ramon-alvarez-de-mon-ramonalvarezdemon/wgtkCGW9nTk.f251.webm (pass -k to keep)
+[ytdl-sub:yt-dlp] [Metadata] There isn't any metadata to add
+[ytdl-sub:ffmpeg] Running /usr/bin/ffmpeg -y -bitexact -i /tmp/ytdl-sub-working-directory/ramon-alvarez-de-mon-ramonalvarezdemon/wgtkCGW9nTk.webp /tmp/ytdl-sub-working-directory/ramon-alvarez-de-mon-ramonalvarezdemon/wgtkCGW9nTk.jpg
+[ytdl-sub:ffmpeg] Running /usr/bin/ffmpeg -i /tmp/ytdl-sub-working-directory/ramon-alvarez-de-mon-ramonalvarezdemon/wgtkCGW9nTk.mp4 -map 0 -dn -metadata contentRating=TV-14 -metadata date=2026-03-19 -metadata episode_id=31902 -metadata genre=ytdl-sub -metadata show=ramon-alvarez-de-mon -metadata synopsis=https://www.youtube.com/watch?v=wgtkCGW9nTk
+
+✅ Vídeo de noticias del Real Madrid
+
+Canal de Whatsapp: https://whatsapp.com/channel/0029VaDEAA7Elagyf0txTx03
+⚡ 𝗦𝗨𝗦𝗖𝗥Í𝗕𝗘𝗧𝗘: https://www.youtube.com/c/RamonAlvarezdeMon?sub_confirmation=1
+
+⭐ 😎 𝗛𝗔𝗭𝗧𝗘 𝗠𝗜𝗘𝗠𝗕𝗥𝗢  𝗗𝗘𝗟 𝗖𝗔𝗡𝗔𝗟 👉https://www.youtube.com/channel/UCrd8pmcZ0Za0ufAfxOrIzmQ/join
+
+Mi web: https://ramonalvarezdemon.com/
+
+👕 TIENDA DE MON 👉 https://www.latostadora.com/ramonalvarezdemon/
+
+𝗔𝗟𝗚𝗨𝗡𝗔𝗦 𝗖𝗢𝗦𝗔𝗦 𝗦𝗢𝗕𝗥𝗘 𝗠Í:
+𝗪𝗜𝗞𝗜𝗣𝗘𝗗𝗜𝗔: https://es.wikipedia.org/wiki/Ram%C3%B3n_%C3%A1lvarez_de_mon
+
+😉 𝗦Í𝗚𝗨𝗘𝗠𝗘 en mis otras 𝗥𝗘𝗗𝗘𝗦 𝗦𝗢𝗖𝗜𝗔𝗟𝗘𝗦:
+
+
+
+
+𝗧𝗪𝗜𝗧𝗧𝗘𝗥:  https://twitter.com/Ramon_AlvarezMM 
+TIK TOK: https://www.tiktok.com/@ramonalvarezdemonoficial
+𝗜𝗡𝗦𝗧𝗔𝗚𝗥𝗔𝗠: https://www.instagram.com/ramonalvarezdemon/
+TWITCH: https://www.twitch.tv/ramonalvarezdemon
+
+✍️ 𝗢 𝗟É𝗘𝗠𝗘 en los medios en los que escribo:
+
+𝗟𝗔 𝗚𝗔𝗟𝗘𝗥𝗡𝗔: https://www.lagalerna.com/author/ramo...
+𝗢𝗞 𝗗𝗜𝗔𝗥𝗜𝗢: https://okdiario.com/diariomadridista...
+
+Music: www.bensound.com
+
+
+Etiquetas manuales:
+
+Ramón Álvarez de Mon, Álvarez de Mon, directo Álvarez de Mon, directo Ramón Álvarez de Mon, Real Madrid, Real Madrid CF, Real Madrid vs, Real Madrid hoy, Noticias Real Madrid, Últimas noticias Real Madrid, Real Madrid noticias, Real Madrid última hora, última hora Real Madrid, Real Madrid información, Opinión Real Madrid, Debates Real Madrid, Rumores Real Madrid, Real Madrid 2021/2022, Real Madrid news, Real, madrid, transfers, Real madrid rumours, Canal Real Madrid, Canal madridista, Youtuber madridista, Youtuber Real Madrid, La Galerna, Marca, Radio Marca, Real Madrid fichajes, Fichajes Real Madrid, Fichajes 2022, Mercado Real Madrid, Mbappé, Haaland, Kylian Mbappé, Erling Haaland, fichaje Mbappé, fichaje Haaland, Mbappé Real Madrid, Haaland Real Madrid, Salidas Real Madrid, Salidas Real Madrid 2022, Oferta Real Madrid, Liga, LaLiga, Liga Santander, Liga 2021/2022, Liga 21/22, Copa del Rey, Copa del Rey 2022, Champions League, Champions League 2021/2022, UEFA Champions League, UCL. Plantilla Real Madrid, jugadores Real Madrid, lesionados Real Madrid, alineación Real Madrid, convocatoria Real Madrid, Vinicius, Vinicius JR, Benzema, Karim Benzema, Ancelotti, Carlo Ancelotti, Eden Hazard, Gareth Bale, Luka Modric, Toni Kroos, Casemiro, Rodrygo, Alaba, Militao, Ferland Mendy, Dani Carvajal, Fede Valverde, Thibaut Courtois, Isco, Marco Asensio, Marcelo, Cristiano Ronaldo, CR7, Zinedine Zidane, Sergio Ramos, Clásico, Real Madrid-Barcelona, Real Madrid vs Barcelona, Real Madrid Barça, Castilla, Raúl Real Madrid, Juvenil Real Madrid, Partidos, partidos Real Madrid, goles, goles Real Madrid, gol Real Madrid, Crónica Real Madrid, Previa Real Madrid, Análisis Real Madrid, Resumen Real Madrid, highlights Real Madrid, Top Real Madrid, Real Madrid directo, próximo partido Real Madrid, calendario Real Madrid, Equipación Real Madrid, camiseta Real Madrid, himno Real Madrid, escudo Real Madrid, Historia Real Madrid, Santiago Bernabéu, Bernabéu, Nuevo Bernabéu, Nuevo Santiago Bernabéu, Reforma Santiago Bernabéu, Obras Santiago Bernabéu, Reforma Bernabéu, Obras Bernabéu, estadio Bernabéu, Nuevo Estadio Santiago Bernabéu, Real Madrid oficial, Florentino, Florentino Pérez, Economía Real Madrid, Masa salarial Real Madrid, Masa salarial, Límite salarial, Tebas, Superliga, Hala Madrid, REAL MADRID レアルマドリード皇家馬德里 ريال مدريد Реал रियल मैड्रिड كريستيانو رونالدو 克里斯蒂 多 克里斯蒂亞諾羅納爾多 Κριστιάνο Ρονάλντο रोनाल्डो क्रिस्टियानो クリスティアーノロナウドКриштиану Роналду -metadata title=2026-03-19 - 🚨MBAPPE CONVOCADO CON FRANCIA | NOTICIAS POSITIVAS EN EL REAL MADRID -metadata year=2026 -codec copy -bitexact /tmp/ytdl-sub-working-directory/ramon-alvarez-de-mon-ramonalvarezdemon/wgtkCGW9nTk.mp4.out.mp4
+[ytdl-sub:ffmpeg] Running /usr/bin/ffmpeg -i /tmp/ytdl-sub-working-directory/ramon-alvarez-de-mon-ramonalvarezdemon/wgtkCGW9nTk.mp4 -i /tmp/ytdl-sub-working-directory/ramon-alvarez-de-mon-ramonalvarezdemon/wgtkCGW9nTk.jpg -map 1 -map 0 -dn -c copy -bitexact -disposition:0 attached_pic /tmp/ytdl-sub-working-directory/ramon-alvarez-de-mon-ramonalvarezdemon/wgtkCGW9nTk.mp4.out.mp4
+------------------------------------------------------------
+/config/logs/2026-03-19-175858.ramon-alvarez-de-mon-ramonalvarezdemon.success.log
+[ytdl-sub:yt-dlp] [youtube] wgtkCGW9nTk: Downloading m3u8 information
+[ytdl-sub:yt-dlp] [info] wgtkCGW9nTk: Downloading 1 format(s): 398+251
+[ytdl-sub:yt-dlp] [info] Downloading video thumbnail 41 ...
+[ytdl-sub:yt-dlp] [info] Writing video thumbnail 41 to: /tmp/ytdl-sub-working-directory/ramon-alvarez-de-mon-ramonalvarezdemon/wgtkCGW9nTk.webp
+[ytdl-sub:yt-dlp] [download] Destination: /tmp/ytdl-sub-working-directory/ramon-alvarez-de-mon-ramonalvarezdemon/wgtkCGW9nTk.f398.mp4
+[ytdl-sub:yt-dlp] [download]   0.0% of   34.50MiB at  493.04KiB/s ETA 01:12
+[ytdl-sub:yt-dlp] [download]   0.0% of   34.50MiB at    1.07MiB/s ETA 00:32
+[ytdl-sub:yt-dlp] [download]   0.0% of   34.50MiB at    2.07MiB/s ETA 00:16
+[ytdl-sub:yt-dlp] [download]   0.0% of   34.50MiB at    3.82MiB/s ETA 00:09
+[ytdl-sub:yt-dlp] [download]   0.1% of   34.50MiB at    2.29MiB/s ETA 00:15
+[ytdl-sub:yt-dlp] [download]   0.2% of   34.50MiB at    3.28MiB/s ETA 00:10
+[ytdl-sub:yt-dlp] [download]   0.4% of   34.50MiB at    3.22MiB/s ETA 00:10
+[ytdl-sub:yt-dlp] [download]   0.7% of   34.50MiB at    5.42MiB/s ETA 00:06
+[ytdl-sub:yt-dlp] [download]   1.4% of   34.50MiB at    7.54MiB/s ETA 00:04
+[ytdl-sub:yt-dlp] [download]   2.9% of   34.50MiB at   10.32MiB/s ETA 00:03
+[ytdl-sub:yt-dlp] [download]   5.8% of   34.50MiB at   13.44MiB/s ETA 00:02
+[ytdl-sub:yt-dlp] [download]  11.6% of   34.50MiB at    9.78MiB/s ETA 00:03
+[ytdl-sub:yt-dlp] [download]  23.2% of   34.50MiB at   11.04MiB/s ETA 00:02
+[ytdl-sub:yt-dlp] [download]  27.6% of   34.50MiB at   11.34MiB/s ETA 00:02
+[ytdl-sub:yt-dlp] [download]  27.6% of   34.50MiB at  Unknown B/s ETA Unknown
+[ytdl-sub:yt-dlp] [download]  27.6% of   34.50MiB at    1.16MiB/s ETA 00:21  
+[ytdl-sub:yt-dlp] [download]  27.6% of   34.50MiB at    2.08MiB/s ETA 00:12
+[ytdl-sub:yt-dlp] [download]  27.6% of   34.50MiB at    3.78MiB/s ETA 00:06
+[ytdl-sub:yt-dlp] [download]  27.7% of   34.50MiB at    6.79MiB/s ETA 00:03
+[ytdl-sub:yt-dlp] [download]  27.8% of   34.50MiB at    5.06MiB/s ETA 00:04
+[ytdl-sub:yt-dlp] [download]  27.9% of   34.50MiB at    6.83MiB/s ETA 00:03
+[ytdl-sub:yt-dlp] [download]  28.3% of   34.50MiB at    8.87MiB/s ETA 00:02
+[ytdl-sub:yt-dlp] [download]  29.0% of   34.50MiB at    8.48MiB/s ETA 00:02
+[ytdl-sub:yt-dlp] [download]  30.5% of   34.50MiB at    8.79MiB/s ETA 00:02
+[ytdl-sub:yt-dlp] [download]  33.4% of   34.50MiB at    9.53MiB/s ETA 00:02
+[ytdl-sub:yt-dlp] [download]  39.2% of   34.50MiB at    9.42MiB/s ETA 00:02
+[ytdl-sub:yt-dlp] [download]  50.8% of   34.50MiB at   10.20MiB/s ETA 00:01
+[ytdl-sub:yt-dlp] [download]  55.9% of   34.50MiB at   11.05MiB/s ETA 00:01
+[ytdl-sub:yt-dlp] [download]  55.9% of   34.50MiB at  Unknown B/s ETA Unknown
+[ytdl-sub:yt-dlp] [download]  55.9% of   34.50MiB at    2.06MiB/s ETA 00:07  
+[ytdl-sub:yt-dlp] [download]  55.9% of   34.50MiB at    3.53MiB/s ETA 00:04
+[ytdl-sub:yt-dlp] [download]  55.9% of   34.50MiB at    6.03MiB/s ETA 00:02
+[ytdl-sub:yt-dlp] [download]  56.0% of   34.50MiB at    8.90MiB/s ETA 00:01
+[ytdl-sub:yt-dlp] [download]  56.1% of   34.50MiB at    9.57MiB/s ETA 00:01
+[ytdl-sub:yt-dlp] [download]  56.2% of   34.50MiB at   12.49MiB/s ETA 00:01
+[ytdl-sub:yt-dlp] [download]  56.6% of   34.50MiB at   14.61MiB/s ETA 00:01
+[ytdl-sub:yt-dlp] [download]  57.3% of   34.50MiB at   15.25MiB/s ETA 00:00
+[ytdl-sub:yt-dlp] [download]  58.8% of   34.50MiB at   12.60MiB/s ETA 00:01
+[ytdl-sub:yt-dlp] [download]  61.7% of   34.50MiB at    8.44MiB/s ETA 00:01
+[ytdl-sub:yt-dlp] [download]  67.5% of   34.50MiB at    3.80MiB/s ETA 00:02
+[ytdl-sub:yt-dlp] [download]  74.6% of   34.50MiB at    4.21MiB/s ETA 00:02
+[ytdl-sub:yt-dlp] [download]  83.5% of   34.50MiB at    4.86MiB/s ETA 00:01
+[ytdl-sub:yt-dlp] [download]  83.5% of   34.50MiB at  Unknown B/s ETA Unknown
+[ytdl-sub:yt-dlp] [download]  83.5% of   34.50MiB at    1.51MiB/s ETA 00:03  
+[ytdl-sub:yt-dlp] [download]  83.5% of   34.50MiB at    1.13MiB/s ETA 00:05
+[ytdl-sub:yt-dlp] [download]  83.5% of   34.50MiB at    2.22MiB/s ETA 00:02
+[ytdl-sub:yt-dlp] [download]  83.6% of   34.50MiB at    4.24MiB/s ETA 00:01
+[ytdl-sub:yt-dlp] [download]  83.7% of   34.50MiB at    7.95MiB/s ETA 00:00
+[ytdl-sub:yt-dlp] [download]  83.9% of   34.50MiB at   10.72MiB/s ETA 00:00
+[ytdl-sub:yt-dlp] [download]  84.2% of   34.50MiB at   11.38MiB/s ETA 00:00
+[ytdl-sub:yt-dlp] [download]  84.9% of   34.50MiB at    8.41MiB/s ETA 00:00
+[ytdl-sub:yt-dlp] [download]  86.4% of   34.50MiB at    9.35MiB/s ETA 00:00
+[ytdl-sub:yt-dlp] [download]  89.3% of   34.50MiB at   10.36MiB/s ETA 00:00
+[ytdl-sub:yt-dlp] [download]  95.1% of   34.50MiB at   11.33MiB/s ETA 00:00
+[ytdl-sub:yt-dlp] [download] 100.0% of   34.50MiB at   11.99MiB/s ETA 00:00
+[ytdl-sub:yt-dlp] [download] 100% of   34.50MiB in 00:00:04 at 7.95MiB/s   
+[ytdl-sub:yt-dlp] [download] Destination: /tmp/ytdl-sub-working-directory/ramon-alvarez-de-mon-ramonalvarezdemon/wgtkCGW9nTk.f251.webm
+[ytdl-sub:yt-dlp] [download]   0.0% of    9.01MiB at  Unknown B/s ETA Unknown
+[ytdl-sub:yt-dlp] [download]   0.0% of    9.01MiB at  567.54KiB/s ETA 00:16  
+[ytdl-sub:yt-dlp] [download]   0.1% of    9.01MiB at    1.18MiB/s ETA 00:07
+[ytdl-sub:yt-dlp] [download]   0.2% of    9.01MiB at    2.32MiB/s ETA 00:03
+[ytdl-sub:yt-dlp] [download]   0.3% of    9.01MiB at    4.41MiB/s ETA 00:02
+[ytdl-sub:yt-dlp] [download]   0.7% of    9.01MiB at    6.52MiB/s ETA 00:01
+[ytdl-sub:yt-dlp] [download]   1.4% of    9.01MiB at    2.63MiB/s ETA 00:03
+[ytdl-sub:yt-dlp] [download]   2.8% of    9.01MiB at    3.94MiB/s ETA 00:02
+[ytdl-sub:yt-dlp] [download]   5.5% of    9.01MiB at    4.85MiB/s ETA 00:01
+[ytdl-sub:yt-dlp] [download]  11.1% of    9.01MiB at    4.90MiB/s ETA 00:01
+[ytdl-sub:yt-dlp] [download]  22.2% of    9.01MiB at    4.16MiB/s ETA 00:01
+[ytdl-sub:yt-dlp] [download]  44.4% of    9.01MiB at    4.85MiB/s ETA 00:01
+[ytdl-sub:yt-dlp] [download]  88.7% of    9.01MiB at    6.11MiB/s ETA 00:00
+[ytdl-sub:yt-dlp] [download] 100.0% of    9.01MiB at    6.05MiB/s ETA 00:00
+[ytdl-sub:yt-dlp] [download] 100% of    9.01MiB in 00:00:01 at 5.82MiB/s   
+[ytdl-sub:yt-dlp] [Merger] Merging formats into "/tmp/ytdl-sub-working-directory/ramon-alvarez-de-mon-ramonalvarezdemon/wgtkCGW9nTk.mp4"
+[ytdl-sub:yt-dlp] Deleting original file /tmp/ytdl-sub-working-directory/ramon-alvarez-de-mon-ramonalvarezdemon/wgtkCGW9nTk.f251.webm (pass -k to keep)
+[ytdl-sub:yt-dlp] Deleting original file /tmp/ytdl-sub-working-directory/ramon-alvarez-de-mon-ramonalvarezdemon/wgtkCGW9nTk.f398.mp4 (pass -k to keep)
+[ytdl-sub:yt-dlp] [Metadata] There isn't any metadata to add
+[ytdl-sub:ffmpeg] Running /usr/bin/ffmpeg -y -bitexact -i /tmp/ytdl-sub-working-directory/ramon-alvarez-de-mon-ramonalvarezdemon/wgtkCGW9nTk.webp /tmp/ytdl-sub-working-directory/ramon-alvarez-de-mon-ramonalvarezdemon/wgtkCGW9nTk.jpg
+[ytdl-sub:ffmpeg] Running /usr/bin/ffmpeg -i /tmp/ytdl-sub-working-directory/ramon-alvarez-de-mon-ramonalvarezdemon/wgtkCGW9nTk.mp4 -map 0 -dn -metadata contentRating=TV-14 -metadata date=2026-03-19 -metadata episode_id=31902 -metadata genre=ytdl-sub -metadata show=ramon-alvarez-de-mon -metadata synopsis=https://www.youtube.com/watch?v=wgtkCGW9nTk
+
+✅ Vídeo de noticias del Real Madrid
+
+Canal de Whatsapp: https://whatsapp.com/channel/0029VaDEAA7Elagyf0txTx03
+⚡ 𝗦𝗨𝗦𝗖𝗥Í𝗕𝗘𝗧𝗘: https://www.youtube.com/c/RamonAlvarezdeMon?sub_confirmation=1
+
+⭐ 😎 𝗛𝗔𝗭𝗧𝗘 𝗠𝗜𝗘𝗠𝗕𝗥𝗢  𝗗𝗘𝗟 𝗖𝗔𝗡𝗔𝗟 👉https://www.youtube.com/channel/UCrd8pmcZ0Za0ufAfxOrIzmQ/join
+
+Mi web: https://ramonalvarezdemon.com/
+
+👕 TIENDA DE MON 👉 https://www.latostadora.com/ramonalvarezdemon/
+
+𝗔𝗟𝗚𝗨𝗡𝗔𝗦 𝗖𝗢𝗦𝗔𝗦 𝗦𝗢𝗕𝗥𝗘 𝗠Í:
+𝗪𝗜𝗞𝗜𝗣𝗘𝗗𝗜𝗔: https://es.wikipedia.org/wiki/Ram%C3%B3n_%C3%A1lvarez_de_mon
+
+😉 𝗦Í𝗚𝗨𝗘𝗠𝗘 en mis otras 𝗥𝗘𝗗𝗘𝗦 𝗦𝗢𝗖𝗜𝗔𝗟𝗘𝗦:
+
+
+
+
+𝗧𝗪𝗜𝗧𝗧𝗘𝗥:  https://twitter.com/Ramon_AlvarezMM 
+TIK TOK: https://www.tiktok.com/@ramonalvarezdemonoficial
+𝗜𝗡𝗦𝗧𝗔𝗚𝗥𝗔𝗠: https://www.instagram.com/ramonalvarezdemon/
+TWITCH: https://www.twitch.tv/ramonalvarezdemon
+
+✍️ 𝗢 𝗟É𝗘𝗠𝗘 en los medios en los que escribo:
+
+𝗟𝗔 𝗚𝗔𝗟𝗘𝗥𝗡𝗔: https://www.lagalerna.com/author/ramo...
+𝗢𝗞 𝗗𝗜𝗔𝗥𝗜𝗢: https://okdiario.com/diariomadridista...
+
+Music: www.bensound.com
+
+
+Etiquetas manuales:
+
+Ramón Álvarez de Mon, Álvarez de Mon, directo Álvarez de Mon, directo Ramón Álvarez de Mon, Real Madrid, Real Madrid CF, Real Madrid vs, Real Madrid hoy, Noticias Real Madrid, Últimas noticias Real Madrid, Real Madrid noticias, Real Madrid última hora, última hora Real Madrid, Real Madrid información, Opinión Real Madrid, Debates Real Madrid, Rumores Real Madrid, Real Madrid 2021/2022, Real Madrid news, Real, madrid, transfers, Real madrid rumours, Canal Real Madrid, Canal madridista, Youtuber madridista, Youtuber Real Madrid, La Galerna, Marca, Radio Marca, Real Madrid fichajes, Fichajes Real Madrid, Fichajes 2022, Mercado Real Madrid, Mbappé, Haaland, Kylian Mbappé, Erling Haaland, fichaje Mbappé, fichaje Haaland, Mbappé Real Madrid, Haaland Real Madrid, Salidas Real Madrid, Salidas Real Madrid 2022, Oferta Real Madrid, Liga, LaLiga, Liga Santander, Liga 2021/2022, Liga 21/22, Copa del Rey, Copa del Rey 2022, Champions League, Champions League 2021/2022, UEFA Champions League, UCL. Plantilla Real Madrid, jugadores Real Madrid, lesionados Real Madrid, alineación Real Madrid, convocatoria Real Madrid, Vinicius, Vinicius JR, Benzema, Karim Benzema, Ancelotti, Carlo Ancelotti, Eden Hazard, Gareth Bale, Luka Modric, Toni Kroos, Casemiro, Rodrygo, Alaba, Militao, Ferland Mendy, Dani Carvajal, Fede Valverde, Thibaut Courtois, Isco, Marco Asensio, Marcelo, Cristiano Ronaldo, CR7, Zinedine Zidane, Sergio Ramos, Clásico, Real Madrid-Barcelona, Real Madrid vs Barcelona, Real Madrid Barça, Castilla, Raúl Real Madrid, Juvenil Real Madrid, Partidos, partidos Real Madrid, goles, goles Real Madrid, gol Real Madrid, Crónica Real Madrid, Previa Real Madrid, Análisis Real Madrid, Resumen Real Madrid, highlights Real Madrid, Top Real Madrid, Real Madrid directo, próximo partido Real Madrid, calendario Real Madrid, Equipación Real Madrid, camiseta Real Madrid, himno Real Madrid, escudo Real Madrid, Historia Real Madrid, Santiago Bernabéu, Bernabéu, Nuevo Bernabéu, Nuevo Santiago Bernabéu, Reforma Santiago Bernabéu, Obras Santiago Bernabéu, Reforma Bernabéu, Obras Bernabéu, estadio Bernabéu, Nuevo Estadio Santiago Bernabéu, Real Madrid oficial, Florentino, Florentino Pérez, Economía Real Madrid, Masa salarial Real Madrid, Masa salarial, Límite salarial, Tebas, Superliga, Hala Madrid, REAL MADRID レアルマドリード皇家馬德里 ريال مدريد Реал रियल मैड्रिड كريستيانو رونالدو 克里斯蒂 多 克里斯蒂亞諾羅納爾多 Κριστιάνο Ρονάλντο रोनाल्डो क्रिस्टियानो クリスティアーノロナウドКриштиану Роналду -metadata title=2026-03-19 - 🚨MBAPPE CONVOCADO CON FRANCIA | NOTICIAS POSITIVAS EN EL REAL MADRID -metadata year=2026 -codec copy -bitexact /tmp/ytdl-sub-working-directory/ramon-alvarez-de-mon-ramonalvarezdemon/wgtkCGW9nTk.mp4.out.mp4
+[ytdl-sub:ffmpeg] Running /usr/bin/ffmpeg -i /tmp/ytdl-sub-working-directory/ramon-alvarez-de-mon-ramonalvarezdemon/wgtkCGW9nTk.mp4 -i /tmp/ytdl-sub-working-directory/ramon-alvarez-de-mon-ramonalvarezdemon/wgtkCGW9nTk.jpg -map 1 -map 0 -dn -c copy -bitexact -disposition:0 attached_pic /tmp/ytdl-sub-working-directory/ramon-alvarez-de-mon-ramonalvarezdemon/wgtkCGW9nTk.mp4.out.mp4
+------------------------------------------------------------
+/config/logs/beets-import.log
+import started Thu Mar 19 18:10:06 2026
+
+[WORKING DIRECTORY]
+0
+[2026-03-19 18:10:28] [INFO] Ejecutando [collect-beets-logs-cp]: docker cp "C:\Users\ZENOSA~1\AppData\Local\Temp\zenotest-7f339607653a46ed94cf46529a90f580.sh" beets-streaming2:/tmp/zenotest-7f339607653a46ed94cf46529a90f580.sh
+0
+[2026-03-19 18:10:28] [INFO] Ejecutando [collect-beets-logs-exec]: docker exec beets-streaming2 sh /tmp/zenotest-7f339607653a46ed94cf46529a90f580.sh
+[BEETS LOG]
+import started Thu Mar 19 18:10:06 2026
+0
+[2026-03-19 18:10:29] [STEP] ============================================================================
+[2026-03-19 18:10:29] [STEP] Fin test aislado de trim
+[2026-03-19 18:10:29] [STEP] ============================================================================
+[2026-03-19 18:10:29] [OK] Test de trim completado correctamente.
+Logs principales:
+- Main log: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\test-zenoytdl\logs\test-trim-only\20260319-181017\test-trim-only.log
+- Transcript: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\test-zenoytdl\logs\test-trim-only\20260319-181017\test-trim-only.transcript.log
+- Carpeta ejecuciÃ³n: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\test-zenoytdl\logs\test-trim-only\20260319-181017
+**********************
+Fin de la transcripción de Windows PowerShell
+Hora de finalización: 20260319181029
+**********************

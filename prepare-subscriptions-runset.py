@@ -1,11 +1,12 @@
 from __future__ import annotations
 
+import argparse
 import json
+import re
 import subprocess
 import sys
 import time
 import unicodedata
-import re
 from datetime import datetime
 from pathlib import Path
 from typing import Any
@@ -87,6 +88,18 @@ def print_separator(title: str | None = None) -> None:
         print(f"[{now_str()}] {title}", flush=True)
         print(f"[{now_str()}] ============================================================", flush=True)
     print("", flush=True)
+
+
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description="Preparar runset inteligente de suscripciones.")
+    parser.add_argument(
+        "--profile-name",
+        dest="profile_names",
+        action="append",
+        default=[],
+        help="Restringe la evaluación a uno o varios profile_name exactos. Puede repetirse.",
+    )
+    return parser.parse_args()
 
 
 def load_yaml(path: Path) -> Any:
@@ -227,13 +240,12 @@ def deep_merge(base: dict[str, Any], override: dict[str, Any]) -> dict[str, Any]
     return result
 
 
-def run_subprocess(cmd: list[str], *, input_text: str | None = None, description: str | None = None) -> subprocess.CompletedProcess[str]:
+def run_subprocess(cmd: list[str], *, description: str | None = None) -> subprocess.CompletedProcess[str]:
     shown = description or " ".join(cmd)
     step(f"Ejecutando subprocess: {shown}")
     started = time.time()
     cp = subprocess.run(
         cmd,
-        input=input_text,
         capture_output=True,
         text=True,
         encoding="utf-8",
@@ -262,7 +274,7 @@ def docker_count_files(path: str, extensions: set[str]) -> int:
     script = (
         'if [ -d "{path}" ]; then '
         'find "{path}" -type f \\( {find_parts} \\) | wc -l; '
-        "else echo 0; fi"
+        'else echo 0; fi'
     ).format(path=path, find_parts=find_parts)
     cp = run_subprocess(
         ["docker", "exec", YTDL_CONTAINER, "sh", "-lc", script],
@@ -354,6 +366,10 @@ def build_output_dir(profile_key: str, subscription_root: str, source_target: st
 
 
 def main() -> None:
+    args = parse_args()
+    requested_profiles = [p.strip() for p in args.profile_names if str(p).strip()]
+    requested_profiles_set = set(requested_profiles)
+
     print_separator("PREPARAR RUNSET INTELIGENTE DE SUSCRIPCIONES")
 
     profiles = normalize_profiles(load_yaml(PROFILES_FILE))
@@ -361,11 +377,18 @@ def main() -> None:
     generated = load_yaml(SUBSCRIPTIONS_GENERATED_FILE)
     current_state = load_json(STATE_FILE)
 
+    if requested_profiles:
+        info(f"Scope de perfiles solicitado: {', '.join(requested_profiles)}")
+        unknown = [p for p in requested_profiles if p not in profiles]
+        if unknown:
+            raise ValueError(f"Perfiles no definidos: {', '.join(unknown)}")
+        subscriptions = [s for s in subscriptions if s["profile_name"] in requested_profiles_set]
+
     runset: dict[str, Any] = {}
     pending_state: dict[str, Any] = {"sources": {}}
 
     info(f"Perfiles cargados: {len(profiles)}")
-    info(f"Suscripciones cargadas: {len(subscriptions)}")
+    info(f"Suscripciones cargadas tras filtro: {len(subscriptions)}")
     info(f"Entradas generadas disponibles: {len(generated) if isinstance(generated, dict) else 0}")
 
     total_sources = sum(len(subscription["sources"]) for subscription in subscriptions)
@@ -508,14 +531,7 @@ def main() -> None:
 
             if include:
                 run_count += 1
-                enriched = dict(generated_entry)
-                enriched["profile_name"] = profile_name
-                enriched["profile_type"] = profile["profile_type"]
-                enriched["custom_name"] = custom_name
-                enriched["source_url"] = url
-                enriched["source_target"] = source_target
-                enriched["subscription_root"] = subscription_root
-                runset[preset_name] = enriched
+                runset[preset_name] = generated_entry
             else:
                 skip_count += 1
 

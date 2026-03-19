@@ -32,12 +32,9 @@ function Test-FilteredRunsetHasEntries {
         [string]$Path
     )
 
-    if (-not (Test-Path $Path)) {
-        return $false
-    }
+    if (-not (Test-Path $Path)) { return $false }
 
     $raw = (Get-Content -Path $Path -Raw -Encoding UTF8).Trim()
-
     if ([string]::IsNullOrWhiteSpace($raw)) { return $false }
     if ($raw -eq '{}') { return $false }
     if ($raw -eq '---') { return $false }
@@ -47,10 +44,7 @@ function Test-FilteredRunsetHasEntries {
 }
 
 function New-TestExecutionContext {
-    param(
-        [Parameter(Mandatory = $true)]
-        [string]$TestName
-    )
+    param([Parameter(Mandatory = $true)][string]$TestName)
 
     $timestamp = Get-Date -Format 'yyyyMMdd-HHmmss'
     $baseDir = Join-Path (Join-Path (Get-LogsRoot) $TestName) $timestamp
@@ -68,7 +62,7 @@ function New-TestExecutionContext {
 
 function Start-TestLogging {
     param([Parameter(Mandatory = $true)]$Context)
-    $null = New-Item -ItemType Directory -Force -Path (Get-LogsRoot)
+    $null = New-Item -ItemType File -Force -Path $Context.MainLog
     Start-Transcript -Path $Context.TranscriptLog -Force | Out-Null
 }
 
@@ -80,13 +74,11 @@ function Write-TestLine {
     param(
         [Parameter(Mandatory = $true)]$Context,
         [Parameter(Mandatory = $true)][string]$Message,
-        [ValidateSet('INFO','WARN','ERROR','OK','STEP')]
+        [ValidateSet('INFO','WARN','OK','STEP','ERROR')]
         [string]$Level = 'INFO'
     )
-
-    $line = ('[{0}] [{1}] {2}' -f (Get-Date -Format 'yyyy-MM-dd HH:mm:ss'), $Level, $Message)
-    Write-Host $line
-    Add-Content -Path $Context.MainLog -Value $line -Encoding UTF8
+    $line = '[{0}] [{1}] {2}' -f (Get-Date -Format 'yyyy-MM-dd HH:mm:ss'), $Level, $Message
+    $line | Tee-Object -FilePath $Context.MainLog -Append | Write-Host
 }
 
 function Write-TestSection {
@@ -94,30 +86,27 @@ function Write-TestSection {
         [Parameter(Mandatory = $true)]$Context,
         [Parameter(Mandatory = $true)][string]$Title
     )
-
-    $sep = '=' * 76
-    Write-TestLine -Context $Context -Message $sep -Level 'STEP'
+    Write-TestLine -Context $Context -Message ('=' * 76) -Level 'STEP'
     Write-TestLine -Context $Context -Message $Title -Level 'STEP'
-    Write-TestLine -Context $Context -Message $sep -Level 'STEP'
+    Write-TestLine -Context $Context -Message ('=' * 76) -Level 'STEP'
 }
 
 function Invoke-LoggedExpression {
     param(
         [Parameter(Mandatory = $true)]$Context,
         [Parameter(Mandatory = $true)][string]$Expression,
-        [string]$Label = 'command',
+        [Parameter(Mandatory = $true)][string]$Label,
         [switch]$AllowFailure
     )
 
-    Write-TestLine -Context $Context -Message ("Ejecutando [{0}]: {1}" -f $Label, $Expression)
-    Add-Content -Path $Context.MainLog -Value ("`n### BEGIN {0}`n{1}`n" -f $Label, $Expression) -Encoding UTF8
+    Write-TestLine -Context $Context -Message "Ejecutando [$Label]: $Expression" -Level 'INFO'
 
     $psi = New-Object System.Diagnostics.ProcessStartInfo
-    $psi.FileName = 'powershell.exe'
-    $psi.Arguments = "-NoProfile -ExecutionPolicy Bypass -Command $Expression"
-    $psi.UseShellExecute = $false
+    $psi.FileName = 'cmd.exe'
+    $psi.Arguments = "/d /c $Expression"
     $psi.RedirectStandardOutput = $true
     $psi.RedirectStandardError = $true
+    $psi.UseShellExecute = $false
     $psi.CreateNoWindow = $true
     $psi.StandardOutputEncoding = [System.Text.UTF8Encoding]::new($false)
     $psi.StandardErrorEncoding = [System.Text.UTF8Encoding]::new($false)
@@ -131,19 +120,20 @@ function Invoke-LoggedExpression {
     $stderr = $process.StandardError.ReadToEnd()
 
     $process.WaitForExit()
-    $exitCode = [int]$process.ExitCode
-    $global:LASTEXITCODE = $exitCode
+    $exitCode = $process.ExitCode
 
-    if ($stdout) {
-        $stdout | Tee-Object -FilePath $Context.MainLog -Append | Out-Host
+    $combined = @()
+    if (-not [string]::IsNullOrWhiteSpace($stdout)) { $combined += $stdout.TrimEnd() }
+    if (-not [string]::IsNullOrWhiteSpace($stderr)) { $combined += $stderr.TrimEnd() }
+
+    if ($combined.Count -gt 0) {
+        ($combined -join [Environment]::NewLine) |
+            Tee-Object -FilePath $Context.MainLog -Append |
+            Write-Host
     }
-    if ($stderr) {
-        $stderr | Tee-Object -FilePath $Context.MainLog -Append | Out-Host
-    }
 
-    Add-Content -Path $Context.MainLog -Value ("`n### END {0} (exit={1})`n" -f $Label, $exitCode) -Encoding UTF8
-
-    if (($exitCode -ne 0) -and (-not $AllowFailure)) {
+    if ($exitCode -ne 0 -and -not $AllowFailure) {
+        Write-RelevantLogPaths -Context $Context
         throw "Fallo [$Label] con exit code $exitCode"
     }
 
@@ -170,58 +160,19 @@ function Invoke-DockerShellScript {
         Invoke-LoggedExpression -Context $Context -Expression ("docker exec {0} sh {1}" -f $Container, $containerTmp) -Label ($Label + '-exec') -AllowFailure:$AllowFailure
     }
     finally {
-        try {
-            & docker exec $Container rm -f $containerTmp *> $null
-        }
-        catch {}
+        try { & docker exec $Container rm -f $containerTmp *> $null } catch {}
         Remove-Item $localTmp -Force -ErrorAction SilentlyContinue
     }
 }
 
 function Get-ProfileDefinitions {
     return @{
-        'Canales-youtube' = @{
-            Slug = 'canales-youtube'
-            OutputTemplate = '/downloads/Canales-youtube/{subscription_root}'
-            Extensions = @('.mp4','.mkv','.webm','.mov','.m4v','.avi')
-            NeedsBeets = $false
-            NeedsTrim = $false
-        }
-        'Podcast' = @{
-            Slug = 'podcast'
-            OutputTemplate = '/downloads/Podcast/{subscription_root}/{source_target}'
-            Extensions = @('.mp3','.m4a','.aac','.opus','.ogg','.wav','.flac')
-            NeedsBeets = $false
-            NeedsTrim = $false
-        }
-        'TV-Serie' = @{
-            Slug = 'tv-serie'
-            OutputTemplate = '/downloads/TV-Serie/{subscription_root}'
-            Extensions = @('.mp4','.mkv','.webm','.mov','.m4v','.avi','.nfo')
-            NeedsBeets = $false
-            NeedsTrim = $false
-        }
-        'Music-Playlist' = @{
-            Slug = 'music-playlist'
-            OutputTemplate = '/downloads/Music-Playlist/{subscription_root}'
-            Extensions = @('.mp3','.m4a','.aac','.opus','.ogg','.wav','.flac')
-            NeedsBeets = $true
-            NeedsTrim = $false
-        }
-        'Ambience-Video' = @{
-            Slug = 'ambience-video'
-            OutputTemplate = '/downloads/Ambience-Video/{subscription_root}'
-            Extensions = @('.mp4','.mkv','.webm','.mov','.m4v','.avi')
-            NeedsBeets = $false
-            NeedsTrim = $true
-        }
-        'Ambience-Audio' = @{
-            Slug = 'ambience-audio'
-            OutputTemplate = '/downloads/Ambience-Audio/{subscription_root}'
-            Extensions = @('.mp3','.m4a','.aac','.opus','.ogg','.wav','.flac')
-            NeedsBeets = $false
-            NeedsTrim = $true
-        }
+        'Canales-youtube' = @{ Slug = 'canales-youtube' }
+        'Podcast'         = @{ Slug = 'podcast' }
+        'TV-Serie'        = @{ Slug = 'tv-serie' }
+        'Music-Playlist'  = @{ Slug = 'music-playlist' }
+        'Ambience-Video'  = @{ Slug = 'ambience-video' }
+        'Ambience-Audio'  = @{ Slug = 'ambience-audio' }
     }
 }
 
@@ -234,78 +185,6 @@ function Assert-ValidProfileName {
     if ($ProfileName -notin (Get-AllProfileNames)) {
         throw "Perfil no válido: $ProfileName. Válidos: $((Get-AllProfileNames) -join ', ')"
     }
-}
-
-function Invoke-PythonInline {
-    param(
-        [Parameter(Mandatory = $true)]$Context,
-        [Parameter(Mandatory = $true)][string]$Code,
-        [Parameter(Mandatory = $true)][string[]]$Arguments,
-        [string]$Label = 'python-inline'
-    )
-
-    $tmpPy = Join-Path $env:TEMP ('zenotest-' + [guid]::NewGuid().ToString('N') + '.py')
-    [System.IO.File]::WriteAllText($tmpPy, (($Code -replace "`r`n", "`n") -replace "`r", "`n"), [System.Text.UTF8Encoding]::new($false))
-    try {
-        $argsQuoted = $Arguments | ForEach-Object { '"' + ($_ -replace '"','\"') + '"' }
-        $expr = 'python -u "{0}" {1}' -f $tmpPy, ($argsQuoted -join ' ')
-        Invoke-LoggedExpression -Context $Context -Expression $expr -Label $Label
-    }
-    finally {
-        Remove-Item $tmpPy -Force -ErrorAction SilentlyContinue
-    }
-}
-
-function Filter-RunsetToProfiles {
-    param(
-        [Parameter(Mandatory = $true)]$Context,
-        [Parameter(Mandatory = $true)][string[]]$Profiles
-    )
-    $projectRoot = Get-ProjectRoot
-    $code = @'
-import json, sys, yaml
-from pathlib import Path
-
-project_root = sys.argv[1]
-profiles = set(sys.argv[2:])
-runset_path = project_root + '/subscriptions.runset.yaml'
-pending_path = project_root + '/.recent-items-state.pending.json'
-out_runset_path = project_root + '/subscriptions.runset.filtered.yaml'
-out_pending_path = project_root + '/.recent-items-state.pending.filtered.json'
-
-runset = yaml.safe_load(open(runset_path, 'r', encoding='utf-8')) or {}
-pending = json.load(open(pending_path, 'r', encoding='utf-8')) if Path(pending_path).exists() else {'sources':{}}
-
-filtered_runset = {}
-for key, value in (runset or {}).items():
-    keep = False
-    if isinstance(value, dict):
-        profile_name = str(value.get('profile_name') or '').strip()
-        if profile_name in profiles:
-            keep = True
-        elif profile_name == '' and key:
-            for p in profiles:
-                if key.startswith(p.lower().replace(' ', '-')):
-                    keep = True
-                    break
-    if keep:
-        filtered_runset[key] = value
-
-filtered_pending = {'sources': {}}
-for key, value in (pending.get('sources') or {}).items():
-    if str(value.get('profile_name','')).strip() in profiles:
-        filtered_pending['sources'][key] = value
-
-with open(out_runset_path, 'w', encoding='utf-8', newline='\n') as fh:
-    yaml.safe_dump(filtered_runset, fh, allow_unicode=True, sort_keys=False, default_flow_style=False, width=1000)
-with open(out_pending_path, 'w', encoding='utf-8') as fh:
-    json.dump(filtered_pending, fh, ensure_ascii=False, indent=2)
-
-print(out_runset_path)
-print(out_pending_path)
-print(len(filtered_runset))
-'@
-    Invoke-PythonInline -Context $Context -Code $code -Arguments (@($projectRoot) + $Profiles) -Label 'filter-runset-profiles'
 }
 
 function Reset-WorkingState {
@@ -323,17 +202,65 @@ rm -f /tmp/trim-ambience-video.py /tmp/trim-ambience-media.py 2>/dev/null || tru
 }
 
 function Invoke-GenerationPhase {
-    param([Parameter(Mandatory = $true)]$Context)
+    param(
+        [Parameter(Mandatory = $true)]$Context,
+        [string[]]$Profiles = @()
+    )
+
     $projectRoot = Get-ProjectRoot
     Push-Location $projectRoot
     try {
-        Write-TestSection -Context $Context -Title 'Generación de YAML y runset completo'
+        Write-TestSection -Context $Context -Title 'Generación de YAML y runset'
         Invoke-LoggedExpression -Context $Context -Expression 'python -u .\generate-ytdl-config.py' -Label 'generate-ytdl-config'
-        Invoke-LoggedExpression -Context $Context -Expression 'python -u .\prepare-subscriptions-runset.py' -Label 'prepare-subscriptions-runset'
+
+        if ($Profiles.Count -gt 0) {
+            $profileArgs = ($Profiles | ForEach-Object { '--profile-name "{0}"' -f $_ }) -join ' '
+            Invoke-LoggedExpression -Context $Context -Expression ("python -u .\prepare-subscriptions-runset.py {0}" -f $profileArgs) -Label 'prepare-subscriptions-runset'
+        }
+        else {
+            Invoke-LoggedExpression -Context $Context -Expression 'python -u .\prepare-subscriptions-runset.py' -Label 'prepare-subscriptions-runset'
+        }
     }
     finally {
         Pop-Location
     }
+}
+
+function Filter-RunsetToProfiles {
+    param(
+        [Parameter(Mandatory = $true)]$Context,
+        [Parameter(Mandatory = $true)][string[]]$Profiles
+    )
+
+    $projectRoot = Get-ProjectRoot
+    $runsetPath = Join-Path $projectRoot 'subscriptions.runset.yaml'
+    $pendingPath = Join-Path $projectRoot '.recent-items-state.pending.json'
+    $filteredRunsetPath = Get-FilteredRunsetPath
+    $filteredPendingPath = Get-FilteredPendingStatePath
+
+    if (-not (Test-Path $runsetPath)) {
+        throw "No existe el runset base: $runsetPath"
+    }
+
+    if (-not (Test-Path $pendingPath)) {
+        throw "No existe el estado pendiente base: $pendingPath"
+    }
+
+    Copy-Item -Path $runsetPath -Destination $filteredRunsetPath -Force
+    Copy-Item -Path $pendingPath -Destination $filteredPendingPath -Force
+
+    $count = 0
+    if (Test-FilteredRunsetHasEntries -Path $filteredRunsetPath) {
+        $raw = Get-Content -Path $filteredRunsetPath -Raw -Encoding UTF8
+        $matches = [regex]::Matches($raw, '^[^\s:#][^:]*:', [System.Text.RegularExpressions.RegexOptions]::Multiline)
+        $count = $matches.Count
+    }
+
+    Write-TestLine -Context $Context -Message "Runset filtrado preparado desde el runset ya scoped por prepare-subscriptions-runset.py" -Level 'INFO'
+    Write-TestLine -Context $Context -Message "Perfiles solicitados: $($Profiles -join ', ')" -Level 'INFO'
+    Write-TestLine -Context $Context -Message "Runset filtrado: $filteredRunsetPath" -Level 'INFO'
+    Write-TestLine -Context $Context -Message "Estado pendiente filtrado: $filteredPendingPath" -Level 'INFO'
+    Write-TestLine -Context $Context -Message "Entradas detectadas en runset filtrado: $count" -Level 'INFO'
 }
 
 function Copy-TrimScriptToContainer {
@@ -366,15 +293,14 @@ function Invoke-RunsetExecution {
     }
 
     Write-TestSection -Context $Context -Title 'Ejecución real de ytdl-sub sobre el runset filtrado'
-    Invoke-LoggedExpression -Context $Context -Expression 'docker exec ytdl-sub sh -lc "ytdl-sub --config /config/zenoytdl/config.generated.yaml sub /config/zenoytdl/subscriptions.runset.filtered.yaml"' -Label 'ytdl-sub-sub'
+    Invoke-LoggedExpression -Context $Context -Expression 'docker exec ytdl-sub ytdl-sub --config /config/zenoytdl/config.generated.yaml sub /config/zenoytdl/subscriptions.runset.filtered.yaml' -Label 'ytdl-sub-sub'
 }
 
 function Promote-PendingState {
     param(
         [Parameter(Mandatory = $true)]$Context,
         [switch]$DryRun,
-        [Parameter(Mandatory = $true)]
-        [bool]$HasEntries
+        [Parameter(Mandatory = $true)][bool]$HasEntries
     )
 
     if ($DryRun) {
@@ -471,9 +397,9 @@ find /tmp/ytdl-sub-working-directory -mindepth 1 -maxdepth 3 -print 2>/dev/null 
 set -e
 printf "[BEETS LOG]\n"
 if [ -f /config/logs/beets-import.log ]; then
-  tail -n 200 /config/logs/beets-import.log
+  tail -n 200 /config/logs/beets-import.log || true
 else
-  echo '[INFO] No existe /config/logs/beets-import.log'
+  echo "[INFO] No existe /config/logs/beets-import.log"
 fi
 '@
     Invoke-DockerShellScript -Context $Context -Container 'beets-streaming2' -Script $beetsScript -Label 'collect-beets-logs' -AllowFailure
@@ -481,11 +407,8 @@ fi
 
 function Write-RelevantLogPaths {
     param([Parameter(Mandatory = $true)]$Context)
-    $msg = @(
-        "Logs principales:",
-        "- Main log: $($Context.MainLog)",
-        "- Transcript: $($Context.TranscriptLog)",
-        "- Carpeta ejecución: $($Context.BaseDir)"
-    ) -join [Environment]::NewLine
-    $msg | Tee-Object -FilePath $Context.SummaryLog -Append | Write-Host
+    Write-Host "Logs principales:"
+    Write-Host "- Main log: $($Context.MainLog)"
+    Write-Host "- Transcript: $($Context.TranscriptLog)"
+    Write-Host "- Carpeta ejecución: $($Context.BaseDir)"
 }

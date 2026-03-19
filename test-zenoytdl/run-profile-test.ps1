@@ -56,22 +56,25 @@ try {
     Write-TestLine -Context $ctx -Message "Project root: $(Get-ProjectRoot)"
 
     if ($ClearDownloadsBool) {
-        Write-TestSection -Context $ctx -Title 'Limpieza global previa solicitada'
-        Write-TestLine -Context $ctx -Message 'Se ejecutará clean-windows-environment.ps1 antes del test.' -Level 'INFO'
+        Write-TestSection -Context $ctx -Title 'Limpieza previa solicitada'
+        Write-TestLine -Context $ctx -Message "Se ejecutará clean-windows-environment.ps1 solo para el perfil: $ProfileName" -Level 'INFO'
 
         $cleanScript = Join-Path $PSScriptRoot 'clean-windows-environment.ps1'
         if (-not (Test-Path $cleanScript)) {
             throw "No existe el script de limpieza requerido: $cleanScript"
         }
 
-        Invoke-LoggedExpression -Context $ctx -Expression ("powershell -ExecutionPolicy Bypass -File `"{0}`"" -f $cleanScript) -Label 'clean-windows-environment'
+        Invoke-LoggedExpression `
+            -Context $ctx `
+            -Expression ("powershell -ExecutionPolicy Bypass -File `"{0}`" -ProfileName `"{1}`"" -f $cleanScript, $ProfileName) `
+            -Label 'clean-windows-environment'
     }
     else {
-        Write-TestLine -Context $ctx -Message 'No se ejecuta limpieza global previa.' -Level 'INFO'
+        Write-TestLine -Context $ctx -Message 'No se ejecuta limpieza previa.' -Level 'INFO'
     }
 
     Reset-WorkingState -Context $ctx
-    Invoke-GenerationPhase -Context $ctx
+    Invoke-GenerationPhase -Context $ctx -Profiles @($ProfileName)
     Filter-RunsetToProfiles -Context $ctx -Profiles @($ProfileName)
 
     $filteredRunsetPath = Get-FilteredRunsetPath

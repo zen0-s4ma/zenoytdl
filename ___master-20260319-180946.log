@@ -1,0 +1,110 @@
+﻿**********************
+Inicio de la transcripción de Windows PowerShell
+Hora de inicio: 20260319180946
+Nombre de usuario: ZENOVERSO\Zeno Sama
+Usuario RunAs: ZENOVERSO\Zeno Sama
+Nombre de la configuración: 
+Máquina: ZENOVERSO (Microsoft Windows NT 10.0.22631.0)
+Aplicación host: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypass -File .\run-master-tests.ps1
+Id. de proceso: 17788
+PSVersion: 5.1.22621.6133
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.22621.6133
+BuildVersion: 10.0.22621.6133
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+La transcripción ha comenzado. El archivo de salida es E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\___master-20260319-180946.log
+Master log: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\___master-20260319-180946.log
+
+
+================================================================================
+INICIO RUN MASTER TESTS
+================================================================================
+Total de pasos planificados: 15
+Orden previsto:
+  [1/15] Limpieza previa del entorno
+  [2/15] Test aislado beets
+  [3/15] Test aislado trim
+  [4/15] Canales-youtube pasada 1
+  [5/15] Podcast pasada 1
+  [6/15] TV-Serie pasada 1
+  [7/15] Music-Playlist pasada 1
+  [8/15] Ambience-Video pasada 1
+  [9/15] Ambience-Audio pasada 1
+  [10/15] Canales-youtube pasada 2
+  [11/15] Podcast pasada 2
+  [12/15] TV-Serie pasada 2
+  [13/15] Music-Playlist pasada 2
+  [14/15] Ambience-Video pasada 2
+  [15/15] Ambience-Audio pasada 2
+
+================================================================================
+LANZANDO [1/15] Limpieza previa del entorno
+================================================================================
+Script     : .\test-zenoytdl\clean-windows-environment.ps1
+Argumentos : -CleanLogs
+Completados: 0
+Pendientes : 15
+
+[OK] [1/15] Limpieza previa del entorno
+DuraciÃ³n paso : 00:00:12
+Acumulado OK  : 1
+Fallos        : 0
+Quedan        : 14
+Tiempo total  : 00:00:12
+
+================================================================================
+LANZANDO [2/15] Test aislado beets
+================================================================================
+Script     : .\test-zenoytdl\test-beets-only.ps1
+Argumentos : -DryRun:$false
+Completados: 1
+Pendientes : 14
+
+[OK] [2/15] Test aislado beets
+DuraciÃ³n paso : 00:00:17
+Acumulado OK  : 2
+Fallos        : 0
+Quedan        : 13
+Tiempo total  : 00:00:29
+
+================================================================================
+LANZANDO [3/15] Test aislado trim
+================================================================================
+Script     : .\test-zenoytdl\test-trim-only.ps1
+Argumentos : -DryRun:$false
+Completados: 2
+Pendientes : 13
+
+[OK] [3/15] Test aislado trim
+DuraciÃ³n paso : 00:00:12
+Acumulado OK  : 3
+Fallos        : 0
+Quedan        : 12
+Tiempo total  : 00:00:42
+
+================================================================================
+LANZANDO [4/15] Canales-youtube pasada 1
+================================================================================
+Script     : .\test-zenoytdl\run-profile-test.ps1
+Argumentos : -ProfileName Canales-youtube -ClearDownloads:$false -DryRun:$false
+Completados: 3
+Pendientes : 12
+
+[OK] [4/15] Canales-youtube pasada 1
+DuraciÃ³n paso : 00:04:11
+Acumulado OK  : 4
+Fallos        : 0
+Quedan        : 11
+Tiempo total  : 00:04:54
+
+================================================================================
+LANZANDO [5/15] Podcast pasada 1
+================================================================================
+Script     : .\test-zenoytdl\run-profile-test.ps1
+Argumentos : -ProfileName Podcast -ClearDownloads:$false -DryRun:$false
+Completados: 4
+Pendientes : 11

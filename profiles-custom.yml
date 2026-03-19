@@ -2,7 +2,7 @@ profiles:
 - profile_name: Canales-youtube
   profile_type: Canales-youtube
   defaults:
-    max_items: 3
+    max_items: 2
     quality: 720p
     format: mp4
     min_duration: ''
@@ -11,7 +11,7 @@ profiles:
 - profile_name: Podcast
   profile_type: Podcast
   defaults:
-    max_items: 3
+    max_items: 2
     quality: best
     format: mp3
     min_duration: 5m
@@ -20,7 +20,7 @@ profiles:
 - profile_name: TV-Serie
   profile_type: TV-Serie
   defaults:
-    max_items: 3
+    max_items: 2
     quality: 1080p
     format: mp4
     min_duration: 5m
