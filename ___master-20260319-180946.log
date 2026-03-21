@@ -123,3 +123,18 @@ Script     : .\test-zenoytdl\run-profile-test.ps1
 Argumentos : -ProfileName TV-Serie -ClearDownloads:$false -DryRun:$false
 Completados: 5
 Pendientes : 10
+
+[OK] [6/15] TV-Serie pasada 1
+DuraciÃ³n paso : 00:25:46
+Acumulado OK  : 6
+Fallos        : 0
+Quedan        : 9
+Tiempo total  : 00:40:14
+
+================================================================================
+LANZANDO [7/15] Music-Playlist pasada 1
+================================================================================
+Script     : .\test-zenoytdl\run-profile-test.ps1
+Argumentos : -ProfileName Music-Playlist -ClearDownloads:$false -DryRun:$false
+Completados: 6
+Pendientes : 9

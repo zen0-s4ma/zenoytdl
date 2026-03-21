@@ -1,22 +1,7 @@
-tv-serie-lolete-kerios:
-  ~lolete-kerios:
-    url: https://www.youtube.com/@Kerios/videos
+music-playlist-music-playlist-prueba-plcajstgncmdxgfdpc5aenevprzgcr-kut:
+  ~music-playlist-prueba-plcajstgncmdxgfdpc5aenevprzgcr-kut:
+    url: https://www.youtube.com/playlist?list=PLcajSTgNCmdXgFdPc5aeNEVPrzGcr_kUt
     enable_resolution_assert: false
-    subscription_root_sanitized: lolete
-    source_target_sanitized: kerios
-    download_strategy: channel
-    only_recent_max_files: 2
-    only_recent_date_range: 100years
-    filter_duration_min_s: 300
-    tv_show_name: lolete
-tv-serie-lolete-nickdaboom:
-  ~lolete-nickdaboom:
-    url: https://www.youtube.com/@nickdaboom/videos
-    enable_resolution_assert: false
-    subscription_root_sanitized: lolete
-    source_target_sanitized: nickdaboom
-    download_strategy: channel
-    only_recent_max_files: 2
-    only_recent_date_range: 100years
-    filter_duration_min_s: 300
-    tv_show_name: lolete
+    subscription_root_sanitized: music-playlist-prueba
+    source_target_sanitized: plcajstgncmdxgfdpc5aenevprzgcr-kut
+    download_strategy: playlist

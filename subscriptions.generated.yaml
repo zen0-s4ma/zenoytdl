@@ -7,7 +7,7 @@ canales-youtube-ramon-alvarez-de-mon-ramonalvarezdemon:
     download_strategy: channel
     only_recent_max_files: 2
     only_recent_date_range: 100years
-    tv_show_name: ramon-alvarez-de-mon
+    tv_show_name: ramonalvarezdemon
 podcast-entrevistas-geoestratego-oficial:
   ~entrevistas-geoestratego-oficial:
     url: https://www.youtube.com/@geoestratego_oficial/videos

@@ -481,7 +481,10 @@ def build_subscription_entry(
         if max_duration_s is not None:
             entry["filter_duration_max_s"] = max_duration_s
 
-    if profile_key in ("canales-youtube", "tv-serie"):
+    if profile_key == "canales-youtube":
+        entry["tv_show_name"] = source_target
+
+    if profile_key == "tv-serie":
         entry["tv_show_name"] = subscription_root
 
     return preset_name, subscription_name, entry
