@@ -1,0 +1,50 @@
+# ============================================================
+# TEST-ZENOYTDL — LISTADO DE COMANDOS PYTHON
+# ============================================================
+# Ejecutar desde la raíz del proyecto:
+# E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl
+# ============================================================
+
+# Perfiles válidos:
+# Canales-youtube
+# Podcast
+# TV-Serie
+# Music-Playlist
+# Ambience-Video
+# Ambience-Audio
+
+# ------------------------------------------------------------
+# 1) Un perfil concreto
+# ------------------------------------------------------------
+python .\test-zenoytdl\run_tests.py --profile "Canales-youtube" --clean
+python .\test-zenoytdl\run_tests.py --profile "Podcast" --clean
+python .\test-zenoytdl\run_tests.py --profile "TV-Serie" --clean
+python .\test-zenoytdl\run_tests.py --profile "Music-Playlist" --clean
+python .\test-zenoytdl\run_tests.py --profile "Ambience-Video" --clean
+python .\test-zenoytdl\run_tests.py --profile "Ambience-Audio" --clean
+
+# ------------------------------------------------------------
+# 2) Un perfil en dry-run
+# ------------------------------------------------------------
+python .\test-zenoytdl\run_tests.py --profile "Podcast" --clean --dry-run
+python .\test-zenoytdl\run_tests.py --profile "Music-Playlist" --clean --dry-run
+
+# ------------------------------------------------------------
+# 3) Varios perfiles concretos en la misma tanda
+# ------------------------------------------------------------
+python .\test-zenoytdl\run_tests.py --profile "Podcast" --profile "TV-Serie" --clean
+
+# ------------------------------------------------------------
+# 4) Batería completa
+# ------------------------------------------------------------
+python .\test-zenoytdl\run_tests.py --all-profiles --clean
+
+# ------------------------------------------------------------
+# 5) Batería completa conservando logs anteriores
+# ------------------------------------------------------------
+python .\test-zenoytdl\run_tests.py --all-profiles --clean --keep-logs
+
+# ------------------------------------------------------------
+# 6) Batería completa en dry-run
+# ------------------------------------------------------------
+python .\test-zenoytdl\run_tests.py --all-profiles --clean --dry-run

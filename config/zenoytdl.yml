@@ -1,0 +1,30 @@
+containers:
+  ytdl_sub: ytdl-sub
+  beets: beets-streaming2
+
+paths:
+  # Rutas LOCALES del repo en el host, relativas a la carpeta donde está zenoytdl-run.py.
+  local:
+    config_user_dir: config/user
+    runtime_base_dir: config/runtime
+
+  # Rutas REMOTAS dentro de los contenedores.
+  remote:
+    project_root: /config/zenoytdl
+    config_user_dir: /config/zenoytdl/config/user
+    runtime_base_dir: /config/zenoytdl/config/runtime
+    remote_trim_script: /tmp/trim-ambience-video.py
+
+  # Rutas de salida por modo dentro del contenedor.
+  downloads_root:
+    prod: /downloads
+    test: /downloads-test
+
+  # Recursos compartidos fuera del repo pero dentro del volumen /config.
+  beets_library:
+    prod: /config/musiclibrary.db
+    test: /config/musiclibrary-test.db
+
+  beets_log:
+    prod: /config/logs/beets-import.log
+    test: /config/logs/beets-import-test.log

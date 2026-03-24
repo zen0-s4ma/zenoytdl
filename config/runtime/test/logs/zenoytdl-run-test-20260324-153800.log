@@ -1,0 +1,1595 @@
+[2026-03-24 15:38:00] [STEP] ==============================================================================
+[2026-03-24 15:38:00] [STEP] Inicio ejecución ZenoYTDL
+[2026-03-24 15:38:00] [STEP] ==============================================================================
+[2026-03-24 15:38:00] [INFO] Proyecto: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl
+[2026-03-24 15:38:00] [INFO] Config user: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\config\user
+[2026-03-24 15:38:00] [INFO] Runtime dir: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\config\runtime\test
+[2026-03-24 15:38:00] [INFO] Perfiles objetivo: Canales-youtube, Podcast, TV-Serie, Music-Playlist, Ambience-Video, Ambience-Audio
+[2026-03-24 15:38:00] [INFO] Mode: test
+[2026-03-24 15:38:00] [INFO] DownloadsRoot: /downloads-test
+[2026-03-24 15:38:00] [INFO] DryRun: False
+[2026-03-24 15:38:00] [INFO] Clean: True
+[2026-03-24 15:38:00] [INFO] CleanProfile: False
+[2026-03-24 15:38:00] [INFO] CleanLogs: True
+[2026-03-24 15:38:00] [INFO] KeepLogs: False
+[2026-03-24 15:38:00] [INFO] RestartYtdlSub: True
+[2026-03-24 15:38:00] [INFO] IncludePostprocessTests: fail
+[2026-03-24 15:38:00] [INFO] Log principal: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\config\runtime\test\logs\zenoytdl-run-test-20260324-153800.log
+[2026-03-24 15:38:00] [STEP] ==============================================================================
+[2026-03-24 15:38:00] [STEP] Autotest inicial de postprocesados
+[2026-03-24 15:38:00] [STEP] ==============================================================================
+[2026-03-24 15:38:00] [INFO] Ejecutando [postprocess-selftest]...
+[2026-03-24 15:38:09] [INFO] Fin [postprocess-selftest] rc=0 en 8.95s
+[2026-03-24 15:38:09] [OK] Autotest de postprocesados completado correctamente.
+[2026-03-24 15:38:09] [STEP] ==============================================================================
+[2026-03-24 15:38:09] [STEP] Limpieza previa del entorno (test)
+[2026-03-24 15:38:09] [STEP] ==============================================================================
+[2026-03-24 15:38:09] [INFO] Perfiles en alcance de limpieza: Canales-youtube, Podcast, TV-Serie, Music-Playlist, Ambience-Video, Ambience-Audio
+[2026-03-24 15:38:09] [OK] Eliminado temporal local: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\config\runtime\test\subscriptions.runset.yaml
+[2026-03-24 15:38:09] [OK] Eliminado temporal local: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\config\runtime\test\.recent-items-state.pending.json
+[2026-03-24 15:38:09] [OK] Eliminado temporal local: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\config\runtime\test\config.generated.yaml
+[2026-03-24 15:38:09] [OK] Eliminado temporal local: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\config\runtime\test\subscriptions.generated.yaml
+[2026-03-24 15:38:09] [OK] Eliminado temporal local: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\config\runtime\test\beets.music-playlist.yaml
+[2026-03-24 15:38:09] [OK] Estado local reiniciado: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\config\runtime\test\.recent-items-state.json
+[2026-03-24 15:38:09] [INFO] Ejecutando [clean-ytdl-sub-cp]...
+[2026-03-24 15:38:10] [INFO] Fin [clean-ytdl-sub-cp] rc=0 en 0.09s
+[2026-03-24 15:38:10] [INFO] Ejecutando [clean-ytdl-sub-exec]...
+[2026-03-24 15:38:10] [PROC] [INFO] Vaciando contenido de /downloads-test/Canales-youtube
+[2026-03-24 15:38:10] [PROC] [INFO] Vaciando contenido de /downloads-test/Podcast
+[2026-03-24 15:38:11] [PROC] [INFO] Vaciando contenido de /downloads-test/TV-Serie
+[2026-03-24 15:38:11] [PROC] [INFO] Vaciando contenido de /downloads-test/Music-Playlist
+[2026-03-24 15:38:11] [PROC] [INFO] Vaciando contenido de /downloads-test/Ambience-Video
+[2026-03-24 15:38:11] [INFO] Fin [clean-ytdl-sub-exec] rc=0 en 1.54s
+[2026-03-24 15:38:11] [INFO] Ejecutando [clean-ytdl-sub-rm]...
+[2026-03-24 15:38:11] [INFO] Fin [clean-ytdl-sub-rm] rc=0 en 0.22s
+[2026-03-24 15:38:12] [INFO] Ejecutando [clean-beets-cp]...
+[2026-03-24 15:38:13] [INFO] Fin [clean-beets-cp] rc=0 en 0.17s
+[2026-03-24 15:38:14] [INFO] Ejecutando [clean-beets-exec]...
+[2026-03-24 15:38:14] [PROC] [INFO] Vaciando contenido de /downloads-test/Canales-youtube
+[2026-03-24 15:38:14] [PROC] [INFO] Vaciando contenido de /downloads-test/Podcast
+[2026-03-24 15:38:14] [PROC] [INFO] Vaciando contenido de /downloads-test/TV-Serie
+[2026-03-24 15:38:14] [PROC] [INFO] Vaciando contenido de /downloads-test/Music-Playlist
+[2026-03-24 15:38:14] [PROC] [INFO] Vaciando contenido de /downloads-test/Ambience-Video
+[2026-03-24 15:38:14] [INFO] Fin [clean-beets-exec] rc=0 en 0.29s
+[2026-03-24 15:38:14] [INFO] Ejecutando [clean-beets-rm]...
+[2026-03-24 15:38:14] [INFO] Fin [clean-beets-rm] rc=0 en 0.18s
+[2026-03-24 15:38:14] [INFO] Ejecutando [restart-ytdl-sub]...
+[2026-03-24 15:38:18] [PROC] ytdl-sub
+[2026-03-24 15:38:18] [INFO] Fin [restart-ytdl-sub] rc=0 en 3.57s
+[2026-03-24 15:38:18] [STEP] ==============================================================================
+[2026-03-24 15:38:18] [STEP] Inicio ejecución perfil: Canales-youtube
+[2026-03-24 15:38:18] [STEP] ==============================================================================
+[2026-03-24 15:38:18] [INFO] Project root: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl
+[2026-03-24 15:38:18] [INFO] Mode: test
+[2026-03-24 15:38:18] [INFO] DryRun: False
+[2026-03-24 15:38:18] [INFO] Ejecutando [generate-ytdl-config]...
+[2026-03-24 15:38:18] [INFO] Fin [generate-ytdl-config] rc=0 en 0.26s
+[2026-03-24 15:38:19] [INFO] Ejecutando [prepare-subscriptions-runset]...
+[2026-03-24 15:38:28] [INFO] Fin [prepare-subscriptions-runset] rc=0 en 9.39s
+[2026-03-24 15:38:28] [INFO] Runset con entradas: True
+[2026-03-24 15:38:28] [INFO] Ejecutando [ytdl-sub-sub]...
+[2026-03-24 15:38:29] [PROC] [ytdl-sub] Validating subscriptions...
+[2026-03-24 15:38:29] [PROC] [ytdl-sub:preset] Throttle protection is disabled. Use at your own risk!
+[2026-03-24 15:38:29] [PROC] [ytdl-sub] Beginning subscription download for ramon-alvarez-de-mon-ramonalvarezdemon
+[2026-03-24 15:38:29] [PROC] [ytdl-sub:preset] Throttle protection is disabled. Use at your own risk!
+[2026-03-24 15:38:30] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] Extracting URL: https://www.youtube.com/@RamonAlvarezdeMon/videos
+[2026-03-24 15:38:30] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] @RamonAlvarezdeMon/videos: Downloading webpage
+[2026-03-24 15:38:30] [PROC] [ytdl-sub:yt-dlp] [info] Writing playlist metadata as JSON to: /tmp/ytdl-sub-working-directory/ramon-alvarez-de-mon-ramonalvarezdemon/UCrd8pmcZ0Za0ufAfxOrIzmQ.info.json
+[2026-03-24 15:38:30] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] Playlist Ramon Alvarez de Mon  - Videos: Downloading N/A items
+[2026-03-24 15:38:30] [PROC] [ytdl-sub:yt-dlp] [youtube] Extracting URL: https://www.youtube.com/watch?v=BIhiKZtH_5o
+[2026-03-24 15:38:30] [PROC] [ytdl-sub:yt-dlp] [youtube] BIhiKZtH_5o: Downloading webpage
+[2026-03-24 15:38:30] [PROC] [ytdl-sub:downloader] Downloading metadata for Ramon Alvarez de Mon  - Videos
+[2026-03-24 15:38:32] [PROC] [ytdl-sub:yt-dlp] [youtube] BIhiKZtH_5o: Downloading android vr player API JSON
+[2026-03-24 15:38:33] [PROC] [ytdl-sub:yt-dlp] [youtube] BIhiKZtH_5o: Downloading player 1ebf2aa6-main
+[2026-03-24 15:38:33] [PROC] [ytdl-sub:yt-dlp] [youtube] [jsc:deno] Solving JS challenges using deno
+[2026-03-24 15:38:39] [PROC] [ytdl-sub:yt-dlp] [youtube] BIhiKZtH_5o: Downloading m3u8 information
+[2026-03-24 15:38:39] [PROC] [ytdl-sub:yt-dlp] [info] BIhiKZtH_5o: Downloading 1 format(s): 398+251
+[2026-03-24 15:38:39] [PROC] [ytdl-sub:yt-dlp] [info] Writing video metadata as JSON to: /tmp/ytdl-sub-working-directory/ramon-alvarez-de-mon-ramonalvarezdemon/BIhiKZtH_5o.info.json
+[2026-03-24 15:38:39] [PROC] [ytdl-sub:yt-dlp] [youtube] Extracting URL: https://www.youtube.com/watch?v=Y3dCWejHleQ
+[2026-03-24 15:38:39] [PROC] [ytdl-sub:yt-dlp] [youtube] Y3dCWejHleQ: Downloading webpage
+[2026-03-24 15:38:39] [PROC] [ytdl-sub:downloader] Downloading metadata for 🚨KLOPP NIEGA CONTACTOS CON EL REAL MADRID, PERO NO CIERRA LA PUERTA
+[2026-03-24 15:38:40] [PROC] [ytdl-sub:yt-dlp] [youtube] Y3dCWejHleQ: Downloading android vr player API JSON
+[2026-03-24 15:38:41] [PROC] [ytdl-sub:yt-dlp] [youtube] [jsc:deno] Solving JS challenges using deno
+[2026-03-24 15:38:43] [PROC] [ytdl-sub:yt-dlp] [youtube] Y3dCWejHleQ: Downloading m3u8 information
+[2026-03-24 15:38:43] [PROC] [ytdl-sub:yt-dlp] [info] Y3dCWejHleQ: Downloading 1 format(s): 398+251
+[2026-03-24 15:38:43] [PROC] [ytdl-sub:yt-dlp] [info] Writing video metadata as JSON to: /tmp/ytdl-sub-working-directory/ramon-alvarez-de-mon-ramonalvarezdemon/Y3dCWejHleQ.info.json
+[2026-03-24 15:38:43] [PROC] [ytdl-sub:downloader] Downloading metadata for 🚨EXCLUSIVA: ACHRAF HAKIMI QUIERE VOLVER AL REAL MADRID
+[2026-03-24 15:38:43] [PROC] [ytdl-sub:yt-dlp-downloader] MaxDownloadsReached, stopping additional downloads.
+[2026-03-24 15:38:43] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] Extracting URL: https://www.youtube.com/@RamonAlvarezdeMon
+[2026-03-24 15:38:43] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] @RamonAlvarezdeMon: Downloading webpage
+[2026-03-24 15:38:44] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] Downloading all uploads of the channel. To download only the videos in a specific tab, pass the tab's URL
+[2026-03-24 15:38:44] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] @RamonAlvarezdeMon/streams: Downloading webpage
+[2026-03-24 15:38:44] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] @RamonAlvarezdeMon/shorts: Downloading webpage
+[2026-03-24 15:38:44] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] Downloading as multiple playlists, separated by tabs. To download as a single playlist instead, pass https://www.youtube.com/playlist?list=UUrd8pmcZ0Za0ufAfxOrIzmQ
+[2026-03-24 15:38:44] [PROC] [ytdl-sub:yt-dlp] [info] Writing playlist metadata as JSON to: /tmp/ytdl-sub-working-directory/ramon-alvarez-de-mon-ramonalvarezdemon/@RamonAlvarezdeMon.info.json
+[2026-03-24 15:38:44] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] Playlist Ramon Alvarez de Mon : Downloading N/A items of 3
+[2026-03-24 15:38:44] [PROC] [ytdl-sub:yt-dlp] WARNING: Ignoring playliststart and playlistend because playlistitems was given
+[2026-03-24 15:38:44] [PROC] [ytdl-sub:yt-dlp] [info] Writing updated playlist metadata as JSON to: /tmp/ytdl-sub-working-directory/ramon-alvarez-de-mon-ramonalvarezdemon/@RamonAlvarezdeMon.info.json
+[2026-03-24 15:38:44] [PROC] [ytdl-sub:downloader] Beginning downloads for https://www.youtube.com/@RamonAlvarezdeMon/videos
+[2026-03-24 15:38:45] [PROC] [ytdl-sub:downloader] Downloading entry 1/2: 🚨EXCLUSIVA: ACHRAF HAKIMI QUIERE VOLVER AL REAL MADRID
+[2026-03-24 15:38:45] [PROC] [ytdl-sub:yt-dlp] [youtube] Extracting URL: https://www.youtube.com/watch?v=Y3dCWejHleQ
+[2026-03-24 15:38:45] [PROC] [ytdl-sub:yt-dlp] [youtube] Y3dCWejHleQ: Downloading webpage
+[2026-03-24 15:38:46] [PROC] [ytdl-sub:yt-dlp] [youtube] Y3dCWejHleQ: Downloading android vr player API JSON
+[2026-03-24 15:38:46] [PROC] [ytdl-sub:yt-dlp] [youtube] Y3dCWejHleQ: Downloading player 1ebf2aa6-main
+[2026-03-24 15:38:46] [PROC] [ytdl-sub:yt-dlp] [youtube] [jsc:deno] Solving JS challenges using deno
+[2026-03-24 15:38:48] [PROC] [ytdl-sub:yt-dlp] [youtube] Y3dCWejHleQ: Downloading m3u8 information
+[2026-03-24 15:38:49] [PROC] [ytdl-sub:yt-dlp] [info] Y3dCWejHleQ: Downloading 1 format(s): 398+251
+[2026-03-24 15:38:49] [PROC] [ytdl-sub:yt-dlp] [info] Downloading video thumbnail 41 ...
+[2026-03-24 15:38:49] [PROC] [ytdl-sub:yt-dlp] [info] Writing video thumbnail 41 to: /tmp/ytdl-sub-working-directory/ramon-alvarez-de-mon-ramonalvarezdemon/Y3dCWejHleQ.webp
+[2026-03-24 15:38:53] [PROC] [ytdl-sub:yt-dlp] [Merger] Merging formats into "/tmp/ytdl-sub-working-directory/ramon-alvarez-de-mon-ramonalvarezdemon/Y3dCWejHleQ.mp4"
+[2026-03-24 15:38:56] [PROC] [ytdl-sub:yt-dlp] Deleting original file /tmp/ytdl-sub-working-directory/ramon-alvarez-de-mon-ramonalvarezdemon/Y3dCWejHleQ.f251.webm (pass -k to keep)
+[2026-03-24 15:38:56] [PROC] [ytdl-sub:yt-dlp] Deleting original file /tmp/ytdl-sub-working-directory/ramon-alvarez-de-mon-ramonalvarezdemon/Y3dCWejHleQ.f398.mp4 (pass -k to keep)
+[2026-03-24 15:38:56] [PROC] [ytdl-sub:yt-dlp] [Metadata] There isn't any metadata to add
+[2026-03-24 15:39:00] [PROC] [ytdl-sub:downloader] Downloading entry 2/2: 🚨KLOPP NIEGA CONTACTOS CON EL REAL MADRID, PERO NO CIERRA LA PUERTA
+[2026-03-24 15:39:01] [PROC] [ytdl-sub:yt-dlp] [youtube] Extracting URL: https://www.youtube.com/watch?v=BIhiKZtH_5o
+[2026-03-24 15:39:01] [PROC] [ytdl-sub:yt-dlp] [youtube] BIhiKZtH_5o: Downloading webpage
+[2026-03-24 15:39:01] [PROC] [ytdl-sub:yt-dlp] [youtube] BIhiKZtH_5o: Downloading android vr player API JSON
+[2026-03-24 15:39:02] [PROC] [ytdl-sub:yt-dlp] [youtube] BIhiKZtH_5o: Downloading player 1ebf2aa6-main
+[2026-03-24 15:39:02] [PROC] [ytdl-sub:yt-dlp] [youtube] [jsc:deno] Solving JS challenges using deno
+[2026-03-24 15:39:04] [PROC] [ytdl-sub:yt-dlp] [youtube] BIhiKZtH_5o: Downloading m3u8 information
+[2026-03-24 15:39:04] [PROC] [ytdl-sub:yt-dlp] [info] BIhiKZtH_5o: Downloading 1 format(s): 398+251
+[2026-03-24 15:39:04] [PROC] [ytdl-sub:yt-dlp] [info] Downloading video thumbnail 41 ...
+[2026-03-24 15:39:04] [PROC] [ytdl-sub:yt-dlp] [info] Writing video thumbnail 41 to: /tmp/ytdl-sub-working-directory/ramon-alvarez-de-mon-ramonalvarezdemon/BIhiKZtH_5o.webp
+[2026-03-24 15:39:08] [PROC] [ytdl-sub:yt-dlp] [Merger] Merging formats into "/tmp/ytdl-sub-working-directory/ramon-alvarez-de-mon-ramonalvarezdemon/BIhiKZtH_5o.mp4"
+[2026-03-24 15:39:09] [PROC] [ytdl-sub:yt-dlp] Deleting original file /tmp/ytdl-sub-working-directory/ramon-alvarez-de-mon-ramonalvarezdemon/BIhiKZtH_5o.f398.mp4 (pass -k to keep)
+[2026-03-24 15:39:09] [PROC] [ytdl-sub:yt-dlp] Deleting original file /tmp/ytdl-sub-working-directory/ramon-alvarez-de-mon-ramonalvarezdemon/BIhiKZtH_5o.f251.webm (pass -k to keep)
+[2026-03-24 15:39:09] [PROC] [ytdl-sub:yt-dlp] [Metadata] There isn't any metadata to add
+[2026-03-24 15:39:13] [PROC] [ytdl-sub] Transaction log for ramon-alvarez-de-mon-ramonalvarezdemon:
+[2026-03-24 15:39:13] [PROC] Files created:
+[2026-03-24 15:39:13] [PROC] ----------------------------------------
+[2026-03-24 15:39:13] [PROC] /downloads-test/Canales-youtube/ramonalvarezdemon
+[2026-03-24 15:39:13] [PROC] .ytdl-sub-ramon-alvarez-de-mon-ramonalvarezdemon-download-archive.json
+[2026-03-24 15:39:13] [PROC] fanart.jpg
+[2026-03-24 15:39:13] [PROC] poster.jpg
+[2026-03-24 15:39:13] [PROC] tvshow.nfo
+[2026-03-24 15:39:13] [PROC] NFO tags:
+[2026-03-24 15:39:13] [PROC] tvshow:
+[2026-03-24 15:39:13] [PROC] genre: ytdl-sub
+[2026-03-24 15:39:13] [PROC] mpaa: TV-14
+[2026-03-24 15:39:13] [PROC] title: ramonalvarezdemon
+[2026-03-24 15:39:13] [PROC] /downloads-test/Canales-youtube/ramonalvarezdemon/Season 2026
+[2026-03-24 15:39:13] [PROC] s2026.e032401 - 🚨EXCLUSIVA： ACHRAF HAKIMI QUIERE VOLVER AL REAL MADRID-thumb.jpg
+[2026-03-24 15:39:14] [PROC] s2026.e032401 - 🚨EXCLUSIVA： ACHRAF HAKIMI QUIERE VOLVER AL REAL MADRID.info.json
+[2026-03-24 15:39:14] [PROC] s2026.e032401 - 🚨EXCLUSIVA： ACHRAF HAKIMI QUIERE VOLVER AL REAL MADRID.mp4
+[2026-03-24 15:39:14] [PROC] Video Tags:
+[2026-03-24 15:39:14] [PROC] contentRating: TV-14
+[2026-03-24 15:39:14] [PROC] date: 2026-03-24
+[2026-03-24 15:39:14] [PROC] episode_id: 32401
+[2026-03-24 15:39:14] [PROC] genre: ytdl-sub
+[2026-03-24 15:39:14] [PROC] show: ramonalvarezdemon
+[2026-03-24 15:39:14] [PROC] synopsis:
+[2026-03-24 15:39:14] [PROC] https://www.youtube.com/watch?v=Y3dCWejHleQ
+[2026-03-24 15:39:14] [PROC] ✅ Achraf Hakimi quiere volver al real Madrid en una operación que se antoja complicada
+[2026-03-24 15:39:14] [PROC] Canal de Whatsapp: https://whatsapp.com/channel/0029VaDEAA7Elagyf0txTx03
+[2026-03-24 15:39:14] [PROC] ⚡ 𝗦𝗨𝗦𝗖𝗥Í𝗕𝗘𝗧𝗘: https://www.youtube.com/c/RamonAlvarezdeMon?sub_confirmation=1
+[2026-03-24 15:39:14] [PROC] ⭐ 😎 𝗛𝗔𝗭𝗧𝗘 𝗠𝗜𝗘𝗠𝗕𝗥𝗢  𝗗𝗘𝗟 𝗖𝗔𝗡𝗔𝗟 👉https://www.youtube.com/channel/UCrd8pmcZ0Za0ufAfxOrIzmQ/join
+[2026-03-24 15:39:14] [PROC] Mi web: https://ramonalvarezdemon.com/
+[2026-03-24 15:39:14] [PROC] 👕 TIENDA DE MON 👉 https://www.latostadora.com/ramonalvarezdemon/
+[2026-03-24 15:39:14] [PROC] 𝗔𝗟𝗚𝗨𝗡𝗔𝗦 𝗖𝗢𝗦𝗔𝗦 𝗦𝗢𝗕𝗥𝗘 𝗠Í:
+[2026-03-24 15:39:14] [PROC] 𝗪𝗜𝗞𝗜𝗣𝗘𝗗𝗜𝗔: https://es.wikipedia.org/wiki/Ram%C3%B3n_%C3%A1lvarez_de_mon
+[2026-03-24 15:39:14] [PROC] 😉 𝗦Í𝗚𝗨𝗘𝗠𝗘 en mis otras 𝗥𝗘𝗗𝗘𝗦 𝗦𝗢𝗖𝗜𝗔𝗟𝗘𝗦:
+[2026-03-24 15:39:14] [PROC] 𝗧𝗪𝗜𝗧𝗧𝗘𝗥:  https://twitter.com/Ramon_AlvarezMM
+[2026-03-24 15:39:14] [PROC] TIK TOK: https://www.tiktok.com/@ramonalvarezdemonoficial
+[2026-03-24 15:39:14] [PROC] 𝗜𝗡𝗦𝗧𝗔𝗚𝗥𝗔𝗠: https://www.instagram.com/ramonalvarezdemon/
+[2026-03-24 15:39:14] [PROC] TWITCH: https://www.twitch.tv/ramonalvarezdemon
+[2026-03-24 15:39:14] [PROC] ✍️ 𝗢 𝗟É𝗘𝗠𝗘 en los medios en los que escribo:
+[2026-03-24 15:39:14] [PROC] 𝗟𝗔 𝗚𝗔𝗟𝗘𝗥𝗡𝗔: https://www.lagalerna.com/author/ramo...
+[2026-03-24 15:39:14] [PROC] 𝗢𝗞 𝗗𝗜𝗔𝗥𝗜𝗢: https://okdiario.com/diariomadridista...
+[2026-03-24 15:39:14] [PROC] Music: www.bensound.com
+[2026-03-24 15:39:14] [PROC] Etiquetas manuales:
+[2026-03-24 15:39:14] [PROC] Ramón Álvarez de Mon, Álvarez de Mon, directo Álvarez de Mon, directo Ramón Álvarez de Mon, Real Madrid, Real Madrid CF, Real Madrid vs, Real Madrid hoy, Noticias Real Madrid, Últimas noticias Real Madrid, Real Madrid noticias, Real Madrid última hora, última hora Real Madrid, Real Madrid información, Opinión Real Madrid, Debates Real Madrid, Rumores Real Madrid, Real Madrid 2021/2022, Real Madrid news, Real, madrid, transfers, Real madrid rumours, Canal Real Madrid, Canal madridista, Youtuber madridista, Youtuber Real Madrid, La Galerna, Marca, Radio Marca, Real Madrid fichajes, Fichajes Real Madrid, Fichajes 2022, Mercado Real Madrid, Mbappé, Haaland, Kylian Mbappé, Erling Haaland, fichaje Mbappé, fichaje Haaland, Mbappé Real Madrid, Haaland Real Madrid, Salidas Real Madrid, Salidas Real Madrid 2022, Oferta Real Madrid, Liga, LaLiga, Liga Santander, Liga 2021/2022, Liga 21/22, Copa del Rey, Copa del Rey 2022, Champions League, Champions League 2021/2022, UEFA Champions League, UCL. Plantilla Real Madrid, jugadores Real Madrid, lesionados Real Madrid, alineación Real Madrid, convocatoria Real Madrid, Vinicius, Vinicius JR, Benzema, Karim Benzema, Ancelotti, Carlo Ancelotti, Eden Hazard, Gareth Bale, Luka Modric, Toni Kroos, Casemiro, Rodrygo, Alaba, Militao, Ferland Mendy, Dani Carvajal, Fede Valverde, Thibaut Courtois, Isco, Marco Asensio, Marcelo, Cristiano Ronaldo, CR7, Zinedine Zidane, Sergio Ramos, Clásico, Real Madrid-Barcelona, Real Madrid vs Barcelona, Real Madrid Barça, Castilla, Raúl Real Madrid, Juvenil Real Madrid, Partidos, partidos Real Madrid, goles, goles Real Madrid, gol Real Madrid, Crónica Real Madrid, Previa Real Madrid, Análisis Real Madrid, Resumen Real Madrid, highlights Real Madrid, Top Real Madrid, Real Madrid directo, próximo partido Real Madrid, calendario Real Madrid, Equipación Real Madrid, camiseta Real Madrid, himno Real Madrid, escudo Real Madrid, Historia Real Madrid, Santiago Bernabéu, Bernabéu, Nuevo Bernabéu, Nuevo Santiago Bernabéu, Reforma Santiago Bernabéu, Obras Santiago Bernabéu, Reforma Bernabéu, Obras Bernabéu, estadio Bernabéu, Nuevo Estadio Santiago Bernabéu, Real Madrid oficial, Florentino, Florentino Pérez, Economía Real Madrid, Masa salarial Real Madrid, Masa salarial, Límite salarial, Tebas, Superliga, Hala Madrid, REAL MADRID レアルマドリード皇家馬德里 ريال مدريد Реал रियल मैड्रिड كريستيانو رونالدو 克里斯蒂 多 克里斯蒂亞諾羅納爾多 Κριστιάνο Ρονάλντο रोनाल्डो क्रिस्टियानो クリスティアーノロナウドКриштиану Роналду
+[2026-03-24 15:39:14] [PROC] title: 2026-03-24 - 🚨EXCLUSIVA: ACHRAF HAKIMI QUIERE VOLVER AL REAL MADRID
+[2026-03-24 15:39:14] [PROC] year: 2026
+[2026-03-24 15:39:14] [PROC] Embedded thumbnail
+[2026-03-24 15:39:14] [PROC] s2026.e032401 - 🚨EXCLUSIVA： ACHRAF HAKIMI QUIERE VOLVER AL REAL MADRID.nfo
+[2026-03-24 15:39:14] [PROC] NFO tags:
+[2026-03-24 15:39:14] [PROC] episodedetails:
+[2026-03-24 15:39:15] [PROC] aired: 2026-03-24
+[2026-03-24 15:39:15] [PROC] episode: 32401
+[2026-03-24 15:39:15] [PROC] genre: ytdl-sub
+[2026-03-24 15:39:15] [PROC] mpaa: TV-14
+[2026-03-24 15:39:15] [PROC] plot:
+[2026-03-24 15:39:15] [PROC] https://www.youtube.com/watch?v=Y3dCWejHleQ
+[2026-03-24 15:39:15] [PROC] ✅ Achraf Hakimi quiere volver al real Madrid en una operación que se antoja complicada
+[2026-03-24 15:39:15] [PROC] Canal de Whatsapp: https://whatsapp.com/channel/0029VaDEAA7Elagyf0txTx03
+[2026-03-24 15:39:15] [PROC] ⚡ 𝗦𝗨𝗦𝗖𝗥Í𝗕𝗘𝗧𝗘: https://www.youtube.com/c/RamonAlvarezdeMon?sub_confirmation=1
+[2026-03-24 15:39:15] [PROC] ⭐ 😎 𝗛𝗔𝗭𝗧𝗘 𝗠𝗜𝗘𝗠𝗕𝗥𝗢  𝗗𝗘𝗟 𝗖𝗔𝗡𝗔𝗟 👉https://www.youtube.com/channel/UCrd8pmcZ0Za0ufAfxOrIzmQ/join
+[2026-03-24 15:39:15] [PROC] Mi web: https://ramonalvarezdemon.com/
+[2026-03-24 15:39:15] [PROC] 👕 TIENDA DE MON 👉 https://www.latostadora.com/ramonalvarezdemon/
+[2026-03-24 15:39:15] [PROC] 𝗔𝗟𝗚𝗨𝗡𝗔𝗦 𝗖𝗢𝗦𝗔𝗦 𝗦𝗢𝗕𝗥𝗘 𝗠Í:
+[2026-03-24 15:39:15] [PROC] 𝗪𝗜𝗞𝗜𝗣𝗘𝗗𝗜𝗔: https://es.wikipedia.org/wiki/Ram%C3%B3n_%C3%A1lvarez_de_mon
+[2026-03-24 15:39:15] [PROC] 😉 𝗦Í𝗚𝗨𝗘𝗠𝗘 en mis otras 𝗥𝗘𝗗𝗘𝗦 𝗦𝗢𝗖𝗜𝗔𝗟𝗘𝗦:
+[2026-03-24 15:39:15] [PROC] 𝗧𝗪𝗜𝗧𝗧𝗘𝗥:  https://twitter.com/Ramon_AlvarezMM
+[2026-03-24 15:39:15] [PROC] TIK TOK: https://www.tiktok.com/@ramonalvarezdemonoficial
+[2026-03-24 15:39:15] [PROC] 𝗜𝗡𝗦𝗧𝗔𝗚𝗥𝗔𝗠: https://www.instagram.com/ramonalvarezdemon/
+[2026-03-24 15:39:15] [PROC] TWITCH: https://www.twitch.tv/ramonalvarezdemon
+[2026-03-24 15:39:15] [PROC] ✍️ 𝗢 𝗟É𝗘𝗠𝗘 en los medios en los que escribo:
+[2026-03-24 15:39:15] [PROC] 𝗟𝗔 𝗚𝗔𝗟𝗘𝗥𝗡𝗔: https://www.lagalerna.com/author/ramo...
+[2026-03-24 15:39:15] [PROC] 𝗢𝗞 𝗗𝗜𝗔𝗥𝗜𝗢: https://okdiario.com/diariomadridista...
+[2026-03-24 15:39:15] [PROC] Music: www.bensound.com
+[2026-03-24 15:39:16] [PROC] Etiquetas manuales:
+[2026-03-24 15:39:16] [PROC] Ramón Álvarez de Mon, Álvarez de Mon, directo Álvarez de Mon, directo Ramón Álvarez de Mon, Real Madrid, Real Madrid CF, Real Madrid vs, Real Madrid hoy, Noticias Real Madrid, Últimas noticias Real Madrid, Real Madrid noticias, Real Madrid última hora, última hora Real Madrid, Real Madrid información, Opinión Real Madrid, Debates Real Madrid, Rumores Real Madrid, Real Madrid 2021/2022, Real Madrid news, Real, madrid, transfers, Real madrid rumours, Canal Real Madrid, Canal madridista, Youtuber madridista, Youtuber Real Madrid, La Galerna, Marca, Radio Marca, Real Madrid fichajes, Fichajes Real Madrid, Fichajes 2022, Mercado Real Madrid, Mbappé, Haaland, Kylian Mbappé, Erling Haaland, fichaje Mbappé, fichaje Haaland, Mbappé Real Madrid, Haaland Real Madrid, Salidas Real Madrid, Salidas Real Madrid 2022, Oferta Real Madrid, Liga, LaLiga, Liga Santander, Liga 2021/2022, Liga 21/22, Copa del Rey, Copa del Rey 2022, Champions League, Champions League 2021/2022, UEFA Champions League, UCL. Plantilla Real Madrid, jugadores Real Madrid, lesionados Real Madrid, alineación Real Madrid, convocatoria Real Madrid, Vinicius, Vinicius JR, Benzema, Karim Benzema, Ancelotti, Carlo Ancelotti, Eden Hazard, Gareth Bale, Luka Modric, Toni Kroos, Casemiro, Rodrygo, Alaba, Militao, Ferland Mendy, Dani Carvajal, Fede Valverde, Thibaut Courtois, Isco, Marco Asensio, Marcelo, Cristiano Ronaldo, CR7, Zinedine Zidane, Sergio Ramos, Clásico, Real Madrid-Barcelona, Real Madrid vs Barcelona, Real Madrid Barça, Castilla, Raúl Real Madrid, Juvenil Real Madrid, Partidos, partidos Real Madrid, goles, goles Real Madrid, gol Real Madrid, Crónica Real Madrid, Previa Real Madrid, Análisis Real Madrid, Resumen Real Madrid, highlights Real Madrid, Top Real Madrid, Real Madrid directo, próximo partido Real Madrid, calendario Real Madrid, Equipación Real Madrid, camiseta Real Madrid, himno Real Madrid, escudo Real Madrid, Historia Real Madrid, Santiago Bernabéu, Bernabéu, Nuevo Bernabéu, Nuevo Santiago Bernabéu, Reforma Santiago Bernabéu, Obras Santiago Bernabéu, Reforma Bernabéu, Obras Bernabéu, estadio Bernabéu, Nuevo Estadio Santiago Bernabéu, Real Madrid oficial, Florentino, Florentino Pérez, Economía Real Madrid, Masa salarial Real Madrid, Masa salarial, Límite salarial, Tebas, Superliga, Hala Madrid, REAL MADRID レアルマドリード皇家馬德里 ريال مدريد Реал रियल मैड्रिड كريستيانو رونالدو 克里斯蒂 多 克里斯蒂亞諾羅納爾多 Κριστιάνο Ρονάλντο रोनाल्डो क्रिस्टियानो クリスティアーノロナウドКриштиану Роналду
+[2026-03-24 15:39:16] [PROC] season: 2026
+[2026-03-24 15:39:16] [PROC] title: 2026-03-24 - 🚨EXCLUSIVA: ACHRAF HAKIMI QUIERE VOLVER AL REAL MADRID
+[2026-03-24 15:39:16] [PROC] year: 2026
+[2026-03-24 15:39:16] [PROC] s2026.e032402 - 🚨KLOPP NIEGA CONTACTOS CON EL REAL MADRID, PERO NO CIERRA LA PUERTA-thumb.jpg
+[2026-03-24 15:39:16] [PROC] s2026.e032402 - 🚨KLOPP NIEGA CONTACTOS CON EL REAL MADRID, PERO NO CIERRA LA PUERTA.info.json
+[2026-03-24 15:39:16] [PROC] s2026.e032402 - 🚨KLOPP NIEGA CONTACTOS CON EL REAL MADRID, PERO NO CIERRA LA PUERTA.mp4
+[2026-03-24 15:39:16] [PROC] Video Tags:
+[2026-03-24 15:39:16] [PROC] contentRating: TV-14
+[2026-03-24 15:39:16] [PROC] date: 2026-03-24
+[2026-03-24 15:39:16] [PROC] episode_id: 32402
+[2026-03-24 15:39:16] [PROC] genre: ytdl-sub
+[2026-03-24 15:39:16] [PROC] show: ramonalvarezdemon
+[2026-03-24 15:39:16] [PROC] synopsis:
+[2026-03-24 15:39:16] [PROC] https://www.youtube.com/watch?v=BIhiKZtH_5o
+[2026-03-24 15:39:16] [PROC] ✅ Jürgen Klopp desmintió categóricamente su fichaje por el Real Madrid en un evento en Múnich. El técnico se mostró visiblemente molesto por toda la rumorología que ha rodeado a su futuro en los últimos meses y especialmente a un posible aterrizaje en el Santiago Bernabéu que no se concretó tras la salida de Xabi Alonso en enero.
+[2026-03-24 15:39:16] [PROC] Canal de Whatsapp: https://whatsapp.com/channel/0029VaDEAA7Elagyf0txTx03
+[2026-03-24 15:39:16] [PROC] ⚡ 𝗦𝗨𝗦𝗖𝗥Í𝗕𝗘𝗧𝗘: https://www.youtube.com/c/RamonAlvarezdeMon?sub_confirmation=1
+[2026-03-24 15:39:16] [PROC] ⭐ 😎 𝗛𝗔𝗭𝗧𝗘 𝗠𝗜𝗘𝗠𝗕𝗥𝗢  𝗗𝗘𝗟 𝗖𝗔𝗡𝗔𝗟 👉https://www.youtube.com/channel/UCrd8pmcZ0Za0ufAfxOrIzmQ/join
+[2026-03-24 15:39:16] [PROC] Mi web: https://ramonalvarezdemon.com/
+[2026-03-24 15:39:16] [PROC] 👕 TIENDA DE MON 👉 https://www.latostadora.com/ramonalvarezdemon/
+[2026-03-24 15:39:16] [PROC] 𝗔𝗟𝗚𝗨𝗡𝗔𝗦 𝗖𝗢𝗦𝗔𝗦 𝗦𝗢𝗕𝗥𝗘 𝗠Í:
+[2026-03-24 15:39:16] [PROC] 𝗪𝗜𝗞𝗜𝗣𝗘𝗗𝗜𝗔: https://es.wikipedia.org/wiki/Ram%C3%B3n_%C3%A1lvarez_de_mon
+[2026-03-24 15:39:16] [PROC] 😉 𝗦Í𝗚𝗨𝗘𝗠𝗘 en mis otras 𝗥𝗘𝗗𝗘𝗦 𝗦𝗢𝗖𝗜𝗔𝗟𝗘𝗦:
+[2026-03-24 15:39:16] [PROC] 𝗧𝗪𝗜𝗧𝗧𝗘𝗥:  https://twitter.com/Ramon_AlvarezMM
+[2026-03-24 15:39:16] [PROC] TIK TOK: https://www.tiktok.com/@ramonalvarezdemonoficial
+[2026-03-24 15:39:16] [PROC] 𝗜𝗡𝗦𝗧𝗔𝗚𝗥𝗔𝗠: https://www.instagram.com/ramonalvarezdemon/
+[2026-03-24 15:39:16] [PROC] TWITCH: https://www.twitch.tv/ramonalvarezdemon
+[2026-03-24 15:39:16] [PROC] ✍️ 𝗢 𝗟É𝗘𝗠𝗘 en los medios en los que escribo:
+[2026-03-24 15:39:16] [PROC] 𝗟𝗔 𝗚𝗔𝗟𝗘𝗥𝗡𝗔: https://www.lagalerna.com/author/ramo...
+[2026-03-24 15:39:16] [PROC] 𝗢𝗞 𝗗𝗜𝗔𝗥𝗜𝗢: https://okdiario.com/diariomadridista...
+[2026-03-24 15:39:16] [PROC] Music: www.bensound.com
+[2026-03-24 15:39:16] [PROC] Etiquetas manuales:
+[2026-03-24 15:39:17] [PROC] Ramón Álvarez de Mon, Álvarez de Mon, directo Álvarez de Mon, directo Ramón Álvarez de Mon, Real Madrid, Real Madrid CF, Real Madrid vs, Real Madrid hoy, Noticias Real Madrid, Últimas noticias Real Madrid, Real Madrid noticias, Real Madrid última hora, última hora Real Madrid, Real Madrid información, Opinión Real Madrid, Debates Real Madrid, Rumores Real Madrid, Real Madrid 2021/2022, Real Madrid news, Real, madrid, transfers, Real madrid rumours, Canal Real Madrid, Canal madridista, Youtuber madridista, Youtuber Real Madrid, La Galerna, Marca, Radio Marca, Real Madrid fichajes, Fichajes Real Madrid, Fichajes 2022, Mercado Real Madrid, Mbappé, Haaland, Kylian Mbappé, Erling Haaland, fichaje Mbappé, fichaje Haaland, Mbappé Real Madrid, Haaland Real Madrid, Salidas Real Madrid, Salidas Real Madrid 2022, Oferta Real Madrid, Liga, LaLiga, Liga Santander, Liga 2021/2022, Liga 21/22, Copa del Rey, Copa del Rey 2022, Champions League, Champions League 2021/2022, UEFA Champions League, UCL. Plantilla Real Madrid, jugadores Real Madrid, lesionados Real Madrid, alineación Real Madrid, convocatoria Real Madrid, Vinicius, Vinicius JR, Benzema, Karim Benzema, Ancelotti, Carlo Ancelotti, Eden Hazard, Gareth Bale, Luka Modric, Toni Kroos, Casemiro, Rodrygo, Alaba, Militao, Ferland Mendy, Dani Carvajal, Fede Valverde, Thibaut Courtois, Isco, Marco Asensio, Marcelo, Cristiano Ronaldo, CR7, Zinedine Zidane, Sergio Ramos, Clásico, Real Madrid-Barcelona, Real Madrid vs Barcelona, Real Madrid Barça, Castilla, Raúl Real Madrid, Juvenil Real Madrid, Partidos, partidos Real Madrid, goles, goles Real Madrid, gol Real Madrid, Crónica Real Madrid, Previa Real Madrid, Análisis Real Madrid, Resumen Real Madrid, highlights Real Madrid, Top Real Madrid, Real Madrid directo, próximo partido Real Madrid, calendario Real Madrid, Equipación Real Madrid, camiseta Real Madrid, himno Real Madrid, escudo Real Madrid, Historia Real Madrid, Santiago Bernabéu, Bernabéu, Nuevo Bernabéu, Nuevo Santiago Bernabéu, Reforma Santiago Bernabéu, Obras Santiago Bernabéu, Reforma Bernabéu, Obras Bernabéu, estadio Bernabéu, Nuevo Estadio Santiago Bernabéu, Real Madrid oficial, Florentino, Florentino Pérez, Economía Real Madrid, Masa salarial Real Madrid, Masa salarial, Límite salarial, Tebas, Superliga, Hala Madrid, REAL MADRID レアルマドリード皇家馬德里 ريال مدريد Реал रियल मैड्रिड كريستيانو رونالدو 克里斯蒂 多 克里斯蒂亞諾羅納爾多 Κριστιάνο Ρονάλντο रोनाल्डो क्रिस्टियानो クリスティアーノロナウドКриштиану Роналду
+[2026-03-24 15:39:17] [PROC] title: 2026-03-24 - 🚨KLOPP NIEGA CONTACTOS CON EL REAL MADRID, PERO NO CIERRA LA PUERTA
+[2026-03-24 15:39:17] [PROC] year: 2026
+[2026-03-24 15:39:17] [PROC] Embedded thumbnail
+[2026-03-24 15:39:17] [PROC] s2026.e032402 - 🚨KLOPP NIEGA CONTACTOS CON EL REAL MADRID, PERO NO CIERRA LA PUERTA.nfo
+[2026-03-24 15:39:17] [PROC] NFO tags:
+[2026-03-24 15:39:17] [PROC] episodedetails:
+[2026-03-24 15:39:17] [PROC] aired: 2026-03-24
+[2026-03-24 15:39:17] [PROC] episode: 32402
+[2026-03-24 15:39:17] [PROC] genre: ytdl-sub
+[2026-03-24 15:39:17] [PROC] mpaa: TV-14
+[2026-03-24 15:39:17] [PROC] plot:
+[2026-03-24 15:39:17] [PROC] https://www.youtube.com/watch?v=BIhiKZtH_5o
+[2026-03-24 15:39:17] [PROC] ✅ Jürgen Klopp desmintió categóricamente su fichaje por el Real Madrid en un evento en Múnich. El técnico se mostró visiblemente molesto por toda la rumorología que ha rodeado a su futuro en los últimos meses y especialmente a un posible aterrizaje en el Santiago Bernabéu que no se concretó tras la salida de Xabi Alonso en enero.
+[2026-03-24 15:39:17] [PROC] Canal de Whatsapp: https://whatsapp.com/channel/0029VaDEAA7Elagyf0txTx03
+[2026-03-24 15:39:17] [PROC] ⚡ 𝗦𝗨𝗦𝗖𝗥Í𝗕𝗘𝗧𝗘: https://www.youtube.com/c/RamonAlvarezdeMon?sub_confirmation=1
+[2026-03-24 15:39:17] [PROC] ⭐ 😎 𝗛𝗔𝗭𝗧𝗘 𝗠𝗜𝗘𝗠𝗕𝗥𝗢  𝗗𝗘𝗟 𝗖𝗔𝗡𝗔𝗟 👉https://www.youtube.com/channel/UCrd8pmcZ0Za0ufAfxOrIzmQ/join
+[2026-03-24 15:39:17] [PROC] Mi web: https://ramonalvarezdemon.com/
+[2026-03-24 15:39:17] [PROC] 👕 TIENDA DE MON 👉 https://www.latostadora.com/ramonalvarezdemon/
+[2026-03-24 15:39:17] [PROC] 𝗔𝗟𝗚𝗨𝗡𝗔𝗦 𝗖𝗢𝗦𝗔𝗦 𝗦𝗢𝗕𝗥𝗘 𝗠Í:
+[2026-03-24 15:39:17] [PROC] 𝗪𝗜𝗞𝗜𝗣𝗘𝗗𝗜𝗔: https://es.wikipedia.org/wiki/Ram%C3%B3n_%C3%A1lvarez_de_mon
+[2026-03-24 15:39:17] [PROC] 😉 𝗦Í𝗚𝗨𝗘𝗠𝗘 en mis otras 𝗥𝗘𝗗𝗘𝗦 𝗦𝗢𝗖𝗜𝗔𝗟𝗘𝗦:
+[2026-03-24 15:39:17] [PROC] 𝗧𝗪𝗜𝗧𝗧𝗘𝗥:  https://twitter.com/Ramon_AlvarezMM
+[2026-03-24 15:39:17] [PROC] TIK TOK: https://www.tiktok.com/@ramonalvarezdemonoficial
+[2026-03-24 15:39:17] [PROC] 𝗜𝗡𝗦𝗧𝗔𝗚𝗥𝗔𝗠: https://www.instagram.com/ramonalvarezdemon/
+[2026-03-24 15:39:17] [PROC] TWITCH: https://www.twitch.tv/ramonalvarezdemon
+[2026-03-24 15:39:17] [PROC] ✍️ 𝗢 𝗟É𝗘𝗠𝗘 en los medios en los que escribo:
+[2026-03-24 15:39:17] [PROC] 𝗟𝗔 𝗚𝗔𝗟𝗘𝗥𝗡𝗔: https://www.lagalerna.com/author/ramo...
+[2026-03-24 15:39:18] [PROC] 𝗢𝗞 𝗗𝗜𝗔𝗥𝗜𝗢: https://okdiario.com/diariomadridista...
+[2026-03-24 15:39:18] [PROC] Music: www.bensound.com
+[2026-03-24 15:39:18] [PROC] Etiquetas manuales:
+[2026-03-24 15:39:18] [PROC] Ramón Álvarez de Mon, Álvarez de Mon, directo Álvarez de Mon, directo Ramón Álvarez de Mon, Real Madrid, Real Madrid CF, Real Madrid vs, Real Madrid hoy, Noticias Real Madrid, Últimas noticias Real Madrid, Real Madrid noticias, Real Madrid última hora, última hora Real Madrid, Real Madrid información, Opinión Real Madrid, Debates Real Madrid, Rumores Real Madrid, Real Madrid 2021/2022, Real Madrid news, Real, madrid, transfers, Real madrid rumours, Canal Real Madrid, Canal madridista, Youtuber madridista, Youtuber Real Madrid, La Galerna, Marca, Radio Marca, Real Madrid fichajes, Fichajes Real Madrid, Fichajes 2022, Mercado Real Madrid, Mbappé, Haaland, Kylian Mbappé, Erling Haaland, fichaje Mbappé, fichaje Haaland, Mbappé Real Madrid, Haaland Real Madrid, Salidas Real Madrid, Salidas Real Madrid 2022, Oferta Real Madrid, Liga, LaLiga, Liga Santander, Liga 2021/2022, Liga 21/22, Copa del Rey, Copa del Rey 2022, Champions League, Champions League 2021/2022, UEFA Champions League, UCL. Plantilla Real Madrid, jugadores Real Madrid, lesionados Real Madrid, alineación Real Madrid, convocatoria Real Madrid, Vinicius, Vinicius JR, Benzema, Karim Benzema, Ancelotti, Carlo Ancelotti, Eden Hazard, Gareth Bale, Luka Modric, Toni Kroos, Casemiro, Rodrygo, Alaba, Militao, Ferland Mendy, Dani Carvajal, Fede Valverde, Thibaut Courtois, Isco, Marco Asensio, Marcelo, Cristiano Ronaldo, CR7, Zinedine Zidane, Sergio Ramos, Clásico, Real Madrid-Barcelona, Real Madrid vs Barcelona, Real Madrid Barça, Castilla, Raúl Real Madrid, Juvenil Real Madrid, Partidos, partidos Real Madrid, goles, goles Real Madrid, gol Real Madrid, Crónica Real Madrid, Previa Real Madrid, Análisis Real Madrid, Resumen Real Madrid, highlights Real Madrid, Top Real Madrid, Real Madrid directo, próximo partido Real Madrid, calendario Real Madrid, Equipación Real Madrid, camiseta Real Madrid, himno Real Madrid, escudo Real Madrid, Historia Real Madrid, Santiago Bernabéu, Bernabéu, Nuevo Bernabéu, Nuevo Santiago Bernabéu, Reforma Santiago Bernabéu, Obras Santiago Bernabéu, Reforma Bernabéu, Obras Bernabéu, estadio Bernabéu, Nuevo Estadio Santiago Bernabéu, Real Madrid oficial, Florentino, Florentino Pérez, Economía Real Madrid, Masa salarial Real Madrid, Masa salarial, Límite salarial, Tebas, Superliga, Hala Madrid, REAL MADRID レアルマドリード皇家馬德里 ريال مدريد Реал रियल मैड्रिड كريستيانو رونالدو 克里斯蒂 多 克里斯蒂亞諾羅納爾多 Κριστιάνο Ρονάλντο रोनाल्डो क्रिस्टियानो クリスティアーノロナウドКриштиану Роналду
+[2026-03-24 15:39:18] [PROC] season: 2026
+[2026-03-24 15:39:18] [PROC] title: 2026-03-24 - 🚨KLOPP NIEGA CONTACTOS CON EL REAL MADRID, PERO NO CIERRA LA PUERTA
+[2026-03-24 15:39:18] [PROC] year: 2026
+[2026-03-24 15:39:18] [PROC] [ytdl-sub] Download Summary:
+[2026-03-24 15:39:18] [PROC] ramon-alvarez-de-mon-ramonalvarezdemon     +2 0 0     2 ✔
+[2026-03-24 15:39:18] [PROC] Total: 1                                   +2 0 0     2 Success
+[2026-03-24 15:39:18] [INFO] Fin [ytdl-sub-sub] rc=0 en 49.84s
+[2026-03-24 15:39:18] [OK] Estado promovido: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\config\runtime\test\.recent-items-state.pending.json -> E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\config\runtime\test\.recent-items-state.json
+[2026-03-24 15:39:18] [INFO] Este perfil no requiere postproceso específico.
+[2026-03-24 15:39:18] [OK] Perfil completado correctamente.
+[2026-03-24 15:39:18] [STEP] ==============================================================================
+[2026-03-24 15:39:18] [STEP] Inicio ejecución perfil: Podcast
+[2026-03-24 15:39:18] [STEP] ==============================================================================
+[2026-03-24 15:39:18] [INFO] Project root: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl
+[2026-03-24 15:39:18] [INFO] Mode: test
+[2026-03-24 15:39:18] [INFO] DryRun: False
+[2026-03-24 15:39:18] [INFO] Ejecutando [generate-ytdl-config]...
+[2026-03-24 15:39:18] [INFO] Fin [generate-ytdl-config] rc=0 en 0.11s
+[2026-03-24 15:39:18] [INFO] Ejecutando [prepare-subscriptions-runset]...
+[2026-03-24 15:39:22] [INFO] Fin [prepare-subscriptions-runset] rc=0 en 3.36s
+[2026-03-24 15:39:22] [INFO] Runset con entradas: True
+[2026-03-24 15:39:22] [INFO] Ejecutando [ytdl-sub-sub]...
+[2026-03-24 15:39:23] [PROC] [ytdl-sub] Validating subscriptions...
+[2026-03-24 15:39:23] [PROC] [ytdl-sub] Beginning subscription download for entrevistas-geoestratego-oficial
+[2026-03-24 15:39:24] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] Extracting URL: https://www.youtube.com/@geoestratego_oficial/videos
+[2026-03-24 15:39:24] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] @geoestratego_oficial/videos: Downloading webpage
+[2026-03-24 15:39:24] [PROC] [ytdl-sub:yt-dlp] [info] Writing playlist metadata as JSON to: /tmp/ytdl-sub-working-directory/entrevistas-geoestratego-oficial/UCHLQ0IVP__944AsRjFmRo1A.info.json
+[2026-03-24 15:39:24] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] Playlist El Canal del Coronel - Videos: Downloading N/A items
+[2026-03-24 15:39:24] [PROC] [ytdl-sub:yt-dlp] [youtube] Extracting URL: https://www.youtube.com/watch?v=XDggRYboTH0
+[2026-03-24 15:39:24] [PROC] [ytdl-sub:yt-dlp] [youtube] XDggRYboTH0: Downloading webpage
+[2026-03-24 15:39:24] [PROC] [ytdl-sub:downloader] Downloading metadata for El Canal del Coronel - Videos
+[2026-03-24 15:39:25] [PROC] [ytdl-sub:yt-dlp] [youtube] XDggRYboTH0: Downloading android vr player API JSON
+[2026-03-24 15:39:26] [PROC] [ytdl-sub:yt-dlp] [youtube] XDggRYboTH0: Downloading player 1ebf2aa6-main
+[2026-03-24 15:39:26] [PROC] [ytdl-sub:yt-dlp] [youtube] [jsc:deno] Solving JS challenges using deno
+[2026-03-24 15:39:28] [PROC] [ytdl-sub:yt-dlp] [youtube] XDggRYboTH0: Downloading m3u8 information
+[2026-03-24 15:39:28] [PROC] [ytdl-sub:yt-dlp] [info] XDggRYboTH0: Downloading 1 format(s): 251
+[2026-03-24 15:39:28] [PROC] [ytdl-sub:yt-dlp] [info] Writing video metadata as JSON to: /tmp/ytdl-sub-working-directory/entrevistas-geoestratego-oficial/XDggRYboTH0.info.json
+[2026-03-24 15:39:28] [PROC] [ytdl-sub:yt-dlp] [youtube] Extracting URL: https://www.youtube.com/watch?v=FtbqjUyI9lg
+[2026-03-24 15:39:28] [PROC] [ytdl-sub:yt-dlp] [youtube] FtbqjUyI9lg: Downloading webpage
+[2026-03-24 15:39:28] [PROC] [ytdl-sub:downloader] Downloading metadata for El futuro según las profecías: lo que viene es aterrador
+[2026-03-24 15:39:29] [PROC] [ytdl-sub:yt-dlp] [youtube] FtbqjUyI9lg: Downloading android vr player API JSON
+[2026-03-24 15:39:30] [PROC] [ytdl-sub:yt-dlp] [youtube] [jsc:deno] Solving JS challenges using deno
+[2026-03-24 15:39:31] [PROC] [ytdl-sub:yt-dlp] [youtube] FtbqjUyI9lg: Downloading m3u8 information
+[2026-03-24 15:39:31] [PROC] [ytdl-sub:yt-dlp] [info] FtbqjUyI9lg: Downloading 1 format(s): 251
+[2026-03-24 15:39:31] [PROC] [ytdl-sub:yt-dlp] [info] Writing video metadata as JSON to: /tmp/ytdl-sub-working-directory/entrevistas-geoestratego-oficial/FtbqjUyI9lg.info.json
+[2026-03-24 15:39:32] [PROC] [ytdl-sub:yt-dlp-downloader] MaxDownloadsReached, stopping additional downloads.
+[2026-03-24 15:39:32] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] Extracting URL: https://www.youtube.com/@geoestratego_oficial
+[2026-03-24 15:39:32] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] @geoestratego_oficial: Downloading webpage
+[2026-03-24 15:39:32] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] Downloading all uploads of the channel. To download only the videos in a specific tab, pass the tab's URL
+[2026-03-24 15:39:32] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] @geoestratego_oficial/streams: Downloading webpage
+[2026-03-24 15:39:32] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] @geoestratego_oficial/shorts: Downloading webpage
+[2026-03-24 15:39:33] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] Downloading as multiple playlists, separated by tabs. To download as a single playlist instead, pass https://www.youtube.com/playlist?list=UUHLQ0IVP__944AsRjFmRo1A
+[2026-03-24 15:39:33] [PROC] [ytdl-sub:yt-dlp] [info] Writing playlist metadata as JSON to: /tmp/ytdl-sub-working-directory/entrevistas-geoestratego-oficial/@geoestratego_oficial.info.json
+[2026-03-24 15:39:33] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] Playlist El Canal del Coronel: Downloading N/A items of 3
+[2026-03-24 15:39:33] [PROC] [ytdl-sub:yt-dlp] WARNING: Ignoring playliststart and playlistend because playlistitems was given
+[2026-03-24 15:39:33] [PROC] [ytdl-sub:yt-dlp] [info] Writing updated playlist metadata as JSON to: /tmp/ytdl-sub-working-directory/entrevistas-geoestratego-oficial/@geoestratego_oficial.info.json
+[2026-03-24 15:39:33] [PROC] [ytdl-sub:downloader] Beginning downloads for https://www.youtube.com/@geoestratego_oficial/videos
+[2026-03-24 15:39:33] [PROC] [ytdl-sub:downloader] Downloading entry 1/2: Irán golpea fuerte 💥 "Esta será la peor noche para Israel"
+[2026-03-24 15:39:34] [PROC] [ytdl-sub:yt-dlp] [youtube] Extracting URL: https://www.youtube.com/watch?v=FtbqjUyI9lg
+[2026-03-24 15:39:34] [PROC] [ytdl-sub:yt-dlp] [youtube] FtbqjUyI9lg: Downloading webpage
+[2026-03-24 15:39:35] [PROC] [ytdl-sub:yt-dlp] [youtube] FtbqjUyI9lg: Downloading android vr player API JSON
+[2026-03-24 15:39:35] [PROC] [ytdl-sub:yt-dlp] [youtube] FtbqjUyI9lg: Downloading player 1ebf2aa6-main
+[2026-03-24 15:39:35] [PROC] [ytdl-sub:yt-dlp] [youtube] [jsc:deno] Solving JS challenges using deno
+[2026-03-24 15:39:37] [PROC] [ytdl-sub:yt-dlp] [youtube] FtbqjUyI9lg: Downloading m3u8 information
+[2026-03-24 15:39:37] [PROC] [ytdl-sub:yt-dlp] [info] FtbqjUyI9lg: Downloading 1 format(s): 251
+[2026-03-24 15:39:37] [PROC] [ytdl-sub:yt-dlp] [info] Downloading video thumbnail 41 ...
+[2026-03-24 15:39:38] [PROC] [ytdl-sub:yt-dlp] [info] Writing video thumbnail 41 to: /tmp/ytdl-sub-working-directory/entrevistas-geoestratego-oficial/FtbqjUyI9lg.webp
+[2026-03-24 15:39:39] [PROC] [ytdl-sub:yt-dlp] [ExtractAudio] Destination: /tmp/ytdl-sub-working-directory/entrevistas-geoestratego-oficial/FtbqjUyI9lg.mp3
+[2026-03-24 15:39:52] [PROC] [ytdl-sub:yt-dlp] Deleting original file /tmp/ytdl-sub-working-directory/entrevistas-geoestratego-oficial/FtbqjUyI9lg.webm (pass -k to keep)
+[2026-03-24 15:39:53] [PROC] [ytdl-sub:downloader] Downloading entry 2/2: El futuro según las profecías: lo que viene es aterrador
+[2026-03-24 15:39:53] [PROC] [ytdl-sub:yt-dlp] [youtube] Extracting URL: https://www.youtube.com/watch?v=XDggRYboTH0
+[2026-03-24 15:39:53] [PROC] [ytdl-sub:yt-dlp] [youtube] XDggRYboTH0: Downloading webpage
+[2026-03-24 15:39:54] [PROC] [ytdl-sub:yt-dlp] [youtube] XDggRYboTH0: Downloading android vr player API JSON
+[2026-03-24 15:39:55] [PROC] [ytdl-sub:yt-dlp] [youtube] XDggRYboTH0: Downloading player 1ebf2aa6-main
+[2026-03-24 15:39:55] [PROC] [ytdl-sub:yt-dlp] [youtube] [jsc:deno] Solving JS challenges using deno
+[2026-03-24 15:39:56] [PROC] [ytdl-sub:yt-dlp] [youtube] XDggRYboTH0: Downloading m3u8 information
+[2026-03-24 15:39:57] [PROC] [ytdl-sub:yt-dlp] [info] XDggRYboTH0: Downloading 1 format(s): 251
+[2026-03-24 15:39:57] [PROC] [ytdl-sub:yt-dlp] [info] Downloading video thumbnail 45 ...
+[2026-03-24 15:39:57] [PROC] [ytdl-sub:yt-dlp] [info] Writing video thumbnail 45 to: /tmp/ytdl-sub-working-directory/entrevistas-geoestratego-oficial/XDggRYboTH0.webp
+[2026-03-24 15:40:02] [PROC] [ytdl-sub:yt-dlp] [ExtractAudio] Destination: /tmp/ytdl-sub-working-directory/entrevistas-geoestratego-oficial/XDggRYboTH0.mp3
+[2026-03-24 15:41:25] [PROC] [ytdl-sub:yt-dlp] Deleting original file /tmp/ytdl-sub-working-directory/entrevistas-geoestratego-oficial/XDggRYboTH0.webm (pass -k to keep)
+[2026-03-24 15:41:27] [PROC] [ytdl-sub] Beginning subscription download for entrevistas-pl01fnqnul7ykui7id1lwxkz8ho3j8l8of
+[2026-03-24 15:41:28] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] Extracting URL: https://www.youtube.com/playlist?list=PL01FNQnUl7YKuI7iD1lwxKz8Ho3J8L8Of
+[2026-03-24 15:41:28] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] PL01FNQnUl7YKuI7iD1lwxKz8Ho3J8L8Of: Downloading webpage
+[2026-03-24 15:41:29] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] PL01FNQnUl7YKuI7iD1lwxKz8Ho3J8L8Of: Redownloading playlist API JSON with unavailable videos
+[2026-03-24 15:41:29] [PROC] [ytdl-sub:yt-dlp] [info] Writing playlist metadata as JSON to: /tmp/ytdl-sub-working-directory/entrevistas-pl01fnqnul7ykui7id1lwxkz8ho3j8l8of/PL01FNQnUl7YKuI7iD1lwxKz8Ho3J8L8Of.info.json
+[2026-03-24 15:41:29] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] Playlist ROCA PROJECT PODCAST: Downloading N/A items of 84
+[2026-03-24 15:41:29] [PROC] [ytdl-sub:yt-dlp] [youtube] Extracting URL: https://www.youtube.com/watch?v=CpSRqC69JGY
+[2026-03-24 15:41:29] [PROC] [ytdl-sub:yt-dlp] [youtube] CpSRqC69JGY: Downloading webpage
+[2026-03-24 15:41:29] [PROC] [ytdl-sub:downloader] Downloading metadata for ROCA PROJECT PODCAST
+[2026-03-24 15:41:30] [PROC] [ytdl-sub:yt-dlp] [youtube] CpSRqC69JGY: Downloading android vr player API JSON
+[2026-03-24 15:41:30] [PROC] [ytdl-sub:yt-dlp] [youtube] CpSRqC69JGY: Downloading player 1ebf2aa6-main
+[2026-03-24 15:41:31] [PROC] [ytdl-sub:yt-dlp] [youtube] [jsc:deno] Solving JS challenges using deno
+[2026-03-24 15:41:34] [PROC] [ytdl-sub:yt-dlp] [youtube] CpSRqC69JGY: Downloading m3u8 information
+[2026-03-24 15:41:35] [PROC] [ytdl-sub:yt-dlp] [info] CpSRqC69JGY: Downloading 1 format(s): 251
+[2026-03-24 15:41:35] [PROC] [ytdl-sub:yt-dlp] [info] Writing video metadata as JSON to: /tmp/ytdl-sub-working-directory/entrevistas-pl01fnqnul7ykui7id1lwxkz8ho3j8l8of/CpSRqC69JGY.info.json
+[2026-03-24 15:41:35] [PROC] [ytdl-sub:yt-dlp] [youtube] Extracting URL: https://www.youtube.com/watch?v=wbf_ojq7rW8
+[2026-03-24 15:41:35] [PROC] [ytdl-sub:yt-dlp] [youtube] wbf_ojq7rW8: Downloading webpage
+[2026-03-24 15:41:35] [PROC] [ytdl-sub:downloader] Downloading metadata for #84 - "LA SALUD MENTAL NO EXISTE" | Dr. José Luis Marín (Psiquiatra) en Roca Project
+[2026-03-24 15:41:36] [PROC] [ytdl-sub:yt-dlp] [youtube] wbf_ojq7rW8: Downloading android vr player API JSON
+[2026-03-24 15:41:36] [PROC] [ytdl-sub:yt-dlp] [youtube] [jsc:deno] Solving JS challenges using deno
+[2026-03-24 15:41:39] [PROC] [ytdl-sub:yt-dlp] [youtube] wbf_ojq7rW8: Downloading m3u8 information
+[2026-03-24 15:41:39] [PROC] [ytdl-sub:yt-dlp] [info] wbf_ojq7rW8: Downloading 1 format(s): 251
+[2026-03-24 15:41:39] [PROC] [ytdl-sub:yt-dlp] [info] Writing video metadata as JSON to: /tmp/ytdl-sub-working-directory/entrevistas-pl01fnqnul7ykui7id1lwxkz8ho3j8l8of/wbf_ojq7rW8.info.json
+[2026-03-24 15:41:39] [PROC] [ytdl-sub:yt-dlp-downloader] MaxDownloadsReached, stopping additional downloads.
+[2026-03-24 15:41:39] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] Extracting URL: https://www.youtube.com/@rocaproject
+[2026-03-24 15:41:39] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] @rocaproject: Downloading webpage
+[2026-03-24 15:41:39] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] Downloading all uploads of the channel. To download only the videos in a specific tab, pass the tab's URL
+[2026-03-24 15:41:39] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] @rocaproject/shorts: Downloading webpage
+[2026-03-24 15:41:40] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] Downloading as multiple playlists, separated by tabs. To download as a single playlist instead, pass https://www.youtube.com/playlist?list=UUYQgLLpqeFe3FGzv18ZabdA
+[2026-03-24 15:41:40] [PROC] [ytdl-sub:yt-dlp] [info] Writing playlist metadata as JSON to: /tmp/ytdl-sub-working-directory/entrevistas-pl01fnqnul7ykui7id1lwxkz8ho3j8l8of/@rocaproject.info.json
+[2026-03-24 15:41:40] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] Playlist ROCA PROJECT: Downloading N/A items of 2
+[2026-03-24 15:41:40] [PROC] [ytdl-sub:yt-dlp] WARNING: Ignoring playliststart and playlistend because playlistitems was given
+[2026-03-24 15:41:40] [PROC] [ytdl-sub:yt-dlp] [info] Writing updated playlist metadata as JSON to: /tmp/ytdl-sub-working-directory/entrevistas-pl01fnqnul7ykui7id1lwxkz8ho3j8l8of/@rocaproject.info.json
+[2026-03-24 15:41:40] [PROC] [ytdl-sub:downloader] Beginning downloads for https://www.youtube.com/playlist?list=PL01FNQnUl7YKuI7iD1lwxKz8Ho3J8L8Of
+[2026-03-24 15:41:41] [PROC] [ytdl-sub:downloader] Downloading entry 1/2: #83 - UNA MUJER ENTRE PRESOS PELIGROSOS | Funcionaria de Prisiones en Roca Project
+[2026-03-24 15:41:41] [PROC] [ytdl-sub:yt-dlp] [youtube] Extracting URL: https://www.youtube.com/watch?v=wbf_ojq7rW8
+[2026-03-24 15:41:41] [PROC] [ytdl-sub:yt-dlp] [youtube] wbf_ojq7rW8: Downloading webpage
+[2026-03-24 15:41:42] [PROC] [ytdl-sub:yt-dlp] [youtube] wbf_ojq7rW8: Downloading android vr player API JSON
+[2026-03-24 15:41:42] [PROC] [ytdl-sub:yt-dlp] [youtube] wbf_ojq7rW8: Downloading player 1ebf2aa6-main
+[2026-03-24 15:41:43] [PROC] [ytdl-sub:yt-dlp] [youtube] [jsc:deno] Solving JS challenges using deno
+[2026-03-24 15:41:45] [PROC] [ytdl-sub:yt-dlp] [youtube] wbf_ojq7rW8: Downloading m3u8 information
+[2026-03-24 15:41:46] [PROC] [ytdl-sub:yt-dlp] [info] wbf_ojq7rW8: Downloading 1 format(s): 251
+[2026-03-24 15:41:46] [PROC] [ytdl-sub:yt-dlp] [info] Downloading video thumbnail 41 ...
+[2026-03-24 15:41:46] [PROC] [ytdl-sub:yt-dlp] [info] Writing video thumbnail 41 to: /tmp/ytdl-sub-working-directory/entrevistas-pl01fnqnul7ykui7id1lwxkz8ho3j8l8of/wbf_ojq7rW8.webp
+[2026-03-24 15:41:58] [PROC] [ytdl-sub:yt-dlp] [ExtractAudio] Destination: /tmp/ytdl-sub-working-directory/entrevistas-pl01fnqnul7ykui7id1lwxkz8ho3j8l8of/wbf_ojq7rW8.mp3
+[2026-03-24 15:45:07] [PROC] [ytdl-sub:yt-dlp] Deleting original file /tmp/ytdl-sub-working-directory/entrevistas-pl01fnqnul7ykui7id1lwxkz8ho3j8l8of/wbf_ojq7rW8.webm (pass -k to keep)
+[2026-03-24 15:45:16] [PROC] [ytdl-sub:downloader] Downloading entry 2/2: #84 - "LA SALUD MENTAL NO EXISTE" | Dr. José Luis Marín (Psiquiatra) en Roca Project
+[2026-03-24 15:45:16] [PROC] [ytdl-sub:yt-dlp] [youtube] Extracting URL: https://www.youtube.com/watch?v=CpSRqC69JGY
+[2026-03-24 15:45:16] [PROC] [ytdl-sub:yt-dlp] [youtube] CpSRqC69JGY: Downloading webpage
+[2026-03-24 15:45:17] [PROC] [ytdl-sub:yt-dlp] [youtube] CpSRqC69JGY: Downloading android vr player API JSON
+[2026-03-24 15:45:18] [PROC] [ytdl-sub:yt-dlp] [youtube] CpSRqC69JGY: Downloading player 1ebf2aa6-main
+[2026-03-24 15:45:18] [PROC] [ytdl-sub:yt-dlp] [youtube] [jsc:deno] Solving JS challenges using deno
+[2026-03-24 15:45:21] [PROC] [ytdl-sub:yt-dlp] [youtube] CpSRqC69JGY: Downloading m3u8 information
+[2026-03-24 15:45:22] [PROC] [ytdl-sub:yt-dlp] [info] CpSRqC69JGY: Downloading 1 format(s): 251
+[2026-03-24 15:45:22] [PROC] [ytdl-sub:yt-dlp] [info] Downloading video thumbnail 41 ...
+[2026-03-24 15:45:22] [PROC] [ytdl-sub:yt-dlp] [info] Writing video thumbnail 41 to: /tmp/ytdl-sub-working-directory/entrevistas-pl01fnqnul7ykui7id1lwxkz8ho3j8l8of/CpSRqC69JGY.webp
+[2026-03-24 15:45:36] [PROC] [ytdl-sub:yt-dlp] [ExtractAudio] Destination: /tmp/ytdl-sub-working-directory/entrevistas-pl01fnqnul7ykui7id1lwxkz8ho3j8l8of/CpSRqC69JGY.mp3
+[2026-03-24 15:48:01] [PROC] [ytdl-sub:yt-dlp] Deleting original file /tmp/ytdl-sub-working-directory/entrevistas-pl01fnqnul7ykui7id1lwxkz8ho3j8l8of/CpSRqC69JGY.webm (pass -k to keep)
+[2026-03-24 15:48:04] [PROC] [ytdl-sub] Transaction log for entrevistas-geoestratego-oficial:
+[2026-03-24 15:48:04] [PROC] Files created:
+[2026-03-24 15:48:04] [PROC] ----------------------------------------
+[2026-03-24 15:48:04] [PROC] /downloads-test/Podcast/entrevistas/geoestratego-oficial
+[2026-03-24 15:48:04] [PROC] .ytdl-sub-entrevistas-geoestratego-oficial-download-archive.json
+[2026-03-24 15:48:04] [PROC] El futuro según las profecías： lo que viene es aterrador.mp3
+[2026-03-24 15:48:04] [PROC] Embedded thumbnail
+[2026-03-24 15:48:04] [PROC] Irán golpea fuerte 💥 ＂Esta será la peor noche para Israel＂.mp3
+[2026-03-24 15:48:04] [PROC] Embedded thumbnail
+[2026-03-24 15:48:04] [PROC] [ytdl-sub] Transaction log for entrevistas-pl01fnqnul7ykui7id1lwxkz8ho3j8l8of:
+[2026-03-24 15:48:04] [PROC] Files created:
+[2026-03-24 15:48:04] [PROC] ----------------------------------------
+[2026-03-24 15:48:04] [PROC] /downloads-test/Podcast/entrevistas/pl01fnqnul7ykui7id1lwxkz8ho3j8l8of
+[2026-03-24 15:48:04] [PROC] #83 - UNA MUJER ENTRE PRESOS PELIGROSOS ｜ Funcionaria de Prisiones en Roca Project.mp3
+[2026-03-24 15:48:04] [PROC] Embedded thumbnail
+[2026-03-24 15:48:04] [PROC] #84 - ＂LA SALUD MENTAL NO EXISTE＂ ｜ Dr. José Luis Marín (Psiquiatra) en Roca Project.mp3
+[2026-03-24 15:48:04] [PROC] Embedded thumbnail
+[2026-03-24 15:48:04] [PROC] .ytdl-sub-entrevistas-pl01fnqnul7ykui7id1lwxkz8ho3j8l8of-download-archive.json
+[2026-03-24 15:48:04] [PROC] [ytdl-sub] Download Summary:
+[2026-03-24 15:48:04] [PROC] entrevistas-geoestratego-oficial                   +2 0 0     2 ✔
+[2026-03-24 15:48:04] [PROC] entrevistas-pl01fnqnul7ykui7id1lwxkz8ho3j8l8of     +2 0 0     2 ✔
+[2026-03-24 15:48:04] [PROC] Total: 2                                           +4 0 0     4 Success
+[2026-03-24 15:48:05] [INFO] Fin [ytdl-sub-sub] rc=0 en 522.75s
+[2026-03-24 15:48:05] [OK] Estado promovido: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\config\runtime\test\.recent-items-state.pending.json -> E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\config\runtime\test\.recent-items-state.json
+[2026-03-24 15:48:05] [INFO] Este perfil no requiere postproceso específico.
+[2026-03-24 15:48:05] [OK] Perfil completado correctamente.
+[2026-03-24 15:48:05] [STEP] ==============================================================================
+[2026-03-24 15:48:05] [STEP] Inicio ejecución perfil: TV-Serie
+[2026-03-24 15:48:05] [STEP] ==============================================================================
+[2026-03-24 15:48:05] [INFO] Project root: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl
+[2026-03-24 15:48:05] [INFO] Mode: test
+[2026-03-24 15:48:05] [INFO] DryRun: False
+[2026-03-24 15:48:05] [INFO] Ejecutando [generate-ytdl-config]...
+[2026-03-24 15:48:05] [INFO] Fin [generate-ytdl-config] rc=0 en 0.12s
+[2026-03-24 15:48:05] [INFO] Ejecutando [prepare-subscriptions-runset]...
+[2026-03-24 15:48:09] [INFO] Fin [prepare-subscriptions-runset] rc=0 en 3.45s
+[2026-03-24 15:48:09] [INFO] Runset con entradas: True
+[2026-03-24 15:48:09] [INFO] Ejecutando [ytdl-sub-sub]...
+[2026-03-24 15:48:10] [PROC] [ytdl-sub] Validating subscriptions...
+[2026-03-24 15:48:11] [PROC] [ytdl-sub:preset] Throttle protection is disabled. Use at your own risk!
+[2026-03-24 15:48:11] [PROC] [ytdl-sub:preset] Throttle protection is disabled. Use at your own risk!
+[2026-03-24 15:48:11] [PROC] [ytdl-sub] Beginning subscription download for lolete-kerios
+[2026-03-24 15:48:11] [PROC] [ytdl-sub:preset] Throttle protection is disabled. Use at your own risk!
+[2026-03-24 15:48:11] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] Extracting URL: https://www.youtube.com/@Kerios/videos
+[2026-03-24 15:48:11] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] @Kerios/videos: Downloading webpage
+[2026-03-24 15:48:12] [PROC] [ytdl-sub:yt-dlp] [info] Writing playlist metadata as JSON to: /tmp/ytdl-sub-working-directory/lolete-kerios/UCg1c09_sFOd-TVPCNgHw8qg.info.json
+[2026-03-24 15:48:12] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] Playlist Kerios - Videos: Downloading N/A items
+[2026-03-24 15:48:12] [PROC] [ytdl-sub:yt-dlp] [youtube] Extracting URL: https://www.youtube.com/watch?v=hQus3LxX5c8
+[2026-03-24 15:48:12] [PROC] [ytdl-sub:yt-dlp] [youtube] hQus3LxX5c8: Downloading webpage
+[2026-03-24 15:48:12] [PROC] [ytdl-sub:downloader] Downloading metadata for Kerios - Videos
+[2026-03-24 15:48:13] [PROC] [ytdl-sub:yt-dlp] [youtube] hQus3LxX5c8: Downloading android vr player API JSON
+[2026-03-24 15:48:14] [PROC] [ytdl-sub:yt-dlp] [youtube] hQus3LxX5c8: Downloading player 1ebf2aa6-main
+[2026-03-24 15:48:14] [PROC] [ytdl-sub:yt-dlp] [youtube] [jsc:deno] Solving JS challenges using deno
+[2026-03-24 15:48:18] [PROC] [ytdl-sub:yt-dlp] [youtube] hQus3LxX5c8: Downloading m3u8 information
+[2026-03-24 15:48:19] [PROC] [ytdl-sub:yt-dlp] [info] hQus3LxX5c8: Downloading 1 format(s): 399+251
+[2026-03-24 15:48:19] [PROC] [ytdl-sub:yt-dlp] [info] Writing video metadata as JSON to: /tmp/ytdl-sub-working-directory/lolete-kerios/hQus3LxX5c8.info.json
+[2026-03-24 15:48:19] [PROC] [ytdl-sub:downloader] Downloading metadata for 😈¡HAGO LLORAR al *MAIN GAREN KOREANO* en RANKED con MI RIVEN DEMONIACA y ME ODIAN SIN PARAR!
+[2026-03-24 15:48:19] [PROC] [ytdl-sub:yt-dlp] [youtube] Extracting URL: https://www.youtube.com/watch?v=Bzogn-6GlrY
+[2026-03-24 15:48:19] [PROC] [ytdl-sub:yt-dlp] [youtube] Bzogn-6GlrY: Downloading webpage
+[2026-03-24 15:48:20] [PROC] [ytdl-sub:yt-dlp] [youtube] Bzogn-6GlrY: Downloading android vr player API JSON
+[2026-03-24 15:48:21] [PROC] [ytdl-sub:yt-dlp] [youtube] [jsc:deno] Solving JS challenges using deno
+[2026-03-24 15:48:28] [PROC] [ytdl-sub:yt-dlp] [youtube] Bzogn-6GlrY: Downloading m3u8 information
+[2026-03-24 15:48:29] [PROC] [ytdl-sub:yt-dlp] [info] Bzogn-6GlrY: Downloading 1 format(s): 399+251
+[2026-03-24 15:48:29] [PROC] [ytdl-sub:yt-dlp] [info] Writing video metadata as JSON to: /tmp/ytdl-sub-working-directory/lolete-kerios/Bzogn-6GlrY.info.json
+[2026-03-24 15:48:29] [PROC] [ytdl-sub:downloader] Downloading metadata for 😱¡KOREA MASTER 400 LPS mmr y LOS KOREANOS ALUCINAN con la *NUEVA BUILD DEMONIACA*
+[2026-03-24 15:48:29] [PROC] [ytdl-sub:yt-dlp-downloader] MaxDownloadsReached, stopping additional downloads.
+[2026-03-24 15:48:29] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] Extracting URL: https://www.youtube.com/@Kerios
+[2026-03-24 15:48:29] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] @Kerios: Downloading webpage
+[2026-03-24 15:48:30] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] Downloading all uploads of the channel. To download only the videos in a specific tab, pass the tab's URL
+[2026-03-24 15:48:30] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] @Kerios/streams: Downloading webpage
+[2026-03-24 15:48:30] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] @Kerios/shorts: Downloading webpage
+[2026-03-24 15:48:31] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] Downloading as multiple playlists, separated by tabs. To download as a single playlist instead, pass https://www.youtube.com/playlist?list=UUg1c09_sFOd-TVPCNgHw8qg
+[2026-03-24 15:48:31] [PROC] [ytdl-sub:yt-dlp] [info] Writing playlist metadata as JSON to: /tmp/ytdl-sub-working-directory/lolete-kerios/@Kerios.info.json
+[2026-03-24 15:48:31] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] Playlist Kerios: Downloading N/A items of 3
+[2026-03-24 15:48:31] [PROC] [ytdl-sub:yt-dlp] WARNING: Ignoring playliststart and playlistend because playlistitems was given
+[2026-03-24 15:48:31] [PROC] [ytdl-sub:yt-dlp] [info] Writing updated playlist metadata as JSON to: /tmp/ytdl-sub-working-directory/lolete-kerios/@Kerios.info.json
+[2026-03-24 15:48:31] [PROC] [ytdl-sub:downloader] Beginning downloads for https://www.youtube.com/@Kerios/videos
+[2026-03-24 15:48:32] [PROC] [ytdl-sub:downloader] Downloading entry 1/2: 😱¡KOREA MASTER 400 LPS mmr y LOS KOREANOS ALUCINAN con la *NUEVA BUILD DEMONIACA*
+[2026-03-24 15:48:33] [PROC] [ytdl-sub:yt-dlp] [youtube] Extracting URL: https://www.youtube.com/watch?v=Bzogn-6GlrY
+[2026-03-24 15:48:33] [PROC] [ytdl-sub:yt-dlp] [youtube] Bzogn-6GlrY: Downloading webpage
+[2026-03-24 15:48:34] [PROC] [ytdl-sub:yt-dlp] [youtube] Bzogn-6GlrY: Downloading android vr player API JSON
+[2026-03-24 15:48:35] [PROC] [ytdl-sub:yt-dlp] [youtube] Bzogn-6GlrY: Downloading player 8180e7ff-main
+[2026-03-24 15:48:35] [PROC] [ytdl-sub:yt-dlp] [youtube] [jsc:deno] Solving JS challenges using deno
+[2026-03-24 15:48:38] [PROC] [ytdl-sub:yt-dlp] [youtube] Bzogn-6GlrY: Downloading m3u8 information
+[2026-03-24 15:48:39] [PROC] [ytdl-sub:yt-dlp] [info] Bzogn-6GlrY: Downloading 1 format(s): 399+251
+[2026-03-24 15:48:39] [PROC] [ytdl-sub:yt-dlp] [info] Downloading video thumbnail 41 ...
+[2026-03-24 15:48:39] [PROC] [ytdl-sub:yt-dlp] [info] Writing video thumbnail 41 to: /tmp/ytdl-sub-working-directory/lolete-kerios/Bzogn-6GlrY.webp
+[2026-03-24 15:50:10] [PROC] [ytdl-sub:yt-dlp] [Merger] Merging formats into "/tmp/ytdl-sub-working-directory/lolete-kerios/Bzogn-6GlrY.mp4"
+[2026-03-24 15:50:33] [PROC] [ytdl-sub:yt-dlp] Deleting original file /tmp/ytdl-sub-working-directory/lolete-kerios/Bzogn-6GlrY.f251.webm (pass -k to keep)
+[2026-03-24 15:50:33] [PROC] [ytdl-sub:yt-dlp] Deleting original file /tmp/ytdl-sub-working-directory/lolete-kerios/Bzogn-6GlrY.f399.mp4 (pass -k to keep)
+[2026-03-24 15:50:33] [PROC] [ytdl-sub:yt-dlp] [Metadata] There isn't any metadata to add
+[2026-03-24 15:51:23] [PROC] [ytdl-sub:downloader] Downloading entry 2/2: 😈¡HAGO LLORAR al *MAIN GAREN KOREANO* en RANKED con MI RIVEN DEMONIACA y ME ODIAN SIN PARAR!
+[2026-03-24 15:51:24] [PROC] [ytdl-sub:yt-dlp] [youtube] Extracting URL: https://www.youtube.com/watch?v=hQus3LxX5c8
+[2026-03-24 15:51:24] [PROC] [ytdl-sub:yt-dlp] [youtube] hQus3LxX5c8: Downloading webpage
+[2026-03-24 15:51:25] [PROC] [ytdl-sub:yt-dlp] [youtube] hQus3LxX5c8: Downloading android vr player API JSON
+[2026-03-24 15:51:25] [PROC] [ytdl-sub:yt-dlp] [youtube] hQus3LxX5c8: Downloading player 8180e7ff-main
+[2026-03-24 15:51:25] [PROC] [ytdl-sub:yt-dlp] [youtube] [jsc:deno] Solving JS challenges using deno
+[2026-03-24 15:51:28] [PROC] [ytdl-sub:yt-dlp] [youtube] hQus3LxX5c8: Downloading m3u8 information
+[2026-03-24 15:51:28] [PROC] [ytdl-sub:yt-dlp] [info] hQus3LxX5c8: Downloading 1 format(s): 399+251
+[2026-03-24 15:51:28] [PROC] [ytdl-sub:yt-dlp] [info] Downloading video thumbnail 41 ...
+[2026-03-24 15:51:28] [PROC] [ytdl-sub:yt-dlp] [info] Writing video thumbnail 41 to: /tmp/ytdl-sub-working-directory/lolete-kerios/hQus3LxX5c8.webp
+[2026-03-24 15:52:58] [PROC] [ytdl-sub:yt-dlp] [Merger] Merging formats into "/tmp/ytdl-sub-working-directory/lolete-kerios/hQus3LxX5c8.mp4"
+[2026-03-24 15:53:15] [PROC] [ytdl-sub:yt-dlp] Deleting original file /tmp/ytdl-sub-working-directory/lolete-kerios/hQus3LxX5c8.f251.webm (pass -k to keep)
+[2026-03-24 15:53:15] [PROC] [ytdl-sub:yt-dlp] Deleting original file /tmp/ytdl-sub-working-directory/lolete-kerios/hQus3LxX5c8.f399.mp4 (pass -k to keep)
+[2026-03-24 15:53:15] [PROC] [ytdl-sub:yt-dlp] [Metadata] There isn't any metadata to add
+[2026-03-24 15:53:38] [PROC] [ytdl-sub] Beginning subscription download for lolete-nickdaboom
+[2026-03-24 15:53:38] [PROC] [ytdl-sub:preset] Throttle protection is disabled. Use at your own risk!
+[2026-03-24 15:53:39] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] Extracting URL: https://www.youtube.com/@nickdaboom/videos
+[2026-03-24 15:53:39] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] @nickdaboom/videos: Downloading webpage
+[2026-03-24 15:53:39] [PROC] [ytdl-sub:yt-dlp] [info] Writing playlist metadata as JSON to: /tmp/ytdl-sub-working-directory/lolete-nickdaboom/UCI-qXeQFI4PTTDzFwKFxsBw.info.json
+[2026-03-24 15:53:39] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] Playlist Nick Daboom - Videos: Downloading N/A items
+[2026-03-24 15:53:39] [PROC] [ytdl-sub:yt-dlp] [youtube] Extracting URL: https://www.youtube.com/watch?v=msolfdzvxig
+[2026-03-24 15:53:39] [PROC] [ytdl-sub:yt-dlp] [youtube] msolfdzvxig: Downloading webpage
+[2026-03-24 15:53:40] [PROC] [ytdl-sub:downloader] Downloading metadata for Nick Daboom - Videos
+[2026-03-24 15:53:40] [PROC] [ytdl-sub:yt-dlp] [youtube] msolfdzvxig: Downloading android vr player API JSON
+[2026-03-24 15:53:40] [PROC] [ytdl-sub:yt-dlp] [youtube] msolfdzvxig: Downloading player 1ebf2aa6-main
+[2026-03-24 15:53:40] [PROC] [ytdl-sub:yt-dlp] [youtube] [jsc:deno] Solving JS challenges using deno
+[2026-03-24 15:53:42] [PROC] [ytdl-sub:yt-dlp] [youtube] msolfdzvxig: Downloading m3u8 information
+[2026-03-24 15:53:43] [PROC] [ytdl-sub:yt-dlp] [info] msolfdzvxig: Downloading 1 format(s): 398+251
+[2026-03-24 15:53:43] [PROC] [ytdl-sub:yt-dlp] [info] Writing video metadata as JSON to: /tmp/ytdl-sub-working-directory/lolete-nickdaboom/msolfdzvxig.info.json
+[2026-03-24 15:53:43] [PROC] [ytdl-sub:downloader] Downloading metadata for LA FINAL MÁS ESPERADA, EUROPA VS CHINA!! - G2 vs BLG | First Stand (Final)
+[2026-03-24 15:53:43] [PROC] [ytdl-sub:yt-dlp] [youtube] Extracting URL: https://www.youtube.com/watch?v=QeGte3n9AMM
+[2026-03-24 15:53:43] [PROC] [ytdl-sub:yt-dlp] [youtube] QeGte3n9AMM: Downloading webpage
+[2026-03-24 15:53:44] [PROC] [ytdl-sub:yt-dlp] [youtube] QeGte3n9AMM: Downloading android vr player API JSON
+[2026-03-24 15:53:44] [PROC] [ytdl-sub:yt-dlp] [youtube] [jsc:deno] Solving JS challenges using deno
+[2026-03-24 15:53:46] [PROC] [ytdl-sub:yt-dlp] [youtube] QeGte3n9AMM: Downloading m3u8 information
+[2026-03-24 15:53:47] [PROC] [ytdl-sub:yt-dlp] [info] QeGte3n9AMM: Downloading 1 format(s): 398+251
+[2026-03-24 15:53:47] [PROC] [ytdl-sub:yt-dlp] [info] Writing video metadata as JSON to: /tmp/ytdl-sub-working-directory/lolete-nickdaboom/QeGte3n9AMM.info.json
+[2026-03-24 15:53:47] [PROC] [ytdl-sub:yt-dlp-downloader] MaxDownloadsReached, stopping additional downloads.
+[2026-03-24 15:53:47] [PROC] [ytdl-sub:downloader] Downloading metadata for LOS MEJORES DE CHINA PELEAN POR IR A LA FINAL!! - BLG vs JDG | First Stand (Semifinal)
+[2026-03-24 15:53:47] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] Extracting URL: https://www.youtube.com/@nickdaboom
+[2026-03-24 15:53:47] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] @nickdaboom: Downloading webpage
+[2026-03-24 15:53:47] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] Downloading all uploads of the channel. To download only the videos in a specific tab, pass the tab's URL
+[2026-03-24 15:53:47] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] @nickdaboom/streams: Downloading webpage
+[2026-03-24 15:53:48] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] @nickdaboom/shorts: Downloading webpage
+[2026-03-24 15:53:48] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] Downloading as multiple playlists, separated by tabs. To download as a single playlist instead, pass https://www.youtube.com/playlist?list=UUI-qXeQFI4PTTDzFwKFxsBw
+[2026-03-24 15:53:48] [PROC] [ytdl-sub:yt-dlp] [info] Writing playlist metadata as JSON to: /tmp/ytdl-sub-working-directory/lolete-nickdaboom/@nickdaboom.info.json
+[2026-03-24 15:53:48] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] Playlist Nick Daboom: Downloading N/A items of 3
+[2026-03-24 15:53:48] [PROC] [ytdl-sub:yt-dlp] WARNING: Ignoring playliststart and playlistend because playlistitems was given
+[2026-03-24 15:53:48] [PROC] [ytdl-sub:yt-dlp] [info] Writing updated playlist metadata as JSON to: /tmp/ytdl-sub-working-directory/lolete-nickdaboom/@nickdaboom.info.json
+[2026-03-24 15:53:48] [PROC] [ytdl-sub:downloader] Beginning downloads for https://www.youtube.com/@nickdaboom/videos
+[2026-03-24 15:53:49] [PROC] [ytdl-sub:downloader] Downloading entry 1/2: LOS MEJORES DE CHINA PELEAN POR IR A LA FINAL!! - BLG vs JDG | First Stand (Semifinal)
+[2026-03-24 15:53:49] [PROC] [ytdl-sub:yt-dlp] [youtube] Extracting URL: https://www.youtube.com/watch?v=QeGte3n9AMM
+[2026-03-24 15:53:49] [PROC] [ytdl-sub:yt-dlp] [youtube] QeGte3n9AMM: Downloading webpage
+[2026-03-24 15:53:50] [PROC] [ytdl-sub:yt-dlp] [youtube] QeGte3n9AMM: Downloading android vr player API JSON
+[2026-03-24 15:53:51] [PROC] [ytdl-sub:yt-dlp] [youtube] QeGte3n9AMM: Downloading player 1ebf2aa6-main
+[2026-03-24 15:53:51] [PROC] [ytdl-sub:yt-dlp] [youtube] [jsc:deno] Solving JS challenges using deno
+[2026-03-24 15:53:53] [PROC] [ytdl-sub:yt-dlp] [youtube] QeGte3n9AMM: Downloading m3u8 information
+[2026-03-24 15:53:54] [PROC] [ytdl-sub:yt-dlp] [info] QeGte3n9AMM: Downloading 1 format(s): 398+251
+[2026-03-24 15:53:54] [PROC] [ytdl-sub:yt-dlp] [info] Downloading video thumbnail 41 ...
+[2026-03-24 15:53:54] [PROC] [ytdl-sub:yt-dlp] [info] Writing video thumbnail 41 to: /tmp/ytdl-sub-working-directory/lolete-nickdaboom/QeGte3n9AMM.webp
+[2026-03-24 15:54:50] [PROC] [ytdl-sub:yt-dlp] [Merger] Merging formats into "/tmp/ytdl-sub-working-directory/lolete-nickdaboom/QeGte3n9AMM.mkv"
+[2026-03-24 15:55:11] [PROC] [ytdl-sub:yt-dlp] Deleting original file /tmp/ytdl-sub-working-directory/lolete-nickdaboom/QeGte3n9AMM.f398.mp4 (pass -k to keep)
+[2026-03-24 15:55:11] [PROC] [ytdl-sub:yt-dlp] Deleting original file /tmp/ytdl-sub-working-directory/lolete-nickdaboom/QeGte3n9AMM.f251.webm (pass -k to keep)
+[2026-03-24 15:55:11] [PROC] [ytdl-sub:yt-dlp] [Metadata] There isn't any metadata to add
+[2026-03-24 15:55:40] [PROC] [ytdl-sub:downloader] Downloading entry 2/2: LA FINAL MÁS ESPERADA, EUROPA VS CHINA!! - G2 vs BLG | First Stand (Final)
+[2026-03-24 15:55:40] [PROC] [ytdl-sub:yt-dlp] [youtube] Extracting URL: https://www.youtube.com/watch?v=msolfdzvxig
+[2026-03-24 15:55:40] [PROC] [ytdl-sub:yt-dlp] [youtube] msolfdzvxig: Downloading webpage
+[2026-03-24 15:55:41] [PROC] [ytdl-sub:yt-dlp] [youtube] msolfdzvxig: Downloading android vr player API JSON
+[2026-03-24 15:55:42] [PROC] [ytdl-sub:yt-dlp] [youtube] msolfdzvxig: Downloading player 1ebf2aa6-main
+[2026-03-24 15:55:46] [PROC] [ytdl-sub:yt-dlp] [youtube] [jsc:deno] Solving JS challenges using deno
+[2026-03-24 15:55:49] [PROC] [ytdl-sub:yt-dlp] [youtube] msolfdzvxig: Downloading m3u8 information
+[2026-03-24 15:55:50] [PROC] [ytdl-sub:yt-dlp] [info] msolfdzvxig: Downloading 1 format(s): 398+251
+[2026-03-24 15:55:50] [PROC] [ytdl-sub:yt-dlp] [info] Downloading video thumbnail 41 ...
+[2026-03-24 15:55:50] [PROC] [ytdl-sub:yt-dlp] [info] Writing video thumbnail 41 to: /tmp/ytdl-sub-working-directory/lolete-nickdaboom/msolfdzvxig.webp
+[2026-03-24 15:57:10] [PROC] [ytdl-sub:yt-dlp] [Merger] Merging formats into "/tmp/ytdl-sub-working-directory/lolete-nickdaboom/msolfdzvxig.mkv"
+[2026-03-24 15:57:47] [PROC] [ytdl-sub:yt-dlp] Deleting original file /tmp/ytdl-sub-working-directory/lolete-nickdaboom/msolfdzvxig.f251.webm (pass -k to keep)
+[2026-03-24 15:57:47] [PROC] [ytdl-sub:yt-dlp] Deleting original file /tmp/ytdl-sub-working-directory/lolete-nickdaboom/msolfdzvxig.f398.mp4 (pass -k to keep)
+[2026-03-24 15:57:47] [PROC] [ytdl-sub:yt-dlp] [Metadata] There isn't any metadata to add
+[2026-03-24 15:58:37] [PROC] [ytdl-sub] Transaction log for lolete-kerios:
+[2026-03-24 15:58:37] [PROC] Files created:
+[2026-03-24 15:58:37] [PROC] ----------------------------------------
+[2026-03-24 15:58:38] [PROC] /downloads-test/TV-Serie/lolete
+[2026-03-24 15:58:38] [PROC] .ytdl-sub-lolete-kerios-download-archive.json
+[2026-03-24 15:58:38] [PROC] fanart.jpg
+[2026-03-24 15:58:38] [PROC] poster.jpg
+[2026-03-24 15:58:38] [PROC] tvshow.nfo
+[2026-03-24 15:58:39] [PROC] NFO tags:
+[2026-03-24 15:58:39] [PROC] tvshow:
+[2026-03-24 15:58:40] [PROC] genre: ytdl-sub
+[2026-03-24 15:58:40] [PROC] mpaa: TV-14
+[2026-03-24 15:58:40] [PROC] title: lolete
+[2026-03-24 15:58:40] [PROC] /downloads-test/TV-Serie/lolete/Season 2026
+[2026-03-24 15:58:40] [PROC] s2026.e031701 - 😱¡KOREA MASTER 400 LPS mmr y LOS KOREANOS ALUCINAN con la ＊NUEVA BUILD DEMONIACA＊-thumb.jpg
+[2026-03-24 15:58:40] [PROC] s2026.e031701 - 😱¡KOREA MASTER 400 LPS mmr y LOS KOREANOS ALUCINAN con la ＊NUEVA BUILD DEMONIACA＊.info.json
+[2026-03-24 15:58:41] [PROC] s2026.e031701 - 😱¡KOREA MASTER 400 LPS mmr y LOS KOREANOS ALUCINAN con la ＊NUEVA BUILD DEMONIACA＊.mp4
+[2026-03-24 15:58:41] [PROC] Video Tags:
+[2026-03-24 15:58:41] [PROC] contentRating: TV-14
+[2026-03-24 15:58:41] [PROC] date: 2026-03-17
+[2026-03-24 15:58:41] [PROC] episode_id: 31701
+[2026-03-24 15:58:41] [PROC] genre: ytdl-sub
+[2026-03-24 15:58:42] [PROC] show: lolete
+[2026-03-24 15:58:42] [PROC] synopsis:
+[2026-03-24 15:58:42] [PROC] https://www.youtube.com/watch?v=Bzogn-6GlrY
+[2026-03-24 15:58:42] [PROC] 💚¡SIGUEME en KICK! ¡MI PLATAFORMA PRINCIPAL de DIRECTOS!
+[2026-03-24 15:58:42] [PROC] Kick https://kick.com/kerios
+[2026-03-24 15:58:43] [PROC] ❤️¡CANAL SECUNDARIO PARA COREA CONTENT!
+[2026-03-24 15:58:43] [PROC] Kerios v2 https://www.youtube.com/channel/UC95KzMWIoZ-hZN5_q2c_W7g?view_as=subscriber
+[2026-03-24 15:58:44] [PROC] ⭐¡Sígueme en mis Redes!
+[2026-03-24 15:58:48] [PROC] TikTok https://www.tiktok.com/@keriosyt
+[2026-03-24 15:58:52] [PROC] Twitter https://twitter.com/KeriosYT
+[2026-03-24 15:58:55] [PROC] Instagram https://www.instagram.com/keriosyt/
+[2026-03-24 15:58:58] [PROC] Discord https://discord.gg/katangasquad
+[2026-03-24 15:59:00] [PROC] Miembro del Canal https://www.youtube.com/channel/UCg1c09_sFOd-TVPCNgHw8qg/join
+[2026-03-24 15:59:02] [PROC] ✉️Correo de contacto: Kerios@l3tcraft-agency.com
+[2026-03-24 15:59:06] [PROC] title: 2026-03-17 - 😱¡KOREA MASTER 400 LPS mmr y LOS KOREANOS ALUCINAN con la *NUEVA BUILD DEMONIACA*
+[2026-03-24 15:59:08] [PROC] year: 2026
+[2026-03-24 15:59:10] [PROC] Embedded thumbnail
+[2026-03-24 15:59:14] [PROC] s2026.e031701 - 😱¡KOREA MASTER 400 LPS mmr y LOS KOREANOS ALUCINAN con la ＊NUEVA BUILD DEMONIACA＊.nfo
+[2026-03-24 15:59:18] [PROC] NFO tags:
+[2026-03-24 15:59:20] [PROC] episodedetails:
+[2026-03-24 15:59:22] [PROC] aired: 2026-03-17
+[2026-03-24 15:59:24] [PROC] episode: 31701
+[2026-03-24 15:59:26] [PROC] genre: ytdl-sub
+[2026-03-24 15:59:29] [PROC] mpaa: TV-14
+[2026-03-24 15:59:31] [PROC] plot:
+[2026-03-24 15:59:33] [PROC] https://www.youtube.com/watch?v=Bzogn-6GlrY
+[2026-03-24 15:59:38] [PROC] 💚¡SIGUEME en KICK! ¡MI PLATAFORMA PRINCIPAL de DIRECTOS!
+[2026-03-24 15:59:43] [PROC] Kick https://kick.com/kerios
+[2026-03-24 15:59:45] [PROC] ❤️¡CANAL SECUNDARIO PARA COREA CONTENT!
+[2026-03-24 15:59:46] [PROC] Kerios v2 https://www.youtube.com/channel/UC95KzMWIoZ-hZN5_q2c_W7g?view_as=subscriber
+[2026-03-24 15:59:46] [PROC] ⭐¡Sígueme en mis Redes!
+[2026-03-24 15:59:46] [PROC] TikTok https://www.tiktok.com/@keriosyt
+[2026-03-24 15:59:46] [PROC] Twitter https://twitter.com/KeriosYT
+[2026-03-24 15:59:46] [PROC] Instagram https://www.instagram.com/keriosyt/
+[2026-03-24 15:59:46] [PROC] Discord https://discord.gg/katangasquad
+[2026-03-24 15:59:46] [PROC] Miembro del Canal https://www.youtube.com/channel/UCg1c09_sFOd-TVPCNgHw8qg/join
+[2026-03-24 15:59:46] [PROC] ✉️Correo de contacto: Kerios@l3tcraft-agency.com
+[2026-03-24 15:59:46] [PROC] season: 2026
+[2026-03-24 15:59:46] [PROC] title: 2026-03-17 - 😱¡KOREA MASTER 400 LPS mmr y LOS KOREANOS ALUCINAN con la *NUEVA BUILD DEMONIACA*
+[2026-03-24 15:59:47] [PROC] year: 2026
+[2026-03-24 15:59:47] [PROC] s2026.e032301 - 😈¡HAGO LLORAR al ＊MAIN GAREN KOREANO＊ en RANKED con MI RIVEN DEMONIACA y ME ODIAN SIN PARAR!-thumb.jpg
+[2026-03-24 15:59:47] [PROC] s2026.e032301 - 😈¡HAGO LLORAR al ＊MAIN GAREN KOREANO＊ en RANKED con MI RIVEN DEMONIACA y ME ODIAN SIN PARAR!.info.json
+[2026-03-24 15:59:47] [PROC] s2026.e032301 - 😈¡HAGO LLORAR al ＊MAIN GAREN KOREANO＊ en RANKED con MI RIVEN DEMONIACA y ME ODIAN SIN PARAR!.mp4
+[2026-03-24 15:59:47] [PROC] Video Tags:
+[2026-03-24 15:59:47] [PROC] contentRating: TV-14
+[2026-03-24 15:59:47] [PROC] date: 2026-03-23
+[2026-03-24 15:59:47] [PROC] episode_id: 32301
+[2026-03-24 15:59:47] [PROC] genre: ytdl-sub
+[2026-03-24 15:59:47] [PROC] show: lolete
+[2026-03-24 15:59:47] [PROC] synopsis:
+[2026-03-24 15:59:47] [PROC] https://www.youtube.com/watch?v=hQus3LxX5c8
+[2026-03-24 15:59:47] [PROC] 💚¡SIGUEME en KICK! ¡MI PLATAFORMA PRINCIPAL de DIRECTOS!
+[2026-03-24 15:59:47] [PROC] Kick https://kick.com/kerios
+[2026-03-24 15:59:47] [PROC] ❤️¡CANAL SECUNDARIO PARA COREA CONTENT!
+[2026-03-24 15:59:47] [PROC] Kerios v2 https://www.youtube.com/channel/UC95KzMWIoZ-hZN5_q2c_W7g?view_as=subscriber
+[2026-03-24 15:59:47] [PROC] ⭐¡Sígueme en mis Redes!
+[2026-03-24 15:59:47] [PROC] TikTok https://www.tiktok.com/@keriosyt
+[2026-03-24 15:59:47] [PROC] Twitter https://twitter.com/KeriosYT
+[2026-03-24 15:59:47] [PROC] Instagram https://www.instagram.com/keriosyt/
+[2026-03-24 15:59:47] [PROC] Discord https://discord.gg/katangasquad
+[2026-03-24 15:59:47] [PROC] Miembro del Canal https://www.youtube.com/channel/UCg1c09_sFOd-TVPCNgHw8qg/join
+[2026-03-24 15:59:47] [PROC] ✉️Correo de contacto: Kerios@l3tcraft-agency.com
+[2026-03-24 15:59:47] [PROC] title: 2026-03-23 - 😈¡HAGO LLORAR al *MAIN GAREN KOREANO* en RANKED con MI RIVEN DEMONIACA y ME ODIAN SIN PARAR!
+[2026-03-24 15:59:47] [PROC] year: 2026
+[2026-03-24 15:59:47] [PROC] Embedded thumbnail
+[2026-03-24 15:59:48] [PROC] s2026.e032301 - 😈¡HAGO LLORAR al ＊MAIN GAREN KOREANO＊ en RANKED con MI RIVEN DEMONIACA y ME ODIAN SIN PARAR!.nfo
+[2026-03-24 15:59:48] [PROC] NFO tags:
+[2026-03-24 15:59:48] [PROC] episodedetails:
+[2026-03-24 15:59:48] [PROC] aired: 2026-03-23
+[2026-03-24 15:59:48] [PROC] episode: 32301
+[2026-03-24 15:59:48] [PROC] genre: ytdl-sub
+[2026-03-24 15:59:48] [PROC] mpaa: TV-14
+[2026-03-24 15:59:48] [PROC] plot:
+[2026-03-24 15:59:48] [PROC] https://www.youtube.com/watch?v=hQus3LxX5c8
+[2026-03-24 15:59:48] [PROC] 💚¡SIGUEME en KICK! ¡MI PLATAFORMA PRINCIPAL de DIRECTOS!
+[2026-03-24 15:59:48] [PROC] Kick https://kick.com/kerios
+[2026-03-24 15:59:48] [PROC] ❤️¡CANAL SECUNDARIO PARA COREA CONTENT!
+[2026-03-24 15:59:48] [PROC] Kerios v2 https://www.youtube.com/channel/UC95KzMWIoZ-hZN5_q2c_W7g?view_as=subscriber
+[2026-03-24 15:59:48] [PROC] ⭐¡Sígueme en mis Redes!
+[2026-03-24 15:59:48] [PROC] TikTok https://www.tiktok.com/@keriosyt
+[2026-03-24 15:59:48] [PROC] Twitter https://twitter.com/KeriosYT
+[2026-03-24 15:59:48] [PROC] Instagram https://www.instagram.com/keriosyt/
+[2026-03-24 15:59:48] [PROC] Discord https://discord.gg/katangasquad
+[2026-03-24 15:59:48] [PROC] Miembro del Canal https://www.youtube.com/channel/UCg1c09_sFOd-TVPCNgHw8qg/join
+[2026-03-24 15:59:48] [PROC] ✉️Correo de contacto: Kerios@l3tcraft-agency.com
+[2026-03-24 15:59:48] [PROC] season: 2026
+[2026-03-24 15:59:48] [PROC] title: 2026-03-23 - 😈¡HAGO LLORAR al *MAIN GAREN KOREANO* en RANKED con MI RIVEN DEMONIACA y ME ODIAN SIN PARAR!
+[2026-03-24 15:59:48] [PROC] year: 2026
+[2026-03-24 15:59:48] [PROC] [ytdl-sub] Transaction log for lolete-nickdaboom:
+[2026-03-24 15:59:48] [PROC] Files created:
+[2026-03-24 15:59:48] [PROC] ----------------------------------------
+[2026-03-24 15:59:48] [PROC] /downloads-test/TV-Serie/lolete
+[2026-03-24 15:59:49] [PROC] .ytdl-sub-lolete-nickdaboom-download-archive.json
+[2026-03-24 15:59:49] [PROC] /downloads-test/TV-Serie/lolete/Season 2026
+[2026-03-24 15:59:49] [PROC] s2026.e032101 - LOS MEJORES DE CHINA PELEAN POR IR A LA FINAL!! - BLG vs JDG ｜ First Stand (Semifinal)-thumb.jpg
+[2026-03-24 15:59:49] [PROC] s2026.e032101 - LOS MEJORES DE CHINA PELEAN POR IR A LA FINAL!! - BLG vs JDG ｜ First Stand (Semifinal).info.json
+[2026-03-24 15:59:49] [PROC] s2026.e032101 - LOS MEJORES DE CHINA PELEAN POR IR A LA FINAL!! - BLG vs JDG ｜ First Stand (Semifinal).mkv
+[2026-03-24 15:59:49] [PROC] Video Tags:
+[2026-03-24 15:59:49] [PROC] contentRating: TV-14
+[2026-03-24 15:59:49] [PROC] date: 2026-03-21
+[2026-03-24 15:59:49] [PROC] episode_id: 32101
+[2026-03-24 15:59:49] [PROC] genre: ytdl-sub
+[2026-03-24 15:59:49] [PROC] show: lolete
+[2026-03-24 15:59:49] [PROC] synopsis:
+[2026-03-24 15:59:49] [PROC] https://www.youtube.com/watch?v=QeGte3n9AMM
+[2026-03-24 15:59:49] [PROC] Si queres apoyar el canal
+[2026-03-24 15:59:49] [PROC] https://streamlabs.com/nickdaboom/tip
+[2026-03-24 15:59:49] [PROC] Seguime!
+[2026-03-24 15:59:49] [PROC] Kick : https://kick.com/nickdaboom
+[2026-03-24 15:59:49] [PROC] Twitch : https://www.twitch.tv/nickdaboom
+[2026-03-24 15:59:49] [PROC] Instagram : https://www.instagram.com/nicoaschwartz
+[2026-03-24 15:59:49] [PROC] Discord : https://discord.com/invite/pms222JAAs
+[2026-03-24 15:59:49] [PROC] Tiktok : https://www.tiktok.com/@nickdaboom0
+[2026-03-24 15:59:49] [PROC] X : https://twitter.com/NickDaboom
+[2026-03-24 15:59:49] [PROC] Unite con tu membresia al club de la gente linda!
+[2026-03-24 15:59:50] [PROC] hacete miembro por 100 pesito:
+[2026-03-24 15:59:50] [PROC] https://www.youtube.com/channel/UCI-qXeQFI4PTTDzFwKFxsBw/join
+[2026-03-24 15:59:50] [PROC] Canal Secundario : https://www.youtube.com/channel/UCbJj68RrcFbFH4UGM-WOWiw
+[2026-03-24 15:59:50] [PROC] BoomCast : https://www.youtube.com/@UCobSwF7MNkV1ORbXHfh_Xfw
+[2026-03-24 15:59:50] [PROC] ► Contacto comercial: nickdavoom@gmail.com
+[2026-03-24 15:59:50] [PROC] LOS MEJORES DE CHINA PELEAN POR IR A LA FINAL!! - BLG vs JDG | First Stand (Semifinal)
+[2026-03-24 15:59:50] [PROC] ---------------------------------------------------------------------------------------------------------------------------
+[2026-03-24 15:59:50] [PROC] title: 2026-03-21 - LOS MEJORES DE CHINA PELEAN POR IR A LA FINAL!! - BLG vs JDG | First Stand (Semifinal)
+[2026-03-24 15:59:50] [PROC] year: 2026
+[2026-03-24 15:59:50] [PROC] Embedded thumbnail
+[2026-03-24 15:59:50] [PROC] s2026.e032101 - LOS MEJORES DE CHINA PELEAN POR IR A LA FINAL!! - BLG vs JDG ｜ First Stand (Semifinal).nfo
+[2026-03-24 15:59:50] [PROC] NFO tags:
+[2026-03-24 15:59:50] [PROC] episodedetails:
+[2026-03-24 15:59:50] [PROC] aired: 2026-03-21
+[2026-03-24 15:59:50] [PROC] episode: 32101
+[2026-03-24 15:59:50] [PROC] genre: ytdl-sub
+[2026-03-24 15:59:50] [PROC] mpaa: TV-14
+[2026-03-24 15:59:50] [PROC] plot:
+[2026-03-24 15:59:50] [PROC] https://www.youtube.com/watch?v=QeGte3n9AMM
+[2026-03-24 15:59:50] [PROC] Si queres apoyar el canal
+[2026-03-24 15:59:50] [PROC] https://streamlabs.com/nickdaboom/tip
+[2026-03-24 15:59:50] [PROC] Seguime!
+[2026-03-24 15:59:50] [PROC] Kick : https://kick.com/nickdaboom
+[2026-03-24 15:59:50] [PROC] Twitch : https://www.twitch.tv/nickdaboom
+[2026-03-24 15:59:50] [PROC] Instagram : https://www.instagram.com/nicoaschwartz
+[2026-03-24 15:59:50] [PROC] Discord : https://discord.com/invite/pms222JAAs
+[2026-03-24 15:59:50] [PROC] Tiktok : https://www.tiktok.com/@nickdaboom0
+[2026-03-24 15:59:51] [PROC] X : https://twitter.com/NickDaboom
+[2026-03-24 15:59:51] [PROC] Unite con tu membresia al club de la gente linda!
+[2026-03-24 15:59:51] [PROC] hacete miembro por 100 pesito:
+[2026-03-24 15:59:51] [PROC] https://www.youtube.com/channel/UCI-qXeQFI4PTTDzFwKFxsBw/join
+[2026-03-24 15:59:51] [PROC] Canal Secundario : https://www.youtube.com/channel/UCbJj68RrcFbFH4UGM-WOWiw
+[2026-03-24 15:59:51] [PROC] BoomCast : https://www.youtube.com/@UCobSwF7MNkV1ORbXHfh_Xfw
+[2026-03-24 15:59:51] [PROC] ► Contacto comercial: nickdavoom@gmail.com
+[2026-03-24 15:59:51] [PROC] LOS MEJORES DE CHINA PELEAN POR IR A LA FINAL!! - BLG vs JDG | First Stand (Semifinal)
+[2026-03-24 15:59:51] [PROC] ---------------------------------------------------------------------------------------------------------------------------
+[2026-03-24 15:59:51] [PROC] season: 2026
+[2026-03-24 15:59:51] [PROC] title: 2026-03-21 - LOS MEJORES DE CHINA PELEAN POR IR A LA FINAL!! - BLG vs JDG | First Stand (Semifinal)
+[2026-03-24 15:59:51] [PROC] year: 2026
+[2026-03-24 15:59:51] [PROC] s2026.e032201 - LA FINAL MÁS ESPERADA, EUROPA VS CHINA!! - G2 vs BLG ｜ First Stand (Final)-thumb.jpg
+[2026-03-24 15:59:51] [PROC] s2026.e032201 - LA FINAL MÁS ESPERADA, EUROPA VS CHINA!! - G2 vs BLG ｜ First Stand (Final).info.json
+[2026-03-24 15:59:51] [PROC] s2026.e032201 - LA FINAL MÁS ESPERADA, EUROPA VS CHINA!! - G2 vs BLG ｜ First Stand (Final).mkv
+[2026-03-24 15:59:51] [PROC] Video Tags:
+[2026-03-24 15:59:51] [PROC] contentRating: TV-14
+[2026-03-24 15:59:51] [PROC] date: 2026-03-22
+[2026-03-24 15:59:51] [PROC] episode_id: 32201
+[2026-03-24 15:59:51] [PROC] genre: ytdl-sub
+[2026-03-24 15:59:51] [PROC] show: lolete
+[2026-03-24 15:59:51] [PROC] synopsis:
+[2026-03-24 15:59:51] [PROC] https://www.youtube.com/watch?v=msolfdzvxig
+[2026-03-24 15:59:51] [PROC] Si queres apoyar el canal
+[2026-03-24 15:59:51] [PROC] https://streamlabs.com/nickdaboom/tip
+[2026-03-24 15:59:51] [PROC] Seguime!
+[2026-03-24 15:59:51] [PROC] Kick : https://kick.com/nickdaboom
+[2026-03-24 15:59:52] [PROC] Twitch : https://www.twitch.tv/nickdaboom
+[2026-03-24 15:59:52] [PROC] Instagram : https://www.instagram.com/nicoaschwartz
+[2026-03-24 15:59:52] [PROC] Discord : https://discord.com/invite/pms222JAAs
+[2026-03-24 15:59:52] [PROC] Tiktok : https://www.tiktok.com/@nickdaboom0
+[2026-03-24 15:59:52] [PROC] X : https://twitter.com/NickDaboom
+[2026-03-24 15:59:52] [PROC] Unite con tu membresia al club de la gente linda!
+[2026-03-24 15:59:52] [PROC] hacete miembro por 100 pesito:
+[2026-03-24 15:59:52] [PROC] https://www.youtube.com/channel/UCI-qXeQFI4PTTDzFwKFxsBw/join
+[2026-03-24 15:59:52] [PROC] Canal Secundario : https://www.youtube.com/channel/UCbJj68RrcFbFH4UGM-WOWiw
+[2026-03-24 15:59:52] [PROC] BoomCast : https://www.youtube.com/@UCobSwF7MNkV1ORbXHfh_Xfw
+[2026-03-24 15:59:52] [PROC] ► Contacto comercial: nickdavoom@gmail.com
+[2026-03-24 15:59:52] [PROC] LA FINAL MÁS ESPERADA, EUROPA VS CHINA!! - G2 vs BLG | First Stand (Final)
+[2026-03-24 15:59:52] [PROC] ---------------------------------------------------------------------------------------------------------------------------
+[2026-03-24 15:59:52] [PROC] title: 2026-03-22 - LA FINAL MÁS ESPERADA, EUROPA VS CHINA!! - G2 vs BLG | First Stand (Final)
+[2026-03-24 15:59:52] [PROC] year: 2026
+[2026-03-24 15:59:52] [PROC] Embedded thumbnail
+[2026-03-24 15:59:53] [PROC] s2026.e032201 - LA FINAL MÁS ESPERADA, EUROPA VS CHINA!! - G2 vs BLG ｜ First Stand (Final).nfo
+[2026-03-24 15:59:53] [PROC] NFO tags:
+[2026-03-24 15:59:53] [PROC] episodedetails:
+[2026-03-24 15:59:53] [PROC] aired: 2026-03-22
+[2026-03-24 15:59:53] [PROC] episode: 32201
+[2026-03-24 15:59:53] [PROC] genre: ytdl-sub
+[2026-03-24 15:59:53] [PROC] mpaa: TV-14
+[2026-03-24 15:59:53] [PROC] plot:
+[2026-03-24 15:59:53] [PROC] https://www.youtube.com/watch?v=msolfdzvxig
+[2026-03-24 15:59:53] [PROC] Si queres apoyar el canal
+[2026-03-24 15:59:53] [PROC] https://streamlabs.com/nickdaboom/tip
+[2026-03-24 15:59:53] [PROC] Seguime!
+[2026-03-24 15:59:53] [PROC] Kick : https://kick.com/nickdaboom
+[2026-03-24 15:59:53] [PROC] Twitch : https://www.twitch.tv/nickdaboom
+[2026-03-24 15:59:53] [PROC] Instagram : https://www.instagram.com/nicoaschwartz
+[2026-03-24 15:59:53] [PROC] Discord : https://discord.com/invite/pms222JAAs
+[2026-03-24 15:59:53] [PROC] Tiktok : https://www.tiktok.com/@nickdaboom0
+[2026-03-24 15:59:53] [PROC] X : https://twitter.com/NickDaboom
+[2026-03-24 15:59:53] [PROC] Unite con tu membresia al club de la gente linda!
+[2026-03-24 15:59:53] [PROC] hacete miembro por 100 pesito:
+[2026-03-24 15:59:53] [PROC] https://www.youtube.com/channel/UCI-qXeQFI4PTTDzFwKFxsBw/join
+[2026-03-24 15:59:53] [PROC] Canal Secundario : https://www.youtube.com/channel/UCbJj68RrcFbFH4UGM-WOWiw
+[2026-03-24 15:59:53] [PROC] BoomCast : https://www.youtube.com/@UCobSwF7MNkV1ORbXHfh_Xfw
+[2026-03-24 15:59:53] [PROC] ► Contacto comercial: nickdavoom@gmail.com
+[2026-03-24 15:59:53] [PROC] LA FINAL MÁS ESPERADA, EUROPA VS CHINA!! - G2 vs BLG | First Stand (Final)
+[2026-03-24 15:59:53] [PROC] ---------------------------------------------------------------------------------------------------------------------------
+[2026-03-24 15:59:53] [PROC] season: 2026
+[2026-03-24 15:59:53] [PROC] title: 2026-03-22 - LA FINAL MÁS ESPERADA, EUROPA VS CHINA!! - G2 vs BLG | First Stand (Final)
+[2026-03-24 15:59:53] [PROC] year: 2026
+[2026-03-24 15:59:53] [PROC] Files modified:
+[2026-03-24 15:59:53] [PROC] ----------------------------------------
+[2026-03-24 15:59:54] [PROC] /downloads-test/TV-Serie/lolete
+[2026-03-24 15:59:54] [PROC] fanart.jpg
+[2026-03-24 15:59:54] [PROC] poster.jpg
+[2026-03-24 15:59:54] [PROC] [ytdl-sub] Download Summary:
+[2026-03-24 15:59:54] [PROC] lolete-kerios         +2 0 0     2 ✔
+[2026-03-24 15:59:54] [PROC] lolete-nickdaboom     +2 0 0     2 ✔
+[2026-03-24 15:59:54] [PROC] Total: 2              +4 0 0     4 Success
+[2026-03-24 15:59:54] [INFO] Fin [ytdl-sub-sub] rc=0 en 704.65s
+[2026-03-24 15:59:54] [OK] Estado promovido: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\config\runtime\test\.recent-items-state.pending.json -> E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\config\runtime\test\.recent-items-state.json
+[2026-03-24 15:59:54] [INFO] Este perfil no requiere postproceso específico.
+[2026-03-24 15:59:54] [OK] Perfil completado correctamente.
+[2026-03-24 15:59:54] [STEP] ==============================================================================
+[2026-03-24 15:59:54] [STEP] Inicio ejecución perfil: Music-Playlist
+[2026-03-24 15:59:54] [STEP] ==============================================================================
+[2026-03-24 15:59:54] [INFO] Project root: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl
+[2026-03-24 15:59:54] [INFO] Mode: test
+[2026-03-24 15:59:54] [INFO] DryRun: False
+[2026-03-24 15:59:54] [INFO] Ejecutando [generate-ytdl-config]...
+[2026-03-24 15:59:54] [INFO] Fin [generate-ytdl-config] rc=0 en 0.14s
+[2026-03-24 15:59:54] [INFO] Ejecutando [prepare-subscriptions-runset]...
+[2026-03-24 15:59:57] [INFO] Fin [prepare-subscriptions-runset] rc=0 en 2.90s
+[2026-03-24 15:59:57] [INFO] Runset con entradas: True
+[2026-03-24 15:59:57] [INFO] Ejecutando [ytdl-sub-sub]...
+[2026-03-24 15:59:59] [PROC] [ytdl-sub] Validating subscriptions...
+[2026-03-24 15:59:59] [PROC] [ytdl-sub] Beginning subscription download for music-playlist-prueba-plcajstgncmdxgfdpc5aenevprzgcr-kut
+[2026-03-24 15:59:59] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] Extracting URL: https://www.youtube.com/playlist?list=PLcajSTgNCmdXgFdPc5aeNEVPrzGcr_kUt
+[2026-03-24 15:59:59] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] PLcajSTgNCmdXgFdPc5aeNEVPrzGcr_kUt: Downloading webpage
+[2026-03-24 16:00:00] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] PLcajSTgNCmdXgFdPc5aeNEVPrzGcr_kUt: Redownloading playlist API JSON with unavailable videos
+[2026-03-24 16:00:00] [PROC] [ytdl-sub:yt-dlp] [info] Writing playlist metadata as JSON to: /tmp/ytdl-sub-working-directory/music-playlist-prueba-plcajstgncmdxgfdpc5aenevprzgcr-kut/PLcajSTgNCmdXgFdPc5aeNEVPrzGcr_kUt.info.json
+[2026-03-24 16:00:00] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] Playlist Salseo que te veo: Downloading N/A items of 116
+[2026-03-24 16:00:00] [PROC] [ytdl-sub:yt-dlp] [youtube] Extracting URL: https://www.youtube.com/watch?v=i-8qaURPles
+[2026-03-24 16:00:00] [PROC] [ytdl-sub:yt-dlp] [youtube] i-8qaURPles: Downloading webpage
+[2026-03-24 16:00:00] [PROC] [ytdl-sub:downloader] Downloading metadata for Salseo que te veo
+[2026-03-24 16:00:01] [PROC] [ytdl-sub:yt-dlp] [youtube] i-8qaURPles: Downloading android vr player API JSON
+[2026-03-24 16:00:02] [PROC] [ytdl-sub:yt-dlp] [youtube] i-8qaURPles: Downloading player 1ebf2aa6-main
+[2026-03-24 16:00:02] [PROC] [ytdl-sub:yt-dlp] [youtube] [jsc:deno] Solving JS challenges using deno
+[2026-03-24 16:00:05] [PROC] [ytdl-sub:yt-dlp] [youtube] i-8qaURPles: Downloading m3u8 information
+[2026-03-24 16:00:05] [PROC] [ytdl-sub:yt-dlp] [info] i-8qaURPles: Downloading 1 format(s): 251
+[2026-03-24 16:00:05] [PROC] [ytdl-sub:yt-dlp] [info] Writing video metadata as JSON to: /tmp/ytdl-sub-working-directory/music-playlist-prueba-plcajstgncmdxgfdpc5aenevprzgcr-kut/i-8qaURPles.info.json
+[2026-03-24 16:00:05] [PROC] [ytdl-sub:yt-dlp] [youtube] Extracting URL: https://www.youtube.com/watch?v=nPG8QXdW9mI
+[2026-03-24 16:00:05] [PROC] [ytdl-sub:yt-dlp] [youtube] nPG8QXdW9mI: Downloading webpage
+[2026-03-24 16:00:05] [PROC] [ytdl-sub:downloader] Downloading metadata for Imposible Amor
+[2026-03-24 16:00:06] [PROC] [ytdl-sub:yt-dlp] [youtube] nPG8QXdW9mI: Downloading android vr player API JSON
+[2026-03-24 16:00:06] [PROC] [ytdl-sub:yt-dlp] [youtube] [jsc:deno] Solving JS challenges using deno
+[2026-03-24 16:00:09] [PROC] [ytdl-sub:yt-dlp] [youtube] nPG8QXdW9mI: Downloading m3u8 information
+[2026-03-24 16:00:10] [PROC] [ytdl-sub:yt-dlp] [info] nPG8QXdW9mI: Downloading 1 format(s): 251
+[2026-03-24 16:00:10] [PROC] [ytdl-sub:yt-dlp] [info] Writing video metadata as JSON to: /tmp/ytdl-sub-working-directory/music-playlist-prueba-plcajstgncmdxgfdpc5aenevprzgcr-kut/nPG8QXdW9mI.info.json
+[2026-03-24 16:00:10] [PROC] [ytdl-sub:yt-dlp] [youtube] Extracting URL: https://www.youtube.com/watch?v=bgSpdgL9lkQ
+[2026-03-24 16:00:10] [PROC] [ytdl-sub:yt-dlp] [youtube] bgSpdgL9lkQ: Downloading webpage
+[2026-03-24 16:00:10] [PROC] [ytdl-sub:downloader] Downloading metadata for TU LOCO LOCO Y YO TRANQUILO -  ROBERTO ROENA CON  PIRO MANTILLA
+[2026-03-24 16:00:11] [PROC] [ytdl-sub:yt-dlp] [youtube] bgSpdgL9lkQ: Downloading android vr player API JSON
+[2026-03-24 16:00:11] [PROC] [ytdl-sub:yt-dlp] [youtube] [jsc:deno] Solving JS challenges using deno
+[2026-03-24 16:00:16] [PROC] [ytdl-sub:yt-dlp] [youtube] bgSpdgL9lkQ: Downloading m3u8 information
+[2026-03-24 16:00:16] [PROC] [ytdl-sub:yt-dlp] [info] bgSpdgL9lkQ: Downloading 1 format(s): 251
+[2026-03-24 16:00:16] [PROC] [ytdl-sub:yt-dlp] [info] Writing video metadata as JSON to: /tmp/ytdl-sub-working-directory/music-playlist-prueba-plcajstgncmdxgfdpc5aenevprzgcr-kut/bgSpdgL9lkQ.info.json
+[2026-03-24 16:00:16] [PROC] [ytdl-sub:downloader] Downloading metadata for Y No Hago Mas Na
+[2026-03-24 16:00:16] [PROC] [ytdl-sub:yt-dlp] [youtube] Extracting URL: https://www.youtube.com/watch?v=2Vo2aaVXyqM
+[2026-03-24 16:00:16] [PROC] [ytdl-sub:yt-dlp] [youtube] 2Vo2aaVXyqM: Downloading webpage
+[2026-03-24 16:00:17] [PROC] [ytdl-sub:yt-dlp] [youtube] 2Vo2aaVXyqM: Downloading android vr player API JSON
+[2026-03-24 16:00:17] [PROC] [ytdl-sub:yt-dlp] [youtube] [jsc:deno] Solving JS challenges using deno
+[2026-03-24 16:00:19] [PROC] [ytdl-sub:yt-dlp] [youtube] 2Vo2aaVXyqM: Downloading m3u8 information
+[2026-03-24 16:00:19] [PROC] [ytdl-sub:yt-dlp] [info] 2Vo2aaVXyqM: Downloading 1 format(s): 251
+[2026-03-24 16:00:19] [PROC] [ytdl-sub:yt-dlp] [info] Writing video metadata as JSON to: /tmp/ytdl-sub-working-directory/music-playlist-prueba-plcajstgncmdxgfdpc5aenevprzgcr-kut/2Vo2aaVXyqM.info.json
+[2026-03-24 16:00:19] [PROC] [ytdl-sub:yt-dlp] [youtube] Extracting URL: https://www.youtube.com/watch?v=DVCjoGeqMl4
+[2026-03-24 16:00:19] [PROC] [ytdl-sub:yt-dlp] [youtube] DVCjoGeqMl4: Downloading webpage
+[2026-03-24 16:00:19] [PROC] [ytdl-sub:downloader] Downloading metadata for En la Orilla del Mar
+[2026-03-24 16:00:21] [PROC] [ytdl-sub:yt-dlp] [youtube] DVCjoGeqMl4: Downloading android vr player API JSON
+[2026-03-24 16:00:21] [PROC] [ytdl-sub:yt-dlp] [youtube] [jsc:deno] Solving JS challenges using deno
+[2026-03-24 16:00:23] [PROC] [ytdl-sub:yt-dlp] [youtube] DVCjoGeqMl4: Downloading m3u8 information
+[2026-03-24 16:00:24] [PROC] [ytdl-sub:yt-dlp] [info] DVCjoGeqMl4: Downloading 1 format(s): 251
+[2026-03-24 16:00:24] [PROC] [ytdl-sub:yt-dlp] [info] Writing video metadata as JSON to: /tmp/ytdl-sub-working-directory/music-playlist-prueba-plcajstgncmdxgfdpc5aenevprzgcr-kut/DVCjoGeqMl4.info.json
+[2026-03-24 16:00:24] [PROC] [ytdl-sub:yt-dlp] [youtube] Extracting URL: https://www.youtube.com/watch?v=9UE9MxCdqok
+[2026-03-24 16:00:24] [PROC] [ytdl-sub:yt-dlp] [youtube] 9UE9MxCdqok: Downloading webpage
+[2026-03-24 16:00:24] [PROC] [ytdl-sub:downloader] Downloading metadata for Daniel, Me Estás Matando - Me Rehúso (Recoversión) [Video Oficial]
+[2026-03-24 16:00:25] [PROC] [ytdl-sub:yt-dlp] [youtube] 9UE9MxCdqok: Downloading android vr player API JSON
+[2026-03-24 16:00:25] [PROC] [ytdl-sub:yt-dlp] [youtube] [jsc:deno] Solving JS challenges using deno
+[2026-03-24 16:00:27] [PROC] [ytdl-sub:yt-dlp] [youtube] 9UE9MxCdqok: Downloading m3u8 information
+[2026-03-24 16:00:27] [PROC] [ytdl-sub:yt-dlp] [info] 9UE9MxCdqok: Downloading 1 format(s): 251
+[2026-03-24 16:00:27] [PROC] [ytdl-sub:yt-dlp] [info] Writing video metadata as JSON to: /tmp/ytdl-sub-working-directory/music-playlist-prueba-plcajstgncmdxgfdpc5aenevprzgcr-kut/9UE9MxCdqok.info.json
+[2026-03-24 16:00:27] [PROC] [ytdl-sub:yt-dlp] [youtube] Extracting URL: https://www.youtube.com/watch?v=KIC4fVmzUwI
+[2026-03-24 16:00:27] [PROC] [ytdl-sub:yt-dlp] [youtube] KIC4fVmzUwI: Downloading webpage
+[2026-03-24 16:00:27] [PROC] [ytdl-sub:downloader] Downloading metadata for LISANDRO MEZA  -  El Siete
+[2026-03-24 16:00:28] [PROC] [ytdl-sub:yt-dlp] [youtube] KIC4fVmzUwI: Downloading android vr player API JSON
+[2026-03-24 16:00:28] [PROC] [ytdl-sub:yt-dlp] ERROR: [youtube] KIC4fVmzUwI: Video unavailable. This video is not available
+[2026-03-24 16:00:28] [PROC] [ytdl-sub:yt-dlp] [youtube] Extracting URL: https://www.youtube.com/watch?v=7WygFiY2Hjw
+[2026-03-24 16:00:28] [PROC] [ytdl-sub:yt-dlp] [youtube] 7WygFiY2Hjw: Downloading webpage
+[2026-03-24 16:00:31] [PROC] [ytdl-sub:yt-dlp] [youtube] 7WygFiY2Hjw: Downloading android vr player API JSON
+[2026-03-24 16:00:32] [PROC] [ytdl-sub:yt-dlp] [youtube] [jsc:deno] Solving JS challenges using deno
+[2026-03-24 16:00:34] [PROC] [ytdl-sub:yt-dlp] [youtube] 7WygFiY2Hjw: Downloading m3u8 information
+[2026-03-24 16:00:34] [PROC] [ytdl-sub:yt-dlp] [info] 7WygFiY2Hjw: Downloading 1 format(s): 251
+[2026-03-24 16:00:35] [PROC] [ytdl-sub:yt-dlp] [info] Writing video metadata as JSON to: /tmp/ytdl-sub-working-directory/music-playlist-prueba-plcajstgncmdxgfdpc5aenevprzgcr-kut/7WygFiY2Hjw.info.json
+[2026-03-24 16:00:35] [PROC] [ytdl-sub:yt-dlp] [youtube] Extracting URL: https://www.youtube.com/watch?v=US0GbUpQ9VU
+[2026-03-24 16:00:35] [PROC] [ytdl-sub:yt-dlp] [youtube] US0GbUpQ9VU: Downloading webpage
+[2026-03-24 16:00:35] [PROC] [ytdl-sub:downloader] Downloading metadata for Los Mirlos  - Cumbia de Los Pajaritos / La Danza de Los Mirlos (Infopesa)
+[2026-03-24 16:00:35] [PROC] [ytdl-sub:yt-dlp] [youtube] US0GbUpQ9VU: Downloading android vr player API JSON
+[2026-03-24 16:00:35] [PROC] [ytdl-sub:yt-dlp] [youtube] [jsc:deno] Solving JS challenges using deno
+[2026-03-24 16:00:37] [PROC] [ytdl-sub:yt-dlp] [youtube] US0GbUpQ9VU: Downloading m3u8 information
+[2026-03-24 16:00:37] [PROC] [ytdl-sub:yt-dlp] [info] US0GbUpQ9VU: Downloading 1 format(s): 251
+[2026-03-24 16:00:37] [PROC] [ytdl-sub:yt-dlp] [info] Writing video metadata as JSON to: /tmp/ytdl-sub-working-directory/music-playlist-prueba-plcajstgncmdxgfdpc5aenevprzgcr-kut/US0GbUpQ9VU.info.json
+[2026-03-24 16:00:37] [PROC] [ytdl-sub:yt-dlp] [youtube] Extracting URL: https://www.youtube.com/watch?v=1uc1iVQFMmo
+[2026-03-24 16:00:37] [PROC] [ytdl-sub:yt-dlp] [youtube] 1uc1iVQFMmo: Downloading webpage
+[2026-03-24 16:00:37] [PROC] [ytdl-sub:downloader] Downloading metadata for El Gran Varon
+[2026-03-24 16:00:38] [PROC] [ytdl-sub:yt-dlp] [youtube] 1uc1iVQFMmo: Downloading android vr player API JSON
+[2026-03-24 16:00:38] [PROC] [ytdl-sub:yt-dlp] [youtube] [jsc:deno] Solving JS challenges using deno
+[2026-03-24 16:00:40] [PROC] [ytdl-sub:yt-dlp] [youtube] 1uc1iVQFMmo: Downloading m3u8 information
+[2026-03-24 16:00:40] [PROC] [ytdl-sub:yt-dlp] [info] 1uc1iVQFMmo: Downloading 1 format(s): 251
+[2026-03-24 16:00:41] [PROC] [ytdl-sub:yt-dlp] [info] Writing video metadata as JSON to: /tmp/ytdl-sub-working-directory/music-playlist-prueba-plcajstgncmdxgfdpc5aenevprzgcr-kut/1uc1iVQFMmo.info.json
+[2026-03-24 16:00:41] [PROC] [ytdl-sub:yt-dlp] [info] Writing updated playlist metadata as JSON to: /tmp/ytdl-sub-working-directory/music-playlist-prueba-plcajstgncmdxgfdpc5aenevprzgcr-kut/PLcajSTgNCmdXgFdPc5aeNEVPrzGcr_kUt.info.json
+[2026-03-24 16:00:41] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] Extracting URL: https://www.youtube.com/@WarnerMusicMexico
+[2026-03-24 16:00:41] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] @WarnerMusicMexico: Downloading webpage
+[2026-03-24 16:00:41] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] Downloading all uploads of the channel. To download only the videos in a specific tab, pass the tab's URL
+[2026-03-24 16:00:41] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] @WarnerMusicMexico/streams: Downloading webpage
+[2026-03-24 16:00:41] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] @WarnerMusicMexico/shorts: Downloading webpage
+[2026-03-24 16:00:42] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] Downloading as multiple playlists, separated by tabs. To download as a single playlist instead, pass https://www.youtube.com/playlist?list=UUP1b9jYyEqiNhJi4GqYdovw
+[2026-03-24 16:00:42] [PROC] [ytdl-sub:yt-dlp] [info] Writing playlist metadata as JSON to: /tmp/ytdl-sub-working-directory/music-playlist-prueba-plcajstgncmdxgfdpc5aenevprzgcr-kut/@WarnerMusicMexico.info.json
+[2026-03-24 16:00:42] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] Playlist Warner Music México: Downloading N/A items of 3
+[2026-03-24 16:00:42] [PROC] [ytdl-sub:yt-dlp] WARNING: Ignoring playliststart and playlistend because playlistitems was given
+[2026-03-24 16:00:42] [PROC] [ytdl-sub:yt-dlp] [info] Writing updated playlist metadata as JSON to: /tmp/ytdl-sub-working-directory/music-playlist-prueba-plcajstgncmdxgfdpc5aenevprzgcr-kut/@WarnerMusicMexico.info.json
+[2026-03-24 16:00:42] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] Extracting URL: https://www.youtube.com/@EpidemicLatinPop
+[2026-03-24 16:00:42] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] @EpidemicLatinPop: Downloading webpage
+[2026-03-24 16:00:43] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] Downloading all uploads of the channel. To download only the videos in a specific tab, pass the tab's URL
+[2026-03-24 16:00:43] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] @EpidemicLatinPop/shorts: Downloading webpage
+[2026-03-24 16:00:43] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] Downloading as multiple playlists, separated by tabs. To download as a single playlist instead, pass https://www.youtube.com/playlist?list=UU8O6ChGSu7m9aH-Mf6ei3QQ
+[2026-03-24 16:00:43] [PROC] [ytdl-sub:yt-dlp] [info] Writing playlist metadata as JSON to: /tmp/ytdl-sub-working-directory/music-playlist-prueba-plcajstgncmdxgfdpc5aenevprzgcr-kut/@EpidemicLatinPop.info.json
+[2026-03-24 16:00:43] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] Playlist Epidemic Latin Pop: Downloading N/A items of 2
+[2026-03-24 16:00:43] [PROC] [ytdl-sub:yt-dlp] WARNING: Ignoring playliststart and playlistend because playlistitems was given
+[2026-03-24 16:00:43] [PROC] [ytdl-sub:yt-dlp] [info] Writing updated playlist metadata as JSON to: /tmp/ytdl-sub-working-directory/music-playlist-prueba-plcajstgncmdxgfdpc5aenevprzgcr-kut/@EpidemicLatinPop.info.json
+[2026-03-24 16:00:43] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] Extracting URL: https://www.youtube.com/@auroraquesada9852
+[2026-03-24 16:00:43] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] @auroraquesada9852: Downloading webpage
+[2026-03-24 16:00:44] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] Downloading all uploads of the channel. To download only the videos in a specific tab, pass the tab's URL
+[2026-03-24 16:00:44] [PROC] [ytdl-sub:yt-dlp] [info] Writing playlist metadata as JSON to: /tmp/ytdl-sub-working-directory/music-playlist-prueba-plcajstgncmdxgfdpc5aenevprzgcr-kut/@auroraquesada9852.info.json
+[2026-03-24 16:00:44] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] Playlist Aurora Quesada: Downloading N/A items
+[2026-03-24 16:00:44] [PROC] [ytdl-sub:yt-dlp] WARNING: Ignoring playliststart and playlistend because playlistitems was given
+[2026-03-24 16:00:44] [PROC] [ytdl-sub:yt-dlp] [info] Writing updated playlist metadata as JSON to: /tmp/ytdl-sub-working-directory/music-playlist-prueba-plcajstgncmdxgfdpc5aenevprzgcr-kut/@auroraquesada9852.info.json
+[2026-03-24 16:00:44] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] Extracting URL: https://www.youtube.com/@koyaniqatsi
+[2026-03-24 16:00:44] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] @koyaniqatsi: Downloading webpage
+[2026-03-24 16:00:45] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] Downloading all uploads of the channel. To download only the videos in a specific tab, pass the tab's URL
+[2026-03-24 16:00:45] [PROC] [ytdl-sub:yt-dlp] [info] Writing playlist metadata as JSON to: /tmp/ytdl-sub-working-directory/music-playlist-prueba-plcajstgncmdxgfdpc5aenevprzgcr-kut/UCEIa9P1-Hke4_QVc-5Xoe5A.info.json
+[2026-03-24 16:00:45] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] Playlist koyaniqatsi - Videos: Downloading N/A items
+[2026-03-24 16:00:45] [PROC] [ytdl-sub:yt-dlp] WARNING: Ignoring playliststart and playlistend because playlistitems was given
+[2026-03-24 16:00:45] [PROC] [ytdl-sub:yt-dlp] [info] Writing updated playlist metadata as JSON to: /tmp/ytdl-sub-working-directory/music-playlist-prueba-plcajstgncmdxgfdpc5aenevprzgcr-kut/UCEIa9P1-Hke4_QVc-5Xoe5A.info.json
+[2026-03-24 16:00:45] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] Extracting URL: https://www.youtube.com/@luckylouie522
+[2026-03-24 16:00:45] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] @luckylouie522: Downloading webpage
+[2026-03-24 16:00:45] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] Downloading all uploads of the channel. To download only the videos in a specific tab, pass the tab's URL
+[2026-03-24 16:00:45] [PROC] [ytdl-sub:yt-dlp] [info] Writing playlist metadata as JSON to: /tmp/ytdl-sub-working-directory/music-playlist-prueba-plcajstgncmdxgfdpc5aenevprzgcr-kut/UCM2K5xJ83GdKLXAvKOdD7VA.info.json
+[2026-03-24 16:00:45] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] Playlist Luckylouie522 - Videos: Downloading N/A items
+[2026-03-24 16:00:45] [PROC] [ytdl-sub:yt-dlp] WARNING: Ignoring playliststart and playlistend because playlistitems was given
+[2026-03-24 16:00:45] [PROC] [ytdl-sub:yt-dlp] [info] Writing updated playlist metadata as JSON to: /tmp/ytdl-sub-working-directory/music-playlist-prueba-plcajstgncmdxgfdpc5aenevprzgcr-kut/UCM2K5xJ83GdKLXAvKOdD7VA.info.json
+[2026-03-24 16:00:45] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] Extracting URL: https://www.youtube.com/@infopesa
+[2026-03-24 16:00:46] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] @infopesa: Downloading webpage
+[2026-03-24 16:00:46] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] Downloading all uploads of the channel. To download only the videos in a specific tab, pass the tab's URL
+[2026-03-24 16:00:46] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] @infopesa/shorts: Downloading webpage
+[2026-03-24 16:00:46] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] Downloading as multiple playlists, separated by tabs. To download as a single playlist instead, pass https://www.youtube.com/playlist?list=UUl-J_Ytoyc6qeiyEcbnJctw
+[2026-03-24 16:00:46] [PROC] [ytdl-sub:yt-dlp] [info] Writing playlist metadata as JSON to: /tmp/ytdl-sub-working-directory/music-playlist-prueba-plcajstgncmdxgfdpc5aenevprzgcr-kut/@infopesa.info.json
+[2026-03-24 16:00:46] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] Playlist INFOPESAvideos: Downloading N/A items of 2
+[2026-03-24 16:00:46] [PROC] [ytdl-sub:yt-dlp] WARNING: Ignoring playliststart and playlistend because playlistitems was given
+[2026-03-24 16:00:46] [PROC] [ytdl-sub:yt-dlp] [info] Writing updated playlist metadata as JSON to: /tmp/ytdl-sub-working-directory/music-playlist-prueba-plcajstgncmdxgfdpc5aenevprzgcr-kut/@infopesa.info.json
+[2026-03-24 16:00:46] [PROC] [ytdl-sub:downloader] Beginning downloads for https://www.youtube.com/playlist?list=PLcajSTgNCmdXgFdPc5aeNEVPrzGcr_kUt
+[2026-03-24 16:00:47] [PROC] [ytdl-sub:downloader] Downloading entry 1/9: Guataca Groove - En Cuba Estoy
+[2026-03-24 16:00:47] [PROC] [ytdl-sub:yt-dlp] [youtube] Extracting URL: https://www.youtube.com/watch?v=1uc1iVQFMmo
+[2026-03-24 16:00:47] [PROC] [ytdl-sub:yt-dlp] [youtube] 1uc1iVQFMmo: Downloading webpage
+[2026-03-24 16:00:48] [PROC] [ytdl-sub:yt-dlp] [youtube] 1uc1iVQFMmo: Downloading android vr player API JSON
+[2026-03-24 16:00:48] [PROC] [ytdl-sub:yt-dlp] [youtube] 1uc1iVQFMmo: Downloading player 1ebf2aa6-main
+[2026-03-24 16:00:49] [PROC] [ytdl-sub:yt-dlp] [youtube] [jsc:deno] Solving JS challenges using deno
+[2026-03-24 16:00:50] [PROC] [ytdl-sub:yt-dlp] [youtube] 1uc1iVQFMmo: Downloading m3u8 information
+[2026-03-24 16:00:51] [PROC] [ytdl-sub:yt-dlp] [info] 1uc1iVQFMmo: Downloading 1 format(s): 251
+[2026-03-24 16:00:51] [PROC] [ytdl-sub:yt-dlp] [info] Downloading video thumbnail 41 ...
+[2026-03-24 16:00:51] [PROC] [ytdl-sub:yt-dlp] [info] Writing video thumbnail 41 to: /tmp/ytdl-sub-working-directory/music-playlist-prueba-plcajstgncmdxgfdpc5aenevprzgcr-kut/1uc1iVQFMmo.webp
+[2026-03-24 16:00:51] [PROC] [ytdl-sub:yt-dlp] [ExtractAudio] Destination: /tmp/ytdl-sub-working-directory/music-playlist-prueba-plcajstgncmdxgfdpc5aenevprzgcr-kut/1uc1iVQFMmo.mp3
+[2026-03-24 16:00:57] [PROC] [ytdl-sub:yt-dlp] Deleting original file /tmp/ytdl-sub-working-directory/music-playlist-prueba-plcajstgncmdxgfdpc5aenevprzgcr-kut/1uc1iVQFMmo.webm (pass -k to keep)
+[2026-03-24 16:00:57] [PROC] [ytdl-sub:downloader] Downloading entry 2/9: El Gran Varon
+[2026-03-24 16:00:58] [PROC] [ytdl-sub:yt-dlp] [youtube] Extracting URL: https://www.youtube.com/watch?v=US0GbUpQ9VU
+[2026-03-24 16:00:58] [PROC] [ytdl-sub:yt-dlp] [youtube] US0GbUpQ9VU: Downloading webpage
+[2026-03-24 16:00:59] [PROC] [ytdl-sub:yt-dlp] [youtube] US0GbUpQ9VU: Downloading android vr player API JSON
+[2026-03-24 16:00:59] [PROC] [ytdl-sub:yt-dlp] [youtube] US0GbUpQ9VU: Downloading player 1ebf2aa6-main
+[2026-03-24 16:00:59] [PROC] [ytdl-sub:yt-dlp] [youtube] [jsc:deno] Solving JS challenges using deno
+[2026-03-24 16:01:01] [PROC] [ytdl-sub:yt-dlp] [youtube] US0GbUpQ9VU: Downloading m3u8 information
+[2026-03-24 16:01:01] [PROC] [ytdl-sub:yt-dlp] [info] US0GbUpQ9VU: Downloading 1 format(s): 251
+[2026-03-24 16:01:01] [PROC] [ytdl-sub:yt-dlp] [info] Downloading video thumbnail 41 ...
+[2026-03-24 16:01:01] [PROC] [ytdl-sub:yt-dlp] [info] Writing video thumbnail 41 to: /tmp/ytdl-sub-working-directory/music-playlist-prueba-plcajstgncmdxgfdpc5aenevprzgcr-kut/US0GbUpQ9VU.webp
+[2026-03-24 16:01:02] [PROC] [ytdl-sub:yt-dlp] [ExtractAudio] Destination: /tmp/ytdl-sub-working-directory/music-playlist-prueba-plcajstgncmdxgfdpc5aenevprzgcr-kut/US0GbUpQ9VU.mp3
+[2026-03-24 16:01:16] [PROC] [ytdl-sub:yt-dlp] Deleting original file /tmp/ytdl-sub-working-directory/music-playlist-prueba-plcajstgncmdxgfdpc5aenevprzgcr-kut/US0GbUpQ9VU.webm (pass -k to keep)
+[2026-03-24 16:01:17] [PROC] [ytdl-sub:downloader] Downloading entry 3/9: Los Mirlos  - Cumbia de Los Pajaritos / La Danza de Los Mirlos (Infopesa)
+[2026-03-24 16:01:17] [PROC] [ytdl-sub:yt-dlp] [youtube] Extracting URL: https://www.youtube.com/watch?v=7WygFiY2Hjw
+[2026-03-24 16:01:17] [PROC] [ytdl-sub:yt-dlp] [youtube] 7WygFiY2Hjw: Downloading webpage
+[2026-03-24 16:01:18] [PROC] [ytdl-sub:yt-dlp] [youtube] 7WygFiY2Hjw: Downloading android vr player API JSON
+[2026-03-24 16:01:18] [PROC] [ytdl-sub:yt-dlp] [youtube] 7WygFiY2Hjw: Downloading player 1ebf2aa6-main
+[2026-03-24 16:01:19] [PROC] [ytdl-sub:yt-dlp] [youtube] [jsc:deno] Solving JS challenges using deno
+[2026-03-24 16:01:20] [PROC] [ytdl-sub:yt-dlp] [youtube] 7WygFiY2Hjw: Downloading m3u8 information
+[2026-03-24 16:01:21] [PROC] [ytdl-sub:yt-dlp] [info] 7WygFiY2Hjw: Downloading 1 format(s): 251
+[2026-03-24 16:01:21] [PROC] [ytdl-sub:yt-dlp] [info] Downloading video thumbnail 41 ...
+[2026-03-24 16:01:21] [PROC] [ytdl-sub:yt-dlp] [info] Writing video thumbnail 41 to: /tmp/ytdl-sub-working-directory/music-playlist-prueba-plcajstgncmdxgfdpc5aenevprzgcr-kut/7WygFiY2Hjw.webp
+[2026-03-24 16:01:21] [PROC] [ytdl-sub:yt-dlp] [ExtractAudio] Destination: /tmp/ytdl-sub-working-directory/music-playlist-prueba-plcajstgncmdxgfdpc5aenevprzgcr-kut/7WygFiY2Hjw.mp3
+[2026-03-24 16:01:26] [PROC] [ytdl-sub:yt-dlp] Deleting original file /tmp/ytdl-sub-working-directory/music-playlist-prueba-plcajstgncmdxgfdpc5aenevprzgcr-kut/7WygFiY2Hjw.webm (pass -k to keep)
+[2026-03-24 16:01:27] [PROC] [ytdl-sub:downloader] Downloading entry 4/9: LISANDRO MEZA  -  El Siete
+[2026-03-24 16:01:27] [PROC] [ytdl-sub:yt-dlp] [youtube] Extracting URL: https://www.youtube.com/watch?v=9UE9MxCdqok
+[2026-03-24 16:01:27] [PROC] [ytdl-sub:yt-dlp] [youtube] 9UE9MxCdqok: Downloading webpage
+[2026-03-24 16:01:28] [PROC] [ytdl-sub:yt-dlp] [youtube] 9UE9MxCdqok: Downloading android vr player API JSON
+[2026-03-24 16:01:29] [PROC] [ytdl-sub:yt-dlp] [youtube] 9UE9MxCdqok: Downloading player 1ebf2aa6-main
+[2026-03-24 16:01:29] [PROC] [ytdl-sub:yt-dlp] [youtube] [jsc:deno] Solving JS challenges using deno
+[2026-03-24 16:01:31] [PROC] [ytdl-sub:yt-dlp] [youtube] 9UE9MxCdqok: Downloading m3u8 information
+[2026-03-24 16:01:31] [PROC] [ytdl-sub:yt-dlp] [info] 9UE9MxCdqok: Downloading 1 format(s): 251
+[2026-03-24 16:01:31] [PROC] [ytdl-sub:yt-dlp] [info] Downloading video thumbnail 44 ...
+[2026-03-24 16:01:31] [PROC] [ytdl-sub:yt-dlp] [info] Video Thumbnail 44 does not exist
+[2026-03-24 16:01:32] [PROC] [ytdl-sub:yt-dlp] [info] Downloading video thumbnail 43 ...
+[2026-03-24 16:01:32] [PROC] [ytdl-sub:yt-dlp] [info] Video Thumbnail 43 does not exist
+[2026-03-24 16:01:32] [PROC] [ytdl-sub:yt-dlp] [info] Downloading video thumbnail 42 ...
+[2026-03-24 16:01:33] [PROC] [ytdl-sub:yt-dlp] [info] Video Thumbnail 42 does not exist
+[2026-03-24 16:01:33] [PROC] [ytdl-sub:yt-dlp] [info] Downloading video thumbnail 41 ...
+[2026-03-24 16:01:33] [PROC] [ytdl-sub:yt-dlp] [info] Video Thumbnail 41 does not exist
+[2026-03-24 16:01:33] [PROC] [ytdl-sub:yt-dlp] [info] Downloading video thumbnail 40 ...
+[2026-03-24 16:01:33] [PROC] [ytdl-sub:yt-dlp] [info] Writing video thumbnail 40 to: /tmp/ytdl-sub-working-directory/music-playlist-prueba-plcajstgncmdxgfdpc5aenevprzgcr-kut/9UE9MxCdqok.webp
+[2026-03-24 16:01:34] [PROC] [ytdl-sub:yt-dlp] [ExtractAudio] Destination: /tmp/ytdl-sub-working-directory/music-playlist-prueba-plcajstgncmdxgfdpc5aenevprzgcr-kut/9UE9MxCdqok.mp3
+[2026-03-24 16:01:39] [PROC] [ytdl-sub:yt-dlp] Deleting original file /tmp/ytdl-sub-working-directory/music-playlist-prueba-plcajstgncmdxgfdpc5aenevprzgcr-kut/9UE9MxCdqok.webm (pass -k to keep)
+[2026-03-24 16:01:40] [PROC] [ytdl-sub:downloader] Downloading entry 5/9: Daniel, Me Estás Matando - Me Rehúso (Recoversión) [Video Oficial]
+[2026-03-24 16:01:40] [PROC] [ytdl-sub:yt-dlp] [youtube] Extracting URL: https://www.youtube.com/watch?v=DVCjoGeqMl4
+[2026-03-24 16:01:40] [PROC] [ytdl-sub:yt-dlp] [youtube] DVCjoGeqMl4: Downloading webpage
+[2026-03-24 16:01:41] [PROC] [ytdl-sub:yt-dlp] [youtube] DVCjoGeqMl4: Downloading android vr player API JSON
+[2026-03-24 16:01:41] [PROC] [ytdl-sub:yt-dlp] [youtube] DVCjoGeqMl4: Downloading player 1ebf2aa6-main
+[2026-03-24 16:01:41] [PROC] [ytdl-sub:yt-dlp] [youtube] [jsc:deno] Solving JS challenges using deno
+[2026-03-24 16:01:43] [PROC] [ytdl-sub:yt-dlp] [youtube] DVCjoGeqMl4: Downloading m3u8 information
+[2026-03-24 16:01:43] [PROC] [ytdl-sub:yt-dlp] [info] DVCjoGeqMl4: Downloading 1 format(s): 251
+[2026-03-24 16:01:43] [PROC] [ytdl-sub:yt-dlp] [info] Downloading video thumbnail 41 ...
+[2026-03-24 16:01:44] [PROC] [ytdl-sub:yt-dlp] [info] Writing video thumbnail 41 to: /tmp/ytdl-sub-working-directory/music-playlist-prueba-plcajstgncmdxgfdpc5aenevprzgcr-kut/DVCjoGeqMl4.webp
+[2026-03-24 16:01:44] [PROC] [ytdl-sub:yt-dlp] [ExtractAudio] Destination: /tmp/ytdl-sub-working-directory/music-playlist-prueba-plcajstgncmdxgfdpc5aenevprzgcr-kut/DVCjoGeqMl4.mp3
+[2026-03-24 16:01:51] [PROC] [ytdl-sub:yt-dlp] Deleting original file /tmp/ytdl-sub-working-directory/music-playlist-prueba-plcajstgncmdxgfdpc5aenevprzgcr-kut/DVCjoGeqMl4.webm (pass -k to keep)
+[2026-03-24 16:01:51] [PROC] [ytdl-sub:downloader] Downloading entry 6/9: En la Orilla del Mar
+[2026-03-24 16:01:51] [PROC] [ytdl-sub:yt-dlp] [youtube] Extracting URL: https://www.youtube.com/watch?v=2Vo2aaVXyqM
+[2026-03-24 16:01:51] [PROC] [ytdl-sub:yt-dlp] [youtube] 2Vo2aaVXyqM: Downloading webpage
+[2026-03-24 16:01:53] [PROC] [ytdl-sub:yt-dlp] [youtube] 2Vo2aaVXyqM: Downloading android vr player API JSON
+[2026-03-24 16:01:53] [PROC] [ytdl-sub:yt-dlp] [youtube] 2Vo2aaVXyqM: Downloading player 1ebf2aa6-main
+[2026-03-24 16:01:53] [PROC] [ytdl-sub:yt-dlp] [youtube] [jsc:deno] Solving JS challenges using deno
+[2026-03-24 16:01:55] [PROC] [ytdl-sub:yt-dlp] [youtube] 2Vo2aaVXyqM: Downloading m3u8 information
+[2026-03-24 16:01:56] [PROC] [ytdl-sub:yt-dlp] [info] 2Vo2aaVXyqM: Downloading 1 format(s): 251
+[2026-03-24 16:01:56] [PROC] [ytdl-sub:yt-dlp] [info] Downloading video thumbnail 41 ...
+[2026-03-24 16:01:56] [PROC] [ytdl-sub:yt-dlp] [info] Writing video thumbnail 41 to: /tmp/ytdl-sub-working-directory/music-playlist-prueba-plcajstgncmdxgfdpc5aenevprzgcr-kut/2Vo2aaVXyqM.webp
+[2026-03-24 16:01:56] [PROC] [ytdl-sub:yt-dlp] [ExtractAudio] Destination: /tmp/ytdl-sub-working-directory/music-playlist-prueba-plcajstgncmdxgfdpc5aenevprzgcr-kut/2Vo2aaVXyqM.mp3
+[2026-03-24 16:02:00] [PROC] [ytdl-sub:yt-dlp] Deleting original file /tmp/ytdl-sub-working-directory/music-playlist-prueba-plcajstgncmdxgfdpc5aenevprzgcr-kut/2Vo2aaVXyqM.webm (pass -k to keep)
+[2026-03-24 16:02:01] [PROC] [ytdl-sub:downloader] Downloading entry 7/9: Y No Hago Mas Na
+[2026-03-24 16:02:01] [PROC] [ytdl-sub:yt-dlp] [youtube] Extracting URL: https://www.youtube.com/watch?v=bgSpdgL9lkQ
+[2026-03-24 16:02:01] [PROC] [ytdl-sub:yt-dlp] [youtube] bgSpdgL9lkQ: Downloading webpage
+[2026-03-24 16:02:02] [PROC] [ytdl-sub:yt-dlp] [youtube] bgSpdgL9lkQ: Downloading android vr player API JSON
+[2026-03-24 16:02:02] [PROC] [ytdl-sub:yt-dlp] [youtube] bgSpdgL9lkQ: Downloading player 8180e7ff-main
+[2026-03-24 16:02:02] [PROC] [ytdl-sub:yt-dlp] [youtube] [jsc:deno] Solving JS challenges using deno
+[2026-03-24 16:02:05] [PROC] [ytdl-sub:yt-dlp] [youtube] bgSpdgL9lkQ: Downloading m3u8 information
+[2026-03-24 16:02:05] [PROC] [ytdl-sub:yt-dlp] [info] bgSpdgL9lkQ: Downloading 1 format(s): 251
+[2026-03-24 16:02:05] [PROC] [ytdl-sub:yt-dlp] [info] Downloading video thumbnail 41 ...
+[2026-03-24 16:02:05] [PROC] [ytdl-sub:yt-dlp] [info] Writing video thumbnail 41 to: /tmp/ytdl-sub-working-directory/music-playlist-prueba-plcajstgncmdxgfdpc5aenevprzgcr-kut/bgSpdgL9lkQ.webp
+[2026-03-24 16:02:06] [PROC] [ytdl-sub:yt-dlp] [ExtractAudio] Destination: /tmp/ytdl-sub-working-directory/music-playlist-prueba-plcajstgncmdxgfdpc5aenevprzgcr-kut/bgSpdgL9lkQ.mp3
+[2026-03-24 16:02:17] [PROC] [ytdl-sub:yt-dlp] Deleting original file /tmp/ytdl-sub-working-directory/music-playlist-prueba-plcajstgncmdxgfdpc5aenevprzgcr-kut/bgSpdgL9lkQ.webm (pass -k to keep)
+[2026-03-24 16:02:17] [PROC] [ytdl-sub:downloader] Downloading entry 8/9: TU LOCO LOCO Y YO TRANQUILO -  ROBERTO ROENA CON  PIRO MANTILLA
+[2026-03-24 16:02:17] [PROC] [ytdl-sub:yt-dlp] [youtube] Extracting URL: https://www.youtube.com/watch?v=nPG8QXdW9mI
+[2026-03-24 16:02:17] [PROC] [ytdl-sub:yt-dlp] [youtube] nPG8QXdW9mI: Downloading webpage
+[2026-03-24 16:02:18] [PROC] [ytdl-sub:yt-dlp] [youtube] nPG8QXdW9mI: Downloading android vr player API JSON
+[2026-03-24 16:02:19] [PROC] [ytdl-sub:yt-dlp] [youtube] nPG8QXdW9mI: Downloading player 1ebf2aa6-main
+[2026-03-24 16:02:19] [PROC] [ytdl-sub:yt-dlp] [youtube] [jsc:deno] Solving JS challenges using deno
+[2026-03-24 16:02:21] [PROC] [ytdl-sub:yt-dlp] [youtube] nPG8QXdW9mI: Downloading m3u8 information
+[2026-03-24 16:02:21] [PROC] [ytdl-sub:yt-dlp] [info] nPG8QXdW9mI: Downloading 1 format(s): 251
+[2026-03-24 16:02:21] [PROC] [ytdl-sub:yt-dlp] [info] Downloading video thumbnail 44 ...
+[2026-03-24 16:02:22] [PROC] [ytdl-sub:yt-dlp] [info] Video Thumbnail 44 does not exist
+[2026-03-24 16:02:22] [PROC] [ytdl-sub:yt-dlp] [info] Downloading video thumbnail 43 ...
+[2026-03-24 16:02:23] [PROC] [ytdl-sub:yt-dlp] [info] Video Thumbnail 43 does not exist
+[2026-03-24 16:02:23] [PROC] [ytdl-sub:yt-dlp] [info] Downloading video thumbnail 42 ...
+[2026-03-24 16:02:24] [PROC] [ytdl-sub:yt-dlp] [info] Video Thumbnail 42 does not exist
+[2026-03-24 16:02:24] [PROC] [ytdl-sub:yt-dlp] [info] Downloading video thumbnail 41 ...
+[2026-03-24 16:02:24] [PROC] [ytdl-sub:yt-dlp] [info] Video Thumbnail 41 does not exist
+[2026-03-24 16:02:24] [PROC] [ytdl-sub:yt-dlp] [info] Downloading video thumbnail 40 ...
+[2026-03-24 16:02:25] [PROC] [ytdl-sub:yt-dlp] [info] Video Thumbnail 40 does not exist
+[2026-03-24 16:02:25] [PROC] [ytdl-sub:yt-dlp] [info] Downloading video thumbnail 39 ...
+[2026-03-24 16:02:26] [PROC] [ytdl-sub:yt-dlp] [info] Video Thumbnail 39 does not exist
+[2026-03-24 16:02:26] [PROC] [ytdl-sub:yt-dlp] [info] Downloading video thumbnail 38 ...
+[2026-03-24 16:02:26] [PROC] [ytdl-sub:yt-dlp] [info] Writing video thumbnail 38 to: /tmp/ytdl-sub-working-directory/music-playlist-prueba-plcajstgncmdxgfdpc5aenevprzgcr-kut/nPG8QXdW9mI.webp
+[2026-03-24 16:02:27] [PROC] [ytdl-sub:yt-dlp] [ExtractAudio] Destination: /tmp/ytdl-sub-working-directory/music-playlist-prueba-plcajstgncmdxgfdpc5aenevprzgcr-kut/nPG8QXdW9mI.mp3
+[2026-03-24 16:02:32] [PROC] [ytdl-sub:yt-dlp] Deleting original file /tmp/ytdl-sub-working-directory/music-playlist-prueba-plcajstgncmdxgfdpc5aenevprzgcr-kut/nPG8QXdW9mI.webm (pass -k to keep)
+[2026-03-24 16:02:32] [PROC] [ytdl-sub:downloader] Downloading entry 9/9: Imposible Amor
+[2026-03-24 16:02:32] [PROC] [ytdl-sub:yt-dlp] [youtube] Extracting URL: https://www.youtube.com/watch?v=i-8qaURPles
+[2026-03-24 16:02:32] [PROC] [ytdl-sub:yt-dlp] [youtube] i-8qaURPles: Downloading webpage
+[2026-03-24 16:02:33] [PROC] [ytdl-sub:yt-dlp] [youtube] i-8qaURPles: Downloading android vr player API JSON
+[2026-03-24 16:02:34] [PROC] [ytdl-sub:yt-dlp] [youtube] i-8qaURPles: Downloading player 1ebf2aa6-main
+[2026-03-24 16:02:34] [PROC] [ytdl-sub:yt-dlp] [youtube] [jsc:deno] Solving JS challenges using deno
+[2026-03-24 16:02:36] [PROC] [ytdl-sub:yt-dlp] [youtube] i-8qaURPles: Downloading m3u8 information
+[2026-03-24 16:02:36] [PROC] [ytdl-sub:yt-dlp] [info] i-8qaURPles: Downloading 1 format(s): 251
+[2026-03-24 16:02:36] [PROC] [ytdl-sub:yt-dlp] [info] Downloading video thumbnail 41 ...
+[2026-03-24 16:02:36] [PROC] [ytdl-sub:yt-dlp] [info] Writing video thumbnail 41 to: /tmp/ytdl-sub-working-directory/music-playlist-prueba-plcajstgncmdxgfdpc5aenevprzgcr-kut/i-8qaURPles.webp
+[2026-03-24 16:02:37] [PROC] [ytdl-sub:yt-dlp] [ExtractAudio] Destination: /tmp/ytdl-sub-working-directory/music-playlist-prueba-plcajstgncmdxgfdpc5aenevprzgcr-kut/i-8qaURPles.mp3
+[2026-03-24 16:02:44] [PROC] [ytdl-sub:yt-dlp] Deleting original file /tmp/ytdl-sub-working-directory/music-playlist-prueba-plcajstgncmdxgfdpc5aenevprzgcr-kut/i-8qaURPles.webm (pass -k to keep)
+[2026-03-24 16:02:45] [PROC] [ytdl-sub] Transaction log for music-playlist-prueba-plcajstgncmdxgfdpc5aenevprzgcr-kut:
+[2026-03-24 16:02:45] [PROC] Files created:
+[2026-03-24 16:02:45] [PROC] ----------------------------------------
+[2026-03-24 16:02:45] [PROC] /downloads-test/Music-Playlist/music-playlist-prueba
+[2026-03-24 16:02:45] [PROC] .ytdl-sub-music-playlist-prueba-plcajstgncmdxgfdpc5aenevprzgcr-kut-download-archive.json
+[2026-03-24 16:02:45] [PROC] Daniel, Me Estás Matando - Me Rehúso (Recoversión) [Video Oficial].mp3
+[2026-03-24 16:02:45] [PROC] Embedded thumbnail
+[2026-03-24 16:02:45] [PROC] El Gran Varon.mp3
+[2026-03-24 16:02:45] [PROC] Embedded thumbnail
+[2026-03-24 16:02:45] [PROC] En la Orilla del Mar.mp3
+[2026-03-24 16:02:45] [PROC] Embedded thumbnail
+[2026-03-24 16:02:45] [PROC] Guataca Groove - En Cuba Estoy.mp3
+[2026-03-24 16:02:46] [PROC] Embedded thumbnail
+[2026-03-24 16:02:46] [PROC] Imposible Amor.mp3
+[2026-03-24 16:02:46] [PROC] Embedded thumbnail
+[2026-03-24 16:02:46] [PROC] LISANDRO MEZA  -  El Siete.mp3
+[2026-03-24 16:02:46] [PROC] Embedded thumbnail
+[2026-03-24 16:02:46] [PROC] Los Mirlos  - Cumbia de Los Pajaritos ⧸ La Danza de Los Mirlos (Infopesa).mp3
+[2026-03-24 16:02:46] [PROC] Embedded thumbnail
+[2026-03-24 16:02:46] [PROC] TU LOCO LOCO Y YO TRANQUILO -  ROBERTO ROENA CON  PIRO MANTILLA.mp3
+[2026-03-24 16:02:46] [PROC] Embedded thumbnail
+[2026-03-24 16:02:46] [PROC] Y No Hago Mas Na.mp3
+[2026-03-24 16:02:46] [PROC] Embedded thumbnail
+[2026-03-24 16:02:46] [PROC] [ytdl-sub] Download Summary:
+[2026-03-24 16:02:46] [PROC] music-playlist-prueba-plcajstgncmdxgfdpc5aenevprzgcr-kut     +9 0 0     9 ✔
+[2026-03-24 16:02:46] [PROC] Total: 1                                                     +9 0 0     9 Success
+[2026-03-24 16:02:46] [INFO] Fin [ytdl-sub-sub] rc=0 en 168.42s
+[2026-03-24 16:02:46] [OK] Estado promovido: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\config\runtime\test\.recent-items-state.pending.json -> E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\config\runtime\test\.recent-items-state.json
+[2026-03-24 16:02:46] [INFO] Ejecutando [beets-music-cp]...
+[2026-03-24 16:02:46] [INFO] Fin [beets-music-cp] rc=0 en 0.07s
+[2026-03-24 16:02:46] [INFO] Ejecutando [beets-music-exec]...
+[2026-03-24 16:02:46] [PROC] [BEETS] /downloads-test/Music-Playlist/music-playlist-prueba
+[2026-03-24 16:02:47] [PROC] overlaying configuration: /config/zenoytdl/config/runtime/test/beets.music-playlist.yaml
+[2026-03-24 16:02:47] [PROC] user configuration: /config/config.yaml
+[2026-03-24 16:02:47] [PROC] data directory: /config
+[2026-03-24 16:02:47] [PROC] plugin paths: []
+[2026-03-24 16:02:47] [PROC] Loading plugins: chroma, discogs, embedart, fetchart, fromfilename, lastgenre, scrub
+[2026-03-24 16:02:48] [PROC] lastgenre: Loading whitelist /lsiopy/lib/python3.12/site-packages/beetsplug/lastgenre/genres.txt
+[2026-03-24 16:02:48] [PROC] fetchart: lastfm: Disabling art source due to missing key
+[2026-03-24 16:02:48] [PROC] fetchart: google: Disabling art source due to missing key
+[2026-03-24 16:02:48] [PROC] Sending event: pluginload
+[2026-03-24 16:02:50] [PROC] library database: /config/musiclibrary-test.db
+[2026-03-24 16:02:50] [PROC] library directory: /downloads-test/Music-Playlist
+[2026-03-24 16:02:50] [PROC] Sending event: library_opened
+[2026-03-24 16:02:50] [PROC] Sending event: import_begin
+[2026-03-24 16:02:50] [PROC] ignoring '.ytdl-sub-music-playlist-prueba-plcajstgncmdxgfdpc5aenevprzgcr-kut-download-archive.json' due to ignore rule '.*'
+[2026-03-24 16:02:50] [PROC] Sending event: import_task_created
+[2026-03-24 16:02:50] [PROC] Sending event: import_task_start
+[2026-03-24 16:02:50] [PROC] fromfilename: Artist replaced with: Daniel, Me Estás Matando
+[2026-03-24 16:02:50] [PROC] fromfilename: Title replaced with: Me Rehúso (Recoversión) [Video Oficial]
+[2026-03-24 16:02:50] [PROC] Sending event: import_task_created
+[2026-03-24 16:02:50] [PROC] Sending event: import_task_created
+[2026-03-24 16:02:50] [PROC] Sending event: import_task_created
+[2026-03-24 16:02:50] [PROC] Sending event: import_task_created
+[2026-03-24 16:02:50] [PROC] Sending event: import_task_created
+[2026-03-24 16:02:50] [PROC] Sending event: import_task_created
+[2026-03-24 16:02:51] [PROC] Sending event: import_task_created
+[2026-03-24 16:02:51] [PROC] Sending event: import_task_created
+[2026-03-24 16:02:56] [PROC] Looking up: /downloads-test/Music-Playlist/music-playlist-prueba/Daniel, Me Estás Matando - Me Rehúso (Recoversión) [Video Oficial].mp3
+[2026-03-24 16:02:56] [PROC] Item search terms: Daniel, Me Estás Matando - Me Rehúso (Recoversión) [Video Oficial]
+[2026-03-24 16:02:57] [PROC] /downloads-test/Music-Playlist/music-playlist-prueba/Daniel, Me Estás Matando - Me Rehúso (Recoversión) [Video Oficial].mp3
+[2026-03-24 16:02:57] [PROC] Importing as-is.
+[2026-03-24 16:02:57] [PROC] Found 0 candidates.
+[2026-03-24 16:02:57] [PROC] Sending event: import_task_start
+[2026-03-24 16:02:57] [PROC] fromfilename: Title replaced with: El Gran Varon
+[2026-03-24 16:02:57] [PROC] Sending event: import_task_choice
+[2026-03-24 16:02:57] [PROC] 0 of 1 items replaced
+[2026-03-24 16:02:57] [PROC] Sending event: database_change
+[2026-03-24 16:02:57] [PROC] lastgenre: Daniel, Me Estás Matando -  - Me Rehúso (Recoversión) [Video Oficial]
+[2026-03-24 16:02:58] [PROC] Sending event: database_change
+[2026-03-24 16:02:58] [PROC] Sending event: database_change
+[2026-03-24 16:02:58] [PROC] Sending event: import_task_files
+[2026-03-24 16:02:58] [PROC] Sending event: write
+[2026-03-24 16:02:58] [PROC] Sending event: after_write
+[2026-03-24 16:02:58] [PROC] Sending event: item_imported
+[2026-03-24 16:02:59] [PROC] Looking up: /downloads-test/Music-Playlist/music-playlist-prueba/El Gran Varon.mp3
+[2026-03-24 16:02:59] [PROC] Item search terms:  - El Gran Varon
+[2026-03-24 16:02:59] [PROC] Sending event: mb_track_extract
+[2026-03-24 16:02:59] [PROC] chroma: acoustid item candidates: 1
+[2026-03-24 16:02:59] [PROC] Sending event: trackinfo_received
+[2026-03-24 16:03:02] [PROC] Sending event: trackinfo_received
+[2026-03-24 16:03:02] [PROC] Sending event: trackinfo_received
+[2026-03-24 16:03:02] [PROC] Sending event: trackinfo_received
+[2026-03-24 16:03:02] [PROC] Sending event: trackinfo_received
+[2026-03-24 16:03:02] [PROC] Sending event: trackinfo_received
+[2026-03-24 16:03:02] [PROC] Found 6 candidates.
+[2026-03-24 16:03:02] [PROC] Sending event: import_task_start
+[2026-03-24 16:03:02] [PROC] fromfilename: Title replaced with: En la Orilla del Mar
+[2026-03-24 16:03:02] [PROC] /downloads-test/Music-Playlist/music-playlist-prueba/El Gran Varon.mp3
+[2026-03-24 16:03:02] [PROC] Importing as-is.
+[2026-03-24 16:03:02] [PROC] Sending event: import_task_choice
+[2026-03-24 16:03:02] [PROC] 0 of 1 items replaced
+[2026-03-24 16:03:02] [PROC] Sending event: database_change
+[2026-03-24 16:03:02] [PROC] lastgenre:  -  - El Gran Varon
+[2026-03-24 16:03:02] [PROC] Sending event: database_change
+[2026-03-24 16:03:02] [PROC] Sending event: database_change
+[2026-03-24 16:03:02] [PROC] Sending event: import_task_files
+[2026-03-24 16:03:02] [PROC] Sending event: write
+[2026-03-24 16:03:03] [PROC] Sending event: after_write
+[2026-03-24 16:03:03] [PROC] Sending event: item_imported
+[2026-03-24 16:03:04] [PROC] Looking up: /downloads-test/Music-Playlist/music-playlist-prueba/En la Orilla del Mar.mp3
+[2026-03-24 16:03:04] [PROC] Item search terms:  - En la Orilla del Mar
+[2026-03-24 16:03:05] [PROC] Sending event: mb_track_extract
+[2026-03-24 16:03:05] [PROC] chroma: acoustid item candidates: 1
+[2026-03-24 16:03:05] [PROC] Sending event: trackinfo_received
+[2026-03-24 16:03:06] [PROC] discogs: Getting master release 3704148
+[2026-03-24 16:03:08] [PROC] discogs: Getting master release 3274348
+[2026-03-24 16:03:09] [PROC] Sending event: trackinfo_received
+[2026-03-24 16:03:09] [PROC] Sending event: trackinfo_received
+[2026-03-24 16:03:09] [PROC] Sending event: trackinfo_received
+[2026-03-24 16:03:09] [PROC] Sending event: trackinfo_received
+[2026-03-24 16:03:09] [PROC] Sending event: trackinfo_received
+[2026-03-24 16:03:09] [PROC] Found 6 candidates.
+[2026-03-24 16:03:09] [PROC] Sending event: import_task_start
+[2026-03-24 16:03:09] [PROC] fromfilename: Artist replaced with: Guataca Groove
+[2026-03-24 16:03:09] [PROC] fromfilename: Title replaced with: En Cuba Estoy
+[2026-03-24 16:03:09] [PROC] /downloads-test/Music-Playlist/music-playlist-prueba/En la Orilla del Mar.mp3
+[2026-03-24 16:03:09] [PROC] Importing as-is.
+[2026-03-24 16:03:09] [PROC] Sending event: import_task_choice
+[2026-03-24 16:03:09] [PROC] 0 of 1 items replaced
+[2026-03-24 16:03:09] [PROC] Sending event: database_change
+[2026-03-24 16:03:09] [PROC] lastgenre:  -  - En la Orilla del Mar
+[2026-03-24 16:03:09] [PROC] Sending event: database_change
+[2026-03-24 16:03:09] [PROC] Sending event: database_change
+[2026-03-24 16:03:09] [PROC] Sending event: import_task_files
+[2026-03-24 16:03:09] [PROC] Sending event: write
+[2026-03-24 16:03:09] [PROC] Sending event: after_write
+[2026-03-24 16:03:09] [PROC] Sending event: item_imported
+[2026-03-24 16:03:10] [PROC] Looking up: /downloads-test/Music-Playlist/music-playlist-prueba/Guataca Groove - En Cuba Estoy.mp3
+[2026-03-24 16:03:10] [PROC] Item search terms: Guataca Groove - En Cuba Estoy
+[2026-03-24 16:03:15] [PROC] discogs: Getting master release 2706566
+[2026-03-24 16:03:16] [PROC] discogs: Getting master release 1061191
+[2026-03-24 16:03:17] [PROC] Found 0 candidates.
+[2026-03-24 16:03:17] [PROC] Sending event: import_task_start
+[2026-03-24 16:03:17] [PROC] fromfilename: Title replaced with: Imposible Amor
+[2026-03-24 16:03:17] [PROC] /downloads-test/Music-Playlist/music-playlist-prueba/Guataca Groove - En Cuba Estoy.mp3
+[2026-03-24 16:03:17] [PROC] Importing as-is.
+[2026-03-24 16:03:18] [PROC] Sending event: import_task_choice
+[2026-03-24 16:03:18] [PROC] 0 of 1 items replaced
+[2026-03-24 16:03:18] [PROC] Sending event: database_change
+[2026-03-24 16:03:18] [PROC] lastgenre: Guataca Groove -  - En Cuba Estoy
+[2026-03-24 16:03:18] [PROC] Sending event: database_change
+[2026-03-24 16:03:18] [PROC] Sending event: database_change
+[2026-03-24 16:03:18] [PROC] Sending event: import_task_files
+[2026-03-24 16:03:18] [PROC] Sending event: write
+[2026-03-24 16:03:18] [PROC] Sending event: after_write
+[2026-03-24 16:03:18] [PROC] Sending event: item_imported
+[2026-03-24 16:03:19] [PROC] Looking up: /downloads-test/Music-Playlist/music-playlist-prueba/Imposible Amor.mp3
+[2026-03-24 16:03:19] [PROC] Item search terms:  - Imposible Amor
+[2026-03-24 16:03:20] [PROC] discogs: Getting master release 847971
+[2026-03-24 16:03:21] [PROC] Found 0 candidates.
+[2026-03-24 16:03:21] [PROC] Sending event: import_task_start
+[2026-03-24 16:03:22] [PROC] fromfilename: Artist replaced with: LISANDRO MEZA
+[2026-03-24 16:03:22] [PROC] fromfilename: Title replaced with: El Siete
+[2026-03-24 16:03:22] [PROC] /downloads-test/Music-Playlist/music-playlist-prueba/Imposible Amor.mp3
+[2026-03-24 16:03:22] [PROC] Importing as-is.
+[2026-03-24 16:03:22] [PROC] Sending event: import_task_choice
+[2026-03-24 16:03:22] [PROC] 0 of 1 items replaced
+[2026-03-24 16:03:22] [PROC] Sending event: database_change
+[2026-03-24 16:03:22] [PROC] lastgenre:  -  - Imposible Amor
+[2026-03-24 16:03:22] [PROC] Sending event: database_change
+[2026-03-24 16:03:22] [PROC] Sending event: database_change
+[2026-03-24 16:03:22] [PROC] Sending event: import_task_files
+[2026-03-24 16:03:22] [PROC] Sending event: write
+[2026-03-24 16:03:23] [PROC] Sending event: after_write
+[2026-03-24 16:03:23] [PROC] Sending event: item_imported
+[2026-03-24 16:03:25] [PROC] Looking up: /downloads-test/Music-Playlist/music-playlist-prueba/LISANDRO MEZA  -  El Siete.mp3
+[2026-03-24 16:03:25] [PROC] Item search terms: LISANDRO MEZA - El Siete
+[2026-03-24 16:03:26] [PROC] discogs: Getting master release 1661454
+[2026-03-24 16:03:27] [PROC] discogs: Getting master release 1646656
+[2026-03-24 16:03:28] [PROC] discogs: Getting master release 87609
+[2026-03-24 16:03:29] [PROC] Found 0 candidates.
+[2026-03-24 16:03:29] [PROC] Sending event: import_task_start
+[2026-03-24 16:03:29] [PROC] fromfilename: Artist replaced with: Los Mirlos
+[2026-03-24 16:03:29] [PROC] fromfilename: Title replaced with: Cumbia de Los Pajaritos ⧸ La Danza de Los Mirlos (Infopesa)
+[2026-03-24 16:03:29] [PROC] /downloads-test/Music-Playlist/music-playlist-prueba/LISANDRO MEZA  -  El Siete.mp3
+[2026-03-24 16:03:30] [PROC] Importing as-is.
+[2026-03-24 16:03:30] [PROC] Sending event: import_task_choice
+[2026-03-24 16:03:30] [PROC] 0 of 1 items replaced
+[2026-03-24 16:03:30] [PROC] Sending event: database_change
+[2026-03-24 16:03:30] [PROC] lastgenre: LISANDRO MEZA -  - El Siete
+[2026-03-24 16:03:30] [PROC] genres:
+[2026-03-24 16:03:31] [PROC]   + Cumbia
+[2026-03-24 16:03:33] [PROC] Looking up: /downloads-test/Music-Playlist/music-playlist-prueba/Los Mirlos  - Cumbia de Los Pajaritos ⧸ La Danza de Los Mirlos (Infopesa).mp3
+[2026-03-24 16:03:33] [PROC] Item search terms: Los Mirlos - Cumbia de Los Pajaritos ⧸ La Danza de Los Mirlos (Infopesa)
+[2026-03-24 16:03:33] [PROC] discogs: Getting master release 3399628
+[2026-03-24 16:03:33] [PROC] Sending event: database_change
+[2026-03-24 16:03:33] [PROC] Sending event: database_change
+[2026-03-24 16:03:33] [PROC] Sending event: import_task_files
+[2026-03-24 16:03:33] [PROC] Sending event: write
+[2026-03-24 16:03:34] [PROC] Sending event: after_write
+[2026-03-24 16:03:34] [PROC] Sending event: item_imported
+[2026-03-24 16:03:34] [PROC] discogs: Getting master release 1208585
+[2026-03-24 16:03:37] [PROC] Found 0 candidates.
+[2026-03-24 16:03:37] [PROC] Sending event: import_task_start
+[2026-03-24 16:03:37] [PROC] fromfilename: Artist replaced with: TU LOCO LOCO Y YO TRANQUILO
+[2026-03-24 16:03:37] [PROC] fromfilename: Title replaced with: ROBERTO ROENA CON  PIRO MANTILLA
+[2026-03-24 16:03:37] [PROC] /downloads-test/Music-Playlist/music-playlist-prueba/Los Mirlos  - Cumbia de Los Pajaritos ⧸ La Danza de Los Mirlos (Infopesa).mp3
+[2026-03-24 16:03:37] [PROC] Importing as-is.
+[2026-03-24 16:03:37] [PROC] Sending event: import_task_choice
+[2026-03-24 16:03:37] [PROC] 0 of 1 items replaced
+[2026-03-24 16:03:37] [PROC] Sending event: database_change
+[2026-03-24 16:03:37] [PROC] Looking up: /downloads-test/Music-Playlist/music-playlist-prueba/TU LOCO LOCO Y YO TRANQUILO -  ROBERTO ROENA CON  PIRO MANTILLA.mp3
+[2026-03-24 16:03:37] [PROC] Item search terms: TU LOCO LOCO Y YO TRANQUILO - ROBERTO ROENA CON  PIRO MANTILLA
+[2026-03-24 16:03:37] [PROC] discogs: Getting master release 533384
+[2026-03-24 16:03:38] [PROC] lastgenre: Los Mirlos -  - Cumbia de Los Pajaritos ⧸ La Danza de Los Mirlos (Infopesa)
+[2026-03-24 16:03:38] [PROC] genres:
+[2026-03-24 16:03:38] [PROC]   + Cumbia
+[2026-03-24 16:03:38] [PROC] Sending event: database_change
+[2026-03-24 16:03:38] [PROC] Sending event: database_change
+[2026-03-24 16:03:38] [PROC] Sending event: import_task_files
+[2026-03-24 16:03:38] [PROC] Sending event: write
+[2026-03-24 16:03:38] [PROC] Sending event: after_write
+[2026-03-24 16:03:38] [PROC] Sending event: item_imported
+[2026-03-24 16:03:39] [PROC] Found 0 candidates.
+[2026-03-24 16:03:39] [PROC] Sending event: import_task_start
+[2026-03-24 16:03:39] [PROC] fromfilename: Title replaced with: Y No Hago Mas Na
+[2026-03-24 16:03:39] [PROC] /downloads-test/Music-Playlist/music-playlist-prueba/TU LOCO LOCO Y YO TRANQUILO -  ROBERTO ROENA CON  PIRO MANTILLA.mp3
+[2026-03-24 16:03:39] [PROC] Importing as-is.
+[2026-03-24 16:03:39] [PROC] Sending event: import_task_choice
+[2026-03-24 16:03:39] [PROC] 0 of 1 items replaced
+[2026-03-24 16:03:39] [PROC] Sending event: database_change
+[2026-03-24 16:03:39] [PROC] lastgenre: TU LOCO LOCO Y YO TRANQUILO -  - ROBERTO ROENA CON  PIRO MANTILLA
+[2026-03-24 16:03:40] [PROC] Looking up: /downloads-test/Music-Playlist/music-playlist-prueba/Y No Hago Mas Na.mp3
+[2026-03-24 16:03:40] [PROC] Item search terms:  - Y No Hago Mas Na
+[2026-03-24 16:03:41] [PROC] discogs: Getting master release 3224038
+[2026-03-24 16:03:42] [PROC] Sending event: database_change
+[2026-03-24 16:03:42] [PROC] Sending event: database_change
+[2026-03-24 16:03:42] [PROC] Sending event: import_task_files
+[2026-03-24 16:03:43] [PROC] Sending event: write
+[2026-03-24 16:03:43] [PROC] Sending event: after_write
+[2026-03-24 16:03:43] [PROC] discogs: Getting master release 1037283
+[2026-03-24 16:03:43] [PROC] Sending event: item_imported
+[2026-03-24 16:03:43] [PROC] Sending event: trackinfo_received
+[2026-03-24 16:03:44] [PROC] Sending event: trackinfo_received
+[2026-03-24 16:03:44] [PROC] Sending event: trackinfo_received
+[2026-03-24 16:03:44] [PROC] Sending event: trackinfo_received
+[2026-03-24 16:03:44] [PROC] Sending event: trackinfo_received
+[2026-03-24 16:03:44] [PROC] Found 5 candidates.
+[2026-03-24 16:03:44] [PROC] /downloads-test/Music-Playlist/music-playlist-prueba/Y No Hago Mas Na.mp3
+[2026-03-24 16:03:44] [PROC] Importing as-is.
+[2026-03-24 16:03:44] [PROC] Sending event: import_task_choice
+[2026-03-24 16:03:44] [PROC] 0 of 1 items replaced
+[2026-03-24 16:03:44] [PROC] Sending event: database_change
+[2026-03-24 16:03:44] [PROC] lastgenre:  -  - Y No Hago Mas Na
+[2026-03-24 16:03:44] [PROC] Sending event: database_change
+[2026-03-24 16:03:44] [PROC] Sending event: database_change
+[2026-03-24 16:03:44] [PROC] Sending event: import_task_files
+[2026-03-24 16:03:44] [PROC] Sending event: write
+[2026-03-24 16:03:44] [PROC] Sending event: after_write
+[2026-03-24 16:03:45] [PROC] Sending event: item_imported
+[2026-03-24 16:03:45] [PROC] Sending event: import
+[2026-03-24 16:03:45] [PROC] Sending event: cli_exit
+[2026-03-24 16:03:45] [INFO] Fin [beets-music-exec] rc=0 en 58.67s
+[2026-03-24 16:03:45] [INFO] Ejecutando [beets-music-rm]...
+[2026-03-24 16:03:45] [INFO] Fin [beets-music-rm] rc=0 en 0.13s
+[2026-03-24 16:03:45] [OK] Perfil completado correctamente.
+[2026-03-24 16:03:45] [STEP] ==============================================================================
+[2026-03-24 16:03:45] [STEP] Inicio ejecución perfil: Ambience-Video
+[2026-03-24 16:03:45] [STEP] ==============================================================================
+[2026-03-24 16:03:45] [INFO] Project root: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl
+[2026-03-24 16:03:45] [INFO] Mode: test
+[2026-03-24 16:03:45] [INFO] DryRun: False
+[2026-03-24 16:03:45] [INFO] Ejecutando [generate-ytdl-config]...
+[2026-03-24 16:03:46] [INFO] Fin [generate-ytdl-config] rc=0 en 0.13s
+[2026-03-24 16:03:46] [INFO] Ejecutando [prepare-subscriptions-runset]...
+[2026-03-24 16:03:46] [INFO] Fin [prepare-subscriptions-runset] rc=0 en 0.43s
+[2026-03-24 16:03:46] [INFO] Runset con entradas: True
+[2026-03-24 16:03:46] [INFO] Ejecutando [copy-trim-script]...
+[2026-03-24 16:03:46] [INFO] Fin [copy-trim-script] rc=0 en 0.14s
+[2026-03-24 16:03:46] [INFO] Ejecutando [ytdl-sub-sub]...
+[2026-03-24 16:03:48] [PROC] [ytdl-sub] Validating subscriptions...
+[2026-03-24 16:03:48] [PROC] [ytdl-sub] Beginning subscription download for ambience-video-prueba-vr4savpspea
+[2026-03-24 16:03:48] [PROC] [ytdl-sub:yt-dlp] [youtube] Extracting URL: https://www.youtube.com/watch?v=vr4sAvPSpEA
+[2026-03-24 16:03:48] [PROC] [ytdl-sub:yt-dlp] [youtube] vr4sAvPSpEA: Downloading webpage
+[2026-03-24 16:03:49] [PROC] [ytdl-sub:yt-dlp] [youtube] vr4sAvPSpEA: Downloading android vr player API JSON
+[2026-03-24 16:03:49] [PROC] [ytdl-sub:yt-dlp] [youtube] vr4sAvPSpEA: Downloading player 8180e7ff-main
+[2026-03-24 16:03:49] [PROC] [ytdl-sub:yt-dlp] [youtube] [jsc:deno] Solving JS challenges using deno
+[2026-03-24 16:03:51] [PROC] [ytdl-sub:yt-dlp] [youtube] vr4sAvPSpEA: Downloading m3u8 information
+[2026-03-24 16:03:51] [PROC] [ytdl-sub:yt-dlp] [info] vr4sAvPSpEA: Downloading 1 format(s): 398+251
+[2026-03-24 16:03:51] [PROC] [ytdl-sub:yt-dlp] [info] Writing video metadata as JSON to: /tmp/ytdl-sub-working-directory/ambience-video-prueba-vr4savpspea/vr4sAvPSpEA.info.json
+[2026-03-24 16:03:51] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] Extracting URL: https://www.youtube.com/@Sonidoterapia2020
+[2026-03-24 16:03:51] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] @Sonidoterapia2020: Downloading webpage
+[2026-03-24 16:03:52] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] Downloading all uploads of the channel. To download only the videos in a specific tab, pass the tab's URL
+[2026-03-24 16:03:52] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] @Sonidoterapia2020/shorts: Downloading webpage
+[2026-03-24 16:03:52] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] Downloading as multiple playlists, separated by tabs. To download as a single playlist instead, pass https://www.youtube.com/playlist?list=UUkjAsdAAslxVWH_4hRP_0tw
+[2026-03-24 16:03:52] [PROC] [ytdl-sub:yt-dlp] [info] Writing playlist metadata as JSON to: /tmp/ytdl-sub-working-directory/ambience-video-prueba-vr4savpspea/@Sonidoterapia2020.info.json
+[2026-03-24 16:03:52] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] Playlist Sonidoterapia: Downloading N/A items of 2
+[2026-03-24 16:03:52] [PROC] [ytdl-sub:yt-dlp] WARNING: Ignoring playliststart and playlistend because playlistitems was given
+[2026-03-24 16:03:53] [PROC] [ytdl-sub:yt-dlp] [info] Writing updated playlist metadata as JSON to: /tmp/ytdl-sub-working-directory/ambience-video-prueba-vr4savpspea/@Sonidoterapia2020.info.json
+[2026-03-24 16:03:53] [PROC] [ytdl-sub:downloader] Beginning downloads for https://www.youtube.com/watch?v=vr4sAvPSpEA
+[2026-03-24 16:03:53] [PROC] [ytdl-sub:downloader] Downloading entry 1/1: CHIMENEA | Sonido de Fuego Crepitando para Meditar y Dormir Profundamente
+[2026-03-24 16:03:53] [PROC] [ytdl-sub:yt-dlp] [youtube] Extracting URL: https://www.youtube.com/watch?v=vr4sAvPSpEA
+[2026-03-24 16:03:53] [PROC] [ytdl-sub:yt-dlp] [youtube] vr4sAvPSpEA: Downloading webpage
+[2026-03-24 16:03:54] [PROC] [ytdl-sub:yt-dlp] [youtube] vr4sAvPSpEA: Downloading android vr player API JSON
+[2026-03-24 16:03:54] [PROC] [ytdl-sub:yt-dlp] [youtube] vr4sAvPSpEA: Downloading player 1ebf2aa6-main
+[2026-03-24 16:03:54] [PROC] [ytdl-sub:yt-dlp] [youtube] [jsc:deno] Solving JS challenges using deno
+[2026-03-24 16:03:56] [PROC] [ytdl-sub:yt-dlp] [youtube] vr4sAvPSpEA: Downloading m3u8 information
+[2026-03-24 16:03:56] [PROC] [ytdl-sub:yt-dlp] [info] vr4sAvPSpEA: Downloading 1 format(s): 398+251
+[2026-03-24 16:03:56] [PROC] [ytdl-sub:yt-dlp] [info] Downloading video thumbnail 41 ...
+[2026-03-24 16:03:57] [PROC] [ytdl-sub:yt-dlp] [info] Writing video thumbnail 41 to: /tmp/ytdl-sub-working-directory/ambience-video-prueba-vr4savpspea/vr4sAvPSpEA.webp
+[2026-03-24 16:10:52] [PROC] [ytdl-sub:yt-dlp] [Merger] Merging formats into "/tmp/ytdl-sub-working-directory/ambience-video-prueba-vr4savpspea/vr4sAvPSpEA.mp4"
+[2026-03-24 16:13:49] [PROC] [ytdl-sub:yt-dlp] Deleting original file /tmp/ytdl-sub-working-directory/ambience-video-prueba-vr4savpspea/vr4sAvPSpEA.f251.webm (pass -k to keep)
+[2026-03-24 16:13:49] [PROC] [ytdl-sub:yt-dlp] Deleting original file /tmp/ytdl-sub-working-directory/ambience-video-prueba-vr4savpspea/vr4sAvPSpEA.f398.mp4 (pass -k to keep)
+[2026-03-24 16:14:31] [PROC] [ytdl-sub] Transaction log for ambience-video-prueba-vr4savpspea:
+[2026-03-24 16:14:32] [PROC] Files created:
+[2026-03-24 16:14:32] [PROC] ----------------------------------------
+[2026-03-24 16:14:32] [PROC] /downloads-test/Ambience-Video/ambience-video-prueba
+[2026-03-24 16:14:32] [PROC] .ytdl-sub-ambience-video-prueba-vr4savpspea-download-archive.json
+[2026-03-24 16:14:32] [PROC] CHIMENEA ｜ Sonido de Fuego Crepitando para Meditar y Dormir Profundamente.mp4
+[2026-03-24 16:14:33] [PROC] [ytdl-sub] Download Summary:
+[2026-03-24 16:14:33] [PROC] ambience-video-prueba-vr4savpspea     +1 0 0     1 ✔
+[2026-03-24 16:14:33] [PROC] Total: 1                              +1 0 0     1 Success
+[2026-03-24 16:14:33] [INFO] Fin [ytdl-sub-sub] rc=0 en 647.11s
+[2026-03-24 16:14:34] [OK] Estado promovido: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\config\runtime\test\.recent-items-state.pending.json -> E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\config\runtime\test\.recent-items-state.json
+[2026-03-24 16:14:34] [INFO] Ejecutando [trim-ambience-video-cp]...
+[2026-03-24 16:14:34] [INFO] Fin [trim-ambience-video-cp] rc=0 en 0.16s
+[2026-03-24 16:14:35] [INFO] Ejecutando [trim-ambience-video-exec]...
+[2026-03-24 16:14:36] [PROC] [TRIM] /downloads-test/Ambience-Video/ambience-video-prueba/CHIMENEA ｜ Sonido de Fuego Crepitando para Meditar y Dormir Profundamente.mp4
+[2026-03-24 16:14:36] [PROC] [INFO] Entrada: /downloads-test/Ambience-Video/ambience-video-prueba/CHIMENEA ｜ Sonido de Fuego Crepitando para Meditar y Dormir Profundamente.mp4
+[2026-03-24 16:14:37] [PROC] [INFO] Tamaño entrada: 2409.12 MiB
+[2026-03-24 16:14:39] [PROC] [INFO] Streams entrada: video:av1, audio:opus
+[2026-03-24 16:14:39] [PROC] [INFO] Duración entrada: 14464.494s (04:01:04)
+[2026-03-24 16:14:39] [PROC] [INFO] Límite pedido   : 10983s (03:03:03)
+[2026-03-24 16:14:39] [PROC] [INFO] Tolerancia      : 2.000s
+[2026-03-24 16:14:40] [PROC] [INFO] Lanzando ffmpeg...
+[2026-03-24 16:14:40] [PROC] [INFO] Comando:
+[2026-03-24 16:14:40] [PROC] ffmpeg -hide_banner -nostdin -y -progress pipe:1 -nostats -loglevel error -fflags +genpts -i "/downloads-test/Ambience-Video/ambience-video-prueba/CHIMENEA ｜ Sonido de Fuego Crepitando para Meditar y Dormir Profundamente.mp4" -t 10983 -map 0 -c copy -avoid_negative_ts make_zero "/downloads-test/Ambience-Video/ambience-video-prueba/CHIMENEA ｜ Sonido de Fuego Crepitando para Meditar y Dormir Profundamente.trimmed.mp4"
+[2026-03-24 16:14:40] [PROC] [FFMPEG-RAW] frame=1467
+[2026-03-24 16:14:40] [PROC] [FFMPEG-RAW] fps=0.00
+[2026-03-24 16:14:41] [PROC] [FFMPEG-RAW] stream_0_0_q=-1.0
+[2026-03-24 16:14:41] [PROC] [FFMPEG-RAW] bitrate=1371.0kbits/s
+[2026-03-24 16:14:41] [PROC] [FFMPEG-RAW] total_size=8388656
+[2026-03-24 16:14:41] [PROC] [FFMPEG-RAW] out_time_us=48948900
+[2026-03-24 16:14:42] [PROC] [FFMPEG-RAW] out_time_ms=48948900
+[2026-03-24 16:14:42] [PROC] [FFMPEG-RAW] out_time=00:00:48.948900
+[2026-03-24 16:14:42] [PROC] [FFMPEG-RAW] dup_frames=0
+[2026-03-24 16:14:43] [PROC] [FFMPEG-RAW] drop_frames=0
+[2026-03-24 16:14:43] [PROC] [FFMPEG-RAW] speed=97.8x
+[2026-03-24 16:16:20] [PROC] [INFO] Temporal generado: /downloads-test/Ambience-Video/ambience-video-prueba/CHIMENEA ｜ Sonido de Fuego Crepitando para Meditar y Dormir Profundamente.trimmed.mp4
+[2026-03-24 16:16:20] [PROC] [INFO] Tamaño temporal  : 1829.12 MiB
+[2026-03-24 16:16:21] [PROC] [OK]   Recorte terminado en 101.34s
+[2026-03-24 16:16:21] [PROC] [WARN] Se omite ffprobe final de validación por velocidad (--skip-output-probe).
+[2026-03-24 16:16:21] [PROC] [INFO] Sustituyendo original por fichero recortado...
+[2026-03-24 16:16:21] [PROC] [OK]   Original sustituido correctamente: /downloads-test/Ambience-Video/ambience-video-prueba/CHIMENEA ｜ Sonido de Fuego Crepitando para Meditar y Dormir Profundamente.mp4
+[2026-03-24 16:16:21] [PROC] /downloads-test/Ambience-Video/ambience-video-prueba/CHIMENEA ｜ Sonido de Fuego Crepitando para Meditar y Dormir Profundamente.mp4
+[2026-03-24 16:16:21] [INFO] Fin [trim-ambience-video-exec] rc=0 en 105.73s
+[2026-03-24 16:16:21] [INFO] Ejecutando [trim-ambience-video-rm]...
+[2026-03-24 16:16:21] [INFO] Fin [trim-ambience-video-rm] rc=0 en 0.36s
+[2026-03-24 16:16:21] [OK] Perfil completado correctamente.
+[2026-03-24 16:16:21] [STEP] ==============================================================================
+[2026-03-24 16:16:21] [STEP] Inicio ejecución perfil: Ambience-Audio
+[2026-03-24 16:16:21] [STEP] ==============================================================================
+[2026-03-24 16:16:21] [INFO] Project root: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl
+[2026-03-24 16:16:21] [INFO] Mode: test
+[2026-03-24 16:16:21] [INFO] DryRun: False
+[2026-03-24 16:16:21] [INFO] Ejecutando [generate-ytdl-config]...
+[2026-03-24 16:16:21] [INFO] Fin [generate-ytdl-config] rc=0 en 0.15s
+[2026-03-24 16:16:22] [INFO] Ejecutando [prepare-subscriptions-runset]...
+[2026-03-24 16:16:22] [INFO] Fin [prepare-subscriptions-runset] rc=0 en 0.47s
+[2026-03-24 16:16:22] [INFO] Runset con entradas: True
+[2026-03-24 16:16:22] [INFO] Ejecutando [copy-trim-script]...
+[2026-03-24 16:16:23] [INFO] Fin [copy-trim-script] rc=0 en 0.07s
+[2026-03-24 16:16:23] [INFO] Ejecutando [ytdl-sub-sub]...
+[2026-03-24 16:16:25] [PROC] [ytdl-sub] Validating subscriptions...
+[2026-03-24 16:16:25] [PROC] [ytdl-sub] Beginning subscription download for ambience-audio-prueba-gr-vejtzbso
+[2026-03-24 16:16:26] [PROC] [ytdl-sub:yt-dlp] [youtube] Extracting URL: https://www.youtube.com/watch?v=GR_vEjTZBso
+[2026-03-24 16:16:26] [PROC] [ytdl-sub:yt-dlp] [youtube] GR_vEjTZBso: Downloading webpage
+[2026-03-24 16:16:27] [PROC] [ytdl-sub:yt-dlp] [youtube] GR_vEjTZBso: Downloading android vr player API JSON
+[2026-03-24 16:16:27] [PROC] [ytdl-sub:yt-dlp] [youtube] GR_vEjTZBso: Downloading player 1ebf2aa6-main
+[2026-03-24 16:16:27] [PROC] [ytdl-sub:yt-dlp] [youtube] [jsc:deno] Solving JS challenges using deno
+[2026-03-24 16:16:31] [PROC] [ytdl-sub:yt-dlp] [youtube] GR_vEjTZBso: Downloading m3u8 information
+[2026-03-24 16:16:31] [PROC] [ytdl-sub:yt-dlp] [info] GR_vEjTZBso: Downloading 1 format(s): 251
+[2026-03-24 16:16:31] [PROC] [ytdl-sub:yt-dlp] [info] Writing video metadata as JSON to: /tmp/ytdl-sub-working-directory/ambience-audio-prueba-gr-vejtzbso/GR_vEjTZBso.info.json
+[2026-03-24 16:16:31] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] Extracting URL: https://www.youtube.com/@symphony_of_the_knight
+[2026-03-24 16:16:32] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] @symphony_of_the_knight: Downloading webpage
+[2026-03-24 16:16:32] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] Downloading all uploads of the channel. To download only the videos in a specific tab, pass the tab's URL
+[2026-03-24 16:16:32] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] @symphony_of_the_knight/shorts: Downloading webpage
+[2026-03-24 16:16:33] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] Downloading as multiple playlists, separated by tabs. To download as a single playlist instead, pass https://www.youtube.com/playlist?list=UUFEP2PkT40DPBHgBm1q5eRA
+[2026-03-24 16:16:34] [PROC] [ytdl-sub:yt-dlp] [info] Writing playlist metadata as JSON to: /tmp/ytdl-sub-working-directory/ambience-audio-prueba-gr-vejtzbso/@symphony_of_the_knight.info.json
+[2026-03-24 16:16:34] [PROC] [ytdl-sub:yt-dlp] [youtube:tab] Playlist Symphony Of The Knight: Downloading N/A items of 2
+[2026-03-24 16:16:34] [PROC] [ytdl-sub:yt-dlp] WARNING: Ignoring playliststart and playlistend because playlistitems was given
+[2026-03-24 16:16:34] [PROC] [ytdl-sub:yt-dlp] [info] Writing updated playlist metadata as JSON to: /tmp/ytdl-sub-working-directory/ambience-audio-prueba-gr-vejtzbso/@symphony_of_the_knight.info.json
+[2026-03-24 16:16:34] [PROC] [ytdl-sub:downloader] Beginning downloads for https://www.youtube.com/watch?v=GR_vEjTZBso
+[2026-03-24 16:16:34] [PROC] [ytdl-sub:downloader] Downloading entry 1/1: The Silent Keep – Relaxing Medieval Music for Deep Focus and Inner Calm
+[2026-03-24 16:16:34] [PROC] [ytdl-sub:yt-dlp] [youtube] Extracting URL: https://www.youtube.com/watch?v=GR_vEjTZBso
+[2026-03-24 16:16:34] [PROC] [ytdl-sub:yt-dlp] [youtube] GR_vEjTZBso: Downloading webpage
+[2026-03-24 16:16:36] [PROC] [ytdl-sub:yt-dlp] [youtube] GR_vEjTZBso: Downloading android vr player API JSON
+[2026-03-24 16:16:36] [PROC] [ytdl-sub:yt-dlp] [youtube] GR_vEjTZBso: Downloading player 8180e7ff-main
+[2026-03-24 16:16:36] [PROC] [ytdl-sub:yt-dlp] [youtube] [jsc:deno] Solving JS challenges using deno
+[2026-03-24 16:16:39] [PROC] [ytdl-sub:yt-dlp] [youtube] GR_vEjTZBso: Downloading m3u8 information
+[2026-03-24 16:16:39] [PROC] [ytdl-sub:yt-dlp] [info] GR_vEjTZBso: Downloading 1 format(s): 251
+[2026-03-24 16:16:40] [PROC] [ytdl-sub:yt-dlp] [info] Downloading video thumbnail 41 ...
+[2026-03-24 16:16:40] [PROC] [ytdl-sub:yt-dlp] [info] Writing video thumbnail 41 to: /tmp/ytdl-sub-working-directory/ambience-audio-prueba-gr-vejtzbso/GR_vEjTZBso.webp
+[2026-03-24 16:17:50] [PROC] [ytdl-sub:yt-dlp] [ExtractAudio] Destination: /tmp/ytdl-sub-working-directory/ambience-audio-prueba-gr-vejtzbso/GR_vEjTZBso.mp3
+[2026-03-24 16:28:32] [PROC] [ytdl-sub:yt-dlp] Deleting original file /tmp/ytdl-sub-working-directory/ambience-audio-prueba-gr-vejtzbso/GR_vEjTZBso.webm (pass -k to keep)
+[2026-03-24 16:28:42] [PROC] [ytdl-sub] Transaction log for ambience-audio-prueba-gr-vejtzbso:
+[2026-03-24 16:28:43] [PROC] Files created:
+[2026-03-24 16:28:43] [PROC] ----------------------------------------
+[2026-03-24 16:28:43] [PROC] /downloads-test/Ambience-Audio/ambience-audio-prueba
+[2026-03-24 16:28:43] [PROC] .ytdl-sub-ambience-audio-prueba-gr-vejtzbso-download-archive.json
+[2026-03-24 16:28:43] [PROC] The Silent Keep – Relaxing Medieval Music for Deep Focus and Inner Calm.mp3
+[2026-03-24 16:28:44] [PROC] [ytdl-sub] Download Summary:
+[2026-03-24 16:28:44] [PROC] ambience-audio-prueba-gr-vejtzbso     +1 0 0     1 ✔
+[2026-03-24 16:28:44] [PROC] Total: 1                              +1 0 0     1 Success
+[2026-03-24 16:28:45] [INFO] Fin [ytdl-sub-sub] rc=0 en 741.37s
+[2026-03-24 16:28:45] [OK] Estado promovido: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\config\runtime\test\.recent-items-state.pending.json -> E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\config\runtime\test\.recent-items-state.json
+[2026-03-24 16:28:45] [INFO] Ejecutando [trim-ambience-audio-cp]...
+[2026-03-24 16:28:46] [INFO] Fin [trim-ambience-audio-cp] rc=0 en 0.30s
+[2026-03-24 16:28:46] [INFO] Ejecutando [trim-ambience-audio-exec]...
+[2026-03-24 16:28:46] [PROC] [TRIM] /downloads-test/Ambience-Audio/ambience-audio-prueba/The Silent Keep – Relaxing Medieval Music for Deep Focus and Inner Calm.mp3
+[2026-03-24 16:28:47] [PROC] [INFO] Entrada: /downloads-test/Ambience-Audio/ambience-audio-prueba/The Silent Keep – Relaxing Medieval Music for Deep Focus and Inner Calm.mp3
+[2026-03-24 16:28:47] [PROC] [INFO] Tamaño entrada: 527.50 MiB
+[2026-03-24 16:28:47] [PROC] [INFO] Streams entrada: audio:mp3
+[2026-03-24 16:28:47] [PROC] [INFO] Duración entrada: 19415.760s (05:23:36)
+[2026-03-24 16:28:47] [PROC] [INFO] Límite pedido   : 10983s (03:03:03)
+[2026-03-24 16:28:47] [PROC] [INFO] Tolerancia      : 2.000s
+[2026-03-24 16:28:47] [PROC] [INFO] Lanzando ffmpeg...
+[2026-03-24 16:28:47] [PROC] [INFO] Comando:
+[2026-03-24 16:28:47] [PROC] ffmpeg -hide_banner -nostdin -y -progress pipe:1 -nostats -loglevel error -fflags +genpts -i "/downloads-test/Ambience-Audio/ambience-audio-prueba/The Silent Keep – Relaxing Medieval Music for Deep Focus and Inner Calm.mp3" -t 10983 -map 0:a:0 -c copy -avoid_negative_ts make_zero "/downloads-test/Ambience-Audio/ambience-audio-prueba/The Silent Keep – Relaxing Medieval Music for Deep Focus and Inner Calm.trimmed.mp3"
+[2026-03-24 16:28:47] [PROC] [FFMPEG-RAW] bitrate= 225.6kbits/s
+[2026-03-24 16:28:47] [PROC] [FFMPEG-RAW] total_size=6553600
+[2026-03-24 16:28:48] [PROC] [FFMPEG-RAW] out_time_us=232368979
+[2026-03-24 16:28:48] [PROC] [FFMPEG-RAW] out_time_ms=232368979
+[2026-03-24 16:28:48] [PROC] [FFMPEG-RAW] out_time=00:03:52.368979
+[2026-03-24 16:28:48] [PROC] [FFMPEG-RAW] dup_frames=0
+[2026-03-24 16:28:48] [PROC] [FFMPEG-RAW] drop_frames=0
+[2026-03-24 16:28:48] [PROC] [FFMPEG-RAW] speed= 465x
+[2026-03-24 16:28:58] [PROC] [INFO] Temporal generado: /downloads-test/Ambience-Audio/ambience-audio-prueba/The Silent Keep – Relaxing Medieval Music for Deep Focus and Inner Calm.trimmed.mp3
+[2026-03-24 16:28:58] [PROC] [INFO] Tamaño temporal  : 298.52 MiB
+[2026-03-24 16:28:58] [PROC] [OK]   Recorte terminado en 10.71s
+[2026-03-24 16:28:58] [PROC] [WARN] Se omite ffprobe final de validación por velocidad (--skip-output-probe).
+[2026-03-24 16:28:58] [PROC] [INFO] Sustituyendo original por fichero recortado...
+[2026-03-24 16:28:58] [PROC] [OK]   Original sustituido correctamente: /downloads-test/Ambience-Audio/ambience-audio-prueba/The Silent Keep – Relaxing Medieval Music for Deep Focus and Inner Calm.mp3
+[2026-03-24 16:28:58] [PROC] /downloads-test/Ambience-Audio/ambience-audio-prueba/The Silent Keep – Relaxing Medieval Music for Deep Focus and Inner Calm.mp3
+[2026-03-24 16:28:58] [INFO] Fin [trim-ambience-audio-exec] rc=0 en 12.13s
+[2026-03-24 16:28:58] [INFO] Ejecutando [trim-ambience-audio-rm]...
+[2026-03-24 16:28:58] [INFO] Fin [trim-ambience-audio-rm] rc=0 en 0.18s
+[2026-03-24 16:28:58] [OK] Perfil completado correctamente.
+[2026-03-24 16:28:58] [STEP] ==============================================================================
+[2026-03-24 16:28:58] [STEP] Resumen final de la ejecución
+[2026-03-24 16:28:58] [STEP] ==============================================================================
+[2026-03-24 16:28:58] [OK] Canales-youtube | ok=True | mode=test | dry_run=False | runset_con_entradas=True | elapsed=59.91s | Perfil completado correctamente.
+[2026-03-24 16:28:58] [OK] Podcast | ok=True | mode=test | dry_run=False | runset_con_entradas=True | elapsed=526.64s | Perfil completado correctamente.
+[2026-03-24 16:28:58] [OK] TV-Serie | ok=True | mode=test | dry_run=False | runset_con_entradas=True | elapsed=709.37s | Perfil completado correctamente.
+[2026-03-24 16:28:59] [OK] Music-Playlist | ok=True | mode=test | dry_run=False | runset_con_entradas=True | elapsed=231.08s | Perfil completado correctamente.
+[2026-03-24 16:28:59] [OK] Ambience-Video | ok=True | mode=test | dry_run=False | runset_con_entradas=True | elapsed=755.96s | Perfil completado correctamente.
+[2026-03-24 16:28:59] [OK] Ambience-Audio | ok=True | mode=test | dry_run=False | runset_con_entradas=True | elapsed=757.10s | Perfil completado correctamente.
+[2026-03-24 16:28:59] [INFO] Total perfiles: 6
+[2026-03-24 16:28:59] [INFO] Perfiles OK: 6
+[2026-03-24 16:28:59] [INFO] Perfiles FAIL: 0
+[2026-03-24 16:29:00] [INFO] Log único generado: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\config\runtime\test\logs\zenoytdl-run-test-20260324-153800.log
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        RESUMEN EJECUTIVO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+⏱️ Duración por perfil
+
+Canales-youtube  ▓                 1m 00s
+Podcast          ▓▓▓▓▓▓▓▓▓▓▓       8m 47s
+TV-Serie         ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓   11m 49s
+Music-Playlist   ▓▓▓▓▓             3m 51s
+Ambience-Video   ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓  12m 36s
+Ambience-Audio   ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓  12m 37s
+
+🔧 Postprocesado total:        2m 59s
+🕒 Tiempo total de la suite:   51m 00s
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+          LECTURA RÁPIDA
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+• Perfil más lento:
+  Ambience-Audio → 12m 37s
+
+• Perfil más rápido:
+  Canales-youtube → 1m 00s
+
+• Mayor tiempo de postprocesado:
+  Ambience-Video → 1m 47s
+
+• Sin postproceso específico:
+  Canales-youtube, Podcast, TV-Serie
+
+• Peso del postprocesado sobre el total:
+  ~5.9%
+

@@ -1,0 +1,96 @@
+[2026-03-24 17:10:25] [STEP] ==============================================================================
+[2026-03-24 17:10:25] [STEP] Inicio ejecución ZenoYTDL
+[2026-03-24 17:10:25] [STEP] ==============================================================================
+[2026-03-24 17:10:25] [INFO] Proyecto: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl
+[2026-03-24 17:10:25] [INFO] Config user: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\config\user
+[2026-03-24 17:10:25] [INFO] Runtime dir: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\config\runtime\test
+[2026-03-24 17:10:25] [INFO] Perfiles objetivo: Ambience-Audio
+[2026-03-24 17:10:25] [INFO] Mode: test
+[2026-03-24 17:10:25] [INFO] DownloadsRoot: /downloads-test
+[2026-03-24 17:10:25] [INFO] DryRun: True
+[2026-03-24 17:10:25] [INFO] Clean: False
+[2026-03-24 17:10:25] [INFO] CleanProfile: True
+[2026-03-24 17:10:25] [INFO] CleanLogs: False
+[2026-03-24 17:10:25] [INFO] KeepLogs: True
+[2026-03-24 17:10:25] [INFO] RestartYtdlSub: False
+[2026-03-24 17:10:25] [INFO] IncludePostprocessTests: disabled
+[2026-03-24 17:10:25] [INFO] Log principal: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\config\runtime\test\logs\zenoytdl-run-test-20260324-171025.log
+[2026-03-24 17:10:25] [STEP] ==============================================================================
+[2026-03-24 17:10:25] [STEP] Limpieza previa del entorno (test)
+[2026-03-24 17:10:26] [STEP] ==============================================================================
+[2026-03-24 17:10:26] [INFO] Perfiles en alcance de limpieza: Ambience-Audio
+[2026-03-24 17:10:26] [OK] Eliminado temporal local: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\config\runtime\test\subscriptions.runset.yaml
+[2026-03-24 17:10:26] [OK] Eliminado temporal local: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\config\runtime\test\.recent-items-state.pending.json
+[2026-03-24 17:10:26] [OK] Eliminado temporal local: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\config\runtime\test\config.generated.yaml
+[2026-03-24 17:10:26] [OK] Eliminado temporal local: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\config\runtime\test\subscriptions.generated.yaml
+[2026-03-24 17:10:26] [OK] Eliminado temporal local: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\config\runtime\test\beets.music-playlist.yaml
+[2026-03-24 17:10:26] [OK] Estado local reiniciado: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\config\runtime\test\.recent-items-state.json
+[2026-03-24 17:10:26] [INFO] Ejecutando [clean-ytdl-sub-cp]...
+[2026-03-24 17:10:26] [INFO] Fin [clean-ytdl-sub-cp] rc=0 en 0.11s
+[2026-03-24 17:10:26] [INFO] Ejecutando [clean-ytdl-sub-exec]...
+[2026-03-24 17:10:26] [PROC] [INFO] Vaciando contenido de /downloads-test/Ambience-Audio
+[2026-03-24 17:10:27] [INFO] Fin [clean-ytdl-sub-exec] rc=0 en 0.58s
+[2026-03-24 17:10:27] [INFO] Ejecutando [clean-ytdl-sub-rm]...
+[2026-03-24 17:10:27] [INFO] Fin [clean-ytdl-sub-rm] rc=0 en 0.48s
+[2026-03-24 17:10:27] [INFO] Ejecutando [clean-beets-cp]...
+[2026-03-24 17:10:27] [INFO] Fin [clean-beets-cp] rc=0 en 0.10s
+[2026-03-24 17:10:27] [INFO] Ejecutando [clean-beets-exec]...
+[2026-03-24 17:10:28] [PROC] [INFO] Vaciando contenido de /downloads-test/Ambience-Audio
+[2026-03-24 17:10:28] [INFO] Fin [clean-beets-exec] rc=0 en 0.41s
+[2026-03-24 17:10:28] [INFO] Ejecutando [clean-beets-rm]...
+[2026-03-24 17:10:28] [INFO] Fin [clean-beets-rm] rc=0 en 0.16s
+[2026-03-24 17:10:28] [INFO] No se reinicia ytdl-sub (flag no especificado).
+[2026-03-24 17:10:28] [STEP] ==============================================================================
+[2026-03-24 17:10:28] [STEP] Inicio ejecución perfil: Ambience-Audio
+[2026-03-24 17:10:28] [STEP] ==============================================================================
+[2026-03-24 17:10:28] [INFO] Project root: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl
+[2026-03-24 17:10:28] [INFO] Mode: test
+[2026-03-24 17:10:28] [INFO] DryRun: True
+[2026-03-24 17:10:28] [INFO] Ejecutando [generate-ytdl-config]...
+[2026-03-24 17:10:28] [INFO] Fin [generate-ytdl-config] rc=0 en 0.14s
+[2026-03-24 17:10:28] [INFO] Ejecutando [prepare-subscriptions-runset]...
+[2026-03-24 17:10:29] [INFO] Fin [prepare-subscriptions-runset] rc=0 en 0.37s
+[2026-03-24 17:10:29] [INFO] Runset con entradas: True
+[2026-03-24 17:10:29] [INFO] Ejecutando [copy-trim-script]...
+[2026-03-24 17:10:29] [INFO] Fin [copy-trim-script] rc=0 en 0.08s
+[2026-03-24 17:10:29] [OK] Dry-run activo: se omite la descarga real y cualquier postproceso.
+[2026-03-24 17:10:29] [OK] Perfil completado correctamente.
+[2026-03-24 17:10:29] [STEP] ==============================================================================
+[2026-03-24 17:10:29] [STEP] Resumen final de la ejecución
+[2026-03-24 17:10:29] [STEP] ==============================================================================
+[2026-03-24 17:10:29] [OK] Ambience-Audio | ok=True | mode=test | dry_run=True | runset_con_entradas=True | elapsed=1.01s | Perfil completado correctamente.
+[2026-03-24 17:10:29] [INFO] Total perfiles: 1
+[2026-03-24 17:10:29] [INFO] Perfiles OK: 1
+[2026-03-24 17:10:29] [INFO] Perfiles FAIL: 0
+[2026-03-24 17:10:29] [INFO] Log único generado: E:\Docker_folders\streaming2\ytdl-sub\config\zenoytdl\config\runtime\test\logs\zenoytdl-run-test-20260324-171025.log
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        RESUMEN EJECUTIVO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+⏱️ Duración por perfil
+
+Ambience-Audio  ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓  1s
+
+🔧 Postprocesado total:        0s
+🕒 Tiempo total de la suite:   5s
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+          LECTURA RÁPIDA
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+• Perfil más lento:
+  Ambience-Audio → 1s
+
+• Perfil más rápido:
+  Ambience-Audio → 1s
+
+• Mayor tiempo de postprocesado:
+  Ambience-Audio → 0s
+
+• Sin postproceso específico:
+  Ninguno
+
+• Peso del postprocesado sobre el total:
+  ~0.0%
+

@@ -1,0 +1,15 @@
+{
+  "sources": {
+    "ambience-audio-ambience-audio-prueba-gr-vejtzbso": {
+      "profile_name": "Ambience-Audio",
+      "profile_type": "ambience-audio",
+      "custom_name": "ambience-audio-prueba",
+      "url": "https://www.youtube.com/watch?v=GR_vEjTZBso",
+      "max_items": 3,
+      "selected_ids": [
+        "gr-vejtzbso"
+      ],
+      "download_strategy": "single_video"
+    }
+  }
+}

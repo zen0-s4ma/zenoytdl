@@ -1,0 +1,26 @@
+configuration:
+  working_directory: /tmp/ytdl-sub-working-directory
+  file_name_max_bytes: 255
+  persist_logs:
+    keep_successful_logs: true
+    logs_directory: /config/logs
+  lock_directory: /tmp
+presets:
+  ambience-audio-ambience-audio-prueba-gr-vejtzbso:
+    preset: []
+    overrides:
+      enable_throttle_protection: false
+    embed_thumbnail: false
+    output_options:
+      output_directory: /downloads/Ambience-Audio/{subscription_root_sanitized}
+      file_name: '{title_sanitized}.{ext}'
+      maintain_download_archive: true
+    download: '{url}'
+    audio_extract:
+      enable: true
+      codec: mp3
+      quality: 0
+    ytdl_options:
+      playlistend: 3
+      lazy_playlist: true
+      break_on_existing: true

@@ -1,0 +1,52 @@
+configuration:
+  working_directory: /tmp/ytdl-sub-working-directory
+  file_name_max_bytes: 255
+  persist_logs:
+    keep_successful_logs: true
+    logs_directory: /config/logs
+  lock_directory: /tmp
+presets:
+  podcast-entrevistas-geoestratego-oficial:
+    preset:
+    - Only Recent
+    - Filter Duration
+    - Max MP3 Quality
+    overrides:
+      enable_throttle_protection: false
+    embed_thumbnail: true
+    output_options:
+      output_directory: /downloads-test/Podcast/{subscription_root_sanitized}/{source_target_sanitized}
+      file_name: '{title_sanitized}.{ext}'
+      maintain_download_archive: true
+    download: '{url}'
+    format: ba[acodec^=mp3]/ba/b
+    audio_extract:
+      enable: true
+      codec: mp3
+      quality: 0
+    ytdl_options:
+      playlistend: 2
+      lazy_playlist: true
+      break_on_existing: true
+  podcast-entrevistas-pl01fnqnul7ykui7id1lwxkz8ho3j8l8of:
+    preset:
+    - Only Recent
+    - Filter Duration
+    - Max MP3 Quality
+    overrides:
+      enable_throttle_protection: false
+    embed_thumbnail: true
+    output_options:
+      output_directory: /downloads-test/Podcast/{subscription_root_sanitized}/{source_target_sanitized}
+      file_name: '{title_sanitized}.{ext}'
+      maintain_download_archive: true
+    download: '{url}'
+    format: ba[acodec^=mp3]/ba/b
+    audio_extract:
+      enable: true
+      codec: mp3
+      quality: 0
+    ytdl_options:
+      playlistend: 2
+      lazy_playlist: true
+      break_on_existing: true

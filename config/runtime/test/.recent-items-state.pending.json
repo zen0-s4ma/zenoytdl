@@ -1,0 +1,19 @@
+{
+  "sources": {
+    "ambience-audio-ambience-audio-prueba-gr-vejtzbso": {
+      "profile_name": "Ambience-Audio",
+      "profile_type": "ambience-audio",
+      "custom_name": "ambience-audio-prueba",
+      "url": "https://www.youtube.com/watch?v=GR_vEjTZBso",
+      "max_items": 3,
+      "download_strategy": "single_video",
+      "selected_ids": [
+        "gr-vejtzbso"
+      ],
+      "output_dir": "/downloads-test/Ambience-Audio/ambience-audio-prueba",
+      "mode": "test",
+      "downloads_root": "/downloads-test",
+      "updated_at": "2026-03-24 17:13:55"
+    }
+  }
+}

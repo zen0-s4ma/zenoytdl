@@ -1,0 +1,57 @@
+profiles:
+- profile_name: Canales-youtube
+  profile_type: Canales-youtube
+  defaults:
+    max_items: 2
+    quality: 720p
+    format: mp4
+    min_duration: ''
+    max_duration: ''
+    date_range: 100years
+- profile_name: Podcast
+  profile_type: Podcast
+  defaults:
+    max_items: 2
+    quality: best
+    format: mp3
+    min_duration: 5m
+    max_duration: ''
+    date_range: 100years
+- profile_name: TV-Serie
+  profile_type: TV-Serie
+  defaults:
+    max_items: 2
+    quality: 1080p
+    format: mp4
+    min_duration: 5m
+    max_duration: ''
+    date_range: 100years
+- profile_name: Music-Playlist
+  profile_type: Music-Playlist
+  defaults:
+    max_items: 10
+    quality: best
+    format: mp3
+    min_duration: ''
+    max_duration: ''
+    date_range: 100years
+- profile_name: Ambience-Video
+  profile_type: ambience-video
+  defaults:
+    quality: 720p
+    format: mp4
+    min_duration: ''
+    max_duration: 3h3m3s
+    date_range: 100years
+    embed_thumbnail: false
+    audio_quality: best
+- profile_name: Ambience-Audio
+  profile_type: ambience-audio
+  defaults:
+    quality: best
+    format: mp3
+    min_duration: ''
+    max_duration: 3h3m3s
+    date_range: 100years
+    embed_thumbnail: false
+    audio_quality: best
